@@ -1,0 +1,14 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+
+metadata:
+  labels:
+    team: tpts
+  name: tiltakspenger-meldekort
+  namespace: tpts
+
+spec:
+  ingresses:
+    - https://tiltakspenger-meldekort.intern.dev.nav.no
+  image: { { image } }
+  port: 3000
