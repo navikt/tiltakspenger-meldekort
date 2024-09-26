@@ -11,18 +11,18 @@ jobs:
       contents: read
       id-token: write
     steps:
-    - uses: actions/checkout@v4
-    - name: Push docker image to GAR
-      uses: nais/docker-build-push@v0
-      id: docker-build-push
-      with:
-        team: tpts
-        identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }} # Provided as Organization Secret
-        project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }} # Provided as Organization Variable
-    - name: Deploy to NAIS
-      uses: nais/deploy/actions/deploy@v2
-      env:
-        CLUSTER: dev-gcp
-        RESOURCE: .nais/app.yaml 
-        VAR: image=${{ steps.docker-build-push.outputs.image }}
-        VAR: image=${{ steps.docker-build-push.outputs.telemetry }}
+      - uses: actions/checkout@v4
+      - name: Push docker image to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: tpts
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }} # Provided as Organization Secret
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }} # Provided as Organization Variable
+      - name: Deploy to NAIS
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/app.yaml
+          IMAGE: ${{ steps.docker-build-push.outputs.image }}
+          VAR: image=${{ steps.docker-build-push.outputs.telemetry }}
