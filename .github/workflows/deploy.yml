@@ -1,34 +1,28 @@
-name: Build & Deploy
+name: Build and deploy
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
-
 jobs:
-  build:
-    name: build
+  build_and_deploy:
+    name: Build, push and deploy
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
-      packages: write
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
-        with:
-          persist-credentials: false
-      - name: Build and push docker image to GAR
-        uses: nais/docker-build-push@main
-        id: docker-push
-        with:
-          target: runtime
-          team: tpts
-          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-          build_secrets: NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
-      - name: Deploy to nais
-        uses: nais/deploy/actions/deploy@v2
-        env:
-          CLUSTER: dev-gcp
-          IMAGE: ${{ steps.docker-push.outputs.image }}
-          RESOURCE: nais.yml
+    - uses: actions/checkout@v4
+    - name: Push docker image to GAR
+      uses: nais/docker-build-push@v0
+      id: docker-build-push
+      with:
+        team: tpts
+        identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }} # Provided as Organization Secret
+        project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }} # Provided as Organization Variable
+    - name: Deploy to NAIS
+      uses: nais/deploy/actions/deploy@v2
+      env:
+        CLUSTER: dev-gcp
+        RESOURCE: .nais/app.yaml 
+        VAR: image=${{ steps.docker-build-push.outputs.image }}
+        VAR: image=${{ steps.docker-build-push.outputs.telemetry }}
