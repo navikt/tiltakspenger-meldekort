@@ -6,10 +6,17 @@ metadata:
   namespace: tpts
 
 spec:
-  ingresses:
-    - { { ingress } }
   image: { { image } }
   port: 3000
+  env:
+    - name: NEXT_PUBLIC_TELEMETRY_URL
+      value: { { NEXT_PUBLIC_TELEMETRY_URL } }
+    - name: UNLEASH_SERVER_API_URL
+      value: { { unleash.url } }
+    - name: DEKORATOR_ENV
+      value: { { dekorator.env } }
+  ingresses:
+    - { { ingress } }
   ttl: 3h
   replicas:
     max: 1
