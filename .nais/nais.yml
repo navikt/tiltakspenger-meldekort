@@ -6,9 +6,9 @@ metadata:
   namespace: tpts
 
 spec:
- ingresses:
-    - {{ ingress }}
-  image: {{image}}
+  ingresses:
+    - { { ingress } }
+  image: { { image } }
   port: 3000
   ttl: 3h
   replicas:
