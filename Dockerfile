@@ -8,7 +8,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /usr/app
 
 COPY package.json .
-COPY next.config.js .
+COPY next.config.mjs .
 COPY .next/standalone ./
 
 ENV NEXT_TELEMETRY_DISABLED 1
