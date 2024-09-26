@@ -16,7 +16,7 @@ spec:
     - name: DEKORATOR_ENV
       value: { { dekorator.env } }
   ingresses:
-    - { { ingress } }
+    - https://tiltakspenger-meldekort.ansatt.dev.nav.no
   ttl: 3h
   replicas:
     max: 1
