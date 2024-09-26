@@ -2,10 +2,14 @@ apiVersion: nais.io/v1alpha1
 kind: Application
 
 metadata:
+  labels:
+    team: tpts
   name: tiltakspenger-meldekort
   namespace: tpts
 
 spec:
+  ingresses:
+    - https://tiltakspenger-meldekort.ansatt.dev.nav.no
   image: { { image } }
   port: 3000
   env:
@@ -15,8 +19,6 @@ spec:
       value: { { unleash.url } }
     - name: DEKORATOR_ENV
       value: { { dekorator.env } }
-  ingresses:
-    - https://tiltakspenger-meldekort.ansatt.dev.nav.no
   ttl: 3h
   replicas:
     max: 1
