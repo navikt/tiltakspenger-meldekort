@@ -35,9 +35,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
-      - name: Build app
-        run: npm run build
-
       - name: Set up Docker Buildx
         if: github.ref == 'refs/heads/main'
         uses: docker/setup-buildx-action@v2
@@ -50,6 +47,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build app
+        run: npm run build
+
       - name: Build and push docker image to GAR
         if: github.ref == 'refs/heads/main'
         uses: nais/docker-build-push@main
@@ -61,7 +61,7 @@ jobs:
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           build_secrets: NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}
           context: .
-          tags: ${{ env.IMAGE }}
+          tags: ${{ env.IMAGE }}-test
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -79,5 +79,5 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          VAR: image=${{ steps.docker-push.outputs.image }}
+          VAR: image=${{ steps.docker-push.outputs.image }},name=${{ github.event.repository.name }}
           RESOURCE: .nais/nais.yml
