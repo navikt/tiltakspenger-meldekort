@@ -10,15 +10,15 @@ metadata:
 spec:
   ingresses:
     - https://tiltakspenger-meldekort.ansatt.dev.nav.no
-  image: { { image } }
+  image: {{ image }}
   port: 3000
   env:
     - name: NEXT_PUBLIC_TELEMETRY_URL
-      value: { { NEXT_PUBLIC_TELEMETRY_URL } }
+      value: {{ NEXT_PUBLIC_TELEMETRY_URL }}
     - name: UNLEASH_SERVER_API_URL
-      value: { { unleash.url } }
+      value: {{ unleash.url }}
     - name: DEKORATOR_ENV
-      value: { { dekorator.env } }
+      value: {{ dekorator.env }}
   ttl: 3h
   replicas:
     max: 1
