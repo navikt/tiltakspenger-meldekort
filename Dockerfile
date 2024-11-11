@@ -18,11 +18,11 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY next.config.mjs tsconfig.json ./
-COPY pages pages
-COPY styles styles
+COPY src/pages pages
+COPY src/styles styles
 COPY public public
 
-RUN npm run build 
+RUN npm run build
 
 COPY .next/static ./.next/static
 COPY .next/standalone ./

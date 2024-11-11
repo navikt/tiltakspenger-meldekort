@@ -1,0 +1,9 @@
+.wrapper {
+    padding: 2rem 0;
+    border-bottom: var(--a-green-400) solid 5px;
+}
+
+.header {
+    margin: 0 auto;
+    max-width: 1024px;
+}
