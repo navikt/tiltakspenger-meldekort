@@ -9,18 +9,16 @@ import style from '@/src/components/forside/Forside.module.css';
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <main>
+        <Page className={style.forside}>
             <Head>
                 <title>{'Meldekort for tiltakspenger - nav.no'}</title>
             </Head>
-            <Page className={style.forside}>
-                <PageHeader />
-                <Page.Block width={'lg'}>
-                    <VStack className={style.text}>
-                        <Component {...pageProps} />
-                    </VStack>
-                </Page.Block>
-            </Page>
-        </main>
+            <PageHeader />
+            <Page.Block width={'md'} as={"main"} id={"maincontent"}>
+                <VStack className={style.text}>
+                    <Component {...pageProps} />
+                </VStack>
+            </Page.Block>
+        </Page>
     );
 }

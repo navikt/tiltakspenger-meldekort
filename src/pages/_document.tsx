@@ -1,6 +1,5 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import { DecoratorComponentsReact, fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr';
-import { Page } from '@navikt/ds-react';
 
 class MyDocument extends Document<{ Decorator: DecoratorComponentsReact }> {
     static async getInitialProps(ctx: DocumentContext) {
@@ -22,12 +21,11 @@ class MyDocument extends Document<{ Decorator: DecoratorComponentsReact }> {
                     <Decorator.HeadAssets />
                 </Head>
                 <body>
-                    <Page footer={<Decorator.Footer />}>
-                        <Decorator.Header />
-                        <Main />
-                        <Decorator.Scripts />
-                        <NextScript />
-                    </Page>
+                    <Decorator.Header />
+                    <Main />
+                    <Decorator.Footer />
+                    <Decorator.Scripts />
+                    <NextScript />
                 </body>
             </Html>
         );
