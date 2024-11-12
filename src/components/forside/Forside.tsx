@@ -1,12 +1,9 @@
-import { BodyLong, Button, Checkbox } from '@navikt/ds-react';
-
-import style from './Forside.module.css';
+import { BodyLong } from '@navikt/ds-react';
 import Link from 'next/link';
 import { Tekst } from '@/src/components/tekst/Tekst';
+import { TilUtfylling } from '@/src/components/forside/til-utfylling/TilUtfylling';
 
 export const Forside = () => {
-    const nesteMeldekortId = 'asdf';
-
     return (
         <>
             <BodyLong spacing={true}>
@@ -24,17 +21,7 @@ export const Forside = () => {
             <BodyLong spacing={true}>
                 <Tekst id={'forsideOpplysninger'} />
             </BodyLong>
-            <Checkbox>
-                <Tekst id={'forsideBekrefter'} />
-            </Checkbox>
-            <Button
-                className={style.button}
-                variant={'primary'}
-                href={`/periode/${nesteMeldekortId}/fyll-ut`}
-                as={Link}
-            >
-                <Tekst id={'neste'} />
-            </Button>
+            <TilUtfylling />
             <Link href={'/innsendt'}>
                 <Tekst id={'seOgEndre'} />
             </Link>

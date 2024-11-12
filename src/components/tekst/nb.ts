@@ -7,5 +7,9 @@ export const teksterNb = {
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
     neste: 'Neste',
-    seOgEndre: 'Se og endre innsendte meldekort'
+    seOgEndre: 'Se og endre innsendte meldekort',
+
+    fyllUtTittel: 'Fyll ut meldekortet',
+    fyllUtKlikkPåDato: 'Klikk på datoen du skal melde for. Du kan velge mellom jobb, syk, ferie/fravær eller tiltak/kurs/utdanning.',
+    fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet'
 } as const
