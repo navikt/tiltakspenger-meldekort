@@ -8,10 +8,8 @@ import {
 } from '@/src/typer/meldekort';
 import { Kalender } from '@/src/components/kalender/Kalender';
 
-const ONE_DAY_MS = 1000 * 3600 * 24;
-
-const fraOgMed = '2024-11-10T23:00:00.000Z';
-const tilOgMed = new Date(new Date(fraOgMed).getTime() + ONE_DAY_MS * 14).toISOString();
+const fraOgMed = '2024-11-11';
+const tilOgMed = '2024-11-24';
 
 const dummyPeriode: MeldekortData = {
     id: 'asdf',
@@ -20,10 +18,8 @@ const dummyPeriode: MeldekortData = {
         tilOgMed,
     },
     meldekortDager: Array.from({ length: 14 }).map((_, index) => {
-        const date = new Date(fraOgMed).getTime();
-
         return {
-            dato: new Date(date + ONE_DAY_MS * index).toISOString(),
+            dato: `2024-11-${11 + index}`,
             status: MeldekortDagStatus.IkkeUtfylt,
             reduksjonAvYtelsePåGrunnAvFravær: ReduksjonAvYtelse.INGEN_REDUKSJON,
             beregningsdag: { beløp: 285, prosent: 100 },

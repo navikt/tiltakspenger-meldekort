@@ -38,7 +38,7 @@ export type MeldekortDag = {
     dato: string;
     status: MeldekortDagStatus;
     reduksjonAvYtelsePåGrunnAvFravær: ReduksjonAvYtelse;
-    beregningsdag: Beregningsdag;
+    beregningsdag: Beregningsdag | null;
 };
 
 export type MeldekortData = {

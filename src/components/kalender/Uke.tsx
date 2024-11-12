@@ -5,31 +5,29 @@ import { MeldekortDag } from '@/src/typer/meldekort';
 
 type Props = {
     readonly?: boolean;
-    rapporteringUke: MeldekortDag[];
+    meldekortUke: MeldekortDag[];
 };
 
 export function Uke(props: Props) {
-    const { rapporteringUke, readonly } = props;
+    const { meldekortUke, readonly } = props;
 
     return (
         <tr className={styles.ukeRadKontainer}>
-            {rapporteringUke.map((dag) => {
+            {meldekortUke.map((dag) => {
+                const formattedDate = `${format(new Date(dag.dato), 'd')}.`;
+
                 return (
                     <td key={dag.dato} className={styles.datoKontainer}>
-                        {readonly && (
-                            <span
-                                className={classNames(styles.dato, styles.readonly)}
-                            >
-                                {`${format(new Date(dag.dato), 'd')}. `}
+                        {readonly ? (
+                            <span className={classNames(styles.dato, styles.readonly)}>
+                                {formattedDate}
                             </span>
-                        )}
-
-                        {!readonly && (
+                        ) : (
                             <button
                                 className={classNames(styles.dato)}
                                 onClick={() => console.log('Open modal')}
                             >
-                                {`${format(new Date(dag.dato), 'd')}.`}
+                                {formattedDate}
                             </button>
                         )}
                     </td>
