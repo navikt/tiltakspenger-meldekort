@@ -1,28 +1,39 @@
 import { BodyLong, Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@/src/components/tekst/Tekst';
-import { Rapporteringsperiode, RapporteringsperiodeStatus } from '@/src/typer/rapporteringsperiode';
+import {
+    MeldekortDagStatus,
+    MeldekortData,
+    MeldekortStatus,
+    ReduksjonAvYtelse,
+} from '@/src/typer/meldekort';
 import { Kalender } from '@/src/components/kalender/Kalender';
 
-const fraOgMed = '2024-11-10T23:00:00.000Z'
-const oneDayMs = 1000 * 3600 * 24;
+const ONE_DAY_MS = 1000 * 3600 * 24;
 
-const dummyPeriode: Rapporteringsperiode = {
+const fraOgMed = '2024-11-10T23:00:00.000Z';
+const tilOgMed = new Date(new Date(fraOgMed).getTime() + ONE_DAY_MS * 14).toISOString();
+
+const dummyPeriode: MeldekortData = {
     id: 'asdf',
     periode: {
         fraOgMed,
-        tilOgMed: '2024-11-24T23:00:00.000Z'
+        tilOgMed,
     },
-    dager: Array.from({length: 14}).map((_, index) => {
+    meldekortDager: Array.from({ length: 14 }).map((_, index) => {
         const date = new Date(fraOgMed).getTime();
 
         return {
-            dato: new Date(date + oneDayMs * index).toISOString(),
-            aktiviteter: []
-        }
+            dato: new Date(date + ONE_DAY_MS * index).toISOString(),
+            status: MeldekortDagStatus.IkkeUtfylt,
+            reduksjonAvYtelsePåGrunnAvFravær: ReduksjonAvYtelse.INGEN_REDUKSJON,
+            beregningsdag: { beløp: 285, prosent: 100 },
+        };
     }),
     kanSendes: true,
-    status: RapporteringsperiodeStatus.TilUtfylling
-}
+    status: MeldekortStatus.TilUtfylling,
+    tiltaksnavn: 'Mitt tiltak',
+    totalbeløpTilUtbetaling: 9001
+};
 
 export const FyllUt = () => {
     return (

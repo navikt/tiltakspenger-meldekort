@@ -1,14 +1,14 @@
 import { EndringsLenke } from './Endringslenke';
 import { Uke } from './Uke';
 import classNames from 'classnames';
-import { Rapporteringsperiode } from '@/src/typer/rapporteringsperiode';
+import { MeldekortData } from '@/src/typer/meldekort';
 
 import style from './Kalender.module.css';
 
 const ukedager = ['mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag', 'søndag']
 
 type Props = {
-    periode: Rapporteringsperiode;
+    periode: MeldekortData;
     visEndringslenke?: boolean;
     readonly?: boolean;
 }
@@ -18,8 +18,8 @@ export function Kalender(props: Props) {
 
     const { fraOgMed, tilOgMed } = periode.periode;
 
-    const forsteUke = [...periode.dager].splice(0, 7);
-    const andreUke = [...periode.dager].splice(7, 7);
+    const forsteUke = [...periode.meldekortDager].splice(0, 7);
+    const andreUke = [...periode.meldekortDager].splice(7, 7);
 
     const periodeUkenummerTekst = `Uke n - n+1`;
 
