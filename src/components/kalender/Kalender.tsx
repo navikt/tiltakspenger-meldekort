@@ -11,7 +11,7 @@ type Props = {
     readonly?: boolean;
 };
 
-export function Kalender(props: Props) {
+export const Kalender = (props: Props) => {
     const { periode, readonly = false } = props;
 
     const { fraOgMed, tilOgMed } = periode.periode;
@@ -59,4 +59,4 @@ export function Kalender(props: Props) {
             </table>
         </>
     );
-}
+};

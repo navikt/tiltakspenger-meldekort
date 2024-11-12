@@ -8,7 +8,7 @@ type Props = {
     meldekortUke: MeldekortDag[];
 };
 
-export function Uke(props: Props) {
+export const Uke = (props: Props) => {
     const { meldekortUke, readonly } = props;
 
     return (
@@ -35,4 +35,4 @@ export function Uke(props: Props) {
             })}
         </tr>
     );
-}
+};
