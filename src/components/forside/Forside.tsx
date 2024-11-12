@@ -2,6 +2,7 @@ import { BodyLong, Button, Checkbox } from '@navikt/ds-react';
 
 import style from './Forside.module.css';
 import Link from 'next/link';
+import { Tekst } from '@/src/components/tekst/Tekst';
 
 export const Forside = () => {
     const nesteMeldekortId = 'asdf';
@@ -9,26 +10,22 @@ export const Forside = () => {
     return (
         <>
             <BodyLong spacing={true}>
-                {
-                    'For å motta tiltakspenger må du være registrert på et tiltak hos NAV og sende meldekort hver 14. dag.'
-                }
+                <Tekst id={'forsideIngress1'} />
             </BodyLong>
             <BodyLong spacing={true}>
-                {
-                    'På meldekortet må du registrere om du har jobbet mens du var på tiltak, om du har vært syk, om ditt barn eller barnepasser har vært syk, om du har hatt ferie/fravær eller andre grunner til at du ikke har deltatt på tiltak/kurs/utdanning. NAV trenger dette for å beregne hvor mye du skal ha i tiltakspenger.'
-                }
+                <Tekst id={'forsideIngress2'} />
             </BodyLong>
             <BodyLong spacing={true}>
-                {'Husk at du også må sende meldekort mens du venter på svar på søknaden din.'}
+                <Tekst id={'forsideIngress3'} />
             </BodyLong>
             <BodyLong weight={'semibold'} size={'large'}>
-                {'Takk for at du er ærlig!'}
+                <Tekst id={'forsideTakk'} />
             </BodyLong>
             <BodyLong spacing={true}>
-                {'Det er viktig at du gir oss riktige opplysninger.'}
+                <Tekst id={'forsideOpplysninger'} />
             </BodyLong>
             <Checkbox>
-                {'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan'}
+                <Tekst id={'forsideBekrefter'} />
             </Checkbox>
             <Button
                 className={style.button}
@@ -36,10 +33,10 @@ export const Forside = () => {
                 href={`/periode/${nesteMeldekortId}/fyll-ut`}
                 as={Link}
             >
-                {'Neste →'}
+                <Tekst id={'neste'} />
             </Button>
             <Link href={'/innsendt'}>
-                {'Se og endre innsendte meldekort'}
+                <Tekst id={'seOgEndre'} />
             </Link>
         </>
     );
