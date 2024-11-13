@@ -1,14 +1,13 @@
 import { BodyLong, Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import {
-    MeldekortDag,
     MeldekortDagStatus,
     MeldekortUtfylling,
     MeldekortStatus,
 } from '@typer/meldekort-utfylling';
 import { Kalender } from '@components/kalender/Kalender';
 import { MeldekortDagModal } from '@components/meldekort-dag-modal/MeldekortDagModal';
-import { useState } from 'react';
+import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
 
 const fraOgMed = '2024-11-11';
 const tilOgMed = '2024-11-24';
@@ -30,8 +29,6 @@ const dummyMeldekort: MeldekortUtfylling = {
 };
 
 export const FyllUt = () => {
-    const [valgtDag, setValgtDag] = useState<MeldekortDag | null>(null);
-
     return (
         <div>
             <Heading size={'medium'}>
@@ -41,8 +38,10 @@ export const FyllUt = () => {
                 <Tekst id={'fyllUtKlikkPåDato'} />
             </BodyLong>
             <ReadMore header={<Tekst id={'fyllUtLesMerHeader'} />}>{'Blah blah'}</ReadMore>
-            <Kalender meldekort={dummyMeldekort} setValgtDag={setValgtDag} />
-            <MeldekortDagModal dag={valgtDag} setValgtDag={setValgtDag} />
+            <MeldekortUtfyllingProvider meldekortUtfylling={dummyMeldekort}>
+                <Kalender meldekort={dummyMeldekort} />
+                <MeldekortDagModal />
+            </MeldekortUtfyllingProvider>
         </div>
     );
 };

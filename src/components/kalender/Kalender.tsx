@@ -1,6 +1,6 @@
 import { Uke } from './Uke';
 import classNames from 'classnames';
-import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { formatterDato, Ukedager } from '@utils/datetime';
 import { getISOWeek } from 'date-fns';
 
@@ -8,11 +8,10 @@ import style from './Kalender.module.css';
 
 type Props = {
     meldekort: MeldekortUtfylling;
-    setValgtDag: (dag: MeldekortDag) => void;
     readonly?: boolean;
 };
 
-export const Kalender = ({ meldekort, setValgtDag, readonly = false }: Props) => {
+export const Kalender = ({ meldekort, readonly = false }: Props) => {
     const { fraOgMed, tilOgMed } = meldekort.periode;
 
     const forsteUke = meldekort.meldekortDager.slice(0, 7);
@@ -52,8 +51,8 @@ export const Kalender = ({ meldekort, setValgtDag, readonly = false }: Props) =>
                     </tr>
                 </thead>
                 <tbody className={classNames(style.ukerKontainer)}>
-                    <Uke meldekortUke={forsteUke} setValgtDag={setValgtDag} readonly={readonly} />
-                    <Uke meldekortUke={andreUke} setValgtDag={setValgtDag} readonly={readonly} />
+                    <Uke meldekortUke={forsteUke} readonly={readonly} />
+                    <Uke meldekortUke={andreUke} readonly={readonly} />
                 </tbody>
             </table>
         </>

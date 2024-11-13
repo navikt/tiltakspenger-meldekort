@@ -1,28 +1,26 @@
 import { format } from 'date-fns';
 import { MeldekortDag } from '@typer/meldekort-utfylling';
-import { useState } from 'react';
 import classNames from 'classnames';
 
 import style from './Dag.module.css';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 
 type Props = {
     dag: MeldekortDag;
-    setValgtDag: (dag: MeldekortDag) => void;
     readonly?: boolean;
 };
 
-export const Dag = ({ dag, setValgtDag, readonly }: Props) => {
-    const [isSelected, setIsSelected] = useState(false);
+export const Dag = ({ dag, readonly }: Props) => {
+    const { setValgtMeldekortDag } = useMeldekortUtfylling()
 
-    const formattedDate = `${format(new Date(dag.dato), 'd')}.`;
+    const formattedDate = `${format(dag.dato, 'd')}.`;
 
     return (
         <td key={dag.dato} className={classNames(style.datoKontainer)}>
             <button
-                className={classNames(style.dato, isSelected && style.selected)}
+                className={classNames(style.dato)}
                 onClick={() => {
-                    // setIsSelected(!isSelected);
-                    setValgtDag(dag)
+                    setValgtMeldekortDag(dag)
                 }}
                 disabled={readonly}
             >
