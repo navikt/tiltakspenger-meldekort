@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { nb } from 'date-fns/locale/nb';
 
 import style from './MeldekortDagModal.module.css';
+import { formatterDato } from '@/src/utils/datetime';
 
 type DeltattValg = 'deltatt' | 'ikkeDeltatt';
 
@@ -32,9 +33,7 @@ export const MeldekortDagModal = ({ dag, setValgtDag }: Props) => {
             }}
             header={{
                 heading: dag
-                    ? format(dag.dato, 'EEEE d. MMMM', { locale: nb }).replace(/^./, (match) =>
-                          match.toUpperCase()
-                      )
+                    ? formatterDato(dag.dato, true)
                     : '',
             }}
             closeOnBackdropClick={true}

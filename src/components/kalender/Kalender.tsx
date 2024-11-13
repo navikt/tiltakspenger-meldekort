@@ -1,7 +1,7 @@
 import { Uke } from './Uke';
 import classNames from 'classnames';
 import { MeldekortDag, MeldekortUtfylling } from '@/src/typer/meldekort-utfylling';
-import { Ukedager } from '@/src/utils/ukedager';
+import { formatterDato, Ukedager } from '@/src/utils/datetime';
 import { getISOWeek } from 'date-fns';
 
 import style from './Kalender.module.css';
@@ -19,7 +19,7 @@ export const Kalender = ({ meldekort, setValgtDag, readonly = false }: Props) =>
     const andreUke = meldekort.meldekortDager.slice(7, 14);
 
     const periodeUkenummerTekst = `Uke ${getISOWeek(new Date(fraOgMed))} - ${getISOWeek(new Date(tilOgMed))}`;
-    const periodeFomTomDatoTekst = `${fraOgMed} - ${tilOgMed}`;
+    const periodeFomTomDatoTekst = `${formatterDato(fraOgMed, true)} til ${formatterDato(tilOgMed)}`;
 
     return (
         <>
