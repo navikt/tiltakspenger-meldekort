@@ -1,21 +1,27 @@
 import { Uke } from './Uke';
 import classNames from 'classnames';
-import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { formatterDato, Ukedager } from '@utils/datetime';
 import { getISOWeek } from 'date-fns';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 
 import style from './Kalender.module.css';
 
 type Props = {
-    meldekort: MeldekortUtfylling;
     readonly?: boolean;
 };
 
-export const Kalender = ({ meldekort, readonly = false }: Props) => {
-    const { fraOgMed, tilOgMed } = meldekort.periode;
+export const Kalender = ({ readonly = false }: Props) => {
+    const { meldekortUtfylling } = useMeldekortUtfylling();
 
-    const forsteUke = meldekort.meldekortDager.slice(0, 7);
-    const andreUke = meldekort.meldekortDager.slice(7, 14);
+    if (!meldekortUtfylling) {
+        console.error('Oh noes, fant ingen meldekort!');
+        return null;
+    }
+
+    const { fraOgMed, tilOgMed } = meldekortUtfylling.periode;
+
+    const forsteUke = meldekortUtfylling.meldekortDager.slice(0, 7);
+    const andreUke = meldekortUtfylling.meldekortDager.slice(7, 14);
 
     const periodeUkenummerTekst = `Uke ${getISOWeek(new Date(fraOgMed))} - ${getISOWeek(new Date(tilOgMed))}`;
     const periodeFomTomDatoTekst = `${formatterDato(fraOgMed, true)} til ${formatterDato(tilOgMed)}`;
@@ -33,15 +39,15 @@ export const Kalender = ({ meldekort, readonly = false }: Props) => {
             <table
                 className={style.kalender}
                 role="grid"
-                aria-disabled={!meldekort.kanSendes || readonly}
+                aria-disabled={!meldekortUtfylling.kanSendes || readonly}
             >
                 <thead aria-hidden>
                     <tr className={style.ukedagKontainer}>
-                        {Ukedager.nb.map((ukedag, index) => {
+                        {Ukedager.nb.map((ukedag) => {
                             return (
                                 <th
                                     scope="col"
-                                    key={`${meldekort.id}-${index}`}
+                                    key={ukedag.kort}
                                     className={style.ukedag}
                                 >
                                     <span>{ukedag.kort}</span>

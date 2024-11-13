@@ -39,7 +39,7 @@ export const FyllUt = () => {
             </BodyLong>
             <ReadMore header={<Tekst id={'fyllUtLesMerHeader'} />}>{'Blah blah'}</ReadMore>
             <MeldekortUtfyllingProvider meldekortUtfylling={dummyMeldekort}>
-                <Kalender meldekort={dummyMeldekort} />
+                <Kalender />
                 <MeldekortDagModal />
             </MeldekortUtfyllingProvider>
         </div>
