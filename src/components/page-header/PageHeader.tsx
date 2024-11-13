@@ -1,5 +1,5 @@
 import { Heading } from '@navikt/ds-react';
-import { Tekst } from '@/src/components/tekst/Tekst';
+import { Tekst } from '@components/tekst/Tekst';
 
 import style from './PageHeader.module.css';
 

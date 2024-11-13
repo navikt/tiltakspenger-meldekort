@@ -1,6 +1,6 @@
 import styles from './Kalender.module.css';
-import { MeldekortDag } from '@/src/typer/meldekort-utfylling';
-import { Dag } from '@/src/components/kalender/dag/Dag';
+import { MeldekortDag } from '@typer/meldekort-utfylling';
+import { Dag } from '@components/kalender/dag/Dag';
 
 type Props = {
     meldekortUke: MeldekortDag[];

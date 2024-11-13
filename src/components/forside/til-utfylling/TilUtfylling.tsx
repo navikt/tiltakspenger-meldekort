@@ -1,5 +1,5 @@
 import { Button, Checkbox } from '@navikt/ds-react';
-import { Tekst } from '@/src/components/tekst/Tekst';
+import { Tekst } from '@components/tekst/Tekst';
 import { useState } from 'react';
 
 import style from './TilUtfylling.module.css';

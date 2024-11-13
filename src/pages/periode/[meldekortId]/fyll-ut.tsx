@@ -1,3 +1,3 @@
-import { FyllUt } from '@/src/components/fyll-ut/FyllUt';
+import { FyllUt } from '@components/fyll-ut/FyllUt';
 
 export default FyllUt;

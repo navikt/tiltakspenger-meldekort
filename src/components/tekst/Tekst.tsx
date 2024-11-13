@@ -1,4 +1,4 @@
-import { teksterNb } from '@/src/components/tekst/nb';
+import { teksterNb } from '@components/tekst/nb';
 
 const tekster = {
     nb: teksterNb,

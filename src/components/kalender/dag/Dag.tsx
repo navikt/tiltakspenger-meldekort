@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { MeldekortDag } from '@/src/typer/meldekort-utfylling';
+import { MeldekortDag } from '@typer/meldekort-utfylling';
 import { useState } from 'react';
 import classNames from 'classnames';
 

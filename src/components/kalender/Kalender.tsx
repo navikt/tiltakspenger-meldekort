@@ -1,7 +1,7 @@
 import { Uke } from './Uke';
 import classNames from 'classnames';
-import { MeldekortDag, MeldekortUtfylling } from '@/src/typer/meldekort-utfylling';
-import { formatterDato, Ukedager } from '@/src/utils/datetime';
+import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { formatterDato, Ukedager } from '@utils/datetime';
 import { getISOWeek } from 'date-fns';
 
 import style from './Kalender.module.css';

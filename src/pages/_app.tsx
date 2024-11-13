@@ -3,10 +3,10 @@ import '@navikt/ds-css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Page, VStack } from '@navikt/ds-react';
-import { PageHeader } from '@/src/components/page-header/PageHeader';
-import { teksterNb } from '@/src/components/tekst/nb';
+import { PageHeader } from '@components/page-header/PageHeader';
+import { teksterNb } from '@components/tekst/nb';
 
-import style from '@/src/components/forside/Forside.module.css';
+import style from '@components/forside/Forside.module.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
     return (

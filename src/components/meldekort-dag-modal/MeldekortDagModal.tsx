@@ -1,12 +1,12 @@
 import { Modal, Radio, RadioGroup } from '@navikt/ds-react';
-import { MeldekortDag, MeldekortDagStatus } from '@/src/typer/meldekort-utfylling';
+import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { useEffect, useState } from 'react';
-import { Tekst } from '@/src/components/tekst/Tekst';
+import { Tekst } from '@components/tekst/Tekst';
 import { format } from 'date-fns';
 import { nb } from 'date-fns/locale/nb';
 
 import style from './MeldekortDagModal.module.css';
-import { formatterDato } from '@/src/utils/datetime';
+import { formatterDato } from '@utils/datetime';
 
 type DeltattValg = 'deltatt' | 'ikkeDeltatt';
 

@@ -1,7 +1,7 @@
 import { BodyLong } from '@navikt/ds-react';
 import Link from 'next/link';
-import { Tekst } from '@/src/components/tekst/Tekst';
-import { TilUtfylling } from '@/src/components/forside/til-utfylling/TilUtfylling';
+import { Tekst } from '@components/tekst/Tekst';
+import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 
 export const Forside = () => {
     return (

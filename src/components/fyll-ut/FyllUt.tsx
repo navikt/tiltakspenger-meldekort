@@ -1,13 +1,13 @@
 import { BodyLong, Heading, ReadMore } from '@navikt/ds-react';
-import { Tekst } from '@/src/components/tekst/Tekst';
+import { Tekst } from '@components/tekst/Tekst';
 import {
     MeldekortDag,
     MeldekortDagStatus,
     MeldekortUtfylling,
     MeldekortStatus,
-} from '@/src/typer/meldekort-utfylling';
-import { Kalender } from '@/src/components/kalender/Kalender';
-import { MeldekortDagModal } from '@/src/components/meldekort-dag-modal/MeldekortDagModal';
+} from '@typer/meldekort-utfylling';
+import { Kalender } from '@components/kalender/Kalender';
+import { MeldekortDagModal } from '@components/meldekort-dag-modal/MeldekortDagModal';
 import { useState } from 'react';
 
 const fraOgMed = '2024-11-11';

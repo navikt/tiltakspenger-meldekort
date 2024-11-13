@@ -1,3 +1,3 @@
-import { Forside } from '@/src/components/forside/Forside';
+import { Forside } from '@components/forside/Forside';
 
 export default Forside;

@@ -1,4 +1,4 @@
-import { MeldekortDagStatus } from '@/src/typer/meldekort-utfylling';
+import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 
 type Props = {
     status: MeldekortDagStatus
