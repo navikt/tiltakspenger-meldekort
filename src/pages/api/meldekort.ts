@@ -1,9 +1,5 @@
 import { NextApiHandler } from 'next';
-import {
-    MeldekortDagStatus,
-    MeldekortStatus,
-    MeldekortUtfylling,
-} from '@typer/meldekort-utfylling';
+import { MeldekortStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling';
 
 const fraOgMed = '2024-11-11';
 const tilOgMed = '2024-11-24';
@@ -19,7 +15,8 @@ const dummyMeldekort: MeldekortUtfylling = {
     meldekortDager: Array.from({ length: 14 }).map((_, index) => {
         return {
             dato: `2024-11-${11 + index}`,
-            status: MeldekortDagStatus.IkkeUtfylt,
+            index,
+            status: { deltattValg: 'ikkeValgt' },
         };
     }),
 };

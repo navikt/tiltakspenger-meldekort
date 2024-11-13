@@ -3,26 +3,40 @@ import {
     MeldekortUtfyllingContext,
     MeldekortUtfyllingState,
 } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
-import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling';
 
 type Props = {
     meldekortUtfylling: MeldekortUtfylling;
     children: React.ReactNode;
 };
 
-export const MeldekortUtfyllingProvider = ({ meldekortUtfylling, children }: Props) => {
-    const [_meldekortUtfylling, setMeldekortUtfylling] =
-        useState<MeldekortUtfylling>(meldekortUtfylling);
+export const MeldekortUtfyllingProvider = ({
+    meldekortUtfylling: meldekortUtfyllingInitial,
+    children,
+}: Props) => {
+    const [meldekortUtfylling, setMeldekortUtfylling] =
+        useState<MeldekortUtfylling>(meldekortUtfyllingInitial);
     const [valgtMeldekortDag, setValgtMeldekortDag] =
         useState<MeldekortUtfyllingState['valgtMeldekortDag']>(null);
+
+    const lagreMeldekortDag = (dag: MeldekortDag) => {
+        const meldekortDagerUpdated = [...meldekortUtfylling.meldekortDager];
+        meldekortDagerUpdated[dag.index] = dag;
+
+        setMeldekortUtfylling({
+            ...meldekortUtfylling,
+            meldekortDager: meldekortDagerUpdated,
+        });
+    };
 
     return (
         <MeldekortUtfyllingContext.Provider
             value={{
-                meldekortUtfylling: _meldekortUtfylling,
+                meldekortUtfylling,
                 setMeldekortUtfylling,
                 valgtMeldekortDag,
                 setValgtMeldekortDag,
+                lagreMeldekortDag,
             }}
         >
             {children}

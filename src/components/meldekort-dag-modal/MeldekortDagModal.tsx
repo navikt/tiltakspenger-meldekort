@@ -1,5 +1,9 @@
-import { Modal, Radio, RadioGroup } from '@navikt/ds-react';
-import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import { Button, Modal, Radio, RadioGroup } from '@navikt/ds-react';
+import {
+    MeldekortDagStatus,
+    MeldekortDeltattUndervalg,
+    MeldekortIkkeDeltattUndervalg,
+} from '@typer/meldekort-utfylling';
 import { useEffect, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato } from '@utils/datetime';
@@ -7,26 +11,25 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 
 import style from './MeldekortDagModal.module.css';
 
-type DeltattValg = 'deltatt' | 'ikkeDeltatt';
-
 export const MeldekortDagModal = () => {
-    const { valgtMeldekortDag, setValgtMeldekortDag } = useMeldekortUtfylling();
+    const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();
 
-    const [valg, setValg] = useState<DeltattValg | null>(null);
+    const [valgtStatus, setValgtStatus] = useState<MeldekortDagStatus | null>(
+        valgtMeldekortDag?.status || null
+    );
+
+    const lukk = () => {
+        setValgtMeldekortDag(null);
+    };
 
     useEffect(() => {
-        if (valgtMeldekortDag) {
-            console.log(`Opening ${valgtMeldekortDag.dato}`);
-        }
+        setValgtStatus(valgtMeldekortDag?.status || null);
     }, [valgtMeldekortDag]);
 
     return (
         <Modal
             open={!!valgtMeldekortDag}
-            onClose={() => {
-                console.log(`Closing ${valgtMeldekortDag?.dato}`);
-                setValgtMeldekortDag(null);
-            }}
+            onClose={lukk}
             header={{
                 heading: valgtMeldekortDag ? formatterDato(valgtMeldekortDag.dato, true) : '',
             }}
@@ -35,48 +38,88 @@ export const MeldekortDagModal = () => {
         >
             <Modal.Body>
                 <RadioGroup
+                    value={valgtStatus?.deltattValg}
                     legend={<Tekst id={'meldekortHvaVilDu'} />}
-                    onChange={(value: DeltattValg) => {
-                        console.log(`Changed: ${value}`);
-                        setValg(value);
+                    onChange={(value: MeldekortDagStatus['deltattValg']) => {
+                        console.log(`Valgte ${value}`);
+                        setValgtStatus({ deltattValg: value });
                     }}
                 >
                     <Radio value={'deltatt'}>
                         <Tekst id={'meldekortHarDeltatt'} />
                     </Radio>
-                    {valg === 'deltatt' && (
+                    {valgtStatus?.deltattValg === 'deltatt' && (
                         <RadioGroup
+                            value={valgtStatus?.underValg}
                             legend={'Valgt deltatt'}
                             hideLegend={true}
                             className={style.underValg}
+                            onChange={(value) => {
+                                setValgtStatus({ ...valgtStatus, underValg: value });
+                            }}
                         >
-                            <Radio value={MeldekortDagStatus.DeltattMedLønn}>{'Med lønn'}</Radio>
-                            <Radio value={MeldekortDagStatus.DeltattUtenLønn}>{'Uten lønn'}</Radio>
+                            <Radio value={MeldekortDeltattUndervalg.DeltattMedLønn}>
+                                {'Med lønn'}
+                            </Radio>
+                            <Radio value={MeldekortDeltattUndervalg.DeltattUtenLønn}>
+                                {'Uten lønn'}
+                            </Radio>
                         </RadioGroup>
                     )}
                     <Radio value={'ikkeDeltatt'}>
                         <Tekst id={'meldekortHarIkkeDeltatt'} />
                     </Radio>
-                    {valg === 'ikkeDeltatt' && (
+                    {valgtStatus?.deltattValg === 'ikkeDeltatt' && (
                         <RadioGroup
+                            value={valgtStatus?.underValg}
                             legend={'Valgt ikke deltatt'}
                             hideLegend={true}
                             className={style.underValg}
+                            onChange={(value) => {
+                                setValgtStatus({ ...valgtStatus, underValg: value });
+                            }}
                         >
-                            <Radio value={MeldekortDagStatus.FraværSyk}>{'Syk'}</Radio>
-                            <Radio value={MeldekortDagStatus.FraværSyktBarn}>
+                            <Radio value={MeldekortIkkeDeltattUndervalg.FraværSyk}>{'Syk'}</Radio>
+                            <Radio value={MeldekortIkkeDeltattUndervalg.FraværSyktBarn}>
                                 {'Sykt barn eller syk barnepasser'}
                             </Radio>
-                            <Radio value={MeldekortDagStatus.FraværAnnet}>
+                            <Radio value={MeldekortIkkeDeltattUndervalg.FraværAnnet}>
                                 {'Annet godkjent fravær'}
                             </Radio>
-                            <Radio value={MeldekortDagStatus.IkkeDeltatt}>
+                            <Radio value={MeldekortIkkeDeltattUndervalg.IkkeDeltatt}>
                                 {'Annet ikke godkjent fravær'}
                             </Radio>
                         </RadioGroup>
                     )}
                 </RadioGroup>
             </Modal.Body>
+            <Modal.Footer>
+                <Button
+                    disabled={!valgtStatus?.underValg}
+                    variant={'primary'}
+                    onClick={() => {
+                        lagreMeldekortDag({
+                            ...valgtMeldekortDag!,
+                            status: valgtStatus!,
+                        });
+                        lukk();
+                    }}
+                >
+                    {'Lagre'}
+                </Button>
+                <Button
+                    variant={'secondary'}
+                    onClick={() => {
+                        lagreMeldekortDag({
+                            ...valgtMeldekortDag!,
+                            status: { deltattValg: 'ikkeValgt' },
+                        });
+                        lukk();
+                    }}
+                >
+                    {'Slett'}
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 };

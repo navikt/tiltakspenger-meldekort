@@ -6,6 +6,7 @@ export type MeldekortUtfyllingState = {
     setMeldekortUtfylling: (_: MeldekortUtfylling) => void;
     valgtMeldekortDag: MeldekortDag | null;
     setValgtMeldekortDag: (_: MeldekortDag | null) => void;
+    lagreMeldekortDag: (dag: MeldekortDag) => void;
 };
 
 export const MeldekortUtfyllingContext = createContext<MeldekortUtfyllingState>({
@@ -13,4 +14,5 @@ export const MeldekortUtfyllingContext = createContext<MeldekortUtfyllingState>(
     setMeldekortUtfylling: () => {},
     valgtMeldekortDag: null,
     setValgtMeldekortDag: () => {},
+    lagreMeldekortDag: () => {},
 });
