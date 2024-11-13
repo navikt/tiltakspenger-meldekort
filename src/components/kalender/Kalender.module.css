@@ -1,298 +1,241 @@
 @value dato-strl: 35px;
 
 .kalender {
-  margin-left: calc(var(--a-spacing-2) * -1);
-  padding-bottom: var(--a-spacing-8);
-  width: calc(var(--a-spacing-4) + 100%);
+    margin-left: calc(var(--a-spacing-2) * -1);
+    padding-bottom: var(--a-spacing-8);
+    width: calc(var(--a-spacing-4) + 100%);
 }
 
 .kalender[aria-disabled="true"] {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .headerKontainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .redigeringsAlternativer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .header {
-  display: flex;
-  flex-direction: column;
-  font-weight: var(--a-font-weight-bold);
-  margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-weight: var(--a-font-weight-bold);
+    margin: 0;
 }
 
 .header span {
-  color: var(--a-text-subtle);
-  font-size: var(--a-font-size-medium);
-  font-weight: var(--a-font-weight-regular);
+    color: var(--a-text-subtle);
+    font-size: var(--a-font-size-medium);
+    font-weight: var(--a-font-weight-regular);
 }
 
 .ukerKontainer {
-  display: grid;
-  gap: var(--a-spacing-10);
-  grid-auto-flow: row;
-  transition: all ease-in-out 200ms;
+    display: grid;
+    gap: var(--a-spacing-10);
+    grid-auto-flow: row;
+    transition: all ease-in-out 200ms;
 }
 
 .ukeRadKontainer {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: var(--a-spacing-2);
-  justify-items: center;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--a-spacing-2);
+    justify-items: center;
 }
 
 .ukedagKontainer {
-  display: grid;
-  margin-top: var(--a-spacing-4);
-  gap: var(--a-spacing-2);
-  grid-template-columns: repeat(7, 1fr);
-  justify-items: center;
-  margin-bottom: var(--a-spacing-2);
+    display: grid;
+    margin-top: var(--a-spacing-4);
+    gap: var(--a-spacing-2);
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+    margin-bottom: var(--a-spacing-2);
 }
 
 .ukedag {
-  font-size: var(--a-font-size-small);
-}
-
-.datoKontainer {
-  position: relative;
-}
-
-.dato {
-  position: relative;
-  display: flex;
-  padding-right: 4px;
-  padding-left: 6px;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--a-bg-subtle);
-  width: dato-strl;
-  height: dato-strl;
-  border-radius: 50%;
-  font-size: var(--a-font-size-medium);
-  line-height: var(--a-font-size-medium);
-  cursor: pointer;
-  border: 0;
-  z-index: 10;
-}
-
-.readonly {
-  pointer-events: none;
-  padding-left: 3px;
-}
-
-.dato:hover {
-  background-color: var(--a-gray-200);
+    font-size: var(--a-font-size-small);
 }
 
 .datoMedAktivitet {
-  position: absolute;
-  top: calc(dato-strl * 0.45);
-  left: calc((calc(dato-strl) - calc(dato-strl - 1px)) / 2);
-  display: flex;
-  border-radius: 0 0 5px 5px;
-  padding-top: calc(dato-strl * 0.6);
-  justify-content: center;
-  align-items: center;
-  background-color: var(--a-surface-selected);
-  width: calc(dato-strl - 1px);
-  height: calc(calc(dato-strl * 1.15));
-  font-size: var(--a-font-size-small);
-  color: var(--a-text-subtle);
-  z-index: 0;
+    position: absolute;
+    top: calc(dato-strl * 0.45);
+    left: calc((calc(dato-strl) - calc(dato-strl - 1px)) / 2);
+    display: flex;
+    border-radius: 0 0 5px 5px;
+    padding-top: calc(dato-strl * 0.6);
+    justify-content: center;
+    align-items: center;
+    background-color: var(--a-surface-selected);
+    width: calc(dato-strl - 1px);
+    height: calc(calc(dato-strl * 1.15));
+    font-size: var(--a-font-size-small);
+    color: var(--a-text-subtle);
+    z-index: 0;
 }
 
 .datoMedAktivitetAktivitetSykdom {
-  background-color: var(--a-surface-warning-subtle);
+    background-color: var(--a-surface-warning-subtle);
 }
 
 .datoMedAktivitetAktivitetFerie {
-  background-color: var(--a-surface-success-subtle);
+    background-color: var(--a-surface-success-subtle);
 }
 
 .timeTypeKontainer {
-  display: flex;
-  flex-direction: column;
-  margin-top: var(--a-spacing-6);
-  min-width: 450px;
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--a-spacing-6);
+    min-width: 450px;
 }
 
 .ikkeRapporteringspliktig {
-  background-color: transparent;
-  cursor: not-allowed;
+    background-color: transparent;
+    cursor: not-allowed;
 }
 
 .ikkeRapporteringspliktig:hover {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .datoMedAktivitetSykdom {
-  background-color: var(--a-orange-50);
+    background-color: var(--a-orange-50);
 }
 
 .datoMedAktivitetFerie {
-  background-color: var(--a-green-50);
+    background-color: var(--a-green-50);
 }
 
 .datoMedAktivitetUtdanning {
-  background-color: var(--a-purple-50);
+    background-color: var(--a-purple-50);
 }
 
 .datoMedAktivitetArbeidOgUtdanning {
-  background-color: var(--a-blue-50);
+    background-color: var(--a-blue-50);
 }
 
 .arbeid, .arbeidOgUtdanning, .arbeid.arbeidOgUtdanning {
-  background-color: var(--a-blue-200);
+    background-color: var(--a-blue-200);
 }
 
 .arbeid:hover, .arbeidOgUtdanning:hover, .arbeid.arbeid.arbeidOgUtdanning:hover {
-  background-color: var(--a-blue-300);
+    background-color: var(--a-blue-300);
 }
 
 .sykOgUtdanning::after,
 .fravaerOgUtdanning::after,
 .arbeidOgUtdanning::after {
-  content: '';
-  position: absolute;
-  right: -12.5%;
-  top: -12.5%;
-  background-color: var(--a-purple-200);
-  border-radius: 50%;
-  height: 50%;
-  width: 50%;
+    content: '';
+    position: absolute;
+    right: -12.5%;
+    top: -12.5%;
+    background-color: var(--a-purple-200);
+    border-radius: 50%;
+    height: 50%;
+    width: 50%;
 }
 
 .arbeidOgUtdanning:hover::after,
 .fravaerOgUtdanning:hover::after,
 .sykOgUtdanning:hover::after {
-  background-color: var(--a-purple-300);
+    background-color: var(--a-purple-300);
 }
 
 .sykFravaerOgUtdanning::before {
-  content: '';
-  position: absolute;
-  left: -12.5%;
-  top: -12.5%;
-  background-color: var(--a-purple-200);
-  border-radius: 50%;
-  height: 50%;
-  width: 50%;
+    content: '';
+    position: absolute;
+    left: -12.5%;
+    top: -12.5%;
+    background-color: var(--a-purple-200);
+    border-radius: 50%;
+    height: 50%;
+    width: 50%;
 }
 
 .sykFravaerOgUtdanning:hover::before {
-  background-color: var(--a-purple-300);
+    background-color: var(--a-purple-300);
 }
 
 .utdanning {
-  background-color: var(--a-purple-200);
+    background-color: var(--a-purple-200);
 }
 
 .utdanning:hover {
-  background-color: var(--a-purple-300);
+    background-color: var(--a-purple-300);
 }
 
 .timerUtdanning {
-  background-color: var(--a-purple-50);
+    background-color: var(--a-purple-50);
 }
 
 .timerSykdom {
-  background-color: var(--a-orange-50);
+    background-color: var(--a-orange-50);
 }
 
 .ferie, .fravaer {
-  background-color: var(--a-green-200);
+    background-color: var(--a-green-200);
 }
 
 .ferie:hover, .fravaer:hover {
-  background-color: var(--a-green-300);
+    background-color: var(--a-green-300);
 }
 
 .timerFerie, .timerFravaer {
-  background-color: var(--a-green-50);
+    background-color: var(--a-green-50);
 }
 
 .sykdom, .sykOgFravaer {
-  background-color: var(--a-orange-200);
+    background-color: var(--a-orange-200);
 }
 
 .sykdom:hover, .sykOgFravaer:hover {
-  background-color: var(--a-orange-300);
+    background-color: var(--a-orange-300);
 }
 
 .sykOgFravaer::after {
-  content: '';
-  position: absolute;
-  right: -12.5%;
-  top: -12.5%;
-  background-color: var(--a-green-200);
-  border-radius: 50%;
-  height: 50%;
-  width: 50%;
+    content: '';
+    position: absolute;
+    right: -12.5%;
+    top: -12.5%;
+    background-color: var(--a-green-200);
+    border-radius: 50%;
+    height: 50%;
+    width: 50%;
 }
 
 .sykOgFravaer:hover::after {
-  background-color: var(--a-green-300);
+    background-color: var(--a-green-300);
 }
 
 .knappKontainer {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--a-spacing-2);
-  margin-top: var(--a-spacing-8);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--a-spacing-2);
+    margin-top: var(--a-spacing-8);
 }
 
 @media screen and (min-width: 768px) {
-  .ukedag {
-    font-size: var(--a-font-size-medium);
-  }
+    .ukedag {
+        font-size: var(--a-font-size-medium);
+    }
 
-  .datoKontainer {
-    display: flex;
-    align-items: center;
-  }
+    .header {
+        font-size: var(--a-font-size-heading-medium);
+    }
 
-  .header {
-    font-size: var(--a-font-size-heading-medium);
-  }
+    .redigeringsAlternativer {
+        flex-direction: column;
+        align-items: flex-end;
+    }
 
-  .redigeringsAlternativer {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .redigeringsAlternativer a {
-    margin-bottom: var(--a-spacing-4);
-  }
-
-  .dato {
-    width: calc(dato-strl * 2);
-    height: calc(dato-strl * 2);
-    font-size: var(--a-font-size-large);
-    line-height: var(--a-font-size-large);
-  }
-
-  .readonly {
-    padding-left: 4px;
-  }
-
-  .datoMedAktivitet {
-    top: calc(dato-strl * 1.625);
-    left: calc((calc(dato-strl * 2) - calc(dato-strl * 1.5)) / 2);
-    border-radius: 0 0 10px 10px;
-    padding-top: calc(dato-strl * 0.3);
-    font-size: var(--a-font-size-medium);
-    width: calc(dato-strl * 1.5);
-    height: calc(dato-strl * 1.4);
-  }
+    .redigeringsAlternativer a {
+        margin-bottom: var(--a-spacing-4);
+    }
 }
 
 

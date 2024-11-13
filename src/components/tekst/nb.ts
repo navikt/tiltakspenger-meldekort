@@ -11,5 +11,9 @@ export const teksterNb = {
 
     fyllUtTittel: 'Fyll ut meldekortet',
     fyllUtKlikkPåDato: 'Klikk på datoen du skal melde for. Du kan velge mellom jobb, syk, ferie/fravær eller tiltak/kurs/utdanning.',
-    fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet'
+    fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet',
+
+    meldekortHvaVilDu: 'Hva vil du melde?',
+    meldekortHarDeltatt: "Har deltatt på tiltak",
+    meldekortHarIkkeDeltatt: "Har ikke deltatt på tiltak",
 } as const

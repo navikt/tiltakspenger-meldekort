@@ -1,0 +1,45 @@
+@value dato-strl: 35px;
+
+.datoKontainer {
+    position: relative;
+}
+
+.selected {
+    outline: solid 3px var(--a-purple-500);
+}
+
+.dato {
+    position: relative;
+    display: flex;
+    padding-right: 4px;
+    padding-left: 6px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--a-bg-subtle);
+    width: dato-strl;
+    height: dato-strl;
+    border-radius: 50%;
+    font-size: var(--a-font-size-medium);
+    line-height: var(--a-font-size-medium);
+    cursor: pointer;
+    border: 0;
+    z-index: 10;
+}
+
+.dato:hover {
+    background-color: var(--a-gray-200);
+}
+
+@media screen and (min-width: 768px) {
+    .datoKontainer {
+        display: flex;
+        align-items: center;
+    }
+
+    .dato {
+        width: calc(dato-strl * 2);
+        height: calc(dato-strl * 2);
+        font-size: var(--a-font-size-large);
+        line-height: var(--a-font-size-large);
+    }
+}

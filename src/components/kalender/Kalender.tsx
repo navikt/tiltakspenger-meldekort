@@ -1,23 +1,22 @@
 import { Uke } from './Uke';
 import classNames from 'classnames';
-import { MeldekortData } from '@/src/typer/meldekort';
+import { MeldekortDag, MeldekortUtfylling } from '@/src/typer/meldekort-utfylling';
 import { Ukedager } from '@/src/utils/ukedager';
 import { getISOWeek } from 'date-fns';
 
 import style from './Kalender.module.css';
 
 type Props = {
-    periode: MeldekortData;
+    meldekort: MeldekortUtfylling;
+    setValgtDag: (dag: MeldekortDag) => void;
     readonly?: boolean;
 };
 
-export const Kalender = (props: Props) => {
-    const { periode, readonly = false } = props;
+export const Kalender = ({ meldekort, setValgtDag, readonly = false }: Props) => {
+    const { fraOgMed, tilOgMed } = meldekort.periode;
 
-    const { fraOgMed, tilOgMed } = periode.periode;
-
-    const forsteUke = periode.meldekortDager.slice(0, 7);
-    const andreUke = periode.meldekortDager.slice(7, 14);
+    const forsteUke = meldekort.meldekortDager.slice(0, 7);
+    const andreUke = meldekort.meldekortDager.slice(7, 14);
 
     const periodeUkenummerTekst = `Uke ${getISOWeek(new Date(fraOgMed))} - ${getISOWeek(new Date(tilOgMed))}`;
     const periodeFomTomDatoTekst = `${fraOgMed} - ${tilOgMed}`;
@@ -35,7 +34,7 @@ export const Kalender = (props: Props) => {
             <table
                 className={style.kalender}
                 role="grid"
-                aria-disabled={!periode.kanSendes || readonly}
+                aria-disabled={!meldekort.kanSendes || readonly}
             >
                 <thead aria-hidden>
                     <tr className={style.ukedagKontainer}>
@@ -43,7 +42,7 @@ export const Kalender = (props: Props) => {
                             return (
                                 <th
                                     scope="col"
-                                    key={`${periode.id}-${index}`}
+                                    key={`${meldekort.id}-${index}`}
                                     className={style.ukedag}
                                 >
                                     <span>{ukedag.kort}</span>
@@ -53,8 +52,8 @@ export const Kalender = (props: Props) => {
                     </tr>
                 </thead>
                 <tbody className={classNames(style.ukerKontainer)}>
-                    <Uke meldekortUke={forsteUke} readonly={readonly} />
-                    <Uke meldekortUke={andreUke} readonly={readonly} />
+                    <Uke meldekortUke={forsteUke} setValgtDag={setValgtDag} readonly={readonly} />
+                    <Uke meldekortUke={andreUke} setValgtDag={setValgtDag} readonly={readonly} />
                 </tbody>
             </table>
         </>
