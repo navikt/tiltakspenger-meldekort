@@ -4,10 +4,6 @@
     position: relative;
 }
 
-.selected {
-    outline: solid 3px var(--a-purple-500);
-}
-
 .dato {
     position: relative;
     display: flex;
@@ -15,7 +11,6 @@
     padding-left: 6px;
     justify-content: center;
     align-items: center;
-    background-color: var(--a-bg-subtle);
     width: dato-strl;
     height: dato-strl;
     border-radius: 50%;
@@ -27,7 +22,23 @@
 }
 
 .dato:hover {
-    background-color: var(--a-gray-200);
+    outline: solid 4px var(--a-deepblue-500);
+}
+
+.ikkeValgt {
+    background-color: var(--a-bg-subtle);
+}
+
+.deltatt {
+    background-color: var(--a-green-300);
+}
+
+.fravær {
+    background-color: var(--a-orange-300);
+}
+
+.ikkeDeltatt {
+    background-color: var(--a-red-300);
 }
 
 @media screen and (min-width: 768px) {
