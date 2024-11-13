@@ -3,7 +3,11 @@ import Link from 'next/link';
 import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 
-export const Forside = () => {
+type Props = {
+    nesteMeldekortIds: string[];
+};
+
+export const Forside = ({ nesteMeldekortIds }: Props) => {
     return (
         <>
             <BodyLong spacing={true}>
@@ -21,7 +25,7 @@ export const Forside = () => {
             <BodyLong spacing={true}>
                 <Tekst id={'forsideOpplysninger'} />
             </BodyLong>
-            <TilUtfylling />
+            <TilUtfylling nesteMeldekortId={nesteMeldekortIds[0]} />
             <Link href={'/innsendt'}>
                 <Tekst id={'seOgEndre'} />
             </Link>

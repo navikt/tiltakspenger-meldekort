@@ -4,10 +4,12 @@ import { useState } from 'react';
 
 import style from './TilUtfylling.module.css';
 
-export const TilUtfylling = () => {
-    const [harBekreftet, setHarBekreftet] = useState(false);
+type Props = {
+    nesteMeldekortId: string;
+};
 
-    const nesteMeldekortId = 'asdf';
+export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
+    const [harBekreftet, setHarBekreftet] = useState(false);
 
     return (
         <>
