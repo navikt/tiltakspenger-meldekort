@@ -8,9 +8,9 @@ import { useEffect, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato } from '@utils/datetime';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
+import { MeldekortDagStatusValg } from '@components/meldekort-dag-modal/status-valg/MeldekortDagStatusValg';
 
 import style from './MeldekortDagModal.module.css';
-import { MeldekortDagStatusValg } from '@components/meldekort-dag-modal/status-valg/MeldekortDagStatusValg';
 
 export const MeldekortDagModal = () => {
     const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();
