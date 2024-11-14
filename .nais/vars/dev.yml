@@ -1,4 +1,4 @@
-ingress: https://tiltakspenger-meldekort.ansatt.dev.nav.no
+ingress: https://www.ansatt.dev.nav.no/tiltakspenger/meldekort
 replyURLs:
   - https://tiltakspenger-meldekort.ansatt.dev.nav.no/oauth2/callback
 cluster: dev-gcp
