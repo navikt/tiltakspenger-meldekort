@@ -2,3 +2,8 @@
     max-width: 200px;
     margin: 1rem 0;
 }
+
+.disabled {
+    pointer-events: none;
+
+}

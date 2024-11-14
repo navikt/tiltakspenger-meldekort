@@ -1,6 +1,8 @@
 import { Button, Checkbox } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Lenke } from '@components/lenke/Lenke';
+import classNames from 'classnames';
 
 import style from './TilUtfylling.module.css';
 
@@ -11,17 +13,20 @@ type Props = {
 export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
 
+    useEffect(() => {
+        setHarBekreftet(false);
+    }, [])
+
     return (
         <>
             <Checkbox onChange={() => setHarBekreftet(!harBekreftet)}>
                 <Tekst id={'forsideBekrefter'} />
             </Checkbox>
             <Button
-                className={style.knapp}
-                variant={'primary'}
-                href={`/tiltakspenger/meldekort/${nesteMeldekortId}/fyll-ut`}
-                as={'a'}
-                disabled={!harBekreftet}
+                className={classNames(style.knapp, !harBekreftet && style.disabled)}
+                variant={harBekreftet ? 'primary' : 'primary-neutral'}
+                as={Lenke}
+                href={`/[meldekortId]/fyll-ut?meldekortId=${nesteMeldekortId}`}
             >
                 <Tekst id={'neste'} />
             </Button>
