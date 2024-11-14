@@ -1,4 +1,4 @@
-import { BodyLong, Button, Checkbox, Heading, ReadMore } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Checkbox, Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { Kalender } from '@components/kalender/Kalender';
@@ -25,6 +25,7 @@ export const FyllUt = ({ meldekort }: Props) => {
             <BodyLong>
                 <Tekst id={ferdigUtfylt ? 'bekreftTekst' : 'fyllUtKlikkPåDato'} />
             </BodyLong>
+            {ferdigUtfylt && <Alert variant={'warning'}>{'Meldekortet er ikke sendt ennå!'}</Alert>}
             <ReadMore header={<Tekst id={'fyllUtLesMerHeader'} />}>{'Blah blah'}</ReadMore>
             <MeldekortUtfyllingProvider meldekortUtfylling={meldekort}>
                 <Kalender erUtfylt={ferdigUtfylt} />

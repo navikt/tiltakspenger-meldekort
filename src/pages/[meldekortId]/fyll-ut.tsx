@@ -5,8 +5,8 @@ import { MeldekortStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling'
 const fraOgMed = '2024-11-11';
 const tilOgMed = '2024-11-24';
 
-const dummyMeldekort: MeldekortUtfylling = {
-    id: 'asdf',
+export const dummyMeldekort: MeldekortUtfylling = {
+    id: 'meldekort_01JBVJW64CR5CQDB7AV6NMGEDS',
     periode: {
         fraOgMed,
         tilOgMed,

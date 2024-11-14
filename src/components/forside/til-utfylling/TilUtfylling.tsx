@@ -23,9 +23,10 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
                 <Tekst id={'forsideBekrefter'} />
             </Checkbox>
             <Button
-                className={classNames(style.knapp, !harBekreftet && style.disabled)}
+                className={classNames(style.knapp)}
                 variant={harBekreftet ? 'primary' : 'primary-neutral'}
                 as={Lenke}
+                disabled={!harBekreftet}
                 href={`/[meldekortId]/fyll-ut?meldekortId=${nesteMeldekortId}`}
             >
                 <Tekst id={'neste'} />
