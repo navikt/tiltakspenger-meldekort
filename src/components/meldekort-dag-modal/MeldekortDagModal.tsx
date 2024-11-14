@@ -1,7 +1,6 @@
 import { Button, Modal, Radio, RadioGroup } from '@navikt/ds-react';
 import {
     MeldekortDagStatus,
-    MeldekortDeltattUndervalg,
     MeldekortIkkeDeltattUndervalg,
 } from '@typer/meldekort-utfylling';
 import { useEffect, useState } from 'react';
