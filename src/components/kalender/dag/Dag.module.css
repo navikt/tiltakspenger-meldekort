@@ -30,32 +30,35 @@
 }
 
 .deltatt {
-    background: var(--a-green-300);
+    background: var(--a-green-200);
 }
 
 .deltattMedLønn {
     background: repeating-linear-gradient(
             45deg,
-            var(--a-orange-300),
-            var(--a-orange-300) 10px,
-            var(--a-green-300) 10px,
-            var(--a-green-300) 20px
+            var(--a-orange-200),
+            var(--a-orange-200) 10px,
+            var(--a-green-200) 10px,
+            var(--a-green-200) 20px
     );
 }
 
 .fravær {
-    background: var(--a-orange-300);
+    background: var(--a-orange-200);
 }
 
 .ikkeDeltatt {
-    background: var(--a-red-300);
+    background: var(--a-red-200);
+}
+
+.statusTekst {
+    margin-top: 0.25rem;
 }
 
 .ikon {
     position: absolute;
     top: 10px;
     right: 10px;
-    color: var(--a-red-400)
 }
 
 @media screen and (min-width: 768px) {

@@ -1,12 +1,20 @@
 import { format } from 'date-fns';
 import {
     MeldekortDag,
+    MeldekortDagStatus,
     MeldekortDeltattUndervalg,
     MeldekortIkkeDeltattUndervalg,
 } from '@typer/meldekort-utfylling';
 import classNames from 'classnames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { FirstAidFillIcon } from '@navikt/aksel-icons';
+import {
+    CheckmarkCircleFillIcon,
+    CheckmarkIcon,
+    FirstAidFillIcon,
+    SunFillIcon,
+    SunIcon,
+    XMarkIcon, XMarkOctagonFillIcon,
+} from '@navikt/aksel-icons';
 
 import style from './Dag.module.css';
 
@@ -33,6 +41,23 @@ const statusTilTekst: Record<MeldekortDeltattUndervalg | MeldekortIkkeDeltattUnd
     [MeldekortIkkeDeltattUndervalg.IkkeDeltatt]: 'Skulket',
 };
 
+const StatusTilIkon = ({ status }: { status: MeldekortDagStatus }) => {
+    switch (status.underValg) {
+        case MeldekortDeltattUndervalg.DeltattUtenLønn:
+        case MeldekortDeltattUndervalg.DeltattMedLønn:
+            return <CheckmarkCircleFillIcon style={{color: "var(--a-green-700)"}} className={style.ikon} />;
+        case MeldekortIkkeDeltattUndervalg.FraværSyk:
+        case MeldekortIkkeDeltattUndervalg.FraværSyktBarn:
+            return <FirstAidFillIcon style={{color: "var(--a-red-500)"}} className={style.ikon} />;
+        case MeldekortIkkeDeltattUndervalg.FraværAnnet:
+            return <SunFillIcon style={{color: "var(--a-orange-500)"}} className={style.ikon} />;
+        case MeldekortIkkeDeltattUndervalg.IkkeDeltatt:
+            return <XMarkOctagonFillIcon style={{color: "var(--a-red-700)"}} className={style.ikon} />;
+    }
+
+    return null;
+};
+
 type Props = {
     dag: MeldekortDag;
     readonly?: boolean;
@@ -53,12 +78,9 @@ export const Dag = ({ dag, readonly }: Props) => {
                 disabled={readonly}
             >
                 {formattedDate}
-                {dag.status.deltattValg === 'ikkeDeltatt' &&
-                    dag.status.underValg !== 'IKKE_DELTATT' && (
-                        <FirstAidFillIcon className={style.ikon} />
-                    )}
+                <StatusTilIkon status={dag.status} />
             </button>
-            {dag.status.underValg && <div>{statusTilTekst[dag.status.underValg]}</div>}
+            {dag.status.underValg && <div className={style.statusTekst}>{statusTilTekst[dag.status.underValg]}</div>}
         </td>
     );
 };

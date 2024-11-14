@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading, ReadMore } from '@navikt/ds-react';
+import { BodyLong, Button, Checkbox, Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { Kalender } from '@components/kalender/Kalender';
@@ -15,20 +15,26 @@ type Props = {
 
 export const FyllUt = ({ meldekort }: Props) => {
     const [ferdigUtfylt, setFerdigUtfylt] = useState(false);
+    const [harBekreftet, setHarBekreftet] = useState(false);
 
     return (
         <div>
             <Heading size={'medium'}>
-                <Tekst id={'fyllUtTittel'} />
+                <Tekst id={ferdigUtfylt ? 'bekreftTittel' : 'fyllUtTittel'} />
             </Heading>
             <BodyLong>
-                <Tekst id={'fyllUtKlikkPåDato'} />
+                <Tekst id={ferdigUtfylt ? 'bekreftTekst' : 'fyllUtKlikkPåDato'} />
             </BodyLong>
             <ReadMore header={<Tekst id={'fyllUtLesMerHeader'} />}>{'Blah blah'}</ReadMore>
             <MeldekortUtfyllingProvider meldekortUtfylling={meldekort}>
                 <Kalender erUtfylt={ferdigUtfylt} />
                 <MeldekortDagModal />
             </MeldekortUtfyllingProvider>
+            {ferdigUtfylt && (
+                <Checkbox onChange={() => setHarBekreftet(!harBekreftet)}>
+                    <Tekst id={'bekreftCheckbox'} />
+                </Checkbox>
+            )}
             <Button
                 className={style.knapp}
                 variant={ferdigUtfylt ? 'secondary' : 'primary'}
@@ -40,6 +46,7 @@ export const FyllUt = ({ meldekort }: Props) => {
             </Button>
             {ferdigUtfylt && (
                 <Button
+                    disabled={!harBekreftet}
                     as={Lenke}
                     href={`/[meldekortId]/kvittering?meldekortId=${meldekort.id}`}
                 >

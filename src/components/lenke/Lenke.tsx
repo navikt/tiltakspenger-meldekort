@@ -5,6 +5,6 @@ type Props = {
     children: React.ReactNode;
 } & LinkProps;
 
-export const Lenke = ({ children, ...rest }: Props) => {
-    return <Link {...rest}>{children}</Link>;
+export const Lenke = ({ children, href, ...rest }: Props) => {
+    return <Link {...rest} href={href || ''}>{children}</Link>;
 };
