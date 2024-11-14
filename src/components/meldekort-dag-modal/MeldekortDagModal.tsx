@@ -50,7 +50,9 @@ export const MeldekortDagModal = () => {
                     </Radio>
                     {valgtStatus?.deltattValg === 'deltatt' && (
                         <RadioGroup
-                            value={valgtStatus?.underValg}
+                            value={
+                                valgtStatus?.underValg || MeldekortDeltattUndervalg.DeltattUtenLønn
+                            }
                             legend={'Valgt deltatt'}
                             hideLegend={true}
                             className={style.underValg}
@@ -58,11 +60,11 @@ export const MeldekortDagModal = () => {
                                 setValgtStatus({ ...valgtStatus, underValg: value });
                             }}
                         >
-                            <Radio value={MeldekortDeltattUndervalg.DeltattMedLønn}>
-                                {'Med lønn'}
-                            </Radio>
                             <Radio value={MeldekortDeltattUndervalg.DeltattUtenLønn}>
                                 {'Uten lønn'}
+                            </Radio>
+                            <Radio value={MeldekortDeltattUndervalg.DeltattMedLønn}>
+                                {'Med lønn'}
                             </Radio>
                         </RadioGroup>
                     )}

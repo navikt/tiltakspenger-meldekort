@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import { MeldekortDag } from '@typer/meldekort-utfylling';
 import classNames from 'classnames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
+import { FirstAidFillIcon } from '@navikt/aksel-icons';
 
 import style from './Dag.module.css';
 
@@ -9,7 +10,7 @@ const getStatusStyle = (dag: MeldekortDag) => {
     const { deltattValg, underValg } = dag.status;
 
     if (deltattValg === 'deltatt') {
-        return style.deltatt;
+        return underValg === 'DELTATT_UTEN_LØNN' ? style.deltatt : style.deltattMedLønn;
     }
 
     if (deltattValg === 'ikkeDeltatt') {
@@ -39,6 +40,8 @@ export const Dag = ({ dag, readonly }: Props) => {
                 disabled={readonly}
             >
                 {formattedDate}
+                {dag.status.deltattValg === 'ikkeDeltatt' &&
+                    dag.status.underValg !== 'IKKE_DELTATT' && <FirstAidFillIcon className={style.ikon} />}
             </button>
         </td>
     );
