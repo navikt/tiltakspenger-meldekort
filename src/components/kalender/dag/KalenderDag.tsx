@@ -10,15 +10,12 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
-    CheckmarkIcon,
     FirstAidFillIcon,
     SunFillIcon,
-    SunIcon,
-    XMarkIcon,
     XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 
-import style from './Dag.module.css';
+import style from './KalenderDag.module.css';
 
 const getStatusStyle = (dag: MeldekortDag) => {
     const { deltattValg, underValg } = dag.status;
@@ -80,7 +77,7 @@ type Props = {
     readonly?: boolean;
 };
 
-export const Dag = ({ dag, readonly }: Props) => {
+export const KalenderDag = ({ dag, readonly }: Props) => {
     const { setValgtMeldekortDag } = useMeldekortUtfylling();
 
     const formattedDate = `${format(dag.dato, 'd')}.`;

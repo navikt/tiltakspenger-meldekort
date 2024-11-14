@@ -1,4 +1,4 @@
-import { Uke } from './Uke';
+import { KalenderUke } from './KalenderUke';
 import classNames from 'classnames';
 import { formatterDato, Ukedager } from '@utils/datetime';
 import { getISOWeek } from 'date-fns';
@@ -57,8 +57,8 @@ export const Kalender = ({ erUtfylt = false }: Props) => {
                     </tr>
                 </thead>
                 <tbody className={classNames(style.ukerKontainer)}>
-                    <Uke meldekortUke={forsteUke} readonly={erUtfylt} />
-                    <Uke meldekortUke={andreUke} readonly={erUtfylt} />
+                    <KalenderUke meldekortUke={forsteUke} readonly={erUtfylt} />
+                    <KalenderUke meldekortUke={andreUke} readonly={erUtfylt} />
                 </tbody>
             </table>
         </div>
