@@ -43,38 +43,16 @@ export const MeldekortDagModal = () => {
                     legend={<Tekst id={'meldekortHvaVilDu'} />}
                     onChange={(value: MeldekortDagStatus['deltattValg']) => {
                         console.log(`Valgte ${value}`);
-                        setValgtStatus({ deltattValg: value });
+                        setValgtStatus({
+                            deltattValg: value,
+                            // @ts-expect-error just cuz
+                            underValg: value === 'deltatt' ? 'DELTATT_UTEN_LØNN' : undefined,
+                        });
                     }}
                 >
                     <Radio value={'deltatt'}>
                         <Tekst id={'meldekortHarDeltatt'} />
                     </Radio>
-                    {valgtStatus?.deltattValg === 'deltatt' && (
-                        <RadioGroup
-                            value={
-                                valgtStatus?.underValg || MeldekortDeltattUndervalg.DeltattUtenLønn
-                            }
-                            legend={'Valgt deltatt'}
-                            hideLegend={true}
-                            className={style.underValg}
-                            onChange={(value) => {
-                                setValgtStatus({ ...valgtStatus, underValg: value });
-                            }}
-                        >
-                            <MeldekortDagStatusValg
-                                status={MeldekortDeltattUndervalg.DeltattUtenLønn}
-                                tittel={'Uten lønn'}
-                                ingress={'Du har deltatt på tiltak uten lønn fra tiltaksarrangør'}
-                            />
-                            <MeldekortDagStatusValg
-                                status={MeldekortDeltattUndervalg.DeltattMedLønn}
-                                tittel={'Med lønn'}
-                                ingress={
-                                    'Du har deltatt på tiltak og fått lønn fra tiltaksarrangør'
-                                }
-                            />
-                        </RadioGroup>
-                    )}
                     <Radio value={'ikkeDeltatt'}>
                         <Tekst id={'meldekortHarIkkeDeltatt'} />
                     </Radio>
