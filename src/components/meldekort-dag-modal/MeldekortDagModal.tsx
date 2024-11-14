@@ -10,6 +10,7 @@ import { formatterDato } from '@utils/datetime';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 
 import style from './MeldekortDagModal.module.css';
+import { MeldekortDagStatusValg } from '@components/meldekort-dag-modal/status-valg/MeldekortDagStatusValg';
 
 export const MeldekortDagModal = () => {
     const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();
@@ -60,12 +61,18 @@ export const MeldekortDagModal = () => {
                                 setValgtStatus({ ...valgtStatus, underValg: value });
                             }}
                         >
-                            <Radio value={MeldekortDeltattUndervalg.DeltattUtenLønn}>
-                                {'Uten lønn'}
-                            </Radio>
-                            <Radio value={MeldekortDeltattUndervalg.DeltattMedLønn}>
-                                {'Med lønn'}
-                            </Radio>
+                            <MeldekortDagStatusValg
+                                status={MeldekortDeltattUndervalg.DeltattUtenLønn}
+                                tittel={'Uten lønn'}
+                                ingress={'Du har deltatt på tiltak uten lønn fra tiltaksarrangør'}
+                            />
+                            <MeldekortDagStatusValg
+                                status={MeldekortDeltattUndervalg.DeltattMedLønn}
+                                tittel={'Med lønn'}
+                                ingress={
+                                    'Du har deltatt på tiltak og fått lønn fra tiltaksarrangør'
+                                }
+                            />
                         </RadioGroup>
                     )}
                     <Radio value={'ikkeDeltatt'}>
@@ -81,16 +88,26 @@ export const MeldekortDagModal = () => {
                                 setValgtStatus({ ...valgtStatus, underValg: value });
                             }}
                         >
-                            <Radio value={MeldekortIkkeDeltattUndervalg.FraværSyk}>{'Syk'}</Radio>
-                            <Radio value={MeldekortIkkeDeltattUndervalg.FraværSyktBarn}>
-                                {'Sykt barn eller syk barnepasser'}
-                            </Radio>
-                            <Radio value={MeldekortIkkeDeltattUndervalg.FraværAnnet}>
-                                {'Annet godkjent fravær'}
-                            </Radio>
-                            <Radio value={MeldekortIkkeDeltattUndervalg.IkkeDeltatt}>
-                                {'Annet ikke godkjent fravær'}
-                            </Radio>
+                            <MeldekortDagStatusValg
+                                status={MeldekortIkkeDeltattUndervalg.FraværSyk}
+                                tittel={'Syk'}
+                                ingress={'Du har vært syk'}
+                            />
+                            <MeldekortDagStatusValg
+                                status={MeldekortIkkeDeltattUndervalg.FraværSyktBarn}
+                                tittel={'Sykt barn'}
+                                ingress={'Du har hatt sykt barn eller syk barnepasser'}
+                            />
+                            <MeldekortDagStatusValg
+                                status={MeldekortIkkeDeltattUndervalg.FraværAnnet}
+                                tittel={'Annet godkjent fravær'}
+                                ingress={'Du har annet fravær som er godkjent av Nav'}
+                            />
+                            <MeldekortDagStatusValg
+                                status={MeldekortIkkeDeltattUndervalg.IkkeDeltatt}
+                                tittel={'Annet fravær'}
+                                ingress={'Annet fravær som ikke er godkjent av Nav'}
+                            />
                         </RadioGroup>
                     )}
                 </RadioGroup>

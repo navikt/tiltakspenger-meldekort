@@ -1,0 +1,8 @@
+.valg {
+    border-radius: var(--a-border-radius-large);
+    padding:  0.25rem 0.5rem;
+}
+
+.utenLønn {
+    background: var(--a-green-200);
+}

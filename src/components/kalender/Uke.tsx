@@ -8,7 +8,6 @@ type Props = {
 };
 
 export const Uke = ({ meldekortUke, readonly }: Props) => {
-
     return (
         <tr className={styles.ukeRadKontainer}>
             {meldekortUke.map((dag) => (
