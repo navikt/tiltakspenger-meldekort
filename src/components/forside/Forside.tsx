@@ -1,7 +1,7 @@
 import { BodyLong } from '@navikt/ds-react';
-import Link from 'next/link';
 import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
+import { Lenke } from '@components/lenke/Lenke';
 
 type Props = {
     nesteMeldekortIds: string[];
@@ -26,9 +26,9 @@ export const Forside = ({ nesteMeldekortIds }: Props) => {
                 <Tekst id={'forsideOpplysninger'} />
             </BodyLong>
             <TilUtfylling nesteMeldekortId={nesteMeldekortIds[0]} />
-            <Link href={'/innsendt'}>
+            <Lenke href={'/innsendt'}>
                 <Tekst id={'seOgEndre'} />
-            </Link>
+            </Lenke>
         </>
     );
 };

@@ -14,13 +14,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-top: 1.5rem;
-}
-
-.redigeringsAlternativer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 .header {
@@ -63,161 +56,15 @@
     font-size: var(--a-font-size-small);
 }
 
-.datoMedAktivitet {
-    position: absolute;
-    top: calc(dato-strl * 0.45);
-    left: calc((calc(dato-strl) - calc(dato-strl - 1px)) / 2);
-    display: flex;
-    border-radius: 0 0 5px 5px;
-    padding-top: calc(dato-strl * 0.6);
-    justify-content: center;
-    align-items: center;
-    background-color: var(--a-surface-selected);
-    width: calc(dato-strl - 1px);
-    height: calc(calc(dato-strl * 1.15));
-    font-size: var(--a-font-size-small);
-    color: var(--a-text-subtle);
-    z-index: 0;
+.ytreKontainer {
+    padding: 0.5rem 1rem;
+    margin: 1.5rem -1rem;
+    border-radius: var(--a-border-radius-large);
 }
 
-.datoMedAktivitetAktivitetSykdom {
-    background-color: var(--a-surface-warning-subtle);
-}
-
-.datoMedAktivitetAktivitetFerie {
-    background-color: var(--a-surface-success-subtle);
-}
-
-.timeTypeKontainer {
-    display: flex;
-    flex-direction: column;
-    margin-top: var(--a-spacing-6);
-    min-width: 450px;
-}
-
-.ikkeRapporteringspliktig {
-    background-color: transparent;
-    cursor: not-allowed;
-}
-
-.ikkeRapporteringspliktig:hover {
-    background-color: transparent;
-}
-
-.datoMedAktivitetSykdom {
-    background-color: var(--a-orange-50);
-}
-
-.datoMedAktivitetFerie {
-    background-color: var(--a-green-50);
-}
-
-.datoMedAktivitetUtdanning {
-    background-color: var(--a-purple-50);
-}
-
-.datoMedAktivitetArbeidOgUtdanning {
-    background-color: var(--a-blue-50);
-}
-
-.arbeid, .arbeidOgUtdanning, .arbeid.arbeidOgUtdanning {
-    background-color: var(--a-blue-200);
-}
-
-.arbeid:hover, .arbeidOgUtdanning:hover, .arbeid.arbeid.arbeidOgUtdanning:hover {
-    background-color: var(--a-blue-300);
-}
-
-.sykOgUtdanning::after,
-.fravaerOgUtdanning::after,
-.arbeidOgUtdanning::after {
-    content: '';
-    position: absolute;
-    right: -12.5%;
-    top: -12.5%;
-    background-color: var(--a-purple-200);
-    border-radius: 50%;
-    height: 50%;
-    width: 50%;
-}
-
-.arbeidOgUtdanning:hover::after,
-.fravaerOgUtdanning:hover::after,
-.sykOgUtdanning:hover::after {
-    background-color: var(--a-purple-300);
-}
-
-.sykFravaerOgUtdanning::before {
-    content: '';
-    position: absolute;
-    left: -12.5%;
-    top: -12.5%;
-    background-color: var(--a-purple-200);
-    border-radius: 50%;
-    height: 50%;
-    width: 50%;
-}
-
-.sykFravaerOgUtdanning:hover::before {
-    background-color: var(--a-purple-300);
-}
-
-.utdanning {
-    background-color: var(--a-purple-200);
-}
-
-.utdanning:hover {
-    background-color: var(--a-purple-300);
-}
-
-.timerUtdanning {
-    background-color: var(--a-purple-50);
-}
-
-.timerSykdom {
-    background-color: var(--a-orange-50);
-}
-
-.ferie, .fravaer {
-    background-color: var(--a-green-200);
-}
-
-.ferie:hover, .fravaer:hover {
-    background-color: var(--a-green-300);
-}
-
-.timerFerie, .timerFravaer {
-    background-color: var(--a-green-50);
-}
-
-.sykdom, .sykOgFravaer {
-    background-color: var(--a-orange-200);
-}
-
-.sykdom:hover, .sykOgFravaer:hover {
-    background-color: var(--a-orange-300);
-}
-
-.sykOgFravaer::after {
-    content: '';
-    position: absolute;
-    right: -12.5%;
-    top: -12.5%;
-    background-color: var(--a-green-200);
-    border-radius: 50%;
-    height: 50%;
-    width: 50%;
-}
-
-.sykOgFravaer:hover::after {
-    background-color: var(--a-green-300);
-}
-
-.knappKontainer {
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--a-spacing-2);
-    margin-top: var(--a-spacing-8);
+.erUtfylt {
+    pointer-events: none;
+    background: var(--a-gray-50);
 }
 
 @media screen and (min-width: 768px) {
@@ -227,15 +74,6 @@
 
     .header {
         font-size: var(--a-font-size-heading-medium);
-    }
-
-    .redigeringsAlternativer {
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    .redigeringsAlternativer a {
-        margin-bottom: var(--a-spacing-4);
     }
 }
 

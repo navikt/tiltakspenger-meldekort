@@ -7,10 +7,10 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 import style from './Kalender.module.css';
 
 type Props = {
-    readonly?: boolean;
+    erUtfylt?: boolean;
 };
 
-export const Kalender = ({ readonly = false }: Props) => {
+export const Kalender = ({ erUtfylt = false }: Props) => {
     const { meldekortUtfylling } = useMeldekortUtfylling();
 
     if (!meldekortUtfylling) {
@@ -27,7 +27,7 @@ export const Kalender = ({ readonly = false }: Props) => {
     const periodeFomTomDatoTekst = `${formatterDato(fraOgMed, true)} til ${formatterDato(tilOgMed)}`;
 
     return (
-        <>
+        <div className={classNames(style.ytreKontainer, erUtfylt && style.erUtfylt)}>
             <div className={style.headerKontainer}>
                 <div>
                     <p className={style.header}>
@@ -39,7 +39,7 @@ export const Kalender = ({ readonly = false }: Props) => {
             <table
                 className={style.kalender}
                 role="grid"
-                aria-disabled={!meldekortUtfylling.kanSendes || readonly}
+                aria-disabled={!meldekortUtfylling.kanSendes || erUtfylt}
             >
                 <thead aria-hidden>
                     <tr className={style.ukedagKontainer}>
@@ -57,10 +57,10 @@ export const Kalender = ({ readonly = false }: Props) => {
                     </tr>
                 </thead>
                 <tbody className={classNames(style.ukerKontainer)}>
-                    <Uke meldekortUke={forsteUke} readonly={readonly} />
-                    <Uke meldekortUke={andreUke} readonly={readonly} />
+                    <Uke meldekortUke={forsteUke} readonly={erUtfylt} />
+                    <Uke meldekortUke={andreUke} readonly={erUtfylt} />
                 </tbody>
             </table>
-        </>
+        </div>
     );
 };

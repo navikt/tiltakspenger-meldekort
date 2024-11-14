@@ -19,7 +19,7 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
             <Button
                 className={style.knapp}
                 variant={'primary'}
-                href={`/tiltakspenger/meldekort/periode/${nesteMeldekortId}/fyll-ut`}
+                href={`/tiltakspenger/meldekort/${nesteMeldekortId}/fyll-ut`}
                 as={'a'}
                 disabled={!harBekreftet}
             >
