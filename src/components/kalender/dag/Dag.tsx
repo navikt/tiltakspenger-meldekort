@@ -8,12 +8,14 @@ import {
 import classNames from 'classnames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import {
+    BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
     CheckmarkIcon,
     FirstAidFillIcon,
     SunFillIcon,
     SunIcon,
-    XMarkIcon, XMarkOctagonFillIcon,
+    XMarkIcon,
+    XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 
 import style from './Dag.module.css';
@@ -45,14 +47,29 @@ const StatusTilIkon = ({ status }: { status: MeldekortDagStatus }) => {
     switch (status.underValg) {
         case MeldekortDeltattUndervalg.DeltattUtenLønn:
         case MeldekortDeltattUndervalg.DeltattMedLønn:
-            return <CheckmarkCircleFillIcon style={{color: "var(--a-green-700)"}} className={style.ikon} />;
+            return (
+                <CheckmarkCircleFillIcon
+                    style={{ color: 'var(--a-green-700)' }}
+                    className={style.ikon}
+                />
+            );
         case MeldekortIkkeDeltattUndervalg.FraværSyk:
+            return (
+                <FirstAidFillIcon style={{ color: 'var(--a-red-500)' }} className={style.ikon} />
+            );
         case MeldekortIkkeDeltattUndervalg.FraværSyktBarn:
-            return <FirstAidFillIcon style={{color: "var(--a-red-500)"}} className={style.ikon} />;
+            return (
+                <BabyWrappedFillIcon style={{ color: 'var(--a-red-500)' }} className={style.ikon} />
+            );
         case MeldekortIkkeDeltattUndervalg.FraværAnnet:
-            return <SunFillIcon style={{color: "var(--a-orange-500)"}} className={style.ikon} />;
+            return <SunFillIcon style={{ color: 'var(--a-orange-500)' }} className={style.ikon} />;
         case MeldekortIkkeDeltattUndervalg.IkkeDeltatt:
-            return <XMarkOctagonFillIcon style={{color: "var(--a-red-700)"}} className={style.ikon} />;
+            return (
+                <XMarkOctagonFillIcon
+                    style={{ color: 'var(--a-red-700)' }}
+                    className={style.ikon}
+                />
+            );
     }
 
     return null;
@@ -80,7 +97,9 @@ export const Dag = ({ dag, readonly }: Props) => {
                 {formattedDate}
                 <StatusTilIkon status={dag.status} />
             </button>
-            {dag.status.underValg && <div className={style.statusTekst}>{statusTilTekst[dag.status.underValg]}</div>}
+            {dag.status.underValg && (
+                <div className={style.statusTekst}>{statusTilTekst[dag.status.underValg]}</div>
+            )}
         </td>
     );
 };
