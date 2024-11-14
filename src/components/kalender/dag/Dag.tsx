@@ -1,5 +1,9 @@
 import { format } from 'date-fns';
-import { MeldekortDag } from '@typer/meldekort-utfylling';
+import {
+    MeldekortDag,
+    MeldekortDeltattUndervalg,
+    MeldekortIkkeDeltattUndervalg,
+} from '@typer/meldekort-utfylling';
 import classNames from 'classnames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { FirstAidFillIcon } from '@navikt/aksel-icons';
@@ -18,6 +22,15 @@ const getStatusStyle = (dag: MeldekortDag) => {
     }
 
     return style.ikkeValgt;
+};
+
+const statusTilTekst: Record<MeldekortDeltattUndervalg | MeldekortIkkeDeltattUndervalg, string> = {
+    [MeldekortDeltattUndervalg.DeltattUtenLønn]: 'Deltatt',
+    [MeldekortDeltattUndervalg.DeltattMedLønn]: 'Deltatt',
+    [MeldekortIkkeDeltattUndervalg.FraværSyk]: 'Syk',
+    [MeldekortIkkeDeltattUndervalg.FraværSyktBarn]: 'Sykt barn',
+    [MeldekortIkkeDeltattUndervalg.FraværAnnet]: 'Fravær',
+    [MeldekortIkkeDeltattUndervalg.IkkeDeltatt]: 'Skulket',
 };
 
 type Props = {
@@ -41,8 +54,11 @@ export const Dag = ({ dag, readonly }: Props) => {
             >
                 {formattedDate}
                 {dag.status.deltattValg === 'ikkeDeltatt' &&
-                    dag.status.underValg !== 'IKKE_DELTATT' && <FirstAidFillIcon className={style.ikon} />}
+                    dag.status.underValg !== 'IKKE_DELTATT' && (
+                        <FirstAidFillIcon className={style.ikon} />
+                    )}
             </button>
+            {dag.status.underValg && <div>{statusTilTekst[dag.status.underValg]}</div>}
         </td>
     );
 };
