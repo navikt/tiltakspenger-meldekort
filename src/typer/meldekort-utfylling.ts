@@ -23,21 +23,19 @@ export enum MeldekortIkkeDeltattUndervalg {
     IkkeDeltatt = 'IKKE_DELTATT',
 }
 
-export type MeldekortDagStatus =
-    | { deltattValg: 'ikkeValgt', underValg?: undefined }
-    | {
-          deltattValg: 'deltatt';
-          underValg?: MeldekortDeltattUndervalg;
-      }
-    | {
-          deltattValg: 'ikkeDeltatt';
-          underValg?: MeldekortIkkeDeltattUndervalg;
-      };
+export enum MeldekortDagStatus {
+DeltattUtenLønn = 'DELTATT_UTEN_LØNN',
+DeltattMedLønn = 'DELTATT_MED_LØNN',
+FraværSyk = 'FRAVÆR_SYK',
+FraværSyktBarn = 'FRAVÆR_SYKT_BARN',
+FraværAnnet = 'FRAVÆR_ANNET',
+IkkeDeltatt = 'IKKE_DELTATT',
+}
 
 export type MeldekortDag = {
     dato: string;
     index: number;
-    status: MeldekortDagStatus;
+    status: MeldekortDagStatus | null;
 };
 
 export type MeldekortUtfylling = {

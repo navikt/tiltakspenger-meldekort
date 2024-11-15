@@ -1,10 +1,5 @@
 import { format } from 'date-fns';
-import {
-    MeldekortDag,
-    MeldekortDagStatus,
-    MeldekortDeltattUndervalg,
-    MeldekortIkkeDeltattUndervalg,
-} from '@typer/meldekort-utfylling';
+import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import classNames from 'classnames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import {
@@ -17,50 +12,45 @@ import {
 
 import style from './KalenderDag.module.css';
 
-const getStatusStyle = (dag: MeldekortDag) => {
-    const { deltattValg, underValg } = dag.status;
-
-    if (deltattValg === 'deltatt') {
-        return underValg === 'DELTATT_UTEN_LØNN' ? style.deltatt : style.deltattMedLønn;
-    }
-
-    if (deltattValg === 'ikkeDeltatt') {
-        return underValg === 'IKKE_DELTATT' ? style.ikkeDeltatt : style.fravær;
-    }
-
-    return style.ikkeValgt;
+const statusTilTekst: Record<MeldekortDagStatus, string> = {
+    [MeldekortDagStatus.DeltattUtenLønn]: 'Deltatt',
+    [MeldekortDagStatus.DeltattMedLønn]: 'Deltatt',
+    [MeldekortDagStatus.FraværSyk]: 'Syk',
+    [MeldekortDagStatus.FraværSyktBarn]: 'Sykt barn',
+    [MeldekortDagStatus.FraværAnnet]: 'Fravær',
+    [MeldekortDagStatus.IkkeDeltatt]: 'Skulket',
 };
 
-const statusTilTekst: Record<MeldekortDeltattUndervalg | MeldekortIkkeDeltattUndervalg, string> = {
-    [MeldekortDeltattUndervalg.DeltattUtenLønn]: 'Deltatt',
-    [MeldekortDeltattUndervalg.DeltattMedLønn]: 'Deltatt',
-    [MeldekortIkkeDeltattUndervalg.FraværSyk]: 'Syk',
-    [MeldekortIkkeDeltattUndervalg.FraværSyktBarn]: 'Sykt barn',
-    [MeldekortIkkeDeltattUndervalg.FraværAnnet]: 'Fravær',
-    [MeldekortIkkeDeltattUndervalg.IkkeDeltatt]: 'Skulket',
+const statusTilStyle: Record<MeldekortDagStatus, string> = {
+    [MeldekortDagStatus.DeltattUtenLønn]: style.deltatt,
+    [MeldekortDagStatus.DeltattMedLønn]: style.deltatt,
+    [MeldekortDagStatus.FraværSyk]: style.fravær,
+    [MeldekortDagStatus.FraværSyktBarn]: style.fravær,
+    [MeldekortDagStatus.FraværAnnet]: style.fravær,
+    [MeldekortDagStatus.IkkeDeltatt]: style.ikkeDeltatt,
 };
 
-const StatusTilIkon = ({ status }: { status: MeldekortDagStatus }) => {
-    switch (status.underValg) {
-        case MeldekortDeltattUndervalg.DeltattUtenLønn:
-        case MeldekortDeltattUndervalg.DeltattMedLønn:
+const StatusTilIkon = ({ status }: { status: MeldekortDagStatus | null }) => {
+    switch (status) {
+        case MeldekortDagStatus.DeltattUtenLønn:
+        case MeldekortDagStatus.DeltattMedLønn:
             return (
                 <CheckmarkCircleFillIcon
                     style={{ color: 'var(--a-green-700)' }}
                     className={style.ikon}
                 />
             );
-        case MeldekortIkkeDeltattUndervalg.FraværSyk:
+        case MeldekortDagStatus.FraværSyk:
             return (
                 <FirstAidFillIcon style={{ color: 'var(--a-red-500)' }} className={style.ikon} />
             );
-        case MeldekortIkkeDeltattUndervalg.FraværSyktBarn:
+        case MeldekortDagStatus.FraværSyktBarn:
             return (
                 <BabyWrappedFillIcon style={{ color: 'var(--a-red-500)' }} className={style.ikon} />
             );
-        case MeldekortIkkeDeltattUndervalg.FraværAnnet:
+        case MeldekortDagStatus.FraværAnnet:
             return <SunFillIcon style={{ color: 'var(--a-orange-500)' }} className={style.ikon} />;
-        case MeldekortIkkeDeltattUndervalg.IkkeDeltatt:
+        case MeldekortDagStatus.IkkeDeltatt:
             return (
                 <XMarkOctagonFillIcon
                     style={{ color: 'var(--a-red-700)' }}
@@ -85,7 +75,7 @@ export const KalenderDag = ({ dag, readonly }: Props) => {
     return (
         <td key={dag.dato} className={classNames(style.datoKontainer)}>
             <button
-                className={classNames(style.dato, getStatusStyle(dag))}
+                className={classNames(style.dato, dag.status && statusTilStyle[dag.status])}
                 onClick={() => {
                     setValgtMeldekortDag(dag);
                 }}
@@ -94,8 +84,8 @@ export const KalenderDag = ({ dag, readonly }: Props) => {
                 {formattedDate}
                 <StatusTilIkon status={dag.status} />
             </button>
-            {dag.status.underValg && (
-                <div className={style.statusTekst}>{statusTilTekst[dag.status.underValg]}</div>
+            {dag.status && (
+                <div className={style.statusTekst}>{dag.status && statusTilTekst[dag.status]}</div>
             )}
         </td>
     );

@@ -1,6 +1,7 @@
 import { Button, Modal, Radio, RadioGroup } from '@navikt/ds-react';
 import {
     MeldekortDagStatus,
+    MeldekortDeltattUndervalg,
     MeldekortIkkeDeltattUndervalg,
 } from '@typer/meldekort-utfylling';
 import { useEffect, useState } from 'react';
@@ -38,60 +39,43 @@ export const MeldekortDagModal = () => {
         >
             <Modal.Body>
                 <RadioGroup
-                    value={valgtStatus?.deltattValg}
+                    value={valgtStatus}
                     legend={<Tekst id={'meldekortHvaVilDu'} />}
-                    onChange={(value: MeldekortDagStatus['deltattValg']) => {
+                    onChange={(value: MeldekortDagStatus) => {
                         console.log(`Valgte ${value}`);
-                        setValgtStatus({
-                            deltattValg: value,
-                            // @ts-expect-error just cuz
-                            underValg: value === 'deltatt' ? 'DELTATT_UTEN_LØNN' : undefined,
-                        });
+                        setValgtStatus(value);
                     }}
                 >
-                    <Radio value={'deltatt'}>
-                        <Tekst id={'meldekortHarDeltatt'} />
-                    </Radio>
-                    <Radio value={'ikkeDeltatt'}>
-                        <Tekst id={'meldekortHarIkkeDeltatt'} />
-                    </Radio>
-                    {valgtStatus?.deltattValg === 'ikkeDeltatt' && (
-                        <RadioGroup
-                            value={valgtStatus?.underValg}
-                            legend={'Valgt ikke deltatt'}
-                            hideLegend={true}
-                            className={style.underValg}
-                            onChange={(value) => {
-                                setValgtStatus({ ...valgtStatus, underValg: value });
-                            }}
-                        >
-                            <MeldekortDagStatusValg
-                                status={MeldekortIkkeDeltattUndervalg.FraværSyk}
-                                tittel={'Syk'}
-                                ingress={'Du har vært syk'}
-                            />
-                            <MeldekortDagStatusValg
-                                status={MeldekortIkkeDeltattUndervalg.FraværSyktBarn}
-                                tittel={'Sykt barn'}
-                                ingress={'Du har hatt sykt barn eller syk barnepasser'}
-                            />
-                            <MeldekortDagStatusValg
-                                status={MeldekortIkkeDeltattUndervalg.FraværAnnet}
-                                tittel={'Annet godkjent fravær'}
-                                ingress={'Du har annet fravær som er godkjent av Nav'}
-                            />
-                            <MeldekortDagStatusValg
-                                status={MeldekortIkkeDeltattUndervalg.IkkeDeltatt}
-                                tittel={'Annet fravær'}
-                                ingress={'Annet fravær som ikke er godkjent av Nav'}
-                            />
-                        </RadioGroup>
-                    )}
+                    <MeldekortDagStatusValg
+                        valg={MeldekortDagStatus.DeltattUtenLønn}
+                        tittel="Har deltatt på tiltak"
+                        ingress="Du har deltatt på tiltaket ditt som normalt"
+                    />
+                    <MeldekortDagStatusValg
+                        valg={MeldekortDagStatus.FraværSyk}
+                        tittel={'Syk'}
+                        ingress={'Du har vært syk'}
+                    />
+                    <MeldekortDagStatusValg
+                        valg={MeldekortDagStatus.FraværSyktBarn}
+                        tittel={'Sykt barn'}
+                        ingress={'Du har hatt sykt barn eller syk barnepasser'}
+                    />
+                    <MeldekortDagStatusValg
+                        valg={MeldekortDagStatus.FraværAnnet}
+                        tittel={'Annet godkjent fravær'}
+                        ingress={'Du har annet fravær som er godkjent av Nav'}
+                    />
+                    <MeldekortDagStatusValg
+                        valg={MeldekortDagStatus.IkkeDeltatt}
+                        tittel={'Annet fravær'}
+                        ingress={'Annet fravær som ikke er godkjent av Nav'}
+                    />
                 </RadioGroup>
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    disabled={!valgtStatus?.underValg}
+                    disabled={!valgtStatus}
                     variant={'primary'}
                     onClick={() => {
                         lagreMeldekortDag({
@@ -108,7 +92,7 @@ export const MeldekortDagModal = () => {
                     onClick={() => {
                         lagreMeldekortDag({
                             ...valgtMeldekortDag!,
-                            status: { deltattValg: 'ikkeValgt' },
+                            status: null,
                         });
                         lukk();
                     }}
