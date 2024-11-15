@@ -17,7 +17,7 @@ export const dummyMeldekort: MeldekortUtfylling = {
         return {
             dato: `2024-11-${11 + index}`,
             index,
-            status: { deltattValg: 'ikkeValgt' },
+            status: null,
         };
     }),
 };
