@@ -27,3 +27,7 @@ spec:
   replicas:
     max: 1
     min: 1
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
