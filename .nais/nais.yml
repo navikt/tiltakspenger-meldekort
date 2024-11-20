@@ -24,6 +24,7 @@ spec:
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
+        - application: tiltakspenger-meldekort-api
   replicas:
     max: 1
     min: 1
