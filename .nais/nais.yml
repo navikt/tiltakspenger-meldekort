@@ -31,3 +31,9 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: nodejs
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      autoLogin: true
+      level: idporten-loa-high
