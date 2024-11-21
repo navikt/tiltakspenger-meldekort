@@ -19,15 +19,12 @@ const testHandler: NextApiHandler = async (req, res) => {
         return res.status(401).send(`Oh no, couldn't get obo token! ${oboToken.error}`);
     }
 
-    const meldekortApiResponse = await fetch(
-        `${process.env.MELDEKORT_API_URL}/test`,
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${oboToken.token}`,
-            },
-        }
-    ).catch((e) => {
+    const meldekortApiResponse = await fetch(`${process.env.MELDEKORT_API_URL}/test`, {
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${oboToken.token}`,
+        },
+    }).catch((e) => {
         console.error(`Failed to fetch from meldekort-api! ${e}`);
         return null;
     });
