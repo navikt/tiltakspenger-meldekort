@@ -13,12 +13,10 @@ spec:
   image: {{ image }}
   port: 3050
   env:
-    - name: NEXT_PUBLIC_TELEMETRY_URL
-      value: {{ NEXT_PUBLIC_TELEMETRY_URL }}
-    - name: UNLEASH_SERVER_API_URL
-      value: {{ unleash.url }}
-    - name: DEKORATOR_ENV
-      value: {{ dekorator.env }}
+  {{#each envs}}
+    - name: {{name}}
+      value: {{value}}
+  {{/each}}
   accessPolicy:
     outbound:
       rules:

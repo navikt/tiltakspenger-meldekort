@@ -1,10 +1,8 @@
 ingress: https://www.ansatt.dev.nav.no/tiltakspenger/meldekort
 replyURLs:
   - https://tiltakspenger-meldekort.ansatt.dev.nav.no/oauth2/callback
-cluster: dev-gcp
-NEXT_PUBLIC_TELEMETRY_URL: https://telemetry.ekstern.dev.nav.no/collect
-unleash:
-  environment: development
-  url: https://tiltakspenger-unleash-api.nav.cloud.nais.io/api
-dekorator:
-  env: dev
+env:
+  - name: MELDEKORT_API_URL
+    value: http://tiltakspenger-meldekort-api
+  - name: MELDEKORT_API_SCOPE
+    value: dev-gcp:tpts:tiltakspenger-meldekort-api

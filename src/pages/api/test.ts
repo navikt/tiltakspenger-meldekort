@@ -7,8 +7,6 @@ const testHandler: NextApiHandler = async (req, res) => {
         return res.status(401).send("Oh no, couldn't get token!");
     }
 
-    console.log(`My token: ${token}`);
-
     const validation = await validateToken(token);
     if (!validation.ok) {
         return res
@@ -16,13 +14,13 @@ const testHandler: NextApiHandler = async (req, res) => {
             .send(`Oh no, couldn't validate token! ${validation.errorType} - ${validation.error}`);
     }
 
-    const oboToken = await requestOboToken(token, 'dev-gcp:tpts:tiltakspenger-meldekort-api');
+    const oboToken = await requestOboToken(token, process.env.MELDEKORT_API_SCOPE);
     if (!oboToken.ok) {
         return res.status(401).send(`Oh no, couldn't get obo token! ${oboToken.error}`);
     }
 
     const meldekortApiResponse = await fetch(
-        'https://tiltakspenger-meldekort-api.intern.dev.nav.no/test',
+        `${process.env.MELDEKORT_API_URL}/test`,
         {
             headers: {
                 'Content-Type': 'application/json',
