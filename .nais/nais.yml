@@ -13,7 +13,7 @@ spec:
   image: {{ image }}
   port: 3050
   env:
-  {{#each envs}}
+  {{#each env}}
     - name: {{name}}
       value: {{value}}
   {{/each}}
