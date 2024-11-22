@@ -1,13 +1,14 @@
 import { Alert, BodyLong, Button, Checkbox, Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
-import { Kalender } from '@components/kalender/Kalender';
+import { KalenderOld } from '@components/kalender/KalenderOld';
 import { MeldekortDagModal } from '@components/meldekort-dag-modal/MeldekortDagModal';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
 import { useState } from 'react';
 
 import style from './FyllUt.module.css';
 import { Lenke } from '@components/lenke/Lenke';
+import { Kalender } from '@components/kalender/Kalender';
 
 type Props = {
     meldekort: MeldekortUtfylling;
@@ -28,7 +29,7 @@ export const FyllUt = ({ meldekort }: Props) => {
             {ferdigUtfylt && <Alert variant={'warning'}>{'Meldekortet er ikke sendt ennå!'}</Alert>}
             <ReadMore header={<Tekst id={'fyllUtLesMerHeader'} />}>{'Blah blah'}</ReadMore>
             <MeldekortUtfyllingProvider meldekortUtfylling={meldekort}>
-                <Kalender erUtfylt={ferdigUtfylt} />
+                <Kalender />
                 <MeldekortDagModal />
             </MeldekortUtfyllingProvider>
             {ferdigUtfylt && (

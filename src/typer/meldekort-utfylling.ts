@@ -11,25 +11,12 @@ export enum MeldekortStatus {
     Feilet = 'Feilet',
 }
 
-export enum MeldekortDeltattUndervalg {
-    DeltattUtenLønn = 'DELTATT_UTEN_LØNN',
-    DeltattMedLønn = 'DELTATT_MED_LØNN',
-}
-
-export enum MeldekortIkkeDeltattUndervalg {
+export enum MeldekortDagStatus {
+    Deltatt = 'DELTATT',
     FraværSyk = 'FRAVÆR_SYK',
     FraværSyktBarn = 'FRAVÆR_SYKT_BARN',
     FraværAnnet = 'FRAVÆR_ANNET',
     IkkeDeltatt = 'IKKE_DELTATT',
-}
-
-export enum MeldekortDagStatus {
-DeltattUtenLønn = 'DELTATT_UTEN_LØNN',
-DeltattMedLønn = 'DELTATT_MED_LØNN',
-FraværSyk = 'FRAVÆR_SYK',
-FraværSyktBarn = 'FRAVÆR_SYKT_BARN',
-FraværAnnet = 'FRAVÆR_ANNET',
-IkkeDeltatt = 'IKKE_DELTATT',
 }
 
 export type MeldekortDag = {

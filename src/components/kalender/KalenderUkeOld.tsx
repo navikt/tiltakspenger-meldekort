@@ -1,17 +1,17 @@
-import styles from './Kalender.module.css';
+import styles from './KalenderOld.module.css';
 import { MeldekortDag } from '@typer/meldekort-utfylling';
-import { KalenderDag } from '@components/kalender/dag/KalenderDag';
+import { KalenderDagOld } from '@components/kalender/dag/KalenderDagOld';
 
 type Props = {
     meldekortUke: MeldekortDag[];
     readonly?: boolean;
 };
 
-export const KalenderUke = ({ meldekortUke, readonly }: Props) => {
+export const KalenderUkeOld = ({ meldekortUke, readonly }: Props) => {
     return (
         <tr className={styles.ukeRadKontainer}>
             {meldekortUke.map((dag) => (
-                <KalenderDag dag={dag} readonly={readonly} key={dag.dato} />
+                <KalenderDagOld dag={dag} readonly={readonly} key={dag.dato} />
             ))}
         </tr>
     );

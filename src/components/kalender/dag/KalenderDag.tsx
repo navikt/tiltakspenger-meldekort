@@ -1,92 +1,34 @@
-import { format } from 'date-fns';
 import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import { Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import {
-    BabyWrappedFillIcon,
-    CheckmarkCircleFillIcon,
-    FirstAidFillIcon,
-    SunFillIcon,
-    XMarkOctagonFillIcon,
-} from '@navikt/aksel-icons';
+import { formatterDato } from '@utils/datetime';
 
 import style from './KalenderDag.module.css';
 
-const statusTilTekst: Record<MeldekortDagStatus, string> = {
-    [MeldekortDagStatus.DeltattUtenLønn]: 'Deltatt',
-    [MeldekortDagStatus.DeltattMedLønn]: 'Deltatt',
-    [MeldekortDagStatus.FraværSyk]: 'Syk',
-    [MeldekortDagStatus.FraværSyktBarn]: 'Sykt barn',
-    [MeldekortDagStatus.FraværAnnet]: 'Fravær',
-    [MeldekortDagStatus.IkkeDeltatt]: 'Skulket',
-};
-
-const statusTilStyle: Record<MeldekortDagStatus, string> = {
-    [MeldekortDagStatus.DeltattUtenLønn]: style.deltatt,
-    [MeldekortDagStatus.DeltattMedLønn]: style.deltatt,
-    [MeldekortDagStatus.FraværSyk]: style.fravær,
-    [MeldekortDagStatus.FraværSyktBarn]: style.fravær,
-    [MeldekortDagStatus.FraværAnnet]: style.fravær,
-    [MeldekortDagStatus.IkkeDeltatt]: style.ikkeDeltatt,
-};
-
-const StatusTilIkon = ({ status }: { status: MeldekortDagStatus | null }) => {
-    switch (status) {
-        case MeldekortDagStatus.DeltattUtenLønn:
-        case MeldekortDagStatus.DeltattMedLønn:
-            return (
-                <CheckmarkCircleFillIcon
-                    style={{ color: 'var(--a-green-700)' }}
-                    className={style.ikon}
-                />
-            );
-        case MeldekortDagStatus.FraværSyk:
-            return (
-                <FirstAidFillIcon style={{ color: 'var(--a-red-500)' }} className={style.ikon} />
-            );
-        case MeldekortDagStatus.FraværSyktBarn:
-            return (
-                <BabyWrappedFillIcon style={{ color: 'var(--a-red-500)' }} className={style.ikon} />
-            );
-        case MeldekortDagStatus.FraværAnnet:
-            return <SunFillIcon style={{ color: 'var(--a-orange-500)' }} className={style.ikon} />;
-        case MeldekortDagStatus.IkkeDeltatt:
-            return (
-                <XMarkOctagonFillIcon
-                    style={{ color: 'var(--a-red-700)' }}
-                    className={style.ikon}
-                />
-            );
-    }
-
-    return null;
-};
-
 type Props = {
     dag: MeldekortDag;
-    readonly?: boolean;
 };
 
-export const KalenderDag = ({ dag, readonly }: Props) => {
-    const { setValgtMeldekortDag } = useMeldekortUtfylling();
+export const KalenderDag = ({ dag }: Props) => {
+    const { lagreMeldekortDag } = useMeldekortUtfylling();
 
-    const formattedDate = `${format(dag.dato, 'd')}.`;
+    const erValgt = dag.status === MeldekortDagStatus.Deltatt;
 
     return (
-        <td key={dag.dato} className={classNames(style.datoKontainer)}>
-            <button
-                className={classNames(style.dato, dag.status && statusTilStyle[dag.status])}
-                onClick={() => {
-                    setValgtMeldekortDag(dag);
+        <li key={dag.dato}>
+            <Checkbox
+                onChange={(e) => {
+                    lagreMeldekortDag({
+                        ...dag,
+                        status: e.target.checked ? MeldekortDagStatus.Deltatt : null,
+                    });
                 }}
-                disabled={readonly}
+                checked={erValgt}
+                className={classNames(style.dag, erValgt && style.valgt)}
             >
-                {formattedDate}
-                <StatusTilIkon status={dag.status} />
-            </button>
-            {dag.status && (
-                <div className={style.statusTekst}>{dag.status && statusTilTekst[dag.status]}</div>
-            )}
-        </td>
+                {formatterDato(dag.dato, true)}
+            </Checkbox>
+        </li>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
     MeldekortUtfyllingContext,
     MeldekortUtfyllingState,
@@ -19,7 +19,7 @@ export const MeldekortUtfyllingProvider = ({
     const [valgtMeldekortDag, setValgtMeldekortDag] =
         useState<MeldekortUtfyllingState['valgtMeldekortDag']>(null);
 
-    const lagreMeldekortDag = (dag: MeldekortDag) => {
+    const lagreMeldekortDag = useCallback((dag: MeldekortDag) => {
         const meldekortDagerUpdated = [...meldekortUtfylling.meldekortDager];
         meldekortDagerUpdated[dag.index] = dag;
 
@@ -27,7 +27,7 @@ export const MeldekortUtfyllingProvider = ({
             ...meldekortUtfylling,
             meldekortDager: meldekortDagerUpdated,
         });
-    };
+    }, [meldekortUtfylling]);
 
     return (
         <MeldekortUtfyllingContext.Provider

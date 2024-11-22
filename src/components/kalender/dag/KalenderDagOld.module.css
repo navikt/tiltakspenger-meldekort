@@ -1,0 +1,77 @@
+@value dato-strl: 35px;
+
+.datoKontainer {
+    position: relative;
+}
+
+.dato {
+    position: relative;
+    display: flex;
+    padding-right: 4px;
+    padding-left: 6px;
+    justify-content: center;
+    align-items: center;
+    width: dato-strl;
+    height: dato-strl;
+    border-radius: 50%;
+    font-size: var(--a-font-size-medium);
+    line-height: var(--a-font-size-medium);
+    cursor: pointer;
+    border: 0;
+}
+
+.dato:hover {
+    outline: solid 4px var(--a-deepblue-500);
+}
+
+.ikkeValgt {
+    background: var(--a-bg-subtle);
+    outline: 1px solid var(--a-gray-600);
+}
+
+.deltatt {
+    background: var(--a-green-200);
+}
+
+.deltattMedLønn {
+    background: repeating-linear-gradient(
+            45deg,
+            var(--a-orange-200),
+            var(--a-orange-200) 10px,
+            var(--a-green-200) 10px,
+            var(--a-green-200) 20px
+    );
+}
+
+.fravær {
+    background: var(--a-orange-200);
+}
+
+.ikkeDeltatt {
+    background: var(--a-red-200);
+}
+
+.statusTekst {
+    margin-top: 0.25rem;
+}
+
+.ikon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .datoKontainer {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .dato {
+        width: calc(dato-strl * 2);
+        height: calc(dato-strl * 2);
+        font-size: var(--a-font-size-large);
+        line-height: var(--a-font-size-large);
+    }
+}

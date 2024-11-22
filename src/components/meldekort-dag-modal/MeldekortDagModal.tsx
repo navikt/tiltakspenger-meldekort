@@ -1,9 +1,5 @@
-import { Button, Modal, Radio, RadioGroup } from '@navikt/ds-react';
-import {
-    MeldekortDagStatus,
-    MeldekortDeltattUndervalg,
-    MeldekortIkkeDeltattUndervalg,
-} from '@typer/meldekort-utfylling';
+import { Button, Modal, RadioGroup } from '@navikt/ds-react';
+import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { useEffect, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato } from '@utils/datetime';
@@ -47,7 +43,7 @@ export const MeldekortDagModal = () => {
                     }}
                 >
                     <MeldekortDagStatusValg
-                        valg={MeldekortDagStatus.DeltattUtenLønn}
+                        valg={MeldekortDagStatus.Deltatt}
                         tittel="Har deltatt på tiltak"
                         ingress="Du har deltatt på tiltaket ditt som normalt"
                     />
