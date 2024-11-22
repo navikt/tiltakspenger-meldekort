@@ -29,6 +29,7 @@ export const teksterNb = {
 
     ikkeRegistrert: 'Ikke registrert',
 
+    [MeldekortDagStatus.Deltatt]: 'Deltatt',
     [MeldekortDagStatus.FraværSyk]: 'Syk',
     [MeldekortDagStatus.FraværSyktBarn]: 'Sykt barn',
     [MeldekortDagStatus.FraværAnnet]: 'Annet godkjent fravær',

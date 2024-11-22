@@ -1,14 +1,13 @@
-import { Alert, BodyLong, Button, Checkbox, Heading, ReadMore } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst';
+import { BodyLong, Heading } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { FraværValgModal } from '@components/fyll-ut/steg-2-fravær/dag/fravær-valg-modal/FraværValgModal';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
 import { useEffect, useState } from 'react';
-import { Lenke } from '@components/lenke/Lenke';
 import { Steg1_Deltatt } from '@components/fyll-ut/steg-1-deltatt/Steg1_Deltatt';
 import { getISOWeek } from 'date-fns';
 import { formatterDato } from '@utils/datetime';
 import { Steg2_Fravær } from '@components/fyll-ut/steg-2-fravær/Steg2_Fravær';
+import { Steg3_Bekreft } from '@components/fyll-ut/steg-3-bekreft/Steg3_Bekreft';
 
 type Props = {
     meldekort: MeldekortUtfylling;
@@ -17,10 +16,8 @@ type Props = {
 export type MeldekortSteg = 'deltatt' | 'fravær' | 'bekreft';
 
 export const FyllUt = ({ meldekort }: Props) => {
+    // TODO: bruk next-router eller window.history for state slik at en kan bruke back/forward-navigering etc
     const [meldekortSteg, setMeldekortSteg] = useState<MeldekortSteg>('deltatt');
-
-    const [ferdigUtfylt, setFerdigUtfylt] = useState(false);
-    const [harBekreftet, setHarBekreftet] = useState(false);
 
     const { fraOgMed, tilOgMed } = meldekort.periode;
 
@@ -32,7 +29,7 @@ export const FyllUt = ({ meldekort }: Props) => {
     })}`;
 
     useEffect(() => {
-        scrollTo(0, 0)
+        scrollTo(0, 0);
     }, [meldekortSteg]);
 
     return (
@@ -43,29 +40,15 @@ export const FyllUt = ({ meldekort }: Props) => {
             <BodyLong weight={'semibold'} spacing={true}>
                 {datoerTekst}
             </BodyLong>
-            {ferdigUtfylt && <Alert variant={'warning'}>{'Meldekortet er ikke sendt ennå!'}</Alert>}
             <MeldekortUtfyllingProvider
                 meldekortUtfylling={meldekort}
                 setMeldekortSteg={setMeldekortSteg}
             >
                 {meldekortSteg === 'deltatt' && <Steg1_Deltatt />}
                 {meldekortSteg === 'fravær' && <Steg2_Fravær />}
+                {meldekortSteg === 'bekreft' && <Steg3_Bekreft />}
                 <FraværValgModal />
             </MeldekortUtfyllingProvider>
-            {ferdigUtfylt && (
-                <Checkbox onChange={() => setHarBekreftet(!harBekreftet)}>
-                    <Tekst id={'bekreftCheckbox'} />
-                </Checkbox>
-            )}
-            {ferdigUtfylt && (
-                <Button
-                    disabled={!harBekreftet}
-                    as={Lenke}
-                    href={`/[meldekortId]/kvittering?meldekortId=${meldekort.id}`}
-                >
-                    {'Send inn'}
-                </Button>
-            )}
         </div>
     );
 };

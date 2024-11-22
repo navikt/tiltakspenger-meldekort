@@ -5,13 +5,14 @@ import { getISOWeek } from 'date-fns';
 import { DeltattDagValg } from '@components/fyll-ut/steg-1-deltatt/dag/DeltattDagValg';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 import { FraværDagValg } from '@components/fyll-ut/steg-2-fravær/dag/FraværDagValg';
+import { StatiskDag } from '@components/fyll-ut/dag-felles/StatiskDag';
 
 import style from './KalenderUke.module.css';
 
 const DagKomponentForSteg: Record<MeldekortSteg, React.FunctionComponent<{ dag: MeldekortDag }>> = {
     deltatt: DeltattDagValg,
     fravær: FraværDagValg,
-    bekreft: () => null,
+    bekreft: StatiskDag,
 };
 
 type Props = {

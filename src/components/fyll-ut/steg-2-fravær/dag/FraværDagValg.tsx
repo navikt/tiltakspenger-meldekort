@@ -1,13 +1,14 @@
 import React from 'react';
-import { FraværStatus, MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
+import { Tekst } from '@components/tekst/Tekst';
+import { StatiskDag } from '@components/fyll-ut/dag-felles/StatiskDag';
+import { meldekortStatusTilStyle } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
 import style from './FraværDagValg.module.css';
-import { Tekst } from '@components/tekst/Tekst';
 
 type Props = {
     dag: MeldekortDag;
@@ -23,13 +24,9 @@ export const FraværDagValg = ({ dag }: Props) => {
     const harDeltatt = status === MeldekortDagStatus.Deltatt;
 
     return harDeltatt ? (
-        <div className={style.deltatt}>
-            <CheckmarkCircleFillIcon className={style.ikon} />
-            <BodyLong>{`${datoTekst}: `}</BodyLong>
-            <BodyLong weight={'semibold'}>{'Deltatt'}</BodyLong>
-        </div>
+        <StatiskDag dag={dag} />
     ) : (
-        <div className={classNames(style.fravær, status && statusTilStyle[status])}>
+        <div className={classNames(style.fravær, status && meldekortStatusTilStyle[status])}>
             <BodyLong>{datoTekst}</BodyLong>
             <div className={style.fraværRad}>
                 <BodyLong weight={'semibold'}>
@@ -48,11 +45,4 @@ export const FraværDagValg = ({ dag }: Props) => {
             </div>
         </div>
     );
-};
-
-const statusTilStyle: Record<FraværStatus, string> = {
-    [MeldekortDagStatus.FraværSyk]: style.syk,
-    [MeldekortDagStatus.FraværSyktBarn]: style.syktBarn,
-    [MeldekortDagStatus.FraværAnnet]: style.annet,
-    [MeldekortDagStatus.IkkeDeltatt]: style.ikkeDeltatt,
 };
