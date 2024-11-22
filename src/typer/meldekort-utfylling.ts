@@ -19,6 +19,8 @@ export enum MeldekortDagStatus {
     IkkeDeltatt = 'IKKE_DELTATT',
 }
 
+export type FraværStatus = Exclude<MeldekortDagStatus, MeldekortDagStatus.Deltatt>;
+
 export type MeldekortDag = {
     dato: string;
     index: number;

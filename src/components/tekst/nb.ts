@@ -1,3 +1,5 @@
+import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
+
 export const teksterNb = {
     meldekortTittel: 'Meldekort for tiltakspenger',
     forsideIngress1:
@@ -24,4 +26,18 @@ export const teksterNb = {
     meldekortHvaVilDu: 'Hva vil du melde?',
     meldekortHarDeltatt: 'Har deltatt på tiltak',
     meldekortHarIkkeDeltatt: 'Har ikke deltatt på tiltak',
+
+    ikkeRegistrert: 'Ikke registrert',
+
+    [MeldekortDagStatus.FraværSyk]: 'Syk',
+    [MeldekortDagStatus.FraværSyktBarn]: 'Sykt barn',
+    [MeldekortDagStatus.FraværAnnet]: 'Annet godkjent fravær',
+    [MeldekortDagStatus.IkkeDeltatt]: 'Ikke deltatt',
+
+    sykIngress: 'Du har vært syk',
+    syktBarnIngress: 'Du har hatt sykt barn eller syk barnepasser',
+    annetFraværIngress: 'Du har annet fravær som er godkjent av Nav',
+    ikkeDeltattIngress: 'Annet fravær som ikke er godkjent av Nav'
 } as const;
+
+export type TekstId = keyof typeof teksterNb;

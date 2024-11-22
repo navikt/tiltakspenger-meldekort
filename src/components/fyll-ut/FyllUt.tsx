@@ -1,7 +1,7 @@
 import { Alert, BodyLong, Button, Checkbox, Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
-import { MeldekortDagModal } from '@components/meldekort-dag-modal/MeldekortDagModal';
+import { FraværValgModal } from '@components/fyll-ut/steg-2-fravær/dag/fravær-valg-modal/FraværValgModal';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
 import { useEffect, useState } from 'react';
 import { Lenke } from '@components/lenke/Lenke';
@@ -50,7 +50,7 @@ export const FyllUt = ({ meldekort }: Props) => {
             >
                 {meldekortSteg === 'deltatt' && <Steg1_Deltatt />}
                 {meldekortSteg === 'fravær' && <Steg2_Fravær />}
-                <MeldekortDagModal />
+                <FraværValgModal />
             </MeldekortUtfyllingProvider>
             {ferdigUtfylt && (
                 <Checkbox onChange={() => setHarBekreftet(!harBekreftet)}>

@@ -1,41 +1,58 @@
-import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import React from 'react';
+import { FraværStatus, MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';
+import classNames from 'classnames';
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 
 import style from './FraværDagValg.module.css';
+import { Tekst } from '@components/tekst/Tekst';
 
 type Props = {
     dag: MeldekortDag;
 };
 
 export const FraværDagValg = ({ dag }: Props) => {
-    const { lagreMeldekortDag } = useMeldekortUtfylling();
+    const { setValgtMeldekortDag } = useMeldekortUtfylling();
 
-    const erValgt = dag.status === MeldekortDagStatus.Deltatt;
+    const { dato, status } = dag;
 
-    const datoTekst = formatterDato({ dato: dag.dato, medUkeDag: true, medStorForbokstav: true });
+    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
-    if (erValgt) {
-        return (
-            <div className={style.deltatt}>
-                <CheckmarkCircleFillIcon className={style.deltattIkon} />
-                <BodyLong>{`${datoTekst}: `}</BodyLong>
-                <BodyLong weight={'semibold'}>{'Deltatt'}</BodyLong>
-            </div>
-        );
-    }
+    const harDeltatt = status === MeldekortDagStatus.Deltatt;
 
-    return (
-        <div className={style.ikkeDeltatt}>
+    return harDeltatt ? (
+        <div className={style.deltatt}>
+            <CheckmarkCircleFillIcon className={style.ikon} />
+            <BodyLong>{`${datoTekst}: `}</BodyLong>
+            <BodyLong weight={'semibold'}>{'Deltatt'}</BodyLong>
+        </div>
+    ) : (
+        <div className={classNames(style.fravær, status && statusTilStyle[status])}>
             <BodyLong>{datoTekst}</BodyLong>
-            <div className={style.rad}>
-                <BodyLong weight={'semibold'}>{'Ikke deltatt'}</BodyLong>
-                <Button size={'small'} variant={'secondary'}>
+            <div className={style.fraværRad}>
+                <BodyLong weight={'semibold'}>
+                    <Tekst id={status || 'ikkeRegistrert'} />
+                </BodyLong>
+                <Button
+                    size={'small'}
+                    variant={'secondary'}
+                    onClick={() => {
+                        setValgtMeldekortDag(dag);
+                    }}
+                    className={style.registrerKnapp}
+                >
                     {'Registrer fravær'}
                 </Button>
             </div>
         </div>
     );
+};
+
+const statusTilStyle: Record<FraværStatus, string> = {
+    [MeldekortDagStatus.FraværSyk]: style.syk,
+    [MeldekortDagStatus.FraværSyktBarn]: style.syktBarn,
+    [MeldekortDagStatus.FraværAnnet]: style.annet,
+    [MeldekortDagStatus.IkkeDeltatt]: style.ikkeDeltatt,
 };

@@ -1,11 +1,11 @@
-import { teksterNb } from '@components/tekst/nb';
+import { teksterNb, TekstId } from '@components/tekst/nb';
 
 const tekster = {
     nb: teksterNb,
 };
 
 type Props = {
-    id: keyof typeof teksterNb;
+    id: TekstId;
 };
 
 export const Tekst = ({ id }: Props) => {
