@@ -1,35 +1,55 @@
 import { Alert, BodyLong, Button, Checkbox, Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
-import { KalenderOld } from '@components/kalender/KalenderOld';
 import { MeldekortDagModal } from '@components/meldekort-dag-modal/MeldekortDagModal';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
-import { useState } from 'react';
-
-import style from './FyllUt.module.css';
+import { useEffect, useState } from 'react';
 import { Lenke } from '@components/lenke/Lenke';
-import { Kalender } from '@components/kalender/Kalender';
+import { Steg1_Deltatt } from '@components/fyll-ut/steg-1-deltatt/Steg1_Deltatt';
+import { getISOWeek } from 'date-fns';
+import { formatterDato } from '@utils/datetime';
+import { Steg2_Fravær } from '@components/fyll-ut/steg-2-fravær/Steg2_Fravær';
 
 type Props = {
     meldekort: MeldekortUtfylling;
 };
 
+export type MeldekortSteg = 'deltatt' | 'fravær' | 'bekreft';
+
 export const FyllUt = ({ meldekort }: Props) => {
+    const [meldekortSteg, setMeldekortSteg] = useState<MeldekortSteg>('deltatt');
+
     const [ferdigUtfylt, setFerdigUtfylt] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
 
+    const { fraOgMed, tilOgMed } = meldekort.periode;
+
+    const ukerTekst = `Uke ${getISOWeek(fraOgMed)} - ${getISOWeek(tilOgMed)}`;
+
+    const datoerTekst = `${formatterDato({ dato: fraOgMed, medUkeDag: false })} - ${formatterDato({
+        dato: tilOgMed,
+        medUkeDag: false,
+    })}`;
+
+    useEffect(() => {
+        scrollTo(0, 0)
+    }, [meldekortSteg]);
+
     return (
         <div>
-            <Heading size={'medium'}>
-                <Tekst id={ferdigUtfylt ? 'bekreftTittel' : 'fyllUtTittel'} />
+            <Heading size={'medium'} level={'2'}>
+                {ukerTekst}
             </Heading>
-            <BodyLong>
-                <Tekst id={ferdigUtfylt ? 'bekreftTekst' : 'fyllUtKlikkPåDato'} />
+            <BodyLong weight={'semibold'} spacing={true}>
+                {datoerTekst}
             </BodyLong>
             {ferdigUtfylt && <Alert variant={'warning'}>{'Meldekortet er ikke sendt ennå!'}</Alert>}
-            <ReadMore header={<Tekst id={'fyllUtLesMerHeader'} />}>{'Blah blah'}</ReadMore>
-            <MeldekortUtfyllingProvider meldekortUtfylling={meldekort}>
-                <Kalender />
+            <MeldekortUtfyllingProvider
+                meldekortUtfylling={meldekort}
+                setMeldekortSteg={setMeldekortSteg}
+            >
+                {meldekortSteg === 'deltatt' && <Steg1_Deltatt />}
+                {meldekortSteg === 'fravær' && <Steg2_Fravær />}
                 <MeldekortDagModal />
             </MeldekortUtfyllingProvider>
             {ferdigUtfylt && (
@@ -37,15 +57,6 @@ export const FyllUt = ({ meldekort }: Props) => {
                     <Tekst id={'bekreftCheckbox'} />
                 </Checkbox>
             )}
-            <Button
-                className={style.knapp}
-                variant={ferdigUtfylt ? 'secondary' : 'primary'}
-                onClick={() => {
-                    setFerdigUtfylt(!ferdigUtfylt);
-                }}
-            >
-                {ferdigUtfylt ? 'Forrige' : 'Neste'}
-            </Button>
             {ferdigUtfylt && (
                 <Button
                     disabled={!harBekreftet}

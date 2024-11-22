@@ -1,0 +1,30 @@
+.deltatt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.25rem 0.75rem;
+
+    background: var(--a-green-100);
+    border: 1px solid var(--a-green-400);
+    border-radius: var(--a-border-radius-medium);
+}
+
+.deltattIkon {
+    color: var(--a-green-600)
+}
+
+.ikkeDeltatt {
+    padding: 0.5rem;
+
+    background: var(--a-gray-100);
+    border: 1px solid var(--a-gray-400);
+    border-radius: var(--a-border-radius-large);
+}
+
+.rad {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}

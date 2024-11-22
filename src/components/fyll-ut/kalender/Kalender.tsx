@@ -1,11 +1,16 @@
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { KalenderUke } from '@components/kalender/uke/KalenderUke';
+import { KalenderUke } from '@components/fyll-ut/kalender/uke/KalenderUke';
+import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 
-export const Kalender = () => {
+type Props = {
+    steg: MeldekortSteg;
+};
+
+export const Kalender = ({ steg }: Props) => {
     const { meldekortUtfylling } = useMeldekortUtfylling();
 
     if (!meldekortUtfylling) {
-        console.error('Oh noes, fant ingen meldekort!');
+        console.error('Oh no, fant ingen meldekort!');
         return null;
     }
 
@@ -14,8 +19,8 @@ export const Kalender = () => {
 
     return (
         <div>
-            <KalenderUke dager={forsteUke} />
-            <KalenderUke dager={andreUke} />
+            <KalenderUke dager={forsteUke} steg={steg} />
+            <KalenderUke dager={andreUke} steg={steg} />
         </div>
     );
 };

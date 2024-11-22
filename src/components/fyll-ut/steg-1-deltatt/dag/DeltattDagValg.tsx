@@ -1,7 +1,8 @@
-import { format } from 'date-fns';
 import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import { Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
+import { formatterDato } from '@utils/datetime';
 import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
@@ -10,7 +11,32 @@ import {
     XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 
-import style from './KalenderDagOld.module.css';
+import style from './DeltattDagValg.module.css';
+
+type Props = {
+    dag: MeldekortDag;
+};
+
+export const DeltattDagValg = ({ dag }: Props) => {
+    const { lagreMeldekortDag } = useMeldekortUtfylling();
+
+    const erValgt = dag.status === MeldekortDagStatus.Deltatt;
+
+    return (
+        <Checkbox
+            onChange={(e) => {
+                lagreMeldekortDag({
+                    ...dag,
+                    status: e.target.checked ? MeldekortDagStatus.Deltatt : null,
+                });
+            }}
+            checked={erValgt}
+            className={classNames(style.dag, erValgt && style.valgt)}
+        >
+            {formatterDato({ dato: dag.dato, medUkeDag: true })}
+        </Checkbox>
+    );
+};
 
 const statusTilTekst: Record<MeldekortDagStatus, string> = {
     [MeldekortDagStatus.Deltatt]: 'Deltatt',
@@ -57,33 +83,4 @@ const StatusTilIkon = ({ status }: { status: MeldekortDagStatus | null }) => {
     }
 
     return null;
-};
-
-type Props = {
-    dag: MeldekortDag;
-    readonly?: boolean;
-};
-
-export const KalenderDagOld = ({ dag, readonly }: Props) => {
-    const { setValgtMeldekortDag } = useMeldekortUtfylling();
-
-    const formattedDate = `${format(dag.dato, 'd')}.`;
-
-    return (
-        <td key={dag.dato} className={classNames(style.datoKontainer)}>
-            <button
-                className={classNames(style.dato, dag.status && statusTilStyle[dag.status])}
-                onClick={() => {
-                    setValgtMeldekortDag(dag);
-                }}
-                disabled={readonly}
-            >
-                {formattedDate}
-                <StatusTilIkon status={dag.status} />
-            </button>
-            {dag.status && (
-                <div className={style.statusTekst}>{dag.status && statusTilTekst[dag.status]}</div>
-            )}
-        </td>
-    );
 };

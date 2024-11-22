@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, getISOWeek } from 'date-fns';
 import { nb } from 'date-fns/locale/nb';
 
 type Ukedag = {
@@ -19,8 +19,19 @@ export const Ukedager = {
     nb: getUkedager('no-nb'),
 } as const;
 
-export const formatterDato = (dato: string, medStorForbokstav?: boolean) => {
-    const formattert = format(dato, 'EEEE d. MMMM', { locale: nb });
+type FormatterDatoProps = {
+    dato: string;
+    medUkeDag?: boolean;
+    medStorForbokstav?: boolean;
+};
+
+export const formatterDato = ({
+    dato,
+    medUkeDag,
+    medStorForbokstav = true,
+}: FormatterDatoProps) => {
+    const formatStr = `${medUkeDag ? 'EEEE ' : ''}d. MMMM`;
+    const formattert = format(dato, formatStr, { locale: nb });
 
     return medStorForbokstav
         ? formattert.replace(/^./, (match) => match.toUpperCase())

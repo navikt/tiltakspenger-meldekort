@@ -28,7 +28,7 @@ export const MeldekortDagModal = () => {
             open={!!valgtMeldekortDag}
             onClose={lukk}
             header={{
-                heading: valgtMeldekortDag ? formatterDato(valgtMeldekortDag.dato, true) : '',
+                heading: valgtMeldekortDag ? formatterDato({ dato: valgtMeldekortDag.dato, medUkeDag: true }) : '',
             }}
             closeOnBackdropClick={true}
             className={style.modal}

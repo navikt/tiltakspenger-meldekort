@@ -4,14 +4,17 @@ import {
     MeldekortUtfyllingState,
 } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
 import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 
 type Props = {
     meldekortUtfylling: MeldekortUtfylling;
+    setMeldekortSteg: (steg: MeldekortSteg) => void;
     children: React.ReactNode;
 };
 
 export const MeldekortUtfyllingProvider = ({
     meldekortUtfylling: meldekortUtfyllingInitial,
+    setMeldekortSteg,
     children,
 }: Props) => {
     const [meldekortUtfylling, setMeldekortUtfylling] =
@@ -37,6 +40,7 @@ export const MeldekortUtfyllingProvider = ({
                 valgtMeldekortDag,
                 setValgtMeldekortDag,
                 lagreMeldekortDag,
+                setMeldekortSteg
             }}
         >
             {children}
