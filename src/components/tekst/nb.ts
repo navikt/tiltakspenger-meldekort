@@ -14,7 +14,7 @@ export const teksterNb = {
 
     neste: 'Neste',
     forrige: 'Forrige',
-    lagre: 'lagre',
+    lagre: 'Lagre',
     slett: 'Slett',
     avbryt: 'Avbryt',
     sendInn: 'Send inn',
