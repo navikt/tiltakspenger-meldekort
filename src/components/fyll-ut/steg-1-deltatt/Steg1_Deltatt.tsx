@@ -14,7 +14,7 @@ export const Steg1_Deltatt = () => {
     const [fraværStatus, setFraværStatus] = useState<FraværStatus | null>(null);
 
     if (!meldekortUtfylling) {
-        console.error('Oh noes, fant ingen meldekort!');
+        console.error('Oh no, fant ingen meldekort!');
         return null;
     }
 
@@ -38,9 +38,9 @@ export const Steg1_Deltatt = () => {
                 legend={'Har du hatt fravær fra tiltaket?'}
                 value={fraværStatus}
                 onChange={(value: FraværStatus) => {
-                    console.log(`Setting ${value}`);
                     setFraværStatus(value);
                 }}
+                className={style.fraværValg}
             >
                 <Radio value={'medFravær'}>{'Ja, jeg har hatt fravær'}</Radio>
                 <Radio value={'utenFravær'}>{'Nei, jeg har ikke hatt fravær'}</Radio>

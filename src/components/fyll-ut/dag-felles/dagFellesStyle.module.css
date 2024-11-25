@@ -1,0 +1,53 @@
+.ikkeRegistrert {
+    background: var(--a-gray-100);
+    border-color: var(--a-gray-400);
+
+    .ikon {
+        color: var(--a-gray-800);
+    }
+}
+
+.deltatt {
+    background: var(--a-green-100);
+    border-color: var(--a-green-400);
+
+    .ikon {
+        color: var(--a-green-600);
+    }
+}
+
+.syk {
+    background: var(--a-orange-100);
+    border-color: var(--a-orange-400);
+
+    .ikon {
+        color: var(--a-orange-600);
+    }
+}
+
+.syktBarn {
+    background: var(--a-orange-200);
+    border-color: var(--a-orange-400);
+
+    .ikon {
+        color: var(--a-orange-600);
+    }
+}
+
+.annet {
+    background: var(--a-orange-300);
+    border-color: var(--a-orange-400);
+
+    .ikon {
+        color: var(--a-orange-600);
+    }
+}
+
+.ikkeDeltatt {
+    background: var(--a-red-200);
+    border-color: var(--a-red-400);
+
+    .ikon {
+        color: var(--a-red-600);
+    }
+}

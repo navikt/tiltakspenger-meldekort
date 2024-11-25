@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato } from '@utils/datetime';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { FraværStatusValg } from '@components/fyll-ut/steg-2-fravær/dag/fravær-valg-modal/status-valg/FraværStatusValg';
+import { FraværStatusValg } from '@components/fyll-ut/steg-2-fravær/fravær-modal/status-valg/FraværStatusValg';
 
 import style from './FraværValgModal.module.css';
 

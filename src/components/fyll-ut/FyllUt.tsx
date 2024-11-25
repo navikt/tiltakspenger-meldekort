@@ -1,6 +1,6 @@
 import { BodyLong, Heading } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
-import { FraværValgModal } from '@components/fyll-ut/steg-2-fravær/dag/fravær-valg-modal/FraværValgModal';
+import { FraværValgModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/FraværValgModal';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
 import { useEffect, useState } from 'react';
 import { Steg1_Deltatt } from '@components/fyll-ut/steg-1-deltatt/Steg1_Deltatt';

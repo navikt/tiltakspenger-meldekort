@@ -5,8 +5,8 @@ import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { Tekst } from '@components/tekst/Tekst';
-import { StatiskDag } from '@components/fyll-ut/dag-felles/StatiskDag';
-import { meldekortStatusTilStyle } from '@components/fyll-ut/dag-felles/dagFellesUtils';
+import { StatiskDag } from '@components/fyll-ut/kalender/statisk-dag/StatiskDag';
+import { getMeldekortDagStatusStyle } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
 import style from './FraværDagValg.module.css';
 
@@ -26,7 +26,7 @@ export const FraværDagValg = ({ dag }: Props) => {
     return harDeltatt ? (
         <StatiskDag dag={dag} />
     ) : (
-        <div className={classNames(style.fravær, status && meldekortStatusTilStyle[status])}>
+        <div className={classNames(style.fravær, getMeldekortDagStatusStyle(status))}>
             <BodyLong>{datoTekst}</BodyLong>
             <div className={style.fraværRad}>
                 <BodyLong weight={'semibold'}>

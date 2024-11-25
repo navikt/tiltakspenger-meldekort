@@ -5,7 +5,7 @@ import { getISOWeek } from 'date-fns';
 import { DeltattDagValg } from '@components/fyll-ut/steg-1-deltatt/dag/DeltattDagValg';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 import { FraværDagValg } from '@components/fyll-ut/steg-2-fravær/dag/FraværDagValg';
-import { StatiskDag } from '@components/fyll-ut/dag-felles/StatiskDag';
+import { StatiskDag } from '@components/fyll-ut/kalender/statisk-dag/StatiskDag';
 
 import style from './KalenderUke.module.css';
 
