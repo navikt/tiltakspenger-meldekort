@@ -18,7 +18,9 @@ export const Steg3_Bekreft = () => {
 
     return (
         <>
-            <Alert variant={'warning'}>{'Meldekortet er ikke sendt ennå!'}</Alert>
+            <Alert variant={'warning'}>
+                <Tekst id={'bekreftStegIkkeSendtEnnå'} />
+            </Alert>
             <Kalender steg={'bekreft'} />
             <Checkbox onChange={() => setHarBekreftet(!harBekreftet)}>
                 <Tekst id={'bekreftStegCheckbox'} />

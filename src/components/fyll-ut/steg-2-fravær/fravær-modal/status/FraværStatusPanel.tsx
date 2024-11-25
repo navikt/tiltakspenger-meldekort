@@ -1,17 +1,23 @@
 import { BodyLong, Radio } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { FraværStatus } from '@typer/meldekort-utfylling';
+import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { Tekst, TekstId } from '@components/tekst/Tekst';
-import { getMeldekortDagStatusStyle, getStatusTekstId } from '@components/fyll-ut/dag-felles/dagFellesUtils';
+import {
+    getMeldekortDagStatusStyle,
+    getStatusTekstId,
+} from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
 import style from './FraværStatusPanel.module.css';
 
 type Props = {
-    status: FraværStatus;
+    status: MeldekortDagStatus;
+    valgtStatus: MeldekortDagStatus | null;
     ingressId: TekstId;
 };
 
-export const FraværStatusPanel = ({ status, ingressId }: Props) => {
+export const FraværStatusPanel = ({ status, ingressId, valgtStatus }: Props) => {
+    const erValgt = status === valgtStatus;
+
     return (
         <Radio
             value={status}
@@ -20,9 +26,11 @@ export const FraværStatusPanel = ({ status, ingressId }: Props) => {
             <BodyLong weight={'semibold'}>
                 <Tekst id={getStatusTekstId(status)} />
             </BodyLong>
-            <BodyLong>
-                <Tekst id={ingressId} />
-            </BodyLong>
+            {erValgt && (
+                <BodyLong className={style.ingress}>
+                    <Tekst id={ingressId} />
+                </BodyLong>
+            )}
         </Radio>
     );
 };

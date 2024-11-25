@@ -26,8 +26,6 @@ export const teksterNb = {
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
 
     fyllUtTittel: 'Fyll ut meldekortet',
-    fyllUtKlikkPåDato:
-        'Klikk på datoen du skal melde for. Du kan velge mellom jobb, syk, ferie/fravær eller tiltak/kurs/utdanning.',
     fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet',
 
     deltattStegHeader: 'Velg de dagene du deltok på tiltaket',
@@ -39,10 +37,11 @@ export const teksterNb = {
     fraværStegHeader: 'Legg inn når du ikke fikk deltatt på tiltaket',
     fraværStegIngress:
         'Velg grunnen til at du ikke fikk deltatt på tiltaket. Noen grunner vil gi deg utbetaling allikevel, mens andre vil ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere noe på',
-    fraværModalHvaVilDu: 'Hva vil du melde?',
+
     fraværPanelRegistrer: 'Registrer fravær',
     fraværPanelEndre: 'Endre fravær',
 
+    fraværModalHeader: 'Hva vil du melde?',
     fraværModalSykIngress:
         'Du kan ha rett til tiltakspenger hvis du er for syk til å delta på tiltaksdagen.',
     fraværModalSyktBarnIngress:
@@ -53,5 +52,5 @@ export const teksterNb = {
         'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende på tiltaksdagen, og fraværet ikke er avtalt med Nav.',
 
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
+    bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
 } as const;
-

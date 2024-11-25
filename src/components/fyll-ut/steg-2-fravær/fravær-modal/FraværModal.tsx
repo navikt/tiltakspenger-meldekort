@@ -46,7 +46,7 @@ export const FraværModal = () => {
             <Modal.Body>
                 <RadioGroup
                     value={valgtStatus}
-                    legend={<Tekst id={'fraværModalHvaVilDu'} />}
+                    legend={<Tekst id={'fraværModalHeader'} />}
                     onChange={(value: MeldekortDagStatus) => {
                         setValgtStatus(value);
                     }}
@@ -54,18 +54,22 @@ export const FraværModal = () => {
                     <FraværStatusPanel
                         status={MeldekortDagStatus.FraværSyk}
                         ingressId={'fraværModalSykIngress'}
+                        valgtStatus={valgtStatus}
                     />
                     <FraværStatusPanel
                         status={MeldekortDagStatus.FraværSyktBarn}
                         ingressId={'fraværModalSyktBarnIngress'}
+                        valgtStatus={valgtStatus}
                     />
                     <FraværStatusPanel
                         status={MeldekortDagStatus.FraværAnnet}
                         ingressId={'fraværModalAnnetGodkjentIngress'}
+                        valgtStatus={valgtStatus}
                     />
                     <FraværStatusPanel
                         status={MeldekortDagStatus.IkkeDeltatt}
                         ingressId={'fraværModalIkkeGodkjentIngress'}
+                        valgtStatus={valgtStatus}
                     />
                 </RadioGroup>
             </Modal.Body>
