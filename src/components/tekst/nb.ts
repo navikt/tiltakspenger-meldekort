@@ -10,13 +10,30 @@ export const teksterNb = {
     forsideTakk: 'Takk for at du er ærlig!',
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
-    neste: 'Neste',
     seOgEndre: 'Se og endre innsendte meldekort',
+
+    neste: 'Neste',
+    forrige: 'Forrige',
+    lagre: 'lagre',
+    slett: 'Slett',
+    avbryt: 'Avbryt',
+    sendInn: 'Send inn',
 
     fyllUtTittel: 'Fyll ut meldekortet',
     fyllUtKlikkPåDato:
         'Klikk på datoen du skal melde for. Du kan velge mellom jobb, syk, ferie/fravær eller tiltak/kurs/utdanning.',
     fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet',
+
+    deltattStegHeader: 'Velg de dagene du deltok på tiltaket',
+    deltattStegIngress: 'Hvis du har fravær fra tiltaket, kan du legge inn dette i neste steg.',
+
+    fraværSpørsmål: 'Har du hatt fravær fra tiltaket?',
+    fraværJa: 'Ja, jeg har hatt fravær',
+    fraværNei: 'Nei, jeg har ikke hatt fravær',
+
+    fraværStegHeader: 'Legg inn når du ikke fikk deltatt på tiltaket',
+    fraværStegIngress:
+        'Velg grunnen til at du ikke fikk deltatt på tiltaket. Noen grunner vil gi deg utbetaling allikevel, mens andre vil ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere noe på',
 
     bekreftTittel: 'Se over før du sender inn',
     bekreftTekst:
@@ -38,7 +55,10 @@ export const teksterNb = {
     sykIngress: 'Du har vært syk',
     syktBarnIngress: 'Du har hatt sykt barn eller syk barnepasser',
     annetFraværIngress: 'Du har annet fravær som er godkjent av Nav',
-    ikkeDeltattIngress: 'Annet fravær som ikke er godkjent av Nav'
+    ikkeDeltattIngress: 'Annet fravær som ikke er godkjent av Nav',
+
+    registrerFravær: 'Registrer fravær',
+    endreFravær: 'Endre fravær',
 } as const;
 
 export type TekstId = keyof typeof teksterNb;

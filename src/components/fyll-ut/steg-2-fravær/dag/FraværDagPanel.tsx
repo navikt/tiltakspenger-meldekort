@@ -40,7 +40,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
                     }}
                     className={style.registrerKnapp}
                 >
-                    {'Registrer fravær'}
+                    <Tekst id={status ? 'endreFravær' : 'registrerFravær'} />
                 </Button>
             </div>
         </div>

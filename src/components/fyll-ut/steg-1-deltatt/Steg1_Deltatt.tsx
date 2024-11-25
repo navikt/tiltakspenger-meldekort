@@ -3,6 +3,7 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
+import { Tekst } from '@components/tekst/Tekst';
 
 import style from './Steg1_Deltatt.module.css';
 
@@ -26,24 +27,30 @@ export const Steg1_Deltatt = () => {
 
     return (
         <>
-            <BodyLong weight={'semibold'}>{'Velg de dagene du deltok på tiltaket'}</BodyLong>
+            <BodyLong weight={'semibold'}>
+                <Tekst id={'deltattStegHeader'} />
+            </BodyLong>
             <BodyLong>
-                {'Hvis du har fravær fra tiltaket, kan du legge inn dette i neste steg.'}
+                <Tekst id={'deltattStegIngress'} />
             </BodyLong>
             <Kalender steg={'deltatt'} />
             <BodyLong className={style.teller} weight={'semibold'}>
                 {dagerDeltattString}
             </BodyLong>
             <RadioGroup
-                legend={'Har du hatt fravær fra tiltaket?'}
+                legend={<Tekst id={'fraværSpørsmål'} />}
                 value={fraværStatus}
                 onChange={(value: FraværStatus) => {
                     setFraværStatus(value);
                 }}
                 className={style.fraværValg}
             >
-                <Radio value={'medFravær'}>{'Ja, jeg har hatt fravær'}</Radio>
-                <Radio value={'utenFravær'}>{'Nei, jeg har ikke hatt fravær'}</Radio>
+                <Radio value={'medFravær'}>
+                    <Tekst id={'fraværJa'} />
+                </Radio>
+                <Radio value={'utenFravær'}>
+                    <Tekst id={'fraværNei'} />
+                </Radio>
             </RadioGroup>
             <Button
                 disabled={!fraværStatus}

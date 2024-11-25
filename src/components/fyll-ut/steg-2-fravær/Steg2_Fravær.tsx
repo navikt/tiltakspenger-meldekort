@@ -1,6 +1,7 @@
 import { BodyLong, Button } from '@navikt/ds-react';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
+import { Tekst } from '@components/tekst/Tekst';
 
 import style from './Steg2_Fravær.module.css';
 
@@ -10,12 +11,10 @@ export const Steg2_Fravær = () => {
     return (
         <>
             <BodyLong weight={'semibold'}>
-                {'Legg inn når du ikke fikk deltatt på tiltaket'}
+                <Tekst id={'fraværStegHeader'} />
             </BodyLong>
             <BodyLong>
-                {
-                    'Velg grunnen til at du ikke fikk deltatt på tiltaket. Noen grunner vil gi deg utbetaling allikevel, mens andre vil ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere noe på'
-                }
+                <Tekst id={'fraværStegIngress'} />
             </BodyLong>
             <Kalender steg={'fravær'} />
             <div className={style.knapper}>
@@ -24,14 +23,14 @@ export const Steg2_Fravær = () => {
                         setMeldekortSteg('deltatt');
                     }}
                 >
-                    {'Forrige'}
+                    <Tekst id={'forrige'} />
                 </Button>
                 <Button
                     onClick={() => {
                         setMeldekortSteg('bekreft');
                     }}
                 >
-                    {'Neste'}
+                    <Tekst id={'neste'} />
                 </Button>
             </div>
         </>

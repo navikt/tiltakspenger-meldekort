@@ -29,14 +29,14 @@ export const Steg3_Bekreft = () => {
                         setMeldekortSteg(harFravær ? 'fravær' : 'deltatt');
                     }}
                 >
-                    {'Forrige'}
+                    <Tekst id={'forrige'} />
                 </Button>
                 <Button
                     disabled={!harBekreftet}
                     as={Lenke}
                     href={`/[meldekortId]/kvittering?meldekortId=${meldekortUtfylling!.id}`}
                 >
-                    {'Send inn'}
+                    <Tekst id={'sendInn'} />
                 </Button>
             </div>
         </>

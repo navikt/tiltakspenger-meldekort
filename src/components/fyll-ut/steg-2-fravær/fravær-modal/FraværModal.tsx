@@ -77,7 +77,7 @@ export const FraværModal = () => {
                         lagreOgLukk(valgtStatus);
                     }}
                 >
-                    {'Lagre'}
+                    <Tekst id={'lagre'} />
                 </Button>
                 <Button
                     variant={'secondary'}
@@ -85,7 +85,7 @@ export const FraværModal = () => {
                         lagreOgLukk(null);
                     }}
                 >
-                    {valgtStatus ? 'Slett' : 'Avbryt'}
+                    <Tekst id={valgtStatus ? 'slett' : 'avbryt'} />
                 </Button>
             </Modal.Footer>
         </Modal>
