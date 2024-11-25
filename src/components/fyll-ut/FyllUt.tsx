@@ -1,6 +1,6 @@
 import { BodyLong, Heading } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
-import { FraværValgModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/FraværValgModal';
+import { FraværModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/FraværModal';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
 import { useEffect, useState } from 'react';
 import { Steg1_Deltatt } from '@components/fyll-ut/steg-1-deltatt/Steg1_Deltatt';
@@ -47,7 +47,7 @@ export const FyllUt = ({ meldekort }: Props) => {
                 {meldekortSteg === 'deltatt' && <Steg1_Deltatt />}
                 {meldekortSteg === 'fravær' && <Steg2_Fravær />}
                 {meldekortSteg === 'bekreft' && <Steg3_Bekreft />}
-                <FraværValgModal />
+                <FraværModal />
             </MeldekortUtfyllingProvider>
         </div>
     );

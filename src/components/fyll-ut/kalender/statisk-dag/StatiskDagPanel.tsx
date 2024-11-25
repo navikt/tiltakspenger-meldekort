@@ -14,13 +14,13 @@ import { Tekst } from '@components/tekst/Tekst';
 import classNames from 'classnames';
 import { getMeldekortDagStatusStyle } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
-import style from './StatiskDag.module.css';
+import style from './StatiskDagPanel.module.css';
 
 type Props = {
     dag: MeldekortDag;
 };
 
-export const StatiskDag = ({ dag }: Props) => {
+export const StatiskDagPanel = ({ dag }: Props) => {
     const { status, dato } = dag;
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });

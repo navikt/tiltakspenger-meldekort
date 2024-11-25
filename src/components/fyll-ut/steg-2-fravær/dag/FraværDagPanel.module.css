@@ -1,8 +1,7 @@
 .fravær {
     padding: 0.5rem;
-
-    background: var(--a-gray-100);
-    border: 1px solid var(--a-gray-400);
+    border-width: 1px;
+    border-style: solid;
     border-radius: var(--a-border-radius-large);
 }
 

@@ -2,17 +2,17 @@ import React from 'react';
 import { MeldekortDag } from '@typer/meldekort-utfylling';
 import { Heading } from '@navikt/ds-react';
 import { getISOWeek } from 'date-fns';
-import { DeltattDagValg } from '@components/fyll-ut/steg-1-deltatt/dag/DeltattDagValg';
+import { DeltattDagPanel } from '@components/fyll-ut/steg-1-deltatt/dag/DeltattDagPanel';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
-import { FraværDagValg } from '@components/fyll-ut/steg-2-fravær/dag/FraværDagValg';
-import { StatiskDag } from '@components/fyll-ut/kalender/statisk-dag/StatiskDag';
+import { FraværDagPanel } from '@components/fyll-ut/steg-2-fravær/dag/FraværDagPanel';
+import { StatiskDagPanel } from '@components/fyll-ut/kalender/statisk-dag/StatiskDagPanel';
 
 import style from './KalenderUke.module.css';
 
 const DagKomponentForSteg: Record<MeldekortSteg, React.FunctionComponent<{ dag: MeldekortDag }>> = {
-    deltatt: DeltattDagValg,
-    fravær: FraværDagValg,
-    bekreft: StatiskDag,
+    deltatt: DeltattDagPanel,
+    fravær: FraværDagPanel,
+    bekreft: StatiskDagPanel,
 };
 
 type Props = {

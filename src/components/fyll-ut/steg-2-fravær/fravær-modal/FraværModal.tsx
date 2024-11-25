@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato } from '@utils/datetime';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { FraværStatusValg } from '@components/fyll-ut/steg-2-fravær/fravær-modal/status-valg/FraværStatusValg';
+import { FraværStatusPanel } from '@components/fyll-ut/steg-2-fravær/fravær-modal/status/FraværStatusPanel';
 
-import style from './FraværValgModal.module.css';
+import style from './FraværModal.module.css';
 
-export const FraværValgModal = () => {
+export const FraværModal = () => {
     const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();
 
     const [valgtStatus, setValgtStatus] = useState<MeldekortDagStatus | null>(
@@ -51,19 +51,19 @@ export const FraværValgModal = () => {
                         setValgtStatus(value);
                     }}
                 >
-                    <FraværStatusValg
+                    <FraværStatusPanel
                         status={MeldekortDagStatus.FraværSyk}
                         ingressId={'sykIngress'}
                     />
-                    <FraværStatusValg
+                    <FraværStatusPanel
                         status={MeldekortDagStatus.FraværSyktBarn}
                         ingressId={'syktBarnIngress'}
                     />
-                    <FraværStatusValg
+                    <FraværStatusPanel
                         status={MeldekortDagStatus.FraværAnnet}
                         ingressId={'annetFraværIngress'}
                     />
-                    <FraværStatusValg
+                    <FraværStatusPanel
                         status={MeldekortDagStatus.IkkeDeltatt}
                         ingressId={'ikkeDeltattIngress'}
                     />

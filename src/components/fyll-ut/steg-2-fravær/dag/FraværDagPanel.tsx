@@ -5,16 +5,16 @@ import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { Tekst } from '@components/tekst/Tekst';
-import { StatiskDag } from '@components/fyll-ut/kalender/statisk-dag/StatiskDag';
+import { StatiskDagPanel } from '@components/fyll-ut/kalender/statisk-dag/StatiskDagPanel';
 import { getMeldekortDagStatusStyle } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
-import style from './FraværDagValg.module.css';
+import style from './FraværDagPanel.module.css';
 
 type Props = {
     dag: MeldekortDag;
 };
 
-export const FraværDagValg = ({ dag }: Props) => {
+export const FraværDagPanel = ({ dag }: Props) => {
     const { setValgtMeldekortDag } = useMeldekortUtfylling();
 
     const { dato, status } = dag;
@@ -24,7 +24,7 @@ export const FraværDagValg = ({ dag }: Props) => {
     const harDeltatt = status === MeldekortDagStatus.Deltatt;
 
     return harDeltatt ? (
-        <StatiskDag dag={dag} />
+        <StatiskDagPanel dag={dag} />
     ) : (
         <div className={classNames(style.fravær, getMeldekortDagStatusStyle(status))}>
             <BodyLong>{datoTekst}</BodyLong>

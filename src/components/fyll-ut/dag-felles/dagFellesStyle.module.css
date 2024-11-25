@@ -2,7 +2,7 @@
     background: var(--a-gray-100);
     border-color: var(--a-gray-400);
 
-    .ikon {
+    & > svg {
         color: var(--a-gray-800);
     }
 }
@@ -11,7 +11,7 @@
     background: var(--a-green-100);
     border-color: var(--a-green-400);
 
-    .ikon {
+    & > svg {
         color: var(--a-green-600);
     }
 }
@@ -20,7 +20,7 @@
     background: var(--a-orange-100);
     border-color: var(--a-orange-400);
 
-    .ikon {
+    & > svg {
         color: var(--a-orange-600);
     }
 }
@@ -29,7 +29,7 @@
     background: var(--a-orange-200);
     border-color: var(--a-orange-400);
 
-    .ikon {
+    & > svg {
         color: var(--a-orange-600);
     }
 }
@@ -38,7 +38,7 @@
     background: var(--a-orange-300);
     border-color: var(--a-orange-400);
 
-    .ikon {
+    & > svg {
         color: var(--a-orange-600);
     }
 }
@@ -47,7 +47,7 @@
     background: var(--a-red-200);
     border-color: var(--a-red-400);
 
-    .ikon {
+    & > svg {
         color: var(--a-red-600);
     }
 }
