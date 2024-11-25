@@ -1,9 +1,8 @@
 import { BodyLong, Radio } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { FraværStatus } from '@typer/meldekort-utfylling';
-import { Tekst } from '@components/tekst/Tekst';
-import { TekstId } from '@components/tekst/nb';
-import { getMeldekortDagStatusStyle } from '@components/fyll-ut/dag-felles/dagFellesUtils';
+import { Tekst, TekstId } from '@components/tekst/Tekst';
+import { getMeldekortDagStatusStyle, getStatusTekstId } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
 import style from './FraværStatusPanel.module.css';
 
@@ -19,7 +18,7 @@ export const FraværStatusPanel = ({ status, ingressId }: Props) => {
             className={classNames(style.valg, getMeldekortDagStatusStyle(status))}
         >
             <BodyLong weight={'semibold'}>
-                <Tekst id={status} />
+                <Tekst id={getStatusTekstId(status)} />
             </BodyLong>
             <BodyLong>
                 <Tekst id={ingressId} />

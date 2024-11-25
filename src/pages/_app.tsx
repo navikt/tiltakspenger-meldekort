@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Page, VStack } from '@navikt/ds-react';
 import { PageHeader } from '@components/page-header/PageHeader';
-import { teksterNb } from '@components/tekst/nb';
+import { teksterNb } from '@tekster/nb';
 
 import style from '@components/forside/Forside.module.css';
 
@@ -12,7 +12,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     return (
         <Page className={style.forside}>
             <Head>
-                <title>{`${teksterNb['meldekortTittel']} - nav.no`}</title>
+                <title>{`${teksterNb['sideTittel']} - nav.no`}</title>
             </Head>
             <PageHeader />
             <Page.Block width={'md'} as={'main'} id={'maincontent'}>

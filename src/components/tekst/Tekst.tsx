@@ -1,8 +1,12 @@
-import { teksterNb, TekstId } from '@components/tekst/nb';
+import { teksterNb } from '@tekster/nb';
 
-const tekster = {
+export type TekstId = keyof typeof teksterNb;
+
+type Tekster = Record<TekstId, string>;
+
+const tekster: Record<string, Tekster> = {
     nb: teksterNb,
-};
+} as const;
 
 type Props = {
     id: TekstId;

@@ -21,7 +21,7 @@ export const Steg3_Bekreft = () => {
             <Alert variant={'warning'}>{'Meldekortet er ikke sendt ennå!'}</Alert>
             <Kalender steg={'bekreft'} />
             <Checkbox onChange={() => setHarBekreftet(!harBekreftet)}>
-                <Tekst id={'bekreftCheckbox'} />
+                <Tekst id={'bekreftStegCheckbox'} />
             </Checkbox>
             <div className={style.knapper}>
                 <Button

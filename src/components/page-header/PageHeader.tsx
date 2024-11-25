@@ -7,7 +7,7 @@ export const PageHeader = () => {
     return (
         <div className={style.wrapper}>
             <Heading size={'xlarge'} className={style.header}>
-                <Tekst id={'meldekortTittel'} />
+                <Tekst id={'sideTittel'} />
             </Heading>
         </div>
     );

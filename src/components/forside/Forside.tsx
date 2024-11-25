@@ -27,7 +27,7 @@ export const Forside = ({ nesteMeldekortIds }: Props) => {
             </BodyLong>
             <TilUtfylling nesteMeldekortId={nesteMeldekortIds[0]} />
             <Lenke href={'/innsendt'}>
-                <Tekst id={'seOgEndre'} />
+                <Tekst id={'forsideSeOgEndre'} />
             </Lenke>
         </>
     );

@@ -38,7 +38,7 @@ export const Steg1_Deltatt = () => {
                 {dagerDeltattString}
             </BodyLong>
             <RadioGroup
-                legend={<Tekst id={'fraværSpørsmål'} />}
+                legend={<Tekst id={'deltattStegFraværSpørsmål'} />}
                 value={fraværStatus}
                 onChange={(value: FraværStatus) => {
                     setFraværStatus(value);
@@ -46,10 +46,10 @@ export const Steg1_Deltatt = () => {
                 className={style.fraværValg}
             >
                 <Radio value={'medFravær'}>
-                    <Tekst id={'fraværJa'} />
+                    <Tekst id={'deltattStegFraværJa'} />
                 </Radio>
                 <Radio value={'utenFravær'}>
-                    <Tekst id={'fraværNei'} />
+                    <Tekst id={'deltattStegFraværNei'} />
                 </Radio>
             </RadioGroup>
             <Button
