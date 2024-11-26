@@ -2,6 +2,8 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 import { KalenderUke } from '@components/fyll-ut/kalender/uke/KalenderUke';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 
+import style from './Kalender.module.css'
+
 type Props = {
     steg: MeldekortSteg;
 };
@@ -18,7 +20,7 @@ export const Kalender = ({ steg }: Props) => {
     const andreUke = meldekortUtfylling.meldekortDager.slice(7, 14);
 
     return (
-        <div>
+        <div className={style.kalender}>
             <KalenderUke dager={forsteUke} steg={steg} />
             <KalenderUke dager={andreUke} steg={steg} />
         </div>

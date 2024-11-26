@@ -26,7 +26,7 @@ export const KalenderUke = ({ dager, steg }: Props) => {
     const DagKomponent = DagKomponentForSteg[steg];
 
     return (
-        <div className={style.uke}>
+        <div>
             <Heading size={'medium'} className={style.heading}>
                 {ukenummerTekst}
             </Heading>

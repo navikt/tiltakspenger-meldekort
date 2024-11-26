@@ -1,7 +1,3 @@
-.uke {
-    margin-top: 2rem;
-}
-
 .heading {
     margin: 1rem 0;
 }
@@ -15,4 +11,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+
+    & > li > * {
+        width: 100%;
+    }
 }
