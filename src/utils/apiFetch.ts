@@ -1,29 +1,31 @@
 import { getFnr, getOboToken } from '@utils/auth';
-import { MeldekortTilUtfyllingDto } from '@typer/meldekort-dto';
+import { MeldekortInnsendingDto, MeldekortTilUtfyllingDto } from '@typer/meldekort-dto';
 import { NextRequestType } from '@typer/request';
 
-export const fetchFraApi = async <ResponseType = unknown>(
+const fetchFraApi = async (
     req: NextRequestType,
-    path: string
-): Promise<ResponseType | null> => {
+    path: string,
+    method: 'GET' | 'POST',
+    body?: BodyInit
+) => {
     const oboToken = await getOboToken(req);
 
     const url = `${process.env.MELDEKORT_API_URL}${path}`;
 
     return fetch(url, {
+        method,
+        body,
         headers: {
             'Content-Type': 'application/json',
             authorization: `Bearer ${oboToken}`,
         },
     })
         .then((res) => {
-            if (res.ok) {
-                return res.json() as ResponseType;
+            if (!res.ok) {
+                console.error(`Feil-response fra meldekort-api ${url} - ${res.status}`);
             }
 
-            console.error(`Feil-response fra meldekort-api ${url} - ${res.status}`);
-
-            return null;
+            return res;
         })
         .catch((e) => {
             console.error(`Exception ved fetch fra meldekort-api - ${e}`);
@@ -34,11 +36,27 @@ export const fetchFraApi = async <ResponseType = unknown>(
 export const fetchSisteMeldekort = async (req: NextRequestType) => {
     const fnr = getFnr(req);
 
-    return fetchFraApi<MeldekortTilUtfyllingDto>(req, `/meldekort/siste?fnr=${fnr}`);
+    return fetchFraApi(req, `/meldekort/siste?fnr=${fnr}`, 'GET').then((res) =>
+        res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto>) : null
+    );
 };
 
 export const fetchGenererMeldekort = async (req: NextRequestType) => {
     const fnr = getFnr(req);
 
-    return fetchFraApi<MeldekortTilUtfyllingDto>(req, `/meldekort/generer?fnr=${fnr}`);
+    return fetchFraApi(req, `/meldekort/generer?fnr=${fnr}`, 'GET').then((res) =>
+        res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto>) : null
+    );
+};
+
+export const fetchSendInnMeldekort = async (
+    req: NextRequestType,
+    meldekort: MeldekortInnsendingDto
+) => {
+    return fetchFraApi(
+        req,
+        '/meldekort/send-inn',
+        'POST',
+        JSON.stringify(meldekort)
+    );
 };

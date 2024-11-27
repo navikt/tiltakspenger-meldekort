@@ -2,7 +2,18 @@
     margin-top: 2rem;
 }
 
+.ingenMeldekort {
+    width: 100%;
+
+    & > :last-child {
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 1;
+
+    }
+}
+
 .genererKnapp {
-    max-width: 150px;
-    margin-top: 1rem;
+    max-width: 200px;
+    margin-left: auto;
 }

@@ -31,26 +31,33 @@ export const Forside = ({ nesteMeldekortId }: Props) => {
                 <TilUtfylling nesteMeldekortId={nesteMeldekortId} />
             ) : (
                 <>
-                    <Alert variant={'info'}>
-                        <Tekst id={'forsideIngenMeldekort'} />
-                    </Alert>
-                    <Button
-                        size={'small'}
-                        className={style.genererKnapp}
-                        onClick={() => {
-                            fetch(`${window.location.href}/api/generer-meldekort`, {
-                                credentials: 'include',
-                            }).then((res) => {
-                                if (res.ok) {
-                                    window.location.reload();
-                                } else {
-                                    window.alert(`Generering av meldekort feilet med kode ${res.status}`);
-                                }
-                            });
-                        }}
+                    <Alert
+                        variant={'info'}
+                        contentMaxWidth={false}
+                        className={style.ingenMeldekort}
                     >
-                        {'Generer nytt meldekort'}
-                    </Button>
+                        <Tekst id={'forsideIngenMeldekort'} />
+                        <Button
+                            size={'small'}
+                            variant={'primary'}
+                            className={style.genererKnapp}
+                            onClick={() => {
+                                fetch(`${window.location.origin}/tiltakspenger/meldekort/api/generer-meldekort`, {
+                                    credentials: 'include',
+                                }).then((res) => {
+                                    if (res.ok) {
+                                        window.location.reload();
+                                    } else {
+                                        window.alert(
+                                            `Generering av meldekort feilet med kode ${res.status}`
+                                        );
+                                    }
+                                });
+                            }}
+                        >
+                            {'Generer et meldekort for denne brukeren'}
+                        </Button>
+                    </Alert>
                 </>
             )}
             <Lenke href={'/innsendt'} className={style.tidligere}>
