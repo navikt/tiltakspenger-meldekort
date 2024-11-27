@@ -6,11 +6,11 @@ import { Page, VStack } from '@navikt/ds-react';
 import { PageHeader } from '@components/page-header/PageHeader';
 import { teksterNb } from '@tekster/nb';
 
-import style from '@components/forside/Forside.module.css';
+import style from './_app.module.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
     return (
-        <Page className={style.forside}>
+        <Page className={style.app}>
             <Head>
                 <title>{`${teksterNb['sideTittel']} - nav.no`}</title>
             </Head>

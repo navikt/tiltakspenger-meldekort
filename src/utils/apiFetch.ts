@@ -1,7 +1,8 @@
-import { NextApiRequest } from 'next';
-import { getOboToken } from '@utils/auth';
+import { getFnr, getOboToken } from '@utils/auth';
+import { MeldekortTilUtfyllingDto } from '@typer/meldekort-dto';
+import { NextRequestType } from '@typer/request';
 
-export const fetchFraApi = async (req: NextApiRequest, path: string) => {
+export const fetchFraApi = async (req: NextRequestType, path: string) => {
     const oboToken = getOboToken(req);
 
     return fetch(`${process.env.MELDEKORT_API_URL}${path}`, {
@@ -14,3 +15,19 @@ export const fetchFraApi = async (req: NextApiRequest, path: string) => {
         return null;
     });
 };
+
+export const fetchSisteMeldekort = async (req: NextRequestType) => {
+    const fnr = getFnr(req);
+
+    return fetchFraApi(req, `/meldekort/siste?fnr=${fnr}`).then((apiRes) =>
+        apiRes?.ok ? (apiRes.json() as Promise<MeldekortTilUtfyllingDto>) : null
+    );
+};
+
+export const fetchGenererMeldekort = async (req: NextRequestType)=> {
+    const fnr = getFnr(req);
+
+    return fetchFraApi(req, `/meldekort/generer?fnr=${fnr}`).then((apiRes) =>
+        apiRes?.ok ? (apiRes.json() as Promise<MeldekortTilUtfyllingDto>) : null
+    );
+}

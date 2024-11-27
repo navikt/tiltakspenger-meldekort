@@ -1,4 +1,4 @@
-import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import { MeldekortDagStatus, MeldekortStatus } from '@typer/meldekort-utfylling';
 
 type MeldekortDagDto = {
     dag: string;
@@ -9,3 +9,11 @@ export type MeldekortInnsendingDto = {
     id: string;
     meldekortDager: MeldekortDagDto[];
 };
+
+export type MeldekortTilUtfyllingDto = {
+    id: string,
+    fraOgMed: string,
+    tilOgMed: string,
+    status?: MeldekortStatus;
+    meldekortDager: MeldekortDagDto[];
+}

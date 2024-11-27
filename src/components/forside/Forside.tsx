@@ -1,13 +1,15 @@
-import { BodyLong } from '@navikt/ds-react';
+import { Alert, BodyLong } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 import { Lenke } from '@components/lenke/Lenke';
 
+import style from './Forside.module.css'
+
 type Props = {
-    nesteMeldekortIds: string[];
+    nesteMeldekortId?: string;
 };
 
-export const Forside = ({ nesteMeldekortIds }: Props) => {
+export const Forside = ({ nesteMeldekortId }: Props) => {
     return (
         <>
             <BodyLong spacing={true}>
@@ -25,8 +27,14 @@ export const Forside = ({ nesteMeldekortIds }: Props) => {
             <BodyLong spacing={true}>
                 <Tekst id={'forsideOpplysninger'} />
             </BodyLong>
-            <TilUtfylling nesteMeldekortId={nesteMeldekortIds[0]} />
-            <Lenke href={'/innsendt'}>
+            {nesteMeldekortId ? (
+                <TilUtfylling nesteMeldekortId={nesteMeldekortId} />
+            ) : (
+                <Alert variant={'info'}>
+                    <Tekst id={'forsideIngenMeldekort'} />
+                </Alert>
+            )}
+            <Lenke href={'/innsendt'} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />
             </Lenke>
         </>

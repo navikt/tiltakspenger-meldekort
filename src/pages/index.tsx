@@ -1,10 +1,12 @@
 import { Forside } from '@components/forside/Forside';
 import { GetServerSideProps } from 'next';
-import { dummyMeldekort } from '@pages/[meldekortId]/fyll-ut';
+import { fetchSisteMeldekort } from '@utils/apiFetch';
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
+    const meldekort = await fetchSisteMeldekort(req);
+
     return {
-        props: { nesteMeldekortIds: [dummyMeldekort.id] },
+        props: { nesteMeldekortId: meldekort?.id ?? null },
     };
 };
 

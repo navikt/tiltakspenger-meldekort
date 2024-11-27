@@ -3,8 +3,13 @@ import Link, { LinkProps } from 'next/link';
 
 type Props = {
     children: React.ReactNode;
-} & LinkProps;
+} & LinkProps &
+    React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export const Lenke = ({ children, href, ...rest }: Props) => {
-    return <Link {...rest} href={href || ''}>{children}</Link>;
+    return (
+        <Link {...rest} href={href || ''}>
+            {children}
+        </Link>
+    );
 };

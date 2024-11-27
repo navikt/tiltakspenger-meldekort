@@ -24,6 +24,7 @@ export const teksterNb = {
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
+    forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
 
     fyllUtTittel: 'Fyll ut meldekortet',
     fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet',

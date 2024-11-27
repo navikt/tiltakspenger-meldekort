@@ -1,7 +1,7 @@
-import { NextApiRequest } from 'next';
 import { getToken, parseIdportenToken, requestOboToken, validateToken } from '@navikt/oasis';
+import { NextRequestType } from '@typer/request';
 
-export const getOboToken = async (req: NextApiRequest) => {
+export const getOboToken = async (req: NextRequestType) => {
     const token = getToken(req);
     if (!token) {
         console.error('Kunne ikke hente token fra request');
@@ -23,7 +23,7 @@ export const getOboToken = async (req: NextApiRequest) => {
     return oboToken.token;
 };
 
-export const getFnrFraToken = (req: NextApiRequest) => {
+export const getFnr = (req: NextRequestType) => {
     const token = getToken(req);
     if (!token) {
         return null;
@@ -32,4 +32,4 @@ export const getFnrFraToken = (req: NextApiRequest) => {
     const pid = parseIdportenToken(token);
 
     return pid.ok ? pid.pid : null;
-}
+};
