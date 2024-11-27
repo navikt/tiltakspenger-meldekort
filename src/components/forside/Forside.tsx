@@ -1,9 +1,9 @@
-import { Alert, BodyLong } from '@navikt/ds-react';
+import { Alert, BodyLong, Button } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 import { Lenke } from '@components/lenke/Lenke';
 
-import style from './Forside.module.css'
+import style from './Forside.module.css';
 
 type Props = {
     nesteMeldekortId?: string;
@@ -30,9 +30,28 @@ export const Forside = ({ nesteMeldekortId }: Props) => {
             {nesteMeldekortId ? (
                 <TilUtfylling nesteMeldekortId={nesteMeldekortId} />
             ) : (
-                <Alert variant={'info'}>
-                    <Tekst id={'forsideIngenMeldekort'} />
-                </Alert>
+                <>
+                    <Alert variant={'info'}>
+                        <Tekst id={'forsideIngenMeldekort'} />
+                    </Alert>
+                    <Button
+                        size={'small'}
+                        className={style.genererKnapp}
+                        onClick={() => {
+                            fetch(`${window.location.href}/api/generer-meldekort`, {
+                                credentials: 'include',
+                            }).then((res) => {
+                                if (res.ok) {
+                                    window.location.reload();
+                                } else {
+                                    window.alert(`Generering av meldekort feilet med kode ${res.status}`);
+                                }
+                            });
+                        }}
+                    >
+                        {'Generer nytt meldekort'}
+                    </Button>
+                </>
             )}
             <Lenke href={'/innsendt'} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />
