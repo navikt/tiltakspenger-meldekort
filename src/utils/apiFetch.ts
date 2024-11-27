@@ -1,4 +1,4 @@
-import { getFnr, getOboToken } from '@utils/auth';
+import { getOboToken } from '@utils/auth';
 import { MeldekortInnsendingDto, MeldekortTilUtfyllingDto } from '@typer/meldekort-dto';
 import { NextRequestType } from '@typer/request';
 
@@ -34,17 +34,13 @@ const fetchFraApi = async (
 };
 
 export const fetchSisteMeldekort = async (req: NextRequestType) => {
-    const fnr = getFnr(req);
-
-    return fetchFraApi(req, `/meldekort/siste?fnr=${fnr}`, 'GET').then((res) =>
+    return fetchFraApi(req, '/meldekort/siste', 'GET').then((res) =>
         res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto>) : null
     );
 };
 
 export const fetchGenererMeldekort = async (req: NextRequestType) => {
-    const fnr = getFnr(req);
-
-    return fetchFraApi(req, `/meldekort/generer?fnr=${fnr}`, 'GET').then((res) =>
+    return fetchFraApi(req, '/meldekort/generer', 'GET').then((res) =>
         res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto>) : null
     );
 };
