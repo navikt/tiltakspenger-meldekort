@@ -11,25 +11,27 @@ import style from './FraværModal.module.css';
 export const FraværModal = () => {
     const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();
 
-    const [valgtStatus, setValgtStatus] = useState<MeldekortDagStatus | null>(
-        valgtMeldekortDag?.status || null
-    );
+    const initiellStatus = valgtMeldekortDag?.status || MeldekortDagStatus.IkkeRegistrert;
+
+    const [valgtStatus, setValgtStatus] = useState<MeldekortDagStatus>(initiellStatus);
 
     const lukk = () => {
         setValgtMeldekortDag(null);
     };
 
-    const lagreOgLukk = (status: MeldekortDagStatus | null) => {
-        lagreMeldekortDag({
-            ...valgtMeldekortDag!,
-            status,
-        });
+    const lagreOgLukk = (status: MeldekortDagStatus) => {
+        if (valgtMeldekortDag) {
+            lagreMeldekortDag({
+                ...valgtMeldekortDag,
+                status,
+            });
+        }
         lukk();
     };
 
     useEffect(() => {
-        setValgtStatus(valgtMeldekortDag?.status || null);
-    }, [valgtMeldekortDag]);
+        setValgtStatus(initiellStatus);
+    }, [initiellStatus]);
 
     return (
         <Modal
@@ -86,7 +88,7 @@ export const FraværModal = () => {
                 <Button
                     variant={'secondary'}
                     onClick={() => {
-                        lagreOgLukk(null);
+                        lagreOgLukk(MeldekortDagStatus.IkkeRegistrert);
                     }}
                 >
                     <Tekst id={valgtStatus ? 'slett' : 'avbryt'} />

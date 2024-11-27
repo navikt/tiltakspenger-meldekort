@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { Tekst, TekstId } from '@components/tekst/Tekst';
 import {
-    getMeldekortDagStatusStyle,
-    getStatusTekstId,
+    meldekortStatusTilStyle,
+    statusTilTekstId,
 } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
 import style from './FraværStatusPanel.module.css';
@@ -21,10 +21,10 @@ export const FraværStatusPanel = ({ status, ingressId, valgtStatus }: Props) =>
     return (
         <Radio
             value={status}
-            className={classNames(style.valg, getMeldekortDagStatusStyle(status))}
+            className={classNames(style.valg, meldekortStatusTilStyle[status])}
         >
             <BodyLong weight={'semibold'}>
-                <Tekst id={getStatusTekstId(status)} />
+                <Tekst id={statusTilTekstId[status]} />
             </BodyLong>
             {erValgt && (
                 <BodyLong className={style.ingress}>

@@ -6,7 +6,10 @@ import { BodyLong, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { Tekst } from '@components/tekst/Tekst';
 import { StatiskDagPanel } from '@components/fyll-ut/kalender/statisk-dag/StatiskDagPanel';
-import { getMeldekortDagStatusStyle, getStatusTekstId } from '@components/fyll-ut/dag-felles/dagFellesUtils';
+import {
+    meldekortStatusTilStyle,
+    statusTilTekstId,
+} from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
 import style from './FraværDagPanel.module.css';
 
@@ -26,11 +29,11 @@ export const FraværDagPanel = ({ dag }: Props) => {
     return harDeltatt ? (
         <StatiskDagPanel dag={dag} />
     ) : (
-        <div className={classNames(style.fravær, getMeldekortDagStatusStyle(status))}>
+        <div className={classNames(style.fravær, meldekortStatusTilStyle[status])}>
             <BodyLong>{datoTekst}</BodyLong>
             <div className={style.fraværRad}>
                 <BodyLong weight={'semibold'}>
-                    <Tekst id={getStatusTekstId(status)} />
+                    <Tekst id={statusTilTekstId[status]} />
                 </BodyLong>
                 <Button
                     size={'small'}

@@ -5,8 +5,9 @@ import { formatterDato } from '@utils/datetime';
 import { Tekst } from '@components/tekst/Tekst';
 import classNames from 'classnames';
 import {
-    getIkonKomponent,
-    getMeldekortDagStatusStyle, getStatusTekstId,
+    statusTilIkon,
+    meldekortStatusTilStyle,
+    statusTilTekstId,
 } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 
 import style from './StatiskDagPanel.module.css';
@@ -20,14 +21,14 @@ export const StatiskDagPanel = ({ dag }: Props) => {
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
-    const IkonKomponent = getIkonKomponent(status);
+    const IkonKomponent = statusTilIkon[status];
 
     return (
-        <div className={classNames(style.statiskDag, getMeldekortDagStatusStyle(status))}>
+        <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
             {IkonKomponent && <IkonKomponent className={style.ikon} />}
             <BodyLong>{`${datoTekst}: `}</BodyLong>
             <BodyLong weight={'semibold'}>
-                <Tekst id={getStatusTekstId(status)} />
+                <Tekst id={statusTilTekstId[status]} />
             </BodyLong>
         </div>
     );

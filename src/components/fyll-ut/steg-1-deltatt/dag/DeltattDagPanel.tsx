@@ -20,7 +20,9 @@ export const DeltattDagPanel = ({ dag }: Props) => {
             onChange={(e) => {
                 lagreMeldekortDag({
                     ...dag,
-                    status: e.target.checked ? MeldekortDagStatus.Deltatt : null,
+                    status: e.target.checked
+                        ? MeldekortDagStatus.Deltatt
+                        : MeldekortDagStatus.IkkeRegistrert,
                 });
             }}
             checked={erValgt}

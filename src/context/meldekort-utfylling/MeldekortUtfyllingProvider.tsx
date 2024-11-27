@@ -1,8 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import {
-    MeldekortUtfyllingContext,
-    MeldekortUtfyllingState,
-} from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
+import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
 import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 
@@ -19,18 +16,20 @@ export const MeldekortUtfyllingProvider = ({
 }: Props) => {
     const [meldekortUtfylling, setMeldekortUtfylling] =
         useState<MeldekortUtfylling>(meldekortUtfyllingInitial);
-    const [valgtMeldekortDag, setValgtMeldekortDag] =
-        useState<MeldekortUtfyllingState['valgtMeldekortDag']>(null);
+    const [valgtMeldekortDag, setValgtMeldekortDag] = useState<MeldekortDag | null>(null);
 
-    const lagreMeldekortDag = useCallback((dag: MeldekortDag) => {
-        const meldekortDagerUpdated = [...meldekortUtfylling.meldekortDager];
-        meldekortDagerUpdated[dag.index] = dag;
+    const lagreMeldekortDag = useCallback(
+        (dag: MeldekortDag) => {
+            const meldekortDagerUpdated = [...meldekortUtfylling.meldekortDager];
+            meldekortDagerUpdated[dag.index] = dag;
 
-        setMeldekortUtfylling({
-            ...meldekortUtfylling,
-            meldekortDager: meldekortDagerUpdated,
-        });
-    }, [meldekortUtfylling]);
+            setMeldekortUtfylling({
+                ...meldekortUtfylling,
+                meldekortDager: meldekortDagerUpdated,
+            });
+        },
+        [meldekortUtfylling]
+    );
 
     return (
         <MeldekortUtfyllingContext.Provider
@@ -40,7 +39,7 @@ export const MeldekortUtfyllingProvider = ({
                 valgtMeldekortDag,
                 setValgtMeldekortDag,
                 lagreMeldekortDag,
-                setMeldekortSteg
+                setMeldekortSteg,
             }}
         >
             {children}

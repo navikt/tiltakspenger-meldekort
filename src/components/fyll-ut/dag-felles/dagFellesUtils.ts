@@ -1,60 +1,43 @@
-import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import React, { SVGProps } from 'react';
+import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
-    FirstAidFillIcon, QuestionmarkDiamondIcon,
+    FirstAidFillIcon,
+    QuestionmarkDiamondIcon,
     SunFillIcon,
     XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
+import { TekstId } from '@components/tekst/Tekst';
 
 import style from './dagFellesStyle.module.css';
 
-import { TekstId } from '@components/tekst/Tekst';
-
-type StatusEllerNull = MeldekortDag['status']
-
-const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
+export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
     [MeldekortDagStatus.Deltatt]: style.deltatt,
     [MeldekortDagStatus.FraværSyk]: style.syk,
     [MeldekortDagStatus.FraværSyktBarn]: style.syktBarn,
     [MeldekortDagStatus.FraværAnnet]: style.annet,
     [MeldekortDagStatus.IkkeDeltatt]: style.ikkeDeltatt,
+    [MeldekortDagStatus.IkkeRegistrert]: style.ikkeRegistrert,
 };
 
-export const getMeldekortDagStatusStyle = (status: StatusEllerNull) => {
-    return status ? meldekortStatusTilStyle[status] : style.ikkeRegistrert;
+export const statusTilIkon: Record<
+    MeldekortDagStatus,
+    React.FunctionComponent<SVGProps<SVGSVGElement>>
+> = {
+    [MeldekortDagStatus.Deltatt]: CheckmarkCircleFillIcon,
+    [MeldekortDagStatus.FraværSyk]: FirstAidFillIcon,
+    [MeldekortDagStatus.FraværSyktBarn]: BabyWrappedFillIcon,
+    [MeldekortDagStatus.FraværAnnet]: SunFillIcon,
+    [MeldekortDagStatus.IkkeDeltatt]: XMarkOctagonFillIcon,
+    [MeldekortDagStatus.IkkeRegistrert]: QuestionmarkDiamondIcon,
 };
 
-export const getIkonKomponent = (status: StatusEllerNull) => {
-    switch (status) {
-        case MeldekortDagStatus.Deltatt:
-            return CheckmarkCircleFillIcon;
-        case MeldekortDagStatus.FraværSyk:
-            return FirstAidFillIcon;
-        case MeldekortDagStatus.FraværSyktBarn:
-            return BabyWrappedFillIcon;
-        case MeldekortDagStatus.FraværAnnet:
-            return SunFillIcon;
-        case MeldekortDagStatus.IkkeDeltatt:
-            return XMarkOctagonFillIcon;
-    }
-
-    return QuestionmarkDiamondIcon;
+export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
+    [MeldekortDagStatus.Deltatt]: 'statusDeltatt',
+    [MeldekortDagStatus.FraværSyk]: 'statusSyk',
+    [MeldekortDagStatus.FraværSyktBarn]: 'statusSyktBarn',
+    [MeldekortDagStatus.FraværAnnet]: 'statusGodkjentFravær',
+    [MeldekortDagStatus.IkkeDeltatt]: 'statusIkkeGodkjentFravær',
+    [MeldekortDagStatus.IkkeRegistrert]: 'statusIkkeRegistrert',
 };
-
-export const getStatusTekstId = (status: StatusEllerNull): TekstId => {
-    switch (status) {
-        case MeldekortDagStatus.Deltatt:
-            return 'statusDeltatt';
-        case MeldekortDagStatus.FraværSyk:
-            return 'statusSyk';
-        case MeldekortDagStatus.FraværSyktBarn:
-            return 'statusSyktBarn';
-        case MeldekortDagStatus.FraværAnnet:
-            return 'statusGodkjentFravær';
-        case MeldekortDagStatus.IkkeDeltatt:
-            return 'statusIkkeGodkjentFravær';
-    }
-
-    return 'statusIkkeRegistrert';
-}
