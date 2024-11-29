@@ -35,22 +35,23 @@ export const teksterNb = {
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
     deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',
 
-    fraværStegHeader: 'Legg inn når du ikke fikk deltatt på tiltaket',
+    fraværStegHeader: 'Legg inn fravær når du skulle vært på tiltak men ikke fikk deltatt',
     fraværStegIngress:
-        'Velg grunnen til at du ikke fikk deltatt på tiltaket. Noen grunner vil gi deg utbetaling allikevel, mens andre vil ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere noe på',
+        'Velg hva slags fravær du hadde. Noen typer fravær gir rett til utbetaling, mens andre gjør det ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere.',
 
     fraværPanelRegistrer: 'Registrer fravær',
-    fraværPanelEndre: 'Endre fravær',
+    fraværPanelEndre: 'Registrer fravær',
 
     fraværModalHeader: 'Hva vil du melde?',
     fraværModalSykIngress:
-        'Du kan ha rett til tiltakspenger hvis du er for syk til å delta på tiltaksdagen.',
+        'Du kan ha rett til tiltakspenger hvis du er for syk til å delta på tiltaksdagen. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
     fraværModalSyktBarnIngress:
-        'Du kan ha rett på tiltakspenger hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk.',
+        'Du kan ha rett på tiltakspenger hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
     fraværModalAnnetGodkjentIngress:
-        'Du kan ha rett til tiltakspenger ved fravær som er avtalt med veilederen din. Ta kontakt med veilederen din for å sjekke mer om hva slags fravær som kan godkjennes.',
+        'Utgår inntil videre',
     fraværModalIkkeGodkjentIngress:
-        'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende på tiltaksdagen, og fraværet ikke er avtalt med Nav.',
+        'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende fra tiltaket, og fraværet ikke er avtalt med Nav.
+Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med veilederen din. For eksempel jobbintervju eller legetime. Du kan også ha rett til utbetaling hvis tiltaket var stengt på grunn av offentlig fridag. Ta kontakt med veilederen din for å sjekke om du har rett til utbetaling selv om du har hatt fravær.',
 
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
     bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
