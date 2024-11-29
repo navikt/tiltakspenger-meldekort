@@ -6,6 +6,7 @@ const nextConfig = {
     basePath: BASE_PATH,
     output: 'standalone',
     reactStrictMode: true,
+    generateEtags: false,
     // transpilePackages: ['@navikt/aksel-icons', '@navikt/ds-react'],
     // experimental: {
     //     optimizePackageImports: ['@navikt/ds-react', '@navikt/aksel-icons'],
