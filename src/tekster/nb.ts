@@ -47,11 +47,10 @@ export const teksterNb = {
         'Du kan ha rett til tiltakspenger hvis du er for syk til å delta på tiltaksdagen. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
     fraværModalSyktBarnIngress:
         'Du kan ha rett på tiltakspenger hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
-    fraværModalAnnetGodkjentIngress:
-        'Utgår inntil videre',
+    fraværModalAnnetGodkjentIngress: 'Utgår inntil videre',
     fraværModalIkkeGodkjentIngress:
-        'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende fra tiltaket, og fraværet ikke er avtalt med Nav.
-Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med veilederen din. For eksempel jobbintervju eller legetime. Du kan også ha rett til utbetaling hvis tiltaket var stengt på grunn av offentlig fridag. Ta kontakt med veilederen din for å sjekke om du har rett til utbetaling selv om du har hatt fravær.',
+        'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende fra tiltaket, og fraværet ikke er avtalt med Nav. ' +
+        'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med veilederen din. For eksempel jobbintervju eller legetime. Du kan også ha rett til utbetaling hvis tiltaket var stengt på grunn av offentlig fridag. Ta kontakt med veilederen din for å sjekke om du har rett til utbetaling selv om du har hatt fravær.',
 
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
     bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
