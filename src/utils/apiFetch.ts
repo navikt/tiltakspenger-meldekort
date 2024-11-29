@@ -10,6 +10,11 @@ const fetchFraApi = async (
 ) => {
     const oboToken = await getOboToken(req);
 
+    if (!oboToken) {
+        console.error('Kunne ikke hente obo token');
+        return null;
+    }
+
     const url = `${process.env.MELDEKORT_API_URL}${path}`;
 
     return fetch(url, {
@@ -49,10 +54,5 @@ export const fetchSendInnMeldekort = async (
     req: NextRequestType,
     meldekort: MeldekortInnsendingDto
 ) => {
-    return fetchFraApi(
-        req,
-        '/meldekort/send-inn',
-        'POST',
-        JSON.stringify(meldekort)
-    );
+    return fetchFraApi(req, '/meldekort/send-inn', 'POST', JSON.stringify(meldekort));
 };
