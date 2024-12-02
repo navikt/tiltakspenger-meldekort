@@ -4,7 +4,12 @@ Frontend for meldekort til bruker.
 # 🚀 Komme i gang
 
 For å starte appen i dev modus lokalt:
-- Kopier `.env.local-template` til `.env.local` (sett verdi for `TOKEN_X_PRIVATE_JWK` fra wonderwall-meldekort container i meta-repo'et)
+- Logg inn på Github package registry. Bruk en PAT med navikt SSO auth og `read: packages` scope som passord.
+```
+npm login --registry=https://npm.pkg.github.com --auth-type=legacy
+```
+- Kopier `.env.local-template` til `.env.local`
+- Kjør `npm install`
 - Kjør `npm run dev`
 
 ## Lokalt oppsett for hele verdikjeden
