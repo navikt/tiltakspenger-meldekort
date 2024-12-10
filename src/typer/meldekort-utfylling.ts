@@ -4,11 +4,10 @@ type Periode = {
 };
 
 export enum MeldekortStatus {
-    TilUtfylling = 'TilUtfylling',
-    Innsendt = 'Innsendt',
-    Endret = 'Endret',
-    Ferdig = 'Ferdig',
-    Feilet = 'Feilet',
+    TilUtfylling = 'KAN_UTFYLLES',
+    KanIkkeUtfylles = 'KAN_IKKE_UTFYLLES',
+    Innsendt = 'INNSENDT',
+    Godkjent = 'GODKJENT',
 }
 
 export enum MeldekortDagStatus {
@@ -17,7 +16,7 @@ export enum MeldekortDagStatus {
     FraværSyktBarn = 'FRAVÆR_SYKT_BARN',
     FraværAnnet = 'FRAVÆR_ANNET',
     IkkeDeltatt = 'IKKE_DELTATT',
-    IkkeRegistrert = 'IKKE_REGISTRERT'
+    IkkeRegistrert = 'IKKE_REGISTRERT',
 }
 
 export type MeldekortDag = {

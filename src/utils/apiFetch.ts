@@ -56,3 +56,9 @@ export const fetchSendInnMeldekort = async (
 ) => {
     return fetchFraApi(req, '/meldekort/send-inn', 'POST', JSON.stringify(meldekort));
 };
+
+export const fetchAlleMeldekort = async (req: NextRequestType) => {
+    return fetchFraApi(req, '/meldekort/alle', 'GET').then((res) =>
+        res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto[]>) : null
+    );
+}
