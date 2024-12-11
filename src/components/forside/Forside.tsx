@@ -60,7 +60,7 @@ export const Forside = ({ nesteMeldekortId }: Props) => {
                     </Alert>
                 </>
             )}
-            <Lenke href={'/innsendt'} className={style.tidligere}>
+            <Lenke href={'/alle'} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />
             </Lenke>
         </>

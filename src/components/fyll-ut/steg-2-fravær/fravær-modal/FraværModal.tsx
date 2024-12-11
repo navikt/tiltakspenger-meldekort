@@ -31,7 +31,7 @@ export const FraværModal = () => {
 
     useEffect(() => {
         setValgtStatus(initiellStatus);
-    }, [initiellStatus]);
+    }, [valgtMeldekortDag, initiellStatus]);
 
     return (
         <Modal

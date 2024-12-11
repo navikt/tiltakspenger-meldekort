@@ -1,4 +1,4 @@
-import { AlleMeldekort } from '@components/innsendt/AlleMeldekort';
+import { AlleMeldekort } from '@components/alle/AlleMeldekort';
 import { GetServerSideProps } from 'next';
 import { fetchAlleMeldekort } from '@utils/apiFetch';
 import { tilMeldekortUtfylling } from '@utils/transformMeldekort';

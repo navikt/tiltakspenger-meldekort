@@ -1,5 +1,8 @@
 import { Heading } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { Lenke } from '@components/lenke/Lenke';
+
+import style from './AlleMeldekort.module.css';
 
 type Props = {
     alleMeldekort: MeldekortUtfylling[];
@@ -8,9 +11,12 @@ type Props = {
 export const AlleMeldekort = ({ alleMeldekort }: Props) => {
     return (
         <div>
-            <Heading size={'medium'} level={'2'}>
-                {'Her er alle meldekortene dine'}
-            </Heading>
+            <div className={style.header}>
+                <Heading size={'medium'} level={'2'}>
+                    {'Her er alle meldekortene dine'}
+                </Heading>
+                <Lenke href={'/'}>{'Tilbake'}</Lenke>
+            </div>
             {alleMeldekort.map((meldekort) => (
                 <div
                     key={meldekort.id}
