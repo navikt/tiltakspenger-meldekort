@@ -1,6 +1,7 @@
-import { Heading } from '@navikt/ds-react';
+import { Heading, Table } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { Lenke } from '@components/lenke/Lenke';
+import { formatterDato } from '@utils/datetime';
 
 import style from './AlleMeldekort.module.css';
 
@@ -17,11 +18,26 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                 </Heading>
                 <Lenke href={'/'}>{'Tilbake'}</Lenke>
             </div>
-            {alleMeldekort.map((meldekort) => (
-                <div
-                    key={meldekort.id}
-                >{`${meldekort.id} // ${meldekort.status} // ${meldekort.periode.fraOgMed}-${meldekort.periode.tilOgMed}`}</div>
-            ))}
+            <Table>
+                <Table.Header>
+                    <Table.HeaderCell>{'Id'}</Table.HeaderCell>
+                    <Table.HeaderCell>{'Status'}</Table.HeaderCell>
+                    <Table.HeaderCell>{'Fra'}</Table.HeaderCell>
+                    <Table.HeaderCell>{'Til'}</Table.HeaderCell>
+                </Table.Header>
+                {alleMeldekort.map((meldekort) => (
+                    <Table.Row key={meldekort.id}>
+                        <Table.DataCell>{meldekort.id}</Table.DataCell>
+                        <Table.DataCell>{meldekort.status}</Table.DataCell>
+                        <Table.DataCell>
+                            {formatterDato({ dato: meldekort.periode.fraOgMed })}
+                        </Table.DataCell>
+                        <Table.DataCell>
+                            {formatterDato({ dato: meldekort.periode.tilOgMed })}
+                        </Table.DataCell>
+                    </Table.Row>
+                ))}
+            </Table>
         </div>
     );
 };
