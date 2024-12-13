@@ -2,6 +2,8 @@ import { getOboToken } from '@utils/auth';
 import { MeldekortInnsendingDto, MeldekortTilUtfyllingDto } from '@typer/meldekort-dto';
 import { NextRequestType } from '@typer/request';
 
+const BASE_URL = `${process.env.MELDEKORT_API_URL}/meldekort/bruker`;
+
 const fetchFraApi = async (
     req: NextRequestType,
     path: string,
@@ -15,7 +17,7 @@ const fetchFraApi = async (
         return null;
     }
 
-    const url = `${process.env.MELDEKORT_API_URL}${path}`;
+    const url = `${BASE_URL}/${path}`;
 
     return fetch(url, {
         method,
@@ -39,13 +41,13 @@ const fetchFraApi = async (
 };
 
 export const fetchSisteMeldekort = async (req: NextRequestType) => {
-    return fetchFraApi(req, '/meldekort/siste', 'GET').then((res) =>
+    return fetchFraApi(req, 'siste', 'GET').then((res) =>
         res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto>) : null
     );
 };
 
 export const fetchGenererMeldekort = async (req: NextRequestType) => {
-    return fetchFraApi(req, '/meldekort/generer', 'GET').then((res) =>
+    return fetchFraApi(req, 'generer', 'GET').then((res) =>
         res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto>) : null
     );
 };
@@ -54,11 +56,11 @@ export const fetchSendInnMeldekort = async (
     req: NextRequestType,
     meldekort: MeldekortInnsendingDto
 ) => {
-    return fetchFraApi(req, '/meldekort/send-inn', 'POST', JSON.stringify(meldekort));
+    return fetchFraApi(req, 'send-inn', 'POST', JSON.stringify(meldekort));
 };
 
 export const fetchAlleMeldekort = async (req: NextRequestType) => {
-    return fetchFraApi(req, '/meldekort/alle', 'GET').then((res) =>
+    return fetchFraApi(req, 'alle', 'GET').then((res) =>
         res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto[]>) : null
     );
 }
