@@ -13,6 +13,7 @@ const DagKomponentForSteg: Record<MeldekortSteg, React.FunctionComponent<{ dag: 
     deltatt: DeltattDagPanel,
     fravær: FraværDagPanel,
     bekreft: StatiskDagPanel,
+    innsendt: StatiskDagPanel,
 };
 
 type Props = {

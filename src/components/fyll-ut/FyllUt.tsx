@@ -13,7 +13,7 @@ type Props = {
     meldekort: MeldekortUtfylling;
 };
 
-export type MeldekortSteg = 'deltatt' | 'fravær' | 'bekreft';
+export type MeldekortSteg = 'deltatt' | 'fravær' | 'bekreft' | 'innsendt';
 
 export const FyllUt = ({ meldekort }: Props) => {
     // TODO: bruk next-router eller window.history for state slik at en kan bruke back/forward-navigering etc

@@ -6,8 +6,12 @@ import { Tekst } from '@components/tekst/Tekst';
 import style from './Steg2_Fravær.module.css';
 
 export const Steg2_Fravær = () => {
-    const { setMeldekortSteg } = useMeldekortUtfylling();
+    const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
 
+    if (!meldekortUtfylling) {
+        console.log('ups, fant ingen meldekort til utfylling');
+        return;
+    }
     return (
         <>
             <BodyLong weight={'semibold'}>
@@ -16,7 +20,7 @@ export const Steg2_Fravær = () => {
             <BodyLong>
                 <Tekst id={'fraværStegIngress'} />
             </BodyLong>
-            <Kalender steg={'fravær'} />
+            <Kalender meldekort={meldekortUtfylling} steg={'fravær'} />
             <div className={style.knapper}>
                 <Button
                     onClick={() => {

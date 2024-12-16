@@ -33,7 +33,7 @@ export const Steg1_Deltatt = () => {
             <BodyLong>
                 <Tekst id={'deltattStegIngress'} />
             </BodyLong>
-            <Kalender steg={'deltatt'} />
+            <Kalender meldekort={meldekortUtfylling} steg={'deltatt'} />
             <BodyLong className={style.teller} weight={'semibold'}>
                 {dagerDeltattString}
             </BodyLong>

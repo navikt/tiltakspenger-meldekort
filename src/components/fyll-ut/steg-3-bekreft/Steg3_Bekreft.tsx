@@ -29,7 +29,7 @@ export const Steg3_Bekreft = () => {
             <Alert variant={'warning'}>
                 <Tekst id={'bekreftStegIkkeSendtEnnå'} />
             </Alert>
-            <Kalender steg={'bekreft'} />
+            <Kalender meldekort={meldekortUtfylling} steg={'bekreft'} />
             <Checkbox onChange={() => setHarBekreftet(!harBekreftet)}>
                 <Tekst id={'bekreftStegCheckbox'} />
             </Checkbox>
@@ -51,7 +51,7 @@ export const Steg3_Bekreft = () => {
                         }).then((res) => {
                             if (res.ok) {
                                 router.push(
-                                    `/[meldekortId]/kvittering?meldekortId=${meldekortUtfylling!.id}`,
+                                    `/[meldekortId]/kvittering?meldekortId=${meldekortUtfylling!.id}`
                                 );
                             } else {
                                 window.alert(`Innsending feilet med feilkode ${res.status}`);
