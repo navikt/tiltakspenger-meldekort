@@ -1,10 +1,10 @@
-import { Accordion, BodyShort, Heading, Table } from '@navikt/ds-react';
+import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { Lenke } from '@components/lenke/Lenke';
 import { formatterDato } from '@utils/datetime';
+import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 
 import style from './AlleMeldekort.module.css';
-import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 
 type Props = {
     alleMeldekort: MeldekortUtfylling[];

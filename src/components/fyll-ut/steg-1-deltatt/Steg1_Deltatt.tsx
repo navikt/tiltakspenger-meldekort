@@ -4,6 +4,7 @@ import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { Tekst } from '@components/tekst/Tekst';
+import { DeltattHjelp } from '@components/fyll-ut/hjelp/DeltattHjelp';
 
 import style from './Steg1_Deltatt.module.css';
 
@@ -27,6 +28,7 @@ export const Steg1_Deltatt = () => {
 
     return (
         <>
+            <DeltattHjelp />
             <BodyLong weight={'semibold'}>
                 <Tekst id={'deltattStegHeader'} />
             </BodyLong>
