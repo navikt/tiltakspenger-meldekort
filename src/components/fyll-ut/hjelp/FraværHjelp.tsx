@@ -1,6 +1,6 @@
 import { BodyLong, Heading, ReadMore } from '@navikt/ds-react';
 
-import style from '@components/fyll-ut/hjelp/Hjelp.module.css';
+import style from './Hjelp.module.css';
 
 export const FraværHjelp = () => {
     return (

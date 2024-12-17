@@ -35,7 +35,8 @@ export const teksterNb = {
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
     deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',
 
-    fraværStegHeader: 'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen',
+    fraværStegHeader:
+        'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen',
     fraværStegIngress:
         'Velg hva slags fravær du hadde. Noen typer fravær gir rett til utbetaling, mens andre gjør det ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere.',
 
@@ -48,10 +49,11 @@ export const teksterNb = {
     fraværModalSyktBarnIngress:
         'Du kan ha rett på tiltakspenger hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
     fraværModalAnnetGodkjentIngress: 'Utgår inntil videre',
-    fraværModalIkkeGodkjentIngress:
-        'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende fra tiltaket, og fraværet ikke er avtalt med Nav. ' +
+    fraværModalIkkeGodkjentIngress: [
+        'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende fra tiltaket, og fraværet ikke er avtalt med Nav.',
         'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med veilederen din. For eksempel jobbintervju eller legetime. Ta kontakt med veilederen din for å sjekke om du har rett til utbetaling selv om du har hatt fravær.',
+    ],
 
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
     bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
-} as const;
+} as const satisfies Record<string, string | string[]>;

@@ -1,11 +1,13 @@
 import { BodyLong, Radio } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
-import { Tekst, TekstId } from '@components/tekst/Tekst';
+import { Tekst } from '@components/tekst/Tekst';
 import {
     meldekortStatusTilStyle,
     statusTilTekstId,
 } from '@components/fyll-ut/dag-felles/dagFellesUtils';
+import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
+import { TekstId } from '@tekster/utils';
 
 import style from './FraværStatusPanel.module.css';
 
@@ -19,18 +21,11 @@ export const FraværStatusPanel = ({ status, ingressId, valgtStatus }: Props) =>
     const erValgt = status === valgtStatus;
 
     return (
-        <Radio
-            value={status}
-            className={classNames(style.valg, meldekortStatusTilStyle[status])}
-        >
+        <Radio value={status} className={classNames(style.valg, meldekortStatusTilStyle[status])}>
             <BodyLong weight={'semibold'}>
                 <Tekst id={statusTilTekstId[status]} />
             </BodyLong>
-            {erValgt && (
-                <BodyLong className={style.ingress}>
-                    <Tekst id={ingressId} />
-                </BodyLong>
-            )}
+            {erValgt && <TekstParagrafer id={ingressId} className={style.ingress} />}
         </Radio>
     );
 };
