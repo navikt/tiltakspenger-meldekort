@@ -29,7 +29,7 @@ export const teksterNb = {
     fyllUtTittel: 'Fyll ut meldekortet',
     fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet',
 
-    deltattStegHeader: 'Velg de dagene du deltok på tiltaket som avtalt',
+    deltattStegHeader: 'Kryss av for de dagene du deltok på tiltaket som avtalt',
     deltattStegIngress: 'Hvis du har fravær fra tiltaket, kan du legge inn dette i neste steg.',
     deltattStegFraværSpørsmål: 'Har du hatt fravær fra tiltaket?',
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
