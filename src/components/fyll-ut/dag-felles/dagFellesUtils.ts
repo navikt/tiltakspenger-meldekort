@@ -8,7 +8,7 @@ import {
     SunFillIcon,
     XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { TekstId } from '@components/tekst/Tekst';
+import { TekstId } from '@tekster/utils';
 
 import style from './dagFellesStyle.module.css';
 
