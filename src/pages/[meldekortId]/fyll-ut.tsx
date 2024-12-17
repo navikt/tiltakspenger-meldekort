@@ -6,8 +6,14 @@ import { tilMeldekortUtfylling } from '@utils/transformMeldekort';
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const sisteMeldekort = await fetchSisteMeldekort(req);
 
+    if (!sisteMeldekort) {
+        return {
+            notFound: true,
+        };
+    }
+
     return {
-        props: { meldekort: sisteMeldekort ? tilMeldekortUtfylling(sisteMeldekort) : null },
+        props: { meldekort: tilMeldekortUtfylling(sisteMeldekort) },
     };
 };
 
