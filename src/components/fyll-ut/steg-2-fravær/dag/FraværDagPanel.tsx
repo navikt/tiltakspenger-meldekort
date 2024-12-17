@@ -10,6 +10,7 @@ import {
     meldekortStatusTilStyle,
     statusTilTekstId,
 } from '@components/fyll-ut/dag-felles/dagFellesUtils';
+import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 
 import style from './FraværDagPanel.module.css';
 
@@ -32,9 +33,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
         <div className={classNames(style.fravær, meldekortStatusTilStyle[status])}>
             <BodyLong>{datoTekst}</BodyLong>
             <div className={style.fraværRad}>
-                <BodyLong weight={'semibold'}>
-                    <Tekst id={statusTilTekstId[status]} />
-                </BodyLong>
+                <TekstParagrafer id={statusTilTekstId[status]} weight={'semibold'} />
                 <Button
                     size={'small'}
                     variant={'secondary'}

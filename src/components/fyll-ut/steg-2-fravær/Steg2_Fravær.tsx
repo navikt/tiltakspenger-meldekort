@@ -1,8 +1,9 @@
-import { BodyLong, Button } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
 import { FraværHjelp } from '@components/fyll-ut/hjelp/FraværHjelp';
+import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 
 import style from './Steg2_Fravær.module.css';
 
@@ -16,12 +17,8 @@ export const Steg2_Fravær = () => {
     return (
         <>
             <FraværHjelp />
-            <BodyLong weight={'semibold'}>
-                <Tekst id={'fraværStegHeader'} />
-            </BodyLong>
-            <BodyLong>
-                <Tekst id={'fraværStegIngress'} />
-            </BodyLong>
+            <TekstParagrafer id={'fraværStegHeader'} weight={'semibold'} />
+            <TekstParagrafer id={'fraværStegIngress'} />
             <Kalender meldekort={meldekortUtfylling} steg={'fravær'} />
             <div className={style.knapper}>
                 <Button

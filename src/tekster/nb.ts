@@ -15,11 +15,10 @@ export const teksterNb = {
 
     sideTittel: 'Meldekort for tiltakspenger',
 
-    forsideIngress1:
+    forsideIngress: [
         'For å motta tiltakspenger må du være registrert på et tiltak hos Nav og sende meldekort hver 14. dag.',
-    forsideIngress2:
         'På meldekortet må du registrere om du har deltatt på tiltaket, om du har vært syk, om ditt barn eller barnepasser har vært syk, eller om du har hatt ferie/fravær. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
-    forsideIngress3: '',
+    ],
     forsideTakk: 'Takk for at du er ærlig!',
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',

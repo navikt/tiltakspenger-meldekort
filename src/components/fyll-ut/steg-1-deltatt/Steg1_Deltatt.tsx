@@ -7,6 +7,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import { DeltattHjelp } from '@components/fyll-ut/hjelp/DeltattHjelp';
 
 import style from './Steg1_Deltatt.module.css';
+import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 
 type FraværStatus = 'medFravær' | 'utenFravær';
 
@@ -29,12 +30,8 @@ export const Steg1_Deltatt = () => {
     return (
         <>
             <DeltattHjelp />
-            <BodyLong weight={'semibold'}>
-                <Tekst id={'deltattStegHeader'} />
-            </BodyLong>
-            <BodyLong>
-                <Tekst id={'deltattStegIngress'} />
-            </BodyLong>
+            <TekstParagrafer id={'deltattStegHeader'} weight={'semibold'} />
+            <TekstParagrafer id={'deltattStegIngress'} />
             <Kalender meldekort={meldekortUtfylling} steg={'deltatt'} />
             <BodyLong className={style.teller} weight={'semibold'}>
                 {dagerDeltattString}

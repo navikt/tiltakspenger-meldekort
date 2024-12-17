@@ -1,7 +1,8 @@
-import { Alert, BodyLong, Button } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 import { Lenke } from '@components/lenke/Lenke';
+import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 
 import style from './Forside.module.css';
 
@@ -12,21 +13,9 @@ type Props = {
 export const Forside = ({ nesteMeldekortId }: Props) => {
     return (
         <>
-            <BodyLong spacing={true}>
-                <Tekst id={'forsideIngress1'} />
-            </BodyLong>
-            <BodyLong spacing={true}>
-                <Tekst id={'forsideIngress2'} />
-            </BodyLong>
-            <BodyLong spacing={true}>
-                <Tekst id={'forsideIngress3'} />
-            </BodyLong>
-            <BodyLong weight={'semibold'} size={'large'}>
-                <Tekst id={'forsideTakk'} />
-            </BodyLong>
-            <BodyLong spacing={true}>
-                <Tekst id={'forsideOpplysninger'} />
-            </BodyLong>
+            <TekstParagrafer id={'forsideIngress'} spacing={true} />
+            <TekstParagrafer id={'forsideTakk'} weight={'semibold'} size={'large'} />
+            <TekstParagrafer id={'forsideOpplysninger'} spacing={true} />
             {nesteMeldekortId ? (
                 <TilUtfylling nesteMeldekortId={nesteMeldekortId} />
             ) : (
@@ -42,9 +31,12 @@ export const Forside = ({ nesteMeldekortId }: Props) => {
                             variant={'primary'}
                             className={style.genererKnapp}
                             onClick={() => {
-                                fetch(`${window.location.origin}/tiltakspenger/meldekort/api/generer-meldekort`, {
-                                    credentials: 'include',
-                                }).then((res) => {
+                                fetch(
+                                    `${window.location.origin}/tiltakspenger/meldekort/api/generer-meldekort`,
+                                    {
+                                        credentials: 'include',
+                                    }
+                                ).then((res) => {
                                     if (res.ok) {
                                         window.location.reload();
                                     } else {
