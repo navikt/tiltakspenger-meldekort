@@ -31,6 +31,7 @@ export const teksterNb = {
 
     deltattStegHeader: 'Kryss av for de dagene du deltok på tiltaket som avtalt',
     deltattStegIngress: 'Hvis du har fravær fra tiltaket, kan du legge inn dette i neste steg.',
+    deltattDagPrefix: 'Har deltatt: ',
     deltattStegFraværSpørsmål: 'Har du hatt fravær fra tiltaket?',
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
     deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',

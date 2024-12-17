@@ -3,6 +3,7 @@ import { Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
+import { Tekst } from '@components/tekst/Tekst';
 
 import style from './DeltattDagPanel.module.css';
 
@@ -28,6 +29,7 @@ export const DeltattDagPanel = ({ dag }: Props) => {
             checked={erValgt}
             className={classNames(style.dag, erValgt && style.valgt)}
         >
+            <Tekst id={'deltattDagPrefix'} />
             {formatterDato({ dato: dag.dato, medUkeDag: true })}
         </Checkbox>
     );
