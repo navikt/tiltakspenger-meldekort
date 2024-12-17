@@ -29,13 +29,13 @@ export const teksterNb = {
     fyllUtTittel: 'Fyll ut meldekortet',
     fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet',
 
-    deltattStegHeader: 'Velg de dagene du deltok på tiltaket',
+    deltattStegHeader: 'Velg de dagene du deltok på tiltaket som avtalt',
     deltattStegIngress: 'Hvis du har fravær fra tiltaket, kan du legge inn dette i neste steg.',
     deltattStegFraværSpørsmål: 'Har du hatt fravær fra tiltaket?',
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
     deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',
 
-    fraværStegHeader: 'Legg inn fravær når du skulle vært på tiltak men ikke fikk deltatt',
+    fraværStegHeader: 'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen',
     fraværStegIngress:
         'Velg hva slags fravær du hadde. Noen typer fravær gir rett til utbetaling, mens andre gjør det ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere.',
 
@@ -50,7 +50,7 @@ export const teksterNb = {
     fraværModalAnnetGodkjentIngress: 'Utgår inntil videre',
     fraværModalIkkeGodkjentIngress:
         'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende fra tiltaket, og fraværet ikke er avtalt med Nav. ' +
-        'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med veilederen din. For eksempel jobbintervju eller legetime. Du kan også ha rett til utbetaling hvis tiltaket var stengt på grunn av offentlig fridag. Ta kontakt med veilederen din for å sjekke om du har rett til utbetaling selv om du har hatt fravær.',
+        'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med veilederen din. For eksempel jobbintervju eller legetime. Ta kontakt med veilederen din for å sjekke om du har rett til utbetaling selv om du har hatt fravær.',
 
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
     bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
