@@ -51,7 +51,8 @@ export const teksterNb = {
     fraværModalAnnetGodkjentIngress: 'Utgår inntil videre',
     fraværModalIkkeGodkjentIngress: [
         'Du har ikke rett på tiltakspenger hvis du har vært helt eller delvis fraværende fra tiltaket, og fraværet ikke er avtalt med Nav.',
-        'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med veilederen din. For eksempel jobbintervju eller legetime. Ta kontakt med veilederen din for å sjekke om du har rett til utbetaling selv om du har hatt fravær.',
+        'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med veilederen din. For eksempel jobbintervju eller legetime.',
+        'Ta kontakt med veilederen din for å sjekke om du har rett til utbetaling selv om du har hatt fravær.',
     ],
 
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
