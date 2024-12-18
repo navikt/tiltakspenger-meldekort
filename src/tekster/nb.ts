@@ -57,5 +57,5 @@ export const teksterNb = {
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
     bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
 
-    kvittering: 'Meldekortet ble sendt inn. Her kommer det en kvittering på innsendingen!'
+    kvittering: 'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.'
 } as const satisfies Record<string, string | string[]>;
