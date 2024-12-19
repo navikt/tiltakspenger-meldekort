@@ -1,4 +1,4 @@
-FROM node:20-alpine as runtime
+FROM node:22-alpine as runtime
 
 COPY .next/static ./.next/static
 COPY .next/standalone ./

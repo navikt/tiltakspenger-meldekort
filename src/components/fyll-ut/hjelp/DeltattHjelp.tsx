@@ -40,7 +40,7 @@ export const DeltattHjelp = () => {
                 <li>{'Du skal velge «Annet fravær» hvis du har vært helt eller delvis fraværende den angitte tiltaksdagen.'}</li>
                 <li>{'Du skal velge «Annet fravær» hvis du har fått lønn i den avtalte tiltakstiden.'}</li>
                 <li><i>{'Du skal velge «Annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.'}</i></li>
-                <li><i>{'Du skal også velge «Annet fravær» hvis du har vært fraværende fordi du har gjennomført aktiviteter som du har avtalt med veilederen din.'}</i>i></li>
+                <li><i>{'Du skal også velge «Annet fravær» hvis du har vært fraværende fordi du har gjennomført aktiviteter som du har avtalt med veilederen din.'}</i></li>
             </ul>
 
              <Heading size={'small'} level={'3'}>
