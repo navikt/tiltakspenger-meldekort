@@ -13,8 +13,8 @@ export const DeltattHjelp = () => {
             </Heading>
             <ul>
                 <li>{'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.'}</li>
-                <li>{'Hvis du ikke har deltatt hele den avtalte tiden den dagen, har du ikke rett på tiltakspenger og må derfor registrere fravær.'}</li>
-                <li>{'Hvis du har hatt lønn i timer du har vært på tiltaket, for eksempel fra tiltaksarrangør, har du ikke rett på tiltakspenger og må registrere fravær.'}</li>
+                <li>{'Hvis du ikke har deltatt hele det avtalte tidsrommet den aktuelle dagen, har du ikke rett på tiltakspenger og må derfor registrere fravær.'}</li>
+                <li>{'Hvis du har hatt lønn i tidsrommet du har vært på tiltaket, for eksempel lønn fra tiltaksarrangør, har du ikke rett på tiltakspenger og må registrere fravær.'}</li>
                 <li>{'Du kan krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.'}</li>
             </ul>
 
@@ -37,8 +37,8 @@ export const DeltattHjelp = () => {
 
             <BodyLong spacing>{'Annet fravær'}</BodyLong> 
             <ul>
-                <li>{'Du skal velge «Annet fravær» hvis du har vært helt eller delvis fraværende den angitte tiltaksdagen.'}</li>
-                <li>{'Du skal velge «Annet fravær» hvis du har fått lønn i den avtalte tiltakstiden.'}</li>
+                <li>{'Du skal velge «Annet fravær» hvis du har vært helt eller delvis fraværende den aktuelle tiltaksdagen.'}</li>
+                <li>{'Du skal velge «Annet fravær» hvis du har fått lønn i tidsrommet du har vært på tiltak.'}</li>
                 <li>{'Du skal velge «Annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.'}</li>
                 <li>{'Du skal også velge «Annet fravær» hvis du har vært fraværende fordi du har gjennomført aktiviteter som du har avtalt med veilederen din.'}</li>
             </ul>
