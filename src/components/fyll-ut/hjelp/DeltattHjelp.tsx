@@ -4,7 +4,7 @@ import style from './Hjelp.module.css';
 
 export const DeltattHjelp = () => {
     return (
-        <ReadMore header={'Les mer om hva som skal føres på meldekortet'} className={style.hjelp}>
+        <ReadMore header={'Les mer om hva som skal registreres på meldekortet'} className={style.hjelp}>
             
             <BodyLong spacing>{'For hver tiltaksdag i meldeperioden må du angi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved enkelte fravær. Det er derfor viktig at du melder for alle avtalte tiltaksdager. Du skal ikke oppgi noe for dager som er utenfor tiltaket.'}</BodyLong>            
 
