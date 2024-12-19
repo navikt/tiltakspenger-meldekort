@@ -4,7 +4,7 @@ import style from './Hjelp.module.css';
 
 export const FraværHjelp = () => {
     return (
-        <ReadMore header={'Les mer om hvordan du skal føre fravær'} className={style.hjelp}>
+        <ReadMore header={'Les mer om hvilke fravær som kan gi rett til tiltakspenger'} className={style.hjelp}>
             <Heading size={'medium'} level={'3'}>
                 {'Syk'}
             </Heading>            
