@@ -16,6 +16,7 @@ export const DeltattHjelp = () => {
                 <li>{'Hvis du ikke har deltatt hele det avtalte tidsrommet den aktuelle dagen, har du ikke rett på tiltakspenger og må derfor registrere fravær.'}</li>
                 <li>{'Hvis du har hatt lønn i tidsrommet du har vært på tiltaket, for eksempel lønn fra tiltaksarrangør, har du ikke rett på tiltakspenger og må registrere fravær.'}</li>
                 <li>{'Du kan krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.'}</li>
+                <li>{'Du kan krysse av for deltakelse hvis du ikke får deltatt fordi tiltaket er feriestengt????'}</li>
             </ul>
 
              <Heading size={'small'} level={'3'}>
