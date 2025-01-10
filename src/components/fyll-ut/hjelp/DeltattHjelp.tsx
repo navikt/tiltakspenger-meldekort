@@ -13,7 +13,6 @@ export const DeltattHjelp = () => {
             </Heading>
             <ul>
                 <li>{'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.'}</li>
-                <li>{'Hvis du ikke har deltatt hele det avtalte tidsrommet den aktuelle dagen, har du ikke rett på tiltakspenger og må derfor registrere fravær.'}</li>
                 <li>{'Hvis du har hatt lønn i avtalt tiltakstid den aktuelle dagen, for eksempel lønn fra tiltaksarrangør, har du ikke rett på tiltakspenger og må registrere fravær.'}</li>
                 <li>{'Du kan krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.'}</li>
                 <li>{'Du kan krysse av for deltakelse hvis du ikke får deltatt fordi tiltaket er feriestengt????'}</li>
@@ -38,7 +37,7 @@ export const DeltattHjelp = () => {
 
             <BodyLong spacing>{'Annet fravær'}</BodyLong> 
             <ul>
-                <li>{'Du skal velge «Annet fravær» hvis du har vært helt eller delvis fraværende den aktuelle tiltaksdagen.'}</li>
+                <li>{'Du skal velge «Annet fravær» hvis du har vært fraværende den aktuelle tiltaksdagen.'}</li>
                 <li>{'Du skal velge «Annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.'}</li>
                 <li>{'Du skal velge «Annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.'}</li>
                 <li>{'Du skal også velge «Annet fravær» hvis du har vært fraværende fordi du har gjennomført aktiviteter som du har avtalt med veilederen din.'}</li>
@@ -58,6 +57,20 @@ export const DeltattHjelp = () => {
                 </li>
                 <li>{'Du må kunne dokumentere årsaken til fraværet for å få det godkjent. Hvis veilederen din godkjenner fraværet ditt, vil du få etterbetalt for dagene du har hatt fravær.'}</li>
             </ul>
+
+
+            <Heading size={'small'} level={'3'}>
+                {'Vurdere å ha med "Har du mottatt lønn i tiltakstiden?"'}
+            </Heading>
+            <ul>
+                <li>{'Hvis lønn for arbeid uten for tiltakstiden...'}</li>
+                <li>{'Hvis lønn ditt og datt....'}</li>
+            </ul>
+
+            <Heading size={'small'} level={'5'}>
+                {'Ta kontakt med veilederen din hvis du er usikker på hva du skal føre på meldekortet"'}
+            </Heading>
+            
 
           <BodyLong>{'Dette er en paragraf uten avstand'}</BodyLong>
          <BodyLong>{'Dette er en paragraf uten avstand'}</BodyLong>  
