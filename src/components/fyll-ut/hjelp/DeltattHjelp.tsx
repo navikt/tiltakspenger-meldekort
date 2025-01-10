@@ -49,14 +49,14 @@ export const DeltattHjelp = () => {
             </Heading>
             <ul>
                 <li>{'Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det er viktig at du melder fra om alt fravær til veilederen din, siden det i enkelte tilfeller kan gjøres unntak.'}</li>
-                <li>{'Godkjente årsaker til fravær, som ikke gir reduksjon i tiltakspengene, er for eksempel:'}
+                <li>{'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel:'}
                     <ul>
                         <li>{'jobbintervju'}</li>
                         <li>{'timeavtale i det offentlige hjelpeapparatet'}</li>
                         <li>{'alvorlig sykdom/begravelse i nærmeste familie'}</li>
                     </ul>
                 </li>
-                <li>{'Du må kunne dokumentere årsaken til fraværet for å få det godkjent. Hvis veilederen din i godkjenner fraværet ditt, vil du få etterbetalt for dagene du har hatt fravær.'}</li>
+                <li>{'Du må kunne dokumentere årsaken til fraværet for å få det godkjent. Hvis veilederen din godkjenner fraværet ditt, vil du få etterbetalt for dagene du har hatt fravær.'}</li>
             </ul>
 
           <BodyLong>{'Dette er en paragraf uten avstand'}</BodyLong>
