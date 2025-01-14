@@ -13,9 +13,8 @@ export const DeltattHjelp = () => {
             </Heading>
             <ul>
                 <li>{'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.'}</li>
-                <li>{'Hvis du har hatt lønn i avtalt tiltakstid den aktuelle dagen, for eksempel lønn fra tiltaksarrangør, har du ikke rett på tiltakspenger og må registrere fravær.'}</li>
                 <li>{'Du kan krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.'}</li>
-                <li>{'Du kan krysse av for deltakelse hvis du ikke får deltatt fordi tiltaket er feriestengt????'}</li>
+                <li>{'Hvis du har hatt lønn i avtalt tiltakstid den aktuelle dagen, for eksempel lønn fra tiltaksarrangør, har du ikke rett på tiltakspenger og må registrere fravær.'}</li>
             </ul>
 
              <Heading size={'small'} level={'3'}>
@@ -35,19 +34,9 @@ export const DeltattHjelp = () => {
                 <li>{'Du må sende legeerklæring for barnet ditt eller bekreftelse fra barnepasseren fra dag 4 for å ha rett på tiltakspenger i mer enn 3 dager.'}</li>
             </ul>
 
-            <BodyLong spacing>{'Annet fravær'}</BodyLong> 
+            <BodyLong spacing>{'Fravær godkjent av Nav'}</BodyLong> 
             <ul>
-                <li>{'Du skal velge «Annet fravær» hvis du har vært fraværende den aktuelle tiltaksdagen.'}</li>
-                <li>{'Du skal velge «Annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.'}</li>
-                <li>{'Du skal velge «Annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.'}</li>
-                <li>{'Du skal også velge «Annet fravær» hvis du har vært fraværende fordi du har gjennomført aktiviteter som du har avtalt med veilederen din.'}</li>
-            </ul>
-
-             <Heading size={'small'} level={'3'}>
-                {'Du kan ha rett til tiltakspenger ved annet fravær'}
-            </Heading>
-            <ul>
-                <li>{'Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det er viktig at du melder fra om alt fravær til veilederen din, siden det i enkelte tilfeller kan gjøres unntak.'}</li>
+                <li>{'Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det gjelder hvis fraværet skyldes aktiviteter som du har avtalt med veilederen din.'}</li>
                 <li>{'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel:'}
                     <ul>
                         <li>{'jobbintervju'}</li>
@@ -55,12 +44,21 @@ export const DeltattHjelp = () => {
                         <li>{'alvorlig sykdom/begravelse i nærmeste familie'}</li>
                     </ul>
                 </li>
-                <li>{'Du må kunne dokumentere årsaken til fraværet for å få det godkjent. Hvis veilederen din godkjenner fraværet ditt, vil du få etterbetalt for dagene du har hatt fravær.'}</li>
+                <li>{'Ta kontakt med veilederen din for å dokumentere årsaken til fraværet og få det godkjent.'}</li>
             </ul>
+
+             <BodyLong spacing>{'Annet fravær'}</BodyLong> 
+            <ul>
+                <li>{'Du skal velge «Annet fravær» hvis du har vært fraværende den aktuelle tiltaksdagen.'}</li>
+                <li>{'Du skal velge «Annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.'}</li>
+                <li>{'Du skal velge «Annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.'}</li>
+            </ul>
+
+             
 
 
             <Heading size={'small'} level={'3'}>
-                {'Vurdere å ha med "Har du mottatt lønn i tiltakstiden?"'}
+                {'Vurdere å ha med noe mer spesifikt for mottatt lønn i tiltakstiden...'}
             </Heading>
             <ul>
                 <li>{'Hvis lønn for arbeid uten for tiltakstiden...'}</li>
