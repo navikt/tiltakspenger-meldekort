@@ -48,8 +48,9 @@ export const teksterNb = {
         'Du kan ha rett til tiltakspenger hvis du er for syk til å delta på tiltaksdagen. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
     fraværModalSyktBarnIngress:
         'Du kan ha rett på tiltakspenger hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
-    fraværModalAnnetGodkjentIngress: 'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med og godkjent av veilederen din.',
+    fraværModalAnnetGodkjentIngress: ['Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med og godkjent av veilederen din.',
       'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel jobbintervju, legetime eller alvorlig sykdom/begravelse i nærmeste familie.',
+        ],
         
     fraværModalIkkeGodkjentIngress: [
         'Du har ikke rett på tiltakspenger hvis du har vært fraværende fra tiltaket, og fraværet ikke er godkjent av Nav.',
