@@ -1,4 +1,4 @@
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 import { Lenke } from '@components/lenke/Lenke';
@@ -26,29 +26,6 @@ export const Forside = ({ nesteMeldekortId }: Props) => {
                         className={style.ingenMeldekort}
                     >
                         <Tekst id={'forsideIngenMeldekort'} />
-                        <Button
-                            size={'small'}
-                            variant={'primary'}
-                            className={style.genererKnapp}
-                            onClick={() => {
-                                fetch(
-                                    `${window.location.origin}/tiltakspenger/meldekort/api/generer-meldekort`,
-                                    {
-                                        credentials: 'include',
-                                    }
-                                ).then((res) => {
-                                    if (res.ok) {
-                                        window.location.reload();
-                                    } else {
-                                        window.alert(
-                                            `Generering av meldekort feilet med kode ${res.status}`
-                                        );
-                                    }
-                                });
-                            }}
-                        >
-                            {'Generer et meldekort for denne brukeren'}
-                        </Button>
                     </Alert>
                 </>
             )}

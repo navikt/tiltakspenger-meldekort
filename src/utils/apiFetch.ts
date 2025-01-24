@@ -1,4 +1,4 @@
-import { getOboToken } from '@utils/auth';
+import { getFnr, getOboToken } from '@utils/auth';
 import { MeldekortInnsendingDto, MeldekortTilUtfyllingDto } from '@typer/meldekort-dto';
 import { NextRequestType } from '@typer/request';
 
@@ -10,6 +10,9 @@ const fetchFraApi = async (
     method: 'GET' | 'POST',
     body?: BodyInit
 ) => {
+    const fnr = getFnr(req);
+    console.log(fnr)
+
     const oboToken = await getOboToken(req);
 
     if (!oboToken) {
@@ -42,12 +45,6 @@ const fetchFraApi = async (
 
 export const fetchSisteMeldekort = async (req: NextRequestType) => {
     return fetchFraApi(req, 'siste', 'GET').then((res) =>
-        res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto>) : null
-    );
-};
-
-export const fetchGenererMeldekort = async (req: NextRequestType) => {
-    return fetchFraApi(req, 'generer', 'GET').then((res) =>
         res?.ok ? (res.json() as Promise<MeldekortTilUtfyllingDto>) : null
     );
 };
