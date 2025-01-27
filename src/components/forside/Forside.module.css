@@ -1,14 +1,3 @@
 .tidligere {
     margin-top: 2rem;
 }
-
-.ingenMeldekort {
-    width: 100%;
-
-    & > :last-child {
-        display: flex;
-        justify-content: space-between;
-        flex-grow: 1;
-
-    }
-}

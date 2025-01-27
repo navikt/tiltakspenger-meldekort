@@ -1,4 +1,4 @@
-import { format, getISOWeek } from 'date-fns';
+import { format } from 'date-fns';
 import { nb } from 'date-fns/locale/nb';
 
 type Ukedag = {
@@ -36,4 +36,8 @@ export const formatterDato = ({
     return medStorForbokstav
         ? formattert.replace(/^./, (match) => match.toUpperCase())
         : formattert;
+};
+
+export const formatterDatoTid = (datoTid: string) => {
+    return format(datoTid, "d.MM.yyyy 'kl.' HH:mm", { locale: nb });
 };

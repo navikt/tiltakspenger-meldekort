@@ -1,9 +1,8 @@
-import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { KalenderUke } from '@components/fyll-ut/kalender/uke/KalenderUke';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
+import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 
 import style from './Kalender.module.css';
-import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
 
 type Props = {
     meldekort: MeldekortUtfylling;

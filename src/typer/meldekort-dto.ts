@@ -10,10 +10,14 @@ export type MeldekortInnsendingDto = {
     meldekortDager: MeldekortDagDto[];
 };
 
-export type MeldekortTilUtfyllingDto = {
+export type MeldekortMottakDto = {
     id: string,
+    meldeperiodeId: string,
+    meldeperiodeKjedeId: string,
+    versjon: number,
     fraOgMed: string,
     tilOgMed: string,
-    status?: MeldekortStatus;
-    meldekortDager: MeldekortDagDto[];
+    innsendt?: string,
+    status: MeldekortStatus;
+    dager: MeldekortDagDto[];
 }

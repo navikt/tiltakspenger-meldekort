@@ -1,5 +1,5 @@
-import { MeldekortStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling';
-import { MeldekortInnsendingDto, MeldekortTilUtfyllingDto } from '@typer/meldekort-dto';
+import { MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { MeldekortInnsendingDto, MeldekortMottakDto } from '@typer/meldekort-dto';
 
 export const tilMeldekortInnsending = (meldekort: MeldekortUtfylling): MeldekortInnsendingDto => {
     return {
@@ -12,7 +12,7 @@ export const tilMeldekortInnsending = (meldekort: MeldekortUtfylling): Meldekort
 };
 
 export const tilMeldekortUtfylling = (
-    meldekortDto: MeldekortTilUtfyllingDto
+    meldekortDto: MeldekortMottakDto
 ): MeldekortUtfylling => {
     return {
         id: meldekortDto.id,
@@ -20,8 +20,9 @@ export const tilMeldekortUtfylling = (
             fraOgMed: meldekortDto.fraOgMed,
             tilOgMed: meldekortDto.tilOgMed,
         },
-        status: MeldekortStatus.TilUtfylling,
-        meldekortDager: meldekortDto.meldekortDager.map((dag, index) => ({
+        status: meldekortDto.status,
+        innsendt: meldekortDto.innsendt ?? null,
+        meldekortDager: meldekortDto.dager.map((dag, index) => ({
             status: dag.status,
             dato: dag.dag,
             index,

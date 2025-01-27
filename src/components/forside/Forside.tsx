@@ -3,31 +3,33 @@ import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 import { Lenke } from '@components/lenke/Lenke';
 import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
+import { MeldekortStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { SisteMeldekortStatus } from '@components/forside/siste-meldekort-status/SisteMeldekortStatus';
 
 import style from './Forside.module.css';
 
 type Props = {
-    nesteMeldekortId?: string;
+    meldekort?: MeldekortUtfylling;
 };
 
-export const Forside = ({ nesteMeldekortId }: Props) => {
+export const Forside = ({ meldekort }: Props) => {
+    if (!meldekort) {
+        return (
+            <Alert variant={'info'} contentMaxWidth={false}>
+                {'Denne brukeren har ingen meldekort for tiltakspenger'}
+            </Alert>
+        );
+    }
+
     return (
         <>
             <TekstParagrafer id={'forsideIngress'} spacing={true} />
             <TekstParagrafer id={'forsideTakk'} weight={'semibold'} size={'large'} />
             <TekstParagrafer id={'forsideOpplysninger'} spacing={true} />
-            {nesteMeldekortId ? (
-                <TilUtfylling nesteMeldekortId={nesteMeldekortId} />
+            {meldekort.status === MeldekortStatus.TilUtfylling ? (
+                <TilUtfylling nesteMeldekortId={meldekort.id} />
             ) : (
-                <>
-                    <Alert
-                        variant={'info'}
-                        contentMaxWidth={false}
-                        className={style.ingenMeldekort}
-                    >
-                        <Tekst id={'forsideIngenMeldekort'} />
-                    </Alert>
-                </>
+                <SisteMeldekortStatus meldekort={meldekort} />
             )}
             <Lenke href={'/alle'} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />

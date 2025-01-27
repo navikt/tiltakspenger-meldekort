@@ -29,5 +29,6 @@ export type MeldekortUtfylling = {
     id: string;
     periode: Periode;
     status: MeldekortStatus;
+    innsendt: string | null;
     meldekortDager: MeldekortDag[];
 };
