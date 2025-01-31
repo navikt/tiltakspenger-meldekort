@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/server/node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -26,7 +27,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env.development
+.env
 
 # vercel
 .vercel
@@ -36,3 +38,6 @@ yarn-error.log*
 next-env.d.ts
 /.idea/
 /.gradle/
+/server/dist/
+/server/src/_ssr-dist/
+/stats.html

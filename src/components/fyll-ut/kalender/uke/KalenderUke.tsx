@@ -1,7 +1,7 @@
 import React from 'react';
 import { MeldekortDag } from '@typer/meldekort-utfylling';
 import { Heading } from '@navikt/ds-react';
-import { getISOWeek } from 'date-fns';
+import { getISOWeek } from 'date-fns/getISOWeek';
 import { DeltattDagPanel } from '@components/fyll-ut/steg-1-deltatt/dag/DeltattDagPanel';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 import { FraværDagPanel } from '@components/fyll-ut/steg-2-fravær/dag/FraværDagPanel';

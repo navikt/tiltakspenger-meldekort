@@ -1,11 +1,10 @@
-import { getFnr, getOboToken } from '@utils/auth';
-import { MeldekortInnsendingDto, MeldekortMottakDto } from '@typer/meldekort-dto';
-import { NextRequestType } from '@typer/request';
+import { Request } from 'express';
+import { getFnr, getOboToken } from '@fetch/auth';
 
 const BASE_URL = `${process.env.MELDEKORT_API_URL}/meldekort/bruker`;
 
-const fetchFraApi = async (
-    req: NextRequestType,
+export const fetchFraApi = async (
+    req: Request,
     path: string,
     method: 'GET' | 'POST',
     body?: BodyInit
@@ -42,22 +41,3 @@ const fetchFraApi = async (
             return null;
         });
 };
-
-export const fetchSisteMeldekort = async (req: NextRequestType) => {
-    return fetchFraApi(req, 'siste', 'GET').then((res) =>
-        res?.ok ? (res.json() as Promise<MeldekortMottakDto>) : null
-    );
-};
-
-export const fetchSendInnMeldekort = async (
-    req: NextRequestType,
-    meldekort: MeldekortInnsendingDto
-) => {
-    return fetchFraApi(req, 'send-inn', 'POST', JSON.stringify(meldekort));
-};
-
-export const fetchAlleMeldekort = async (req: NextRequestType) => {
-    return fetchFraApi(req, 'alle', 'GET').then((res) =>
-        res?.ok ? (res.json() as Promise<MeldekortMottakDto[]>) : null
-    );
-}

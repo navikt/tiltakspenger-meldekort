@@ -1,7 +1,7 @@
 import { getToken, parseIdportenToken, requestOboToken, validateToken } from '@navikt/oasis';
-import { NextRequestType } from '@typer/request';
+import { Request } from 'express';
 
-export const getOboToken = async (req: NextRequestType) => {
+export const getOboToken = async (req: Request) => {
     const token = getToken(req);
     if (!token) {
         console.error('Kunne ikke hente token fra request');
@@ -23,7 +23,7 @@ export const getOboToken = async (req: NextRequestType) => {
     return oboToken.token;
 };
 
-export const getFnr = (req: NextRequestType) => {
+export const getFnr = (req: Request) => {
     const token = getToken(req);
     if (!token) {
         return null;

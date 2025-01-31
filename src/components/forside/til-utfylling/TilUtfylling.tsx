@@ -1,7 +1,7 @@
 import { Button, Checkbox } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { useEffect, useState } from 'react';
-import { Lenke } from '@components/lenke/Lenke';
+import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import classNames from 'classnames';
 
 import style from './TilUtfylling.module.css';
@@ -24,10 +24,10 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
             </Checkbox>
             <Button
                 className={classNames(style.knapp)}
-                variant={harBekreftet ? 'primary' : 'primary-neutral'}
-                as={Lenke}
+                variant={'primary'}
+                as={InternLenke}
                 disabled={!harBekreftet}
-                href={`/[meldekortId]/fyll-ut?meldekortId=${nesteMeldekortId}`}
+                href={`/${nesteMeldekortId}/fyll-ut`}
             >
                 <Tekst id={'neste'} />
             </Button>

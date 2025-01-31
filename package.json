@@ -1,13 +1,19 @@
 {
   "name": "tiltakspenger-meldekort",
-  "version": "0.1.0",
   "private": true,
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev -p 3050",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "node server",
+    "build": "npm-run-all build:*",
+    "build:client": "vite build --outDir server/dist/client",
+    "build:ssr": "vite build --ssr src/main-server.tsx --outDir server/src/_ssr-dist",
+    "build:server": "npm run build --workspace server",
+    "start": "npm run start --workspace server"
   },
+  "workspaces": [
+    "server"
+  ],
   "dependencies": {
     "@navikt/aksel-icons": "7.10.0",
     "@navikt/ds-css": "7.10.0",
@@ -16,17 +22,26 @@
     "@navikt/oasis": "3.6.0",
     "classnames": "2.5.1",
     "date-fns": "4.1.0",
-    "next": "15.1.6",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@types/node": "22.10.10",
+    "@types/node": "22.12.0",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
+    "@typescript-eslint/eslint-plugin": "8.9.0",
+    "@typescript-eslint/parser": "8.9.0",
+    "@vitejs/plugin-react": "4.3.4",
     "eslint": "8.57.1",
-    "eslint-config-next": "15.1.6",
+    "eslint-plugin-react": "7.37.1",
+    "eslint-plugin-react-hooks": "5.0.0",
+    "eslint-plugin-react-refresh": "0.4.12",
+    "eslint-plugin-css-modules": "2.12.0",
+    "npm-run-all": "4.1.5",
     "prettier": "3.4.2",
-    "typescript": "5.7.3"
+    "rollup-plugin-visualizer": "5.12.0",
+    "typescript": "5.7.3",
+    "vite": "6.0.11",
+    "vite-tsconfig-paths": "5.0.1"
   }
 }

@@ -1,5 +1,5 @@
 import { Alert } from '@navikt/ds-react';
-import { Lenke } from '@components/lenke/Lenke';
+import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 
 import style from './KvitteringsSide.module.css';
@@ -10,7 +10,7 @@ export const KvitteringsSide = () => {
             <Alert variant={'success'} className={style.kvittering}>
                 <TekstParagrafer id={'kvittering'} />
             </Alert>
-            <Lenke href={'/'}>{'Tilbake'}</Lenke>
+            <InternLenke href={'/'}>{'Tilbake'}</InternLenke>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format } from 'date-fns/format';
 import { nb } from 'date-fns/locale/nb';
 
 type Ukedag = {
