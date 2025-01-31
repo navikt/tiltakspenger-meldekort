@@ -1,5 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
-import react from '@vitejs/plugin-react';
+import preact from "@preact/preset-vite";
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { visualizer } from 'rollup-plugin-visualizer';
 
@@ -11,13 +11,14 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [
-            react(),
+            preact(),
             tsconfigPaths(),
             ...(process.env.ANALYZE ? [visualizer({ open: true, gzipSize: true })] : []),
         ],
         base: '/tiltakspenger/meldekort',
-        // ssr: {
-        //     noExternal: ['@navikt/ds-react', '@navikt/aksel-icons'],
-        // },
+        ssr: {
+            // noExternal på react deps for at preact compat skal funke
+            noExternal: ['@navikt/ds-react', '@navikt/aksel-icons'],
+        },
     };
 });
