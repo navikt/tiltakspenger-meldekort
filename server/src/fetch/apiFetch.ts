@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { getFnr, getOboToken } from '@fetch/auth';
+import { getOboToken } from '@fetch/auth';
 
 const BASE_URL = `${process.env.MELDEKORT_API_URL}/meldekort/bruker`;
 
@@ -9,9 +9,6 @@ export const fetchFraApi = async (
     method: 'GET' | 'POST',
     body?: BodyInit
 ) => {
-    const fnr = getFnr(req);
-    console.log(fnr)
-
     const oboToken = await getOboToken(req);
 
     if (!oboToken) {

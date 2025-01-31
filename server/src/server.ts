@@ -5,31 +5,32 @@ import { setupNaisProbeHandlers } from '@routing/internal';
 import { setupErrorHandlers } from '@routing/errorHandlers';
 import { setupSiteRoutes } from '@routing/site';
 import { appConfig } from '@appConfig';
+import { validateEnv } from '@validateEnv';
 
 const { port, basePath } = appConfig;
 
-(async () => {
-    const app = express();
-    app.use(compression());
+validateEnv()
+    .then(async () => {
+        const app = express();
+        app.use(compression());
 
-    const router = express.Router();
-    router.use(express.json());
+        const router = express.Router();
+        router.use(express.json());
 
-    app.use(basePath, router);
+        app.use(basePath, router);
 
-    app.get('/', (req, res) => {
-        return res.redirect(basePath);
-    });
+        app.get('/', (req, res) => {
+            return res.redirect(basePath);
+        });
 
-    setupNaisProbeHandlers(router);
+        setupNaisProbeHandlers(router);
 
-    await setupSiteRoutes(router);
+        await setupSiteRoutes(router);
 
-    setupErrorHandlers(router);
+        setupErrorHandlers(router);
 
-    return app;
-})()
-    .then()
+        return app;
+    })
     .catch((e) => {
         console.error(`Error occured while initializing server - ${e}`);
         throw e;

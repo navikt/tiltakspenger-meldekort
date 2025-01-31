@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node server",
+    "dev": "npm run dev --workspace server",
     "build": "npm-run-all build:*",
     "build:client": "vite build --outDir server/dist/client",
     "build:ssr": "vite build --ssr src/main-server.tsx --outDir server/src/_ssr-dist",

@@ -7,7 +7,7 @@
         "build": "node build.mjs",
         "build-and-watch": "node build.mjs watch",
         "start": "node -r dotenv/config ./dist/server/server.cjs dotenv_config_path=../.env",
-        "nodemon-start": "nodemon -r dotenv/config -w ./dist/server -w ../.env.development ./dist/server/server.cjs dotenv_config_path=../.env.local",
+        "nodemon-start": "nodemon -r dotenv/config -w ./dist/server -w ../.env.development ./dist/server/server.cjs dotenv_config_path=../.env.development",
         "dev": "npm-run-all -p build-and-watch nodemon-start"
     },
     "dependencies": {
