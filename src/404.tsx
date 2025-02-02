@@ -1,7 +1,7 @@
 import { BugIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Heading, Link, List, Page, VStack } from '@navikt/ds-react';
 
-const NotFound = () => {
+export const NotFound = () => {
     return (
         <Page.Block as="main" width="xl" gutters>
             <Box paddingBlock="20 16">
@@ -46,5 +46,3 @@ const NotFound = () => {
         </Page.Block>
     );
 };
-
-export default NotFound;

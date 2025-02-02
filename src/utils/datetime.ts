@@ -1,23 +1,10 @@
-import { format } from 'date-fns';
-import { nb } from 'date-fns/locale/nb';
+import dayjs from 'dayjs';
+import 'dayjs/locale/nb';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-type Ukedag = {
-    kort: string;
-    lang: string;
-};
-
-const getUkedager = (locale: string): Ukedag[] =>
-    Array.from({ length: 7 }).map((_, index) => {
-        const date = new Date(Date.UTC(2017, 0, 2 + index)); // 2017-01-02 is just a random Monday
-        return {
-            kort: date.toLocaleDateString(locale, { weekday: 'short' }).replace('.', ''),
-            lang: date.toLocaleDateString(locale, { weekday: 'long' }),
-        };
-    });
-
-export const Ukedager = {
-    nb: getUkedager('no-nb'),
-} as const;
+dayjs.extend(weekOfYear);
+dayjs.extend(localizedFormat);
 
 type FormatterDatoProps = {
     dato: string;
@@ -30,8 +17,9 @@ export const formatterDato = ({
     medUkeDag,
     medStorForbokstav = true,
 }: FormatterDatoProps) => {
-    const formatStr = `${medUkeDag ? 'EEEE ' : ''}d. MMMM`;
-    const formattert = format(dato, formatStr, { locale: nb });
+    const formattert = dayjs(dato)
+        .locale('nb')
+        .format(`${medUkeDag ? 'dddd ' : ''}D. MMMM`);
 
     return medStorForbokstav
         ? formattert.replace(/^./, (match) => match.toUpperCase())
@@ -39,5 +27,9 @@ export const formatterDato = ({
 };
 
 export const formatterDatoTid = (datoTid: string) => {
-    return format(datoTid, "d.MM.yyyy 'kl.' HH:mm", { locale: nb });
+    return dayjs(datoTid).locale('nb').format("d.MM.yyyy 'kl.' HH:mm");
+};
+
+export const getUkenummer = (datoTid: string) => {
+    return dayjs(datoTid).locale('nb').week();
 };

@@ -1,7 +1,7 @@
 import { Alert } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
-import { Lenke } from '@components/lenke/Lenke';
+import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 import { MeldekortStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling';
 import { SisteMeldekortStatus } from '@components/forside/siste-meldekort-status/SisteMeldekortStatus';
@@ -31,9 +31,9 @@ export const Forside = ({ meldekort }: Props) => {
             ) : (
                 <SisteMeldekortStatus meldekort={meldekort} />
             )}
-            <Lenke href={'/alle'} className={style.tidligere}>
+            <InternLenke path={'/alle'} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />
-            </Lenke>
+            </InternLenke>
         </>
     );
 };

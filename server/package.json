@@ -1,0 +1,30 @@
+{
+    "name": "tiltakspenger-meldekort-server",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "node build.mjs",
+        "build-and-watch": "node build.mjs watch",
+        "start": "node -r dotenv/config ./dist/server.cjs dotenv_config_path=../.env",
+        "nodemon-start": "nodemon -r dotenv/config -w ./dist/server -w ../.env.development ./dist/server/server.cjs dotenv_config_path=../.env.development",
+        "dev": "npm-run-all -p build-and-watch nodemon-start"
+    },
+    "dependencies": {
+        "@navikt/oasis": "3.6.0",
+        "compression": "1.7.5",
+        "csp-header": "6.0.0",
+        "dotenv": "16.4.7",
+        "express": "5.0.1",
+        "http-terminator": "3.2.0",
+        "sirv": "3.0.0"
+    },
+    "devDependencies": {
+        "@types/express": "5.0.0",
+        "@types/compression": "1.7.5",
+        "nodemon": "3.1.9"
+    },
+    "nodemonConfig": {
+        "delay": 500
+    }
+}

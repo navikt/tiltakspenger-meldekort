@@ -1,13 +1,14 @@
-FROM node:22-alpine as runtime
+FROM node:22-alpine
 
-COPY .next/static ./.next/static
-COPY .next/standalone ./
+WORKDIR /app
 
-ENV NEXT_TELEMETRY_DISABLED 1
+COPY node_modules /app/node_modules/
+COPY server/dist  /app/dist/
+
 ENV PORT 3050
 ENV NODE_ENV production
 ENV TZ=Europe/Oslo
 
 EXPOSE 3050
 
-CMD ["node", "server.js"]
+CMD ["node", "dist/server.cjs"]

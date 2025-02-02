@@ -6,12 +6,9 @@ import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { tilMeldekortInnsending } from '@utils/transformMeldekort';
-import { useRouter } from 'next/router';
 
 export const Steg3_Bekreft = () => {
     const [harBekreftet, setHarBekreftet] = useState(false);
-
-    const router = useRouter();
 
     const { setMeldekortSteg, meldekortUtfylling } = useMeldekortUtfylling();
 
@@ -44,14 +41,17 @@ export const Steg3_Bekreft = () => {
                 <Button
                     disabled={!harBekreftet}
                     onClick={() => {
-                        fetch(`${window.location.origin}/tiltakspenger/meldekort/api/send-inn`, {
+                        fetch(`/tiltakspenger/meldekort/api/send-inn`, {
                             method: 'POST',
                             credentials: 'include',
+                            headers: {
+                                'content-type': 'application/json',
+                            },
                             body: JSON.stringify(tilMeldekortInnsending(meldekortUtfylling)),
                         }).then((res) => {
                             if (res.ok) {
-                                router.push(
-                                    `/[meldekortId]/kvittering?meldekortId=${meldekortUtfylling!.id}`
+                                window.location.assign(
+                                    `/tiltakspenger/meldekort/${meldekortUtfylling!.id}/kvittering`
                                 );
                             } else {
                                 window.alert(`Innsending feilet med feilkode ${res.status}`);
