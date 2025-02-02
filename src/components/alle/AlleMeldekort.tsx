@@ -18,7 +18,7 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                 <Heading size={'medium'} level={'2'}>
                     {'Her er alle meldekortene dine'}
                 </Heading>
-                <InternLenke href={'/'}>{'Tilbake'}</InternLenke>
+                <InternLenke path={'/'}>{'Tilbake'}</InternLenke>
             </div>
 
             {alleMeldekort.map((meldekort) => (

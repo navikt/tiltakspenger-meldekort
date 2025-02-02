@@ -2,14 +2,14 @@ import React from 'react';
 import { BodyLong } from '@navikt/ds-react';
 import { MeldekortDag } from '@typer/meldekort-utfylling';
 import { formatterDato } from '@utils/datetime';
-import classNames from 'classnames';
 import {
     statusTilIkon,
     meldekortStatusTilStyle,
     statusTilTekstId,
 } from '@components/fyll-ut/dag-felles/dagFellesUtils';
-import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
+import { classNames } from '@utils/classNames.ts';
 
+import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 import style from './StatiskDagPanel.module.css';
 
 type Props = {

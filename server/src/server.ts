@@ -5,11 +5,21 @@ import { setupNaisProbeHandlers } from '@routing/internal';
 import { setupErrorHandlers } from '@routing/errorHandlers';
 import { setupSiteRoutes } from '@routing/site';
 import { appConfig } from '@appConfig';
-import { validateEnv } from '@validateEnv';
+import { validateEnv } from '@utils';
 
 const { port, basePath } = appConfig;
 
-validateEnv()
+validateEnv([
+    'NODE_ENV',
+    'MELDEKORT_API_URL',
+    'MELDEKORT_API_SCOPE',
+    'IDPORTEN_ISSUER',
+    'IDPORTEN_JWKS_URI',
+    'TOKEN_X_ISSUER',
+    'TOKEN_X_TOKEN_ENDPOINT',
+    'TOKEN_X_CLIENT_ID',
+    'TOKEN_X_PRIVATE_JWK',
+])
     .then(async () => {
         const app = express();
         app.use(compression());

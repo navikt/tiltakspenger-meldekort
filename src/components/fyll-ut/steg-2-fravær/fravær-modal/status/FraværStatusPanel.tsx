@@ -1,5 +1,5 @@
 import { Radio } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { classNames } from '@utils/classNames.ts';
 import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import {
     meldekortStatusTilStyle,

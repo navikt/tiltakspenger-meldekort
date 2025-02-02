@@ -31,7 +31,7 @@ export const Forside = ({ meldekort }: Props) => {
             ) : (
                 <SisteMeldekortStatus meldekort={meldekort} />
             )}
-            <InternLenke href={'/alle'} className={style.tidligere}>
+            <InternLenke path={'/alle'} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />
             </InternLenke>
         </>

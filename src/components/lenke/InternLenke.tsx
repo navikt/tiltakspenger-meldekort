@@ -1,16 +1,18 @@
 import React from 'react';
-
-const baseUrl = import.meta.env.BASE_URL;
+import { NavLink } from 'react-router';
+import { useFetchPageProps, usePreloadPageProps } from '@context/useFetchPageData.ts';
 
 type Props = {
     children: React.ReactNode;
-    href: string;
+    path: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
-export const InternLenke = ({ children, href, ...rest }: Props) => {
+export const InternLenke = ({ children, path, ...rest }: Props) => {
+    usePreloadPageProps(path);
+
     return (
-        <a {...rest} href={`${baseUrl}${href}`}>
+        <NavLink {...rest} to={path} onClick={(arg) => console.log(`Navigating to ${path}`)}>
             {children}
-        </a>
+        </NavLink>
     );
 };

@@ -3,7 +3,7 @@ import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { classNames } from '@utils/classNames.ts';
 import { Tekst } from '@components/tekst/Tekst';
 import { StatiskDagPanel } from '@components/fyll-ut/kalender/statisk-dag/StatiskDagPanel';
 import {

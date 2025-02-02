@@ -10,7 +10,7 @@ export const KvitteringsSide = () => {
             <Alert variant={'success'} className={style.kvittering}>
                 <TekstParagrafer id={'kvittering'} />
             </Alert>
-            <InternLenke href={'/'}>{'Tilbake'}</InternLenke>
+            <InternLenke path={'/'}>{'Tilbake'}</InternLenke>
         </div>
     );
 };

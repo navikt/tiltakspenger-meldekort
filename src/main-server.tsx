@@ -1,12 +1,15 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { App } from '@App';
-import { AppProps } from '@appProps.ts';
+import { AppContext } from '@appContext.ts';
+import { StaticRouter } from 'react-router';
 
-export const render = (url: string, appContext: AppProps) => {
+export const render = (url: string, appContext: AppContext) => {
     return renderToString(
         <React.StrictMode>
-            <App {...appContext} />
+            <StaticRouter location={url} basename={import.meta.env.BASE_URL}>
+                <App {...appContext} />
+            </StaticRouter>
         </React.StrictMode>
     );
 };

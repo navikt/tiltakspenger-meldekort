@@ -1,6 +1,6 @@
 import { MeldekortDag, MeldekortDagStatus } from '@typer/meldekort-utfylling';
 import { Checkbox } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { classNames } from '@utils/classNames.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { Tekst } from '@components/tekst/Tekst';
