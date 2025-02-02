@@ -1,43 +1,33 @@
 import { createHttpTerminator } from 'http-terminator';
 import express from 'express';
 import compression from 'compression';
-import { setupNaisProbeHandlers } from '@routing/internal';
 import { setupErrorHandlers } from '@routing/errorHandlers';
-import { setupSiteRoutes } from '@routing/site';
 import { appConfig } from '@appConfig';
-import { validateEnv } from '@utils';
+import { validateEnv } from '@validateEnv';
+import { cspMiddleware } from '@routing/cspMiddleware';
+import { setupInternalRoutes } from '@routing/routes/internalRoutes';
+import { setupSiteRoutes } from '@routing/routes/siteRoutes';
+import { setupApiRoutes } from '@routing/routes/apiRoutes';
 
 const { port, basePath } = appConfig;
 
-validateEnv([
-    'NODE_ENV',
-    'MELDEKORT_API_URL',
-    'MELDEKORT_API_SCOPE',
-    'IDPORTEN_ISSUER',
-    'IDPORTEN_JWKS_URI',
-    'TOKEN_X_ISSUER',
-    'TOKEN_X_TOKEN_ENDPOINT',
-    'TOKEN_X_CLIENT_ID',
-    'TOKEN_X_PRIVATE_JWK',
-])
+validateEnv()
     .then(async () => {
-        const app = express();
-        app.use(compression());
+        const app = express().use(compression());
+        const baseRouter = express.Router()
+        const siteRouter = express.Router().use(express.json(), await cspMiddleware())
 
-        const router = express.Router();
-        router.use(express.json());
-
-        app.use(basePath, router);
+        app.use(basePath, baseRouter);
+        baseRouter.use(siteRouter);
 
         app.get('/', (req, res) => {
             return res.redirect(basePath);
         });
 
-        setupNaisProbeHandlers(router);
-
-        await setupSiteRoutes(router);
-
-        setupErrorHandlers(router);
+        await setupSiteRoutes(siteRouter);
+        setupInternalRoutes(baseRouter);
+        setupApiRoutes(baseRouter);
+        setupErrorHandlers(baseRouter);
 
         return app;
     })

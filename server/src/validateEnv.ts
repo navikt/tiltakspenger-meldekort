@@ -1,9 +1,16 @@
-import path from 'path';
-import process from 'process';
+const expectedEnv = [
+    'NODE_ENV',
+    'MELDEKORT_API_URL',
+    'MELDEKORT_API_SCOPE',
+    'IDPORTEN_ISSUER',
+    'IDPORTEN_JWKS_URI',
+    'TOKEN_X_ISSUER',
+    'TOKEN_X_TOKEN_ENDPOINT',
+    'TOKEN_X_CLIENT_ID',
+    'TOKEN_X_PRIVATE_JWK',
+] as const;
 
-export const joinPaths = (...paths: string[]) => path.posix.join(...paths);
-
-export const validateEnv = async (expectedEnv: string[]) => {
+export const validateEnv = async () => {
     const missingVars: string[] = [];
 
     expectedEnv.forEach((key) => {

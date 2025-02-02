@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { initHtmlRenderer } from '@ssr/initHtmlRenderer';
-import { sendInnRoute } from '@routing/routes/sendInnRoute';
-import { SiteRouter } from '@routing/SiteRouter';
+import { SiteRouteBuilder } from '@routing/SiteRouteBuilder';
 import { tilMeldekortUtfylling } from '@fetch/transformMeldekort';
 import { fetchFraApi } from '@fetch/apiFetch';
 import { MeldekortMottakDto } from '@client/typer/meldekort-dto';
@@ -11,16 +10,16 @@ export const setupSiteRoutes = async (router: Router) => {
         router: router,
     });
 
-    const siteRouter = new SiteRouter({ router, renderer: htmlRenderer });
+    const routeBuilder = new SiteRouteBuilder({ router, renderer: htmlRenderer });
 
-    siteRouter.handle('/', async (req) => {
+    routeBuilder.route('/', async (req) => {
         const meldekortDto = await fetchFraApi(req, 'siste', 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortMottakDto>) : null
         );
         return { meldekort: meldekortDto ? tilMeldekortUtfylling(meldekortDto) : null };
     });
 
-    siteRouter.handle('/alle', async (req) => {
+    routeBuilder.route('/alle', async (req) => {
         const alleMeldekort = await fetchFraApi(req, 'alle', 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortMottakDto[]>) : null
         );
@@ -28,7 +27,7 @@ export const setupSiteRoutes = async (router: Router) => {
         return { alleMeldekort: alleMeldekort ? alleMeldekort.map(tilMeldekortUtfylling) : [] }
     });
 
-    siteRouter.handle('/:meldekortId/fyll-ut', async (req) => {
+    routeBuilder.route('/:meldekortId/fyll-ut', async (req) => {
         const meldekortId = req.params.meldekortId;
 
         const meldekortDto = await fetchFraApi(req, 'siste', 'GET').then((res) =>
@@ -38,9 +37,7 @@ export const setupSiteRoutes = async (router: Router) => {
         return { meldekort: meldekortDto ? tilMeldekortUtfylling(meldekortDto) : null }
     });
 
-    siteRouter.handle('/alle', async (req) => {
+    routeBuilder.route('/:meldekortId/kvittering', async (req) => {
         return {}
     });
-
-    router.post('/api/send-inn', sendInnRoute);
 };
