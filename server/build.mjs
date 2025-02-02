@@ -2,7 +2,7 @@ import { build, context } from 'esbuild';
 
 const options = {
     entryPoints: ['src/server.ts'],
-    outfile: 'dist/server/server.cjs',
+    outfile: 'dist/server.cjs',
     bundle: true,
     platform: 'node',
     packages: 'external',
