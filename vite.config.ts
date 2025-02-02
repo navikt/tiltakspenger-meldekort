@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -9,33 +9,45 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
     process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-    const analyze = process.env.ANALYZE && !isSsrBuild
+    const analyze = process.env.ANALYZE === "true" && !isSsrBuild;
+    const usePreact = process.env.PREACT === "true";
 
     return {
         plugins: [
-            react(),
+            usePreact ? preact() : react(),
             tsconfigPaths(),
             ...(analyze ? [visualizer({ open: true, gzipSize: true })] : []),
         ],
         base: '/tiltakspenger/meldekort',
-        // ssr: {
-        //     // noExternal på react deps for at preact compat skal funke
-        //     noExternal: [
-        //         '@floating-ui/react',
-        //         '@navikt/ds-react',
-        //         '@navikt/aksel-icons',
-        //         'swr',
-        //         'use-sync-external-store',
-        //         "wouter"
-        //     ],
-        // },
         css: {
             modules: {
-                // Stabile CSS-modules navn for å støtte HMR i dev mode
+                // Stabile CSS-modules navn for bedre HMR i dev mode
                 ...(process.env.NODE_ENV === 'development' && {
                     generateScopedName: '[path][name]__[local]',
                 }),
             },
         },
+        ...(usePreact && preactOptions)
     };
 });
+
+const preactOptions: UserConfig = {
+    resolve: {
+        alias: {
+            // useSyncExternalStore shim som noen pakker bruker for bakoverkompatibilitet
+            // preset-vite aliaser ikke denne selv
+            'use-sync-external-store/shim/index.js': `${process.cwd()}/../node_modules/preact/compat/src/hooks.js`,
+        },
+    },
+    ssr: {
+        // noExternal på react deps for at preact compat skal funke
+        noExternal: [
+            '@floating-ui/react',
+            '@navikt/aksel-icons',
+            '@navikt/ds-react',
+            'swr',
+            'use-sync-external-store',
+            'wouter',
+        ],
+    },
+};
