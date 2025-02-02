@@ -30,7 +30,7 @@ export const setupSiteRoutes = async (router: Router) => {
     routeBuilder.route('/:meldekortId/fyll-ut', async (req) => {
         const meldekortId = req.params.meldekortId;
 
-        const meldekortDto = await fetchFraApi(req, 'siste', 'GET').then((res) =>
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortMottakDto>) : null
         );
 
