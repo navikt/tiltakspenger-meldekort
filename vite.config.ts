@@ -22,14 +22,10 @@ export default defineConfig(({ mode }) => {
         //         '@floating-ui/react',
         //         '@navikt/ds-react',
         //         '@navikt/aksel-icons',
-        //         'react-router',
+        //         "wouter",
         //         'swr',
         //         'use-sync-external-store'
         //     ],
-        //     resolve: {
-        //         // Fikser react-router cjs import
-        //         conditions: ['module-sync'],
-        //     },
         // },
         css: {
             modules: {

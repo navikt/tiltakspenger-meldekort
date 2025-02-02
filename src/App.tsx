@@ -2,7 +2,7 @@ import './global.css';
 import React from 'react';
 import { Page, VStack } from '@navikt/ds-react';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
-import { Route, Routes } from 'react-router';
+import { Route, Router } from 'wouter';
 
 import { siteRouteConfigs } from '@routing/siteRouteConfigs.ts';
 import style from './App.module.css';
@@ -17,22 +17,18 @@ export const App = ({ initialRoute, initialProps }: AppContext) => {
             <PageHeader />
             <Page.Block width={'md'} as={'main'} id={'maincontent'}>
                 <VStack className={style.text}>
-                    <Routes>
+                    <Router ssrPath={initialRoute} base={import.meta.env.BASE_URL}>
                         {Object.values(siteRouteConfigs).map((routeConfig) => (
-                            <Route
-                                path={routeConfig.path}
-                                element={
-                                    <SiteRoute
-                                        config={routeConfig}
-                                        initialProps={
-                                            initialRoute === routeConfig.path ? initialProps : undefined
-                                        }
-                                    />
-                                }
-                                key={routeConfig.path}
-                            />
+                            <Route path={routeConfig.path} key={routeConfig.path}>
+                                <SiteRoute
+                                    config={routeConfig}
+                                    initialProps={
+                                        initialRoute === routeConfig.path ? initialProps : undefined
+                                    }
+                                />
+                            </Route>
                         ))}
-                    </Routes>
+                    </Router>
                 </VStack>
             </Page.Block>
         </Page>

@@ -1,6 +1,7 @@
 import React from 'react';
-import { NavLink } from 'react-router';
+// import { NavLink } from 'react-router-dom';
 import { useFetchPageProps, usePreloadPageProps } from '@context/useFetchPageData.ts';
+import { Link } from 'wouter';
 
 type Props = {
     children: React.ReactNode;
@@ -11,8 +12,8 @@ export const InternLenke = ({ children, path, ...rest }: Props) => {
     usePreloadPageProps(path);
 
     return (
-        <NavLink {...rest} to={path} onClick={(arg) => console.log(`Navigating to ${path}`)}>
+        <Link {...rest} href={path} onClick={(arg) => console.log(`Navigating to ${path}`)}>
             {children}
-        </NavLink>
+        </Link>
     );
 };
