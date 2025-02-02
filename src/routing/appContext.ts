@@ -1,6 +1,7 @@
-import { SiteRoutePath, SiteRouteProps } from '@routing/siteRouteConfigs.ts';
+import { SiteRoutePath, SiteRouteProps } from '@routing/siteRoutes.ts';
 
-export type AppContext<Route extends SiteRoutePath = SiteRoutePath> = {
-    initialRoute: Route;
-    initialProps: SiteRouteProps<Route>;
-};
+export type AppContext = {
+    initialRoute: string;
+    initialProps: SiteRouteProps<any>;
+    error?: string;
+}

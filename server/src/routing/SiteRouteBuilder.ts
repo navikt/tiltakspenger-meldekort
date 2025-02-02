@@ -1,6 +1,6 @@
 import { SsrRenderer } from '@ssr/htmlRenderer';
 import { Router, Request } from 'express';
-import { SiteRoutePath, SiteRouteProps } from '@client/routing/siteRouteConfigs';
+import { SiteRoutePath, SiteRouteProps } from '@client/routing/siteRoutes';
 import { appConfig } from '@appConfig';
 import path from 'path';
 

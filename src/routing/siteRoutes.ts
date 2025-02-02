@@ -9,13 +9,13 @@ export type SiteRouteConfig<Props> = {
     Component: React.FunctionComponent<Props>;
 };
 
-export type SiteRouteMap =  typeof siteRouteConfigs
+export type SiteRouteMap =  typeof siteRoutes
 
 export type SiteRoutePath = keyof SiteRouteMap;
 
 export type SiteRouteProps<Path extends SiteRoutePath> = React.ComponentProps<SiteRouteMap[Path]['Component']>;
 
-export const siteRouteConfigs =
+export const siteRoutes =
     {
         '/': {
             path: '/',

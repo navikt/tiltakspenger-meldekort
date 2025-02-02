@@ -11,7 +11,7 @@ export const InternLenke = ({ children, path, ...rest }: Props) => {
     usePreloadPageProps(path);
 
     return (
-        <Link {...rest} href={path} onClick={(arg) => console.log(`Navigating to ${path}`)}>
+        <Link {...rest} href={path}>
             {children}
         </Link>
     );

@@ -1,21 +1,23 @@
 import React from 'react';
-import { SiteRouteConfig, SiteRouteProps } from '@routing/siteRouteConfigs.ts';
+import { SiteRouteConfig, SiteRouteProps } from '@routing/siteRoutes.ts';
 import { useLocation } from 'wouter';
-import { Loader } from '@navikt/ds-react';
+import { Alert, Loader } from '@navikt/ds-react';
 import { useFetchPageProps } from '@context/useFetchPageData.ts';
 
 type Props = {
-    config: SiteRouteConfig<any>;
+    route: SiteRouteConfig<any>;
     initialProps?: SiteRouteProps<any>;
 };
 
-export const RouteComponent = ({ config, initialProps }: Props) => {
-    const { Component } = config;
-    const [location] = useLocation();
+export const RouteComponent = ({ route, initialProps }: Props) => {
+    const { Component } = route;
+    const [path] = useLocation();
 
-    const { isLoading, data, error } = useFetchPageProps(location, initialProps);
+    const { data, error } = useFetchPageProps(path, initialProps);
 
-    console.log(`Route path: ${location} - ${isLoading} - ${error}`);
+    if (error) {
+        return <Alert variant={"error"}>{`Noe gikk galt ved henting av data - ${error}`}</Alert>
+    }
 
     if (!data) {
         return <Loader />;

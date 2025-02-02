@@ -9,14 +9,14 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
     process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-    const analyze = process.env.ANALYZE === "true" && !isSsrBuild;
-    const usePreact = process.env.PREACT === "true";
+    const analyzeClientBundle = process.env.ANALYZE === "true" && !isSsrBuild;
+    const usePreact = process.env.NODE_ENV  === "production";
 
     return {
         plugins: [
             usePreact ? preact() : react(),
             tsconfigPaths(),
-            ...(analyze ? [visualizer({ open: true, gzipSize: true })] : []),
+            ...(analyzeClientBundle ? [visualizer({ open: true, gzipSize: true })] : []),
         ],
         base: '/tiltakspenger/meldekort',
         css: {
@@ -36,11 +36,11 @@ const preactOptions: UserConfig = {
         alias: {
             // useSyncExternalStore shim som noen pakker bruker for bakoverkompatibilitet
             // preset-vite aliaser ikke denne selv
-            'use-sync-external-store/shim/index.js': `${process.cwd()}/../node_modules/preact/compat/src/hooks.js`,
+            'use-sync-external-store/shim/index.js': `${process.cwd()}/node_modules/preact/compat/src/hooks.js`,
         },
     },
     ssr: {
-        // noExternal på react deps for at preact compat skal funke
+        // noExternal på react deps for at preact compat aliaser skal funke
         noExternal: [
             '@floating-ui/react',
             '@navikt/aksel-icons',

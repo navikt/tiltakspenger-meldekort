@@ -1,28 +1,27 @@
 import './global.css';
 import React from 'react';
-import { Page, VStack } from '@navikt/ds-react';
+import { Alert, Page, VStack } from '@navikt/ds-react';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Route } from 'wouter';
-
-import { siteRouteConfigs } from '@routing/siteRouteConfigs.ts';
-import style from './App.module.css';
 import { AppContext } from '@routing/appContext.ts';
 import { RouteComponent } from '@routing/RouteComponent.tsx';
+import { siteRoutes } from '@routing/siteRoutes.ts';
 
-export const App = ({ initialRoute, initialProps }: AppContext) => {
-    console.log(`Initial path: ${initialRoute}`);
+import style from './App.module.css';
 
+export const App = ({ initialRoute, initialProps, error }: AppContext) => {
     return (
         <Page className={style.app}>
             <PageHeader />
             <Page.Block width={'md'} as={'main'} id={'maincontent'}>
                 <VStack className={style.text}>
-                    {Object.values(siteRouteConfigs).map((routeConfig) => (
-                        <Route path={routeConfig.path} key={routeConfig.path}>
+                    {error && <Alert variant={'error'}>{error}</Alert>}
+                    {Object.values(siteRoutes).map((route) => (
+                        <Route path={route.path} key={route.path}>
                             <RouteComponent
-                                config={routeConfig}
+                                route={route}
                                 initialProps={
-                                    initialRoute === routeConfig.path ? initialProps : undefined
+                                    initialRoute === route.path ? initialProps : undefined
                                 }
                             />
                         </Route>

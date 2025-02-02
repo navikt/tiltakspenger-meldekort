@@ -3,6 +3,8 @@ import { fetchJson } from '@utils/fetchUtils.ts';
 
 const basePath = import.meta.env.BASE_URL;
 
+const isSsr = import.meta.env.SSR;
+
 const fetcher = async (path: string) => {
     return fetchJson<any>(`${basePath}${path.replace(/\/$/, '')}/data`);
 };
@@ -16,5 +18,7 @@ export const useFetchPageProps = (path: string, initialProps?: any) => {
 };
 
 export const usePreloadPageProps = (path: string) => {
-    return preload(path, fetcher);
+    if (!isSsr) {
+        preload(path, fetcher);
+    }
 };

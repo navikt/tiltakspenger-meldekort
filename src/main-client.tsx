@@ -10,7 +10,11 @@ const parseAppProps = (): AppContext => {
         return JSON.parse(contextElement.innerText);
     } catch (e) {
         console.error(`Failed to parse app context - ${e}`);
-        return { route: 'notFound', props: {} };
+        return {
+            initialProps: {},
+            initialRoute: window.location.pathname,
+            error: 'Oi sann, noe gikk galt!',
+        };
     }
 };
 
