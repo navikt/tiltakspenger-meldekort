@@ -1,6 +1,5 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
-import { useFetchPageProps, usePreloadPageProps } from '@context/useFetchPageData.ts';
+import { usePreloadPageProps } from '@context/useFetchPageData.ts';
 import { Link } from 'wouter';
 
 type Props = {

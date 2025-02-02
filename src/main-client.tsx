@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
-// import { BrowserRouter } from 'react-router-dom';
 import { AppContext } from '@routing/appContext.ts';
+import { Router } from 'wouter';
 
 const parseAppProps = (): AppContext => {
     try {
@@ -17,8 +17,8 @@ const parseAppProps = (): AppContext => {
 ReactDOM.hydrateRoot(
     document.getElementById('root')!,
     <React.StrictMode>
-        {/*<BrowserRouter basename={import.meta.env.BASE_URL}>*/}
+        <Router base={import.meta.env.BASE_URL}>
             <App {...parseAppProps()} />
-        {/*</BrowserRouter>*/}
+        </Router>
     </React.StrictMode>
 );

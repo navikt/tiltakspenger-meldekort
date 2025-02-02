@@ -5,15 +5,17 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { preact } from '@preact/preset-vite';
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
     process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+
+    const analyze = process.env.ANALYZE && !isSsrBuild
 
     return {
         plugins: [
             react(),
             tsconfigPaths(),
-            ...(process.env.ANALYZE ? [visualizer({ open: true, gzipSize: true })] : []),
+            ...(analyze ? [visualizer({ open: true, gzipSize: true })] : []),
         ],
         base: '/tiltakspenger/meldekort',
         // ssr: {
@@ -22,9 +24,9 @@ export default defineConfig(({ mode }) => {
         //         '@floating-ui/react',
         //         '@navikt/ds-react',
         //         '@navikt/aksel-icons',
-        //         "wouter",
         //         'swr',
-        //         'use-sync-external-store'
+        //         'use-sync-external-store',
+        //         "wouter"
         //     ],
         // },
         css: {
