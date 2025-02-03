@@ -3,13 +3,6 @@ type Periode = {
     tilOgMed: string;
 };
 
-export enum MeldekortStatus {
-    TilUtfylling = 'KAN_UTFYLLES',
-    KanIkkeUtfylles = 'KAN_IKKE_UTFYLLES',
-    Innsendt = 'INNSENDT',
-    Godkjent = 'GODKJENT',
-}
-
 export enum MeldekortDagStatus {
     Deltatt = 'DELTATT',
     FraværSyk = 'FRAVÆR_SYK',
@@ -21,14 +14,14 @@ export enum MeldekortDagStatus {
 
 export type MeldekortDag = {
     dato: string;
-    index: number;
     status: MeldekortDagStatus;
+    harRett: boolean;
+    index: number;
 };
 
 export type MeldekortUtfylling = {
     id: string;
     periode: Periode;
-    status: MeldekortStatus;
     innsendt: string | null;
-    meldekortDager: MeldekortDag[];
+    dager: MeldekortDag[];
 };

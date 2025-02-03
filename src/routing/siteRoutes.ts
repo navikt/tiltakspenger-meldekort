@@ -9,28 +9,27 @@ export type SiteRouteConfig<Props> = {
     Component: React.FunctionComponent<Props>;
 };
 
-export type SiteRouteMap =  typeof siteRoutes
+export type SiteRoute = (typeof siteRoutes)[number];
 
-export type SiteRoutePath = keyof SiteRouteMap;
+export type SiteRoutePath = SiteRoute['path'];
 
-export type SiteRouteProps<Path extends SiteRoutePath> = React.ComponentProps<SiteRouteMap[Path]['Component']>;
+export type SiteRouteProps = React.ComponentProps<SiteRoute['Component']>;
 
-export const siteRoutes =
+export const siteRoutes = [
     {
-        '/': {
-            path: '/',
-            Component: Forside,
-        },
-        '/alle': {
-            path: '/alle',
-            Component: AlleMeldekort,
-        },
-        '/:meldekortId/fyll-ut': {
-            path: '/:meldekortId/fyll-ut',
-            Component: FyllUt,
-        },
-        '/:meldekortId/kvittering': {
-            path: '/:meldekortId/kvittering',
-            Component: KvitteringsSide,
-        },
-    } as const satisfies Record<string, SiteRouteConfig<any>>;
+        path: '/',
+        Component: Forside,
+    },
+    {
+        path: '/alle',
+        Component: AlleMeldekort,
+    },
+    {
+        path: '/:meldekortId/fyll-ut',
+        Component: FyllUt,
+    },
+    {
+        path: '/:meldekortId/kvittering',
+        Component: KvitteringsSide,
+    },
+] as const satisfies SiteRouteConfig<any>[];

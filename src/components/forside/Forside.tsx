@@ -3,7 +3,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
-import { MeldekortStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { SisteMeldekortStatus } from '@components/forside/siste-meldekort-status/SisteMeldekortStatus';
 
 import style from './Forside.module.css';
@@ -26,10 +26,10 @@ export const Forside = ({ meldekort }: Props) => {
             <TekstParagrafer id={'forsideIngress'} spacing={true} />
             <TekstParagrafer id={'forsideTakk'} weight={'semibold'} size={'large'} />
             <TekstParagrafer id={'forsideOpplysninger'} spacing={true} />
-            {meldekort.status === MeldekortStatus.TilUtfylling ? (
-                <TilUtfylling nesteMeldekortId={meldekort.id} />
-            ) : (
+            {meldekort.innsendt ? (
                 <SisteMeldekortStatus meldekort={meldekort} />
+            ) : (
+                <TilUtfylling nesteMeldekortId={meldekort.id} />
             )}
             <InternLenke path={'/alle'} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />

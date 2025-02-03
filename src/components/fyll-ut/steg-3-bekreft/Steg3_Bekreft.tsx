@@ -6,6 +6,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { tilMeldekortInnsending } from '@utils/transformMeldekort';
+import { useLocation } from 'wouter';
 
 type Props = {
     forrigeSteg?: MeldekortSteg;
@@ -13,6 +14,7 @@ type Props = {
 
 export const Steg3_Bekreft = ({ forrigeSteg = 'deltatt' }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
+    const [_, navigate] = useLocation();
 
     const { setMeldekortSteg, meldekortUtfylling } = useMeldekortUtfylling();
 
@@ -50,9 +52,7 @@ export const Steg3_Bekreft = ({ forrigeSteg = 'deltatt' }: Props) => {
                             body: JSON.stringify(tilMeldekortInnsending(meldekortUtfylling)),
                         }).then((res) => {
                             if (res.ok) {
-                                window.location.assign(
-                                    `/tiltakspenger/meldekort/${meldekortUtfylling!.id}/kvittering`
-                                );
+                                navigate(`/${meldekortUtfylling!.id}/kvittering`);
                             } else {
                                 window.alert(`Innsending feilet med feilkode ${res.status}`);
                             }

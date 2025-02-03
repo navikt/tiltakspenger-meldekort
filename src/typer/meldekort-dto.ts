@@ -1,23 +1,28 @@
-import { MeldekortDagStatus, MeldekortStatus } from '@typer/meldekort-utfylling';
+import { MeldekortDagStatus } from '@typer/meldekort-utfylling.ts';
 
-type MeldekortDagDto = {
+export type MeldekortFraBrukerDTO = {
+    id: string;
+    dager: MeldekortDagFraBrukerDTO[];
+};
+
+type MeldekortDagFraBrukerDTO = {
     dag: string;
     status: MeldekortDagStatus;
 };
 
-export type MeldekortInnsendingDto = {
+export type MeldekortTilBrukerDTO = {
     id: string;
-    meldekortDager: MeldekortDagDto[];
+    meldeperiodeId: string;
+    meldeperiodeKjedeId: string;
+    versjon: number;
+    fraOgMed: string;
+    tilOgMed: string;
+    innsendt?: string;
+    dager: MeldekortDagTilBrukerDTO[];
 };
 
-export type MeldekortMottakDto = {
-    id: string,
-    meldeperiodeId: string,
-    meldeperiodeKjedeId: string,
-    versjon: number,
-    fraOgMed: string,
-    tilOgMed: string,
-    innsendt?: string,
-    status: MeldekortStatus;
-    dager: MeldekortDagDto[];
-}
+type MeldekortDagTilBrukerDTO = {
+    dag: string;
+    status: MeldekortDagStatus;
+    harRett: boolean;
+};

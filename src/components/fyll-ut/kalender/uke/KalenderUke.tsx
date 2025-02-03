@@ -1,5 +1,5 @@
 import React from 'react';
-import { MeldekortDag } from '@typer/meldekort-utfylling';
+import { MeldekortDag } from '@typer/meldekort-utfylling.ts';
 import { Heading } from '@navikt/ds-react';
 import { getUkenummer } from '@utils/datetime.ts';
 import { DeltattDagPanel } from '@components/fyll-ut/steg-1-deltatt/dag/DeltattDagPanel';

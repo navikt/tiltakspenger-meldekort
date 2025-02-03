@@ -16,7 +16,7 @@ export const App = ({ initialRoute, initialProps, error }: AppContext) => {
             <Page.Block width={'md'} as={'main'} id={'maincontent'}>
                 <VStack className={style.text}>
                     {error && <Alert variant={'error'}>{error}</Alert>}
-                    {Object.values(siteRoutes).map((route) => (
+                    {siteRoutes.map((route) => (
                         <Route path={route.path} key={route.path}>
                             <RouteComponent
                                 route={route}

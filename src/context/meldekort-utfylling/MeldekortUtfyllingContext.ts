@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 
 export type MeldekortUtfyllingState = {

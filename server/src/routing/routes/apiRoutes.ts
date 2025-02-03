@@ -1,9 +1,9 @@
 import { RequestHandler, Router } from 'express';
-import { MeldekortInnsendingDto } from '@client/typer/meldekort-dto';
+import { MeldekortFraBrukerDTO } from '@client/typer/meldekort-dto';
 import { fetchFraApi } from '@fetch/apiFetch';
 
 const sendInnRoute: RequestHandler = async (req, res) => {
-    const body = req.body as MeldekortInnsendingDto;
+    const body = req.body as MeldekortFraBrukerDTO;
 
     const response = await fetchFraApi(req, 'send-inn', 'POST', JSON.stringify(body));
 

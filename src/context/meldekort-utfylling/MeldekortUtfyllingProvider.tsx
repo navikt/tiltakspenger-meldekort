@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
-import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling';
+import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 
 type Props = {
@@ -20,12 +20,12 @@ export const MeldekortUtfyllingProvider = ({
 
     const lagreMeldekortDag = useCallback(
         (dag: MeldekortDag) => {
-            const meldekortDagerUpdated = [...meldekortUtfylling.meldekortDager];
+            const meldekortDagerUpdated = [...meldekortUtfylling.dager];
             meldekortDagerUpdated[dag.index] = dag;
 
             setMeldekortUtfylling({
                 ...meldekortUtfylling,
-                meldekortDager: meldekortDagerUpdated,
+                dager: meldekortDagerUpdated,
             });
         },
         [meldekortUtfylling]

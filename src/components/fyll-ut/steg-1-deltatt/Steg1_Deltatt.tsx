@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import { MeldekortDagStatus } from '@typer/meldekort-utfylling.ts';
 import { BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { Tekst } from '@components/tekst/Tekst';
@@ -21,7 +21,7 @@ export const Steg1_Deltatt = () => {
         return null;
     }
 
-    const antallDagerDeltatt = meldekortUtfylling.meldekortDager.filter(
+    const antallDagerDeltatt = meldekortUtfylling.dager.filter(
         (dag) => dag.status === MeldekortDagStatus.Deltatt
     ).length;
 

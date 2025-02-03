@@ -20,7 +20,7 @@ export class SiteRouteBuilder {
 
     public route<Path extends SiteRoutePath>(
         path: Path,
-        fetcher: (req: Request) => Promise<SiteRouteProps<Path>>
+        fetcher: (req: Request) => Promise<SiteRouteProps>
     ) {
         const fullPath = this.joinPaths(appConfig.basePath, path);
         const dataPath = this.joinPaths(path, 'data');

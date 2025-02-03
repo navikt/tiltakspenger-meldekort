@@ -6,7 +6,7 @@ import { useFetchPageProps } from '@context/useFetchPageData.ts';
 
 type Props = {
     route: SiteRouteConfig<any>;
-    initialProps?: SiteRouteProps<any>;
+    initialProps?: SiteRouteProps;
 };
 
 export const RouteComponent = ({ route, initialProps }: Props) => {
