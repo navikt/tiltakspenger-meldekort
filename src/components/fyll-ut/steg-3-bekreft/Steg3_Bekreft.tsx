@@ -3,11 +3,15 @@ import style from '@components/fyll-ut/steg-2-fravær/Steg2_Fravær.module.css';
 import { Alert, Button, Checkbox } from '@navikt/ds-react';
 import { useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
-import { MeldekortDagStatus } from '@typer/meldekort-utfylling';
+import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { tilMeldekortInnsending } from '@utils/transformMeldekort';
 
-export const Steg3_Bekreft = () => {
+type Props = {
+    forrigeSteg?: MeldekortSteg;
+};
+
+export const Steg3_Bekreft = ({ forrigeSteg = 'deltatt' }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
 
     const { setMeldekortSteg, meldekortUtfylling } = useMeldekortUtfylling();
@@ -16,10 +20,6 @@ export const Steg3_Bekreft = () => {
     if (!meldekortUtfylling) {
         return <div>{'Åh nei, fant ingen meldekort!'}</div>;
     }
-
-    const harFravær = meldekortUtfylling?.meldekortDager.some(
-        (dag) => dag.status && dag.status !== MeldekortDagStatus.Deltatt
-    );
 
     return (
         <>
@@ -33,7 +33,7 @@ export const Steg3_Bekreft = () => {
             <div className={style.knapper}>
                 <Button
                     onClick={() => {
-                        setMeldekortSteg(harFravær ? 'fravær' : 'deltatt');
+                        setMeldekortSteg(forrigeSteg);
                     }}
                 >
                     <Tekst id={'forrige'} />
