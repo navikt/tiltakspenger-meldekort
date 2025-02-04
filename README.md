@@ -1,19 +1,32 @@
 # Tiltakspenger meldekort
-Frontend for meldekort til bruker.
+
+Frontend for brukers innfylling av meldekort for tiltakspenger.
 
 # 🚀 Komme i gang
 
-For å starte appen i dev modus lokalt:
+For å starte appen lokalt:
+
 - Logg inn på Github package registry. Bruk en PAT med navikt SSO auth og `read: packages` scope som passord.
+
 ```
 npm login --registry=https://npm.pkg.github.com --auth-type=legacy
 ```
-- Kopier `.env.local-template` til `.env.local`
-- Kjør `npm install`
+
+### Start i dev-modus:
+- Kopier `.env-template` til `.env.development`
 - Kjør `npm run dev`
+ 
+Som standard benyttes mocks lokalt ved api-kall i dev modus. Fjern `MOCK_API_FETCH` fra .env-fila hvis du vil integrere mot resten av verdikjeden.
+
+### Start i prod-modus:
+- Kopier `.env-template` til `.env`
+- Sett `NODE_ENV: production` i `.env`
+- Kjør `npm run start`
 
 ## Lokalt oppsett for hele verdikjeden
-Hele verdikjeden kan kjøres opp lokalt, med noen komponenter mocket ut. Dette er satt opp med docker-compose i [tiltakspenger-meta-repo](https://github.com/navikt/tiltakspenger).
+
+Hele verdikjeden kan kjøres opp lokalt, med noen komponenter mocket ut. Dette er satt opp med docker-compose
+i [tiltakspenger-meta-repo](https://github.com/navikt/tiltakspenger).
 
 Se på [denne siden](https://confluence.adeo.no/display/POAO/Ny+Utvikler+i+Tiltakspenger) for tips til lokalt oppsett av utviklingsmiljø.
 
@@ -21,7 +34,8 @@ Se på [denne siden](https://confluence.adeo.no/display/POAO/Ny+Utvikler+i+Tilta
 
 ## Lenke til dev-miljø
 
-Appen kjører på [https://www.ansatt.dev.nav.no/tiltakspenger/meldekort](https://www.ansatt.dev.nav.no/tiltakspenger/meldekort). Deployes ved push til main eller manuelt med workflow_dispatch trigger.
+Appen kjører på [https://www.ansatt.dev.nav.no/tiltakspenger/meldekort](https://www.ansatt.dev.nav.no/tiltakspenger/meldekort).
+Deployes ved push til main eller manuelt med workflow_dispatch trigger.
 
 ## 📣 Henvendelser
 

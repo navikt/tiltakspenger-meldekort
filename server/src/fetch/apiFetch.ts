@@ -1,14 +1,21 @@
 import { Request } from 'express';
 import { getOboToken } from '@fetch/auth';
+import { fetchFraApiMock } from '@fetch/apiFetchMock';
 
-const BASE_URL = `${process.env.MELDEKORT_API_URL}/meldekort/bruker`;
+const API_BASE_URL = `${process.env.MELDEKORT_API_URL}/meldekort/bruker`;
 
-export const fetchFraApi = async (
+if (process.env.NODE_ENV === 'development' && process.env.MOCK_API_FETCH === 'true') {
+    console.log("Bruker mocks for api fetch!")
+    // @ts-ignore
+    fetchFraApi = fetchFraApiMock;
+}
+
+export async function fetchFraApi(
     req: Request,
     path: string,
     method: 'GET' | 'POST',
     body?: BodyInit
-) => {
+) {
     const oboToken = await getOboToken(req);
 
     if (!oboToken) {
@@ -16,7 +23,7 @@ export const fetchFraApi = async (
         return null;
     }
 
-    const url = `${BASE_URL}/${path}`;
+    const url = `${API_BASE_URL}/${path}`;
 
     return fetch(url, {
         method,
@@ -37,4 +44,4 @@ export const fetchFraApi = async (
             console.error(`Exception ved fetch fra meldekort-api - ${e}`);
             return null;
         });
-};
+}
