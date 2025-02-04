@@ -41,7 +41,7 @@ export const fetchFraApiMock: typeof fetchFraApi = async (_1, path, _2, body) =>
 const mockResponse = (status: number, body: any) =>
     ({
         status,
-        ok: status >= 200,
+        ok: status >= 200 && status < 300,
         json: () => body,
     }) as unknown as ReturnType<typeof fetchFraApiMock>;
 
