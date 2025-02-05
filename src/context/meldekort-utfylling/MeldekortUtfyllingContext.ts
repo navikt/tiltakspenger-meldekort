@@ -3,7 +3,7 @@ import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts'
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 
 export type MeldekortUtfyllingState = {
-    meldekortUtfylling: MeldekortUtfylling | null;
+    meldekortUtfylling: MeldekortUtfylling;
     setMeldekortUtfylling: (meldekort: MeldekortUtfylling) => void;
     valgtMeldekortDag: MeldekortDag | null;
     setValgtMeldekortDag: (dag: MeldekortDag | null) => void;
@@ -11,11 +11,6 @@ export type MeldekortUtfyllingState = {
     setMeldekortSteg: (steg: MeldekortSteg) => void;
 };
 
-export const MeldekortUtfyllingContext = createContext<MeldekortUtfyllingState>({
-    meldekortUtfylling: null,
-    setMeldekortUtfylling: () => {},
-    valgtMeldekortDag: null,
-    setValgtMeldekortDag: () => {},
-    lagreMeldekortDag: () => {},
-    setMeldekortSteg: () => {},
-});
+export const MeldekortUtfyllingContext = createContext<MeldekortUtfyllingState>(
+    {} as MeldekortUtfyllingState
+);

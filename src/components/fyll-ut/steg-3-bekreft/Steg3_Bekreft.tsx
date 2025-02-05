@@ -18,11 +18,6 @@ export const Steg3_Bekreft = ({ forrigeSteg = 'deltatt' }: Props) => {
 
     const { setMeldekortSteg, meldekortUtfylling } = useMeldekortUtfylling();
 
-    // TODO: redirect til forsiden el. hvis ingen meldekortUtfylling finnes
-    if (!meldekortUtfylling) {
-        return <div>{'Åh nei, fant ingen meldekort!'}</div>;
-    }
-
     return (
         <>
             <Alert variant={'warning'}>

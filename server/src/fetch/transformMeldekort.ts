@@ -10,6 +10,7 @@ export const tilMeldekortUtfylling = (
             fraOgMed: meldekortDto.fraOgMed,
             tilOgMed: meldekortDto.tilOgMed,
         },
+        maksAntallDager: meldekortDto.maksAntallDager,
         innsendt: meldekortDto.innsendt ?? null,
         dager: meldekortDto.dager.map((dag, index) => ({
             status: dag.status,

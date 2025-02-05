@@ -53,6 +53,7 @@ const mockMeldekort: MeldekortTilBrukerDTO[] = [
         meldeperiodeKjedeId: 'kjede_2',
         fraOgMed: '2025-01-06',
         tilOgMed: '2025-01-19',
+        maksAntallDager: 6,
         dager: [
             ...Array.from({ length: 4 }).map((_, i) => ({
                 status: MeldekortDagStatus.IkkeRegistrert,
@@ -73,6 +74,7 @@ const mockMeldekort: MeldekortTilBrukerDTO[] = [
         meldeperiodeKjedeId: 'kjede_1',
         fraOgMed: '2024-12-23',
         tilOgMed: '2025-01-05',
+        maksAntallDager: 6,
         dager: [
             ...Array.from({ length: 4 }).map((_, i) => ({
                 status: MeldekortDagStatus.IkkeRegistrert,

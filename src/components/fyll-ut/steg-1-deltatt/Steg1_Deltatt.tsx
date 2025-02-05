@@ -1,31 +1,27 @@
 import { useState } from 'react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortDagStatus } from '@typer/meldekort-utfylling.ts';
-import { BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { Tekst } from '@components/tekst/Tekst';
 import { DeltattHjelp } from '@components/fyll-ut/hjelp/DeltattHjelp';
+import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 
 import style from './Steg1_Deltatt.module.css';
-import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
 
 type FraværStatus = 'medFravær' | 'utenFravær';
 
 export const Steg1_Deltatt = () => {
-    const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
+    const { meldekortUtfylling, setMeldekortSteg, harForMangeDagerRegistrert } =
+        useMeldekortUtfylling();
 
     const [fraværStatus, setFraværStatus] = useState<FraværStatus | null>(null);
 
-    if (!meldekortUtfylling) {
-        console.error('Oh no, fant ingen meldekort!');
-        return null;
-    }
-
-    const antallDagerDeltatt = meldekortUtfylling.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.Deltatt
+    const antallDagerRegistrert = meldekortUtfylling.dager.filter(
+        (dag) => dag.status !== MeldekortDagStatus.IkkeRegistrert
     ).length;
 
-    const dagerDeltattString = `${antallDagerDeltatt} dag${antallDagerDeltatt === 1 ? '' : 'er'} deltatt på tiltak`;
+    const dagerDeltattString = `${antallDagerRegistrert} dag${antallDagerRegistrert === 1 ? '' : 'er'} deltatt på tiltak`;
 
     return (
         <>
@@ -33,9 +29,15 @@ export const Steg1_Deltatt = () => {
             <TekstParagrafer id={'deltattStegHeader'} weight={'semibold'} />
             <TekstParagrafer id={'deltattStegIngress'} />
             <Kalender meldekort={meldekortUtfylling} steg={'deltatt'} />
-            <BodyLong className={style.teller} weight={'semibold'}>
-                {dagerDeltattString}
-            </BodyLong>
+            {harForMangeDagerRegistrert ? (
+                <Alert className={style.teller} variant={'warning'}>
+                    {`Du har fylt ut ${antallDagerRegistrert} dager. Det er maks ${meldekortUtfylling.maksAntallDager} dager med tiltak i denne perioden.`}
+                </Alert>
+            ) : (
+                <BodyLong className={style.teller} weight={'semibold'}>
+                    {dagerDeltattString}
+                </BodyLong>
+            )}
             <RadioGroup
                 legend={<Tekst id={'deltattStegFraværSpørsmål'} />}
                 value={fraværStatus}
@@ -52,7 +54,7 @@ export const Steg1_Deltatt = () => {
                 </Radio>
             </RadioGroup>
             <Button
-                disabled={!fraværStatus}
+                disabled={!fraværStatus || harForMangeDagerRegistrert}
                 onClick={() => {
                     setMeldekortSteg(fraværStatus === 'medFravær' ? 'fravær' : 'bekreft');
                 }}

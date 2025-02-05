@@ -17,6 +17,7 @@ export type MeldekortTilBrukerDTO = {
     versjon: number;
     fraOgMed: string;
     tilOgMed: string;
+    maksAntallDager: number;
     innsendt?: string;
     dager: MeldekortDagTilBrukerDTO[];
 };
