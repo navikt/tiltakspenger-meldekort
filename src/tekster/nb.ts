@@ -13,6 +13,8 @@ export const teksterNb = {
     statusGodkjentFravær: 'Fravær godkjent av Nav',
     statusIkkeGodkjentFravær: 'Annet fravær',
 
+    ikkeRett: 'Ikke rett',
+
     sideTittel: 'Meldekort for tiltakspenger',
 
     forsideIngress: [

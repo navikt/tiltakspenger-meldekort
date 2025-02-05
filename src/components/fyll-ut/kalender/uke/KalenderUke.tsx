@@ -34,7 +34,7 @@ export const KalenderUke = ({ dager, steg }: Props) => {
             <ul className={style.liste}>
                 {dager.map((dag) => (
                     <li key={dag.dato}>
-                        <DagKomponent dag={dag} />
+                        {dag.harRett ? <DagKomponent dag={dag} /> : <StatiskDagPanel dag={dag} />}
                     </li>
                 ))}
             </ul>

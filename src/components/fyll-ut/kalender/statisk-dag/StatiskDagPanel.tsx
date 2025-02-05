@@ -8,8 +8,9 @@ import {
     statusTilTekstId,
 } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 import { classNames } from '@utils/classNames.ts';
-
 import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
+import { CircleSlashIcon } from '@navikt/aksel-icons';
+
 import style from './StatiskDagPanel.module.css';
 
 type Props = {
@@ -17,17 +18,20 @@ type Props = {
 };
 
 export const StatiskDagPanel = ({ dag }: Props) => {
-    const { status, dato } = dag;
+    const { status, dato, harRett } = dag;
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
-    const IkonKomponent = statusTilIkon[status];
+    const IkonKomponent = harRett ? statusTilIkon[status] : CircleSlashIcon;
 
     return (
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
-            {IkonKomponent && <IkonKomponent className={style.ikon} />}
+            <IkonKomponent className={style.ikon} />
             <BodyLong>{`${datoTekst}: `}</BodyLong>
-            <TekstParagrafer id={statusTilTekstId[status]} weight={'semibold'} />
+            <TekstParagrafer
+                id={harRett ? statusTilTekstId[status] : 'ikkeRett'}
+                weight={'semibold'}
+            />
         </div>
     );
 };
