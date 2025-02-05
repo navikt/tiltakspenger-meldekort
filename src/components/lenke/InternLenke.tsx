@@ -8,8 +8,6 @@ type Props = {
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export const InternLenke = ({ children, path, ...rest }: Props) => {
-    usePreloadPageProps(path);
-
     return (
         <Link {...rest} href={path}>
             {children}

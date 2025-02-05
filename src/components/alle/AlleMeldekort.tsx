@@ -22,17 +22,15 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
             </div>
 
             {alleMeldekort.map((meldekort) => (
-                <Fragment key={meldekort.id}>
-                    <Accordion>
-                        <Accordion.Item>
-                            <Accordion.Header>{`${formatterDato({ dato: meldekort.periode.fraOgMed })}-${formatterDato({ dato: meldekort.periode.tilOgMed })}`}</Accordion.Header>
-                            <Accordion.Content>
-                                <BodyShort>Innsendt av bruker </BodyShort>
-                                <Kalender meldekort={meldekort} steg="innsendt" />
-                            </Accordion.Content>
-                        </Accordion.Item>
-                    </Accordion>
-                </Fragment>
+                <Accordion key={meldekort.id}>
+                    <Accordion.Item>
+                        <Accordion.Header>{`${formatterDato({ dato: meldekort.periode.fraOgMed })} - ${formatterDato({ dato: meldekort.periode.tilOgMed })}`}</Accordion.Header>
+                        <Accordion.Content>
+                            <BodyShort>{meldekort.innsendt ? 'Innsendt' : 'Ikke innsendt'}</BodyShort>
+                            <Kalender meldekort={meldekort} steg="innsendt" />
+                        </Accordion.Content>
+                    </Accordion.Item>
+                </Accordion>
             ))}
         </div>
     );

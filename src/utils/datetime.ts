@@ -27,7 +27,7 @@ export const formatterDato = ({
 };
 
 export const formatterDatoTid = (datoTid: string) => {
-    return dayjs(datoTid).locale('nb').format("D.M.YYYY [kl.] H:mm");
+    return dayjs(datoTid).locale('nb').format("D[.] MMMM YYYY [kl.] H:mm");
 };
 
 export const getUkenummer = (datoTid: string) => {
