@@ -1,3 +1,5 @@
+import { TekstResolver } from '@tekster/utils.ts';
+
 export const teksterNb = {
     neste: 'Neste',
     forrige: 'Forrige',
@@ -14,6 +16,11 @@ export const teksterNb = {
     statusIkkeGodkjentFravær: 'Annet fravær',
 
     ikkeRett: 'Ikke rett',
+    antallDagerRegistrert: ({ antall }: { antall: number }) =>
+        `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
+
+    forMangeDagerRegistrert: ({ antall, maks }: { antall: number; maks: number }) =>
+        `Du har fylt ut ${antall} dager. Det er maks ${maks} dager med tiltak i denne perioden.`,
 
     sideTittel: 'Meldekort for tiltakspenger',
 
@@ -50,10 +57,11 @@ export const teksterNb = {
         'Du kan ha rett til tiltakspenger hvis du er for syk til å delta på tiltaksdagen. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
     fraværModalSyktBarnIngress:
         'Du kan ha rett på tiltakspenger hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
-    fraværModalAnnetGodkjentIngress: ['Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med og godkjent av veilederen din.',
-      'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel jobbintervju, legetime eller alvorlig sykdom/begravelse i nærmeste familie.',
-        ],
-        
+    fraværModalAnnetGodkjentIngress: [
+        'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med og godkjent av veilederen din.',
+        'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel jobbintervju, legetime eller alvorlig sykdom/begravelse i nærmeste familie.',
+    ],
+
     fraværModalIkkeGodkjentIngress: [
         'Du har ikke rett på tiltakspenger hvis du har vært fraværende fra tiltaket, og fraværet ikke er godkjent av Nav.',
     ],
@@ -61,5 +69,6 @@ export const teksterNb = {
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
     bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
 
-    kvittering: 'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.'
-} as const satisfies Record<string, string | string[]>;
+    kvittering:
+        'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
+} as const satisfies Record<string, string | string[] | TekstResolver>;

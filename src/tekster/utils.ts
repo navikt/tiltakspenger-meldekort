@@ -1,15 +1,43 @@
 import { teksterNb } from '@tekster/nb';
+import React from 'react';
 
-export type TekstId = keyof typeof teksterNb;
+type Locale = 'nb';
 
-type Locale = keyof typeof tekster
+export type TekstResolver = (props: any) => React.ReactNode;
 
-const tekster: Record<string, typeof teksterNb> = {
+type Tekster = typeof teksterNb;
+
+export type TekstId = keyof Tekster;
+
+const tekster: Record<Locale, Tekster> = {
     nb: teksterNb,
 } as const;
 
-export const getTekster = (id: TekstId, locale: Locale = 'nb'): string[] => {
+export type TeksterProps<Id extends TekstId> = {
+    id: Id;
+    locale?: Locale;
+    resolverProps?: unknown;
+} & TekstResolverProps<Tekster[Id]>;
+
+type TekstResolverProps<TekstVerdi extends Tekster[TekstId]> = TekstVerdi extends TekstResolver
+    ? {
+          resolverProps: Parameters<TekstVerdi>[0];
+      }
+    : {
+          resolverProps?: never;
+      };
+
+export const getTekster = <Id extends TekstId>({
+    id,
+    locale = 'nb',
+    resolverProps,
+}: TeksterProps<Id>): string[] => {
     const tekstVerdi = tekster[locale][id];
+
+    if (typeof tekstVerdi === 'function') {
+        // :_(
+        return [tekstVerdi(resolverProps as any)];
+    }
 
     return Array.isArray(tekstVerdi) ? tekstVerdi : [tekstVerdi];
 };

@@ -1,21 +1,18 @@
-import { Alert, BodyLong, Button } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
 import { FraværHjelp } from '@components/fyll-ut/hjelp/FraværHjelp';
 import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
-import { MeldekortDagStatus } from '@typer/meldekort-utfylling.ts';
+import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
+import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 
 import style from './Steg2_Fravær.module.css';
 
 export const Steg2_Fravær = () => {
-    const { meldekortUtfylling, setMeldekortSteg, harForMangeDagerRegistrert } = useMeldekortUtfylling();
+    const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
 
-    const antallDagerRegistrert = meldekortUtfylling.dager.filter(
-        (dag) => dag.status !== MeldekortDagStatus.IkkeRegistrert
-    ).length;
-
-    const dagerDeltattString = `${antallDagerRegistrert} dag${antallDagerRegistrert === 1 ? '' : 'er'} med deltatt eller fravær.`;
+    const { harForMangeDagerRegistrert } = antallDagerValidering(meldekortUtfylling);
 
     return (
         <>
@@ -23,15 +20,7 @@ export const Steg2_Fravær = () => {
             <TekstParagrafer id={'fraværStegHeader'} weight={'semibold'} />
             <TekstParagrafer id={'fraværStegIngress'} />
             <Kalender meldekort={meldekortUtfylling} steg={'fravær'} />
-            {harForMangeDagerRegistrert ? (
-                <Alert className={style.teller} variant={'warning'}>
-                    {`Du har fylt ut ${antallDagerRegistrert} dager. Det er maks ${meldekortUtfylling.maksAntallDager} dager med tiltak i denne perioden.`}
-                </Alert>
-            ) : (
-                <BodyLong className={style.teller} weight={'semibold'}>
-                    {dagerDeltattString}
-                </BodyLong>
-            )}
+            <DagerUtfyltTeller meldekortUtfylling={meldekortUtfylling} />
             <div className={style.knapper}>
                 <Button
                     onClick={() => {

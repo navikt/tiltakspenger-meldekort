@@ -1,17 +1,22 @@
 import { BodyLong, BodyLongProps } from '@navikt/ds-react';
-import { getTekster, TekstId } from '@tekster/utils';
+import { getTekster, TeksterProps, TekstId } from '@tekster/utils';
 import React from 'react';
 
-type Props = {
-    id: TekstId;
-} & Omit<BodyLongProps, 'children' | 'id'>;
+type Props<Id extends TekstId> = TeksterProps<Id> & Omit<BodyLongProps, 'children' | 'id'>;
 
-export const TekstParagrafer = ({ id, ...rest }: Props) => {
-    return getTekster(id).map((tekst, index, array) => {
+export const TekstParagrafer = <Id extends TekstId>(props: Props<Id>) => {
+    const {
+        id,
+        locale,
+        resolverProps,
+        ...bodyLongProps
+    } = props;
+
+    return getTekster(props).map((tekst, index, array) => {
         const erSist = index === array.length - 1;
 
         return (
-            <BodyLong key={`${id}-${index}`} spacing={!erSist} {...rest}>
+            <BodyLong key={`${id}-${index}`} spacing={!erSist} {...bodyLongProps}>
                 {tekst}
             </BodyLong>
         );

@@ -1,9 +1,5 @@
-import { getTekster, TekstId } from '@tekster/utils';
+import { getTekster, TeksterProps, TekstId } from '@tekster/utils';
 
-type Props = {
-    id: TekstId;
-};
-
-export const Tekst = ({ id }: Props) => {
-    return getTekster(id).join(' ');
+export const Tekst = <Id extends TekstId>(props: TeksterProps<Id>) => {
+    return getTekster(props).join(' ');
 };
