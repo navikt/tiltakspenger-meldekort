@@ -1,6 +1,6 @@
 .ikkeRegistrert {
-    background: var(--a-gray-100);
-    border-color: var(--a-gray-400);
+    background: var(--a-surface-subtle);
+    border-color: var(--a-border-default);
 
     & > svg {
         color: var(--a-gray-800);
@@ -8,35 +8,17 @@
 }
 
 .deltatt {
-    background: var(--a-green-100);
-    border-color: var(--a-green-400);
+    background: var(--a-surface-success-subtle);
+    border-color: var(--a-border-success);
 
     & > svg {
         color: var(--a-green-600);
     }
 }
 
-.syk {
-    background: var(--a-orange-100);
-    border-color: var(--a-orange-400);
-
-    & > svg {
-        color: var(--a-orange-600);
-    }
-}
-
-.syktBarn {
-    background: var(--a-orange-200);
-    border-color: var(--a-orange-400);
-
-    & > svg {
-        color: var(--a-orange-600);
-    }
-}
-
-.annet {
-    background: var(--a-orange-300);
-    border-color: var(--a-orange-400);
+.syk, .syktBarn, .annet {
+    background: var(--a-surface-warning-subtle);
+    border-color: var(--a-border-warning);
 
     & > svg {
         color: var(--a-orange-600);
@@ -44,8 +26,8 @@
 }
 
 .ikkeDeltatt {
-    background: var(--a-red-200);
-    border-color: var(--a-red-400);
+    background: var(--a-surface-danger-subtle);
+    border-color: var(--a-border-danger);
 
     & > svg {
         color: var(--a-red-600);

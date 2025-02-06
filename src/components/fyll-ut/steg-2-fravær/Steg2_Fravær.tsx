@@ -2,10 +2,9 @@ import { Button } from '@navikt/ds-react';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
-import { FraværHjelp } from '@components/fyll-ut/hjelp/FraværHjelp';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
+import { FraværHjelp } from '@components/fyll-ut/steg-2-fravær/hjelp/FraværHjelp.tsx';
 
 import style from './Steg2_Fravær.module.css';
 
@@ -17,10 +16,8 @@ export const Steg2_Fravær = () => {
     return (
         <>
             <FraværHjelp />
-            <TekstSegmenter id={'fraværStegHeader'} weight={'semibold'} />
-            <TekstSegmenter id={'fraværStegIngress'} />
-            <Kalender meldekort={meldekortUtfylling} steg={'fravær'} />
-            <DagerUtfyltTeller meldekortUtfylling={meldekortUtfylling} />
+            <Kalender meldekort={meldekortUtfylling} steg={'fravær'} className={style.kalender} />
+            <DagerUtfyltTeller meldekortUtfylling={meldekortUtfylling} className={style.teller} />
             <div className={style.knapper}>
                 <Button
                     onClick={() => {
@@ -30,9 +27,10 @@ export const Steg2_Fravær = () => {
                     <Tekst id={'forrige'} />
                 </Button>
                 <Button
-                    disabled={harForMangeDagerRegistrert}
                     onClick={() => {
-                        setMeldekortSteg('bekreft');
+                        if (!harForMangeDagerRegistrert) {
+                            setMeldekortSteg('bekreft');
+                        }
                     }}
                 >
                     <Tekst id={'neste'} />

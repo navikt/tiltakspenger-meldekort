@@ -10,16 +10,20 @@ type FormatterDatoProps = {
     dato: string;
     medUkeDag?: boolean;
     medStorForbokstav?: boolean;
+    kort?: boolean
 };
 
 export const formatterDato = ({
     dato,
     medUkeDag,
     medStorForbokstav = true,
+    kort = false
 }: FormatterDatoProps) => {
+    const ukeDag = medUkeDag ? kort ? "ddd " : "dddd " : ''
+
     const formattert = dayjs(dato)
         .locale('nb')
-        .format(`${medUkeDag ? 'dddd ' : ''}D. MMMM`);
+        .format(`${ukeDag}D. ${kort ? 'MMM' : 'MMMM'}`);
 
     return medStorForbokstav
         ? formattert.replace(/^./, (match) => match.toUpperCase())

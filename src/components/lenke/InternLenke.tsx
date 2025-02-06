@@ -1,6 +1,6 @@
 import React from 'react';
-import { usePreloadPageProps } from '@context/useFetchPageData.ts';
-import { Link } from 'wouter';
+import { Link as RouterLink } from 'wouter';
+import { Link } from '@navikt/ds-react';
 
 type Props = {
     children: React.ReactNode;
@@ -9,7 +9,7 @@ type Props = {
 
 export const InternLenke = ({ children, path, ...rest }: Props) => {
     return (
-        <Link {...rest} href={path}>
+        <Link as={RouterLink} {...rest} href={path}>
             {children}
         </Link>
     );

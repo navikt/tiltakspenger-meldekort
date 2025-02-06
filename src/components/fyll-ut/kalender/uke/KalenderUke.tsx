@@ -33,6 +33,7 @@ export const KalenderUke = ({ dager, steg }: Props) => {
                 {ukenummerTekst}
             </Heading>
             {steg == 'deltatt' && <Tekst id={'deltattUkeHjelp'} />}
+            {steg == 'fravær' && <Tekst id={'fraværUkeHjelp'} />}
             <ul className={style.liste}>
                 {dager.map((dag) => (
                     <li key={dag.dato}>

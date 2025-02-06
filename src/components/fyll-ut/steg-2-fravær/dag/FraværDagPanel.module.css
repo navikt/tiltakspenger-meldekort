@@ -1,8 +1,19 @@
 .fravær {
+    display: flex;
+    justify-content: space-between;
     padding: 0.5rem;
     border-width: 1px;
     border-style: solid;
     border-radius: var(--a-border-radius-large);
+}
+
+.dato {
+    white-space: nowrap;
+}
+
+.datoStatus {
+    display: inline-flex;
+    gap: 0.5rem;
 }
 
 .fraværRad {
@@ -12,6 +23,8 @@
     gap: 1rem;
 }
 
-.registrerKnapp {
-    background: var(--a-white)
+.knapp {
+    background: var(--a-white);
+    flex-grow: 0;
+    align-self: center;
 }

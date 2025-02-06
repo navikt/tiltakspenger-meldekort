@@ -1,0 +1,15 @@
+.header {
+    margin-bottom: 0.75rem;
+}
+
+.lesMer {
+    margin: 1rem 0;
+}
+
+.guide {
+    margin: 2rem 0;
+    & > :global(.navds-guide-panel__content) {
+        display: flex;
+        align-items: center;
+    }
+}

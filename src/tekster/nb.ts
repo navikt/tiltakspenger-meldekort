@@ -17,7 +17,7 @@ export const teksterNb = {
 
     ikkeRett: 'Ikke rett',
 
-    forMangeDagerEnkel: "Du har fylt ut for mange dager",
+    forMangeDagerEnkel: 'Du har fylt ut for mange dager',
     antallDagerRegistrert: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerRegistrert: ({ antall, maks }: { antall: number; maks: number }) =>
@@ -47,23 +47,60 @@ export const teksterNb = {
     ],
     deltattHjelpLesMerTekst:
         'Hvis du ikke har deltatt på alle dagene i tiltaket som var avtalt, oppgir du at du har hatt fravær nederst på denne siden. Hva som var årsaken til fraværet kan du registrere på det neste skrittet i meldekortet.',
-    deltattHjelpGuideTekst: "Ta kontakt med veilederen din hvis du er usikker på hva du skal føre på meldekortet.",
+    deltattHjelpGuideTekst:
+        'Ta kontakt med veilederen din hvis du er usikker på hva du skal føre på meldekortet.',
 
     deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket som avtalt',
     deltattDagPrefix: 'Har deltatt: ',
     deltattStegFraværSpørsmål: 'Har du hatt fravær fra tiltaket? (obligatorisk)',
-    deltattStegFraværSpørsmålUndertekst: 'Hvis du har hatt fravær kan du registrere årsaken på det neste skrittet',
+    deltattStegFraværSpørsmålUndertekst:
+        'Hvis du har hatt fravær kan du registrere årsaken på det neste skrittet',
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
     deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',
     deltattStegFraværIkkeValgt: 'Du må velge et alternativ for å gå videre',
 
-    fraværStegHeader:
+    fraværHjelpTittel:
         'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen',
-    fraværStegIngress:
+    fraværHjelpIngress:
         'Velg hva slags fravær du hadde. Noen typer fravær gir rett til utbetaling, mens andre gjør det ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere.',
 
-    fraværPanelRegistrer: 'Registrer fravær',
-    fraværPanelEndre: 'Registrer fravær',
+    fraværHjelpLesMerSyk: 'Når skal du velge "syk"?',
+    fraværHjelpLesMerSykListe: [
+        'Du skal velge «Syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.',
+        'Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 prosent av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.',
+        'Du må ha sykmelding fra lege for å ha rett på tiltakspenger i mer enn 3 dager.',
+    ],
+
+    fraværHjelpLesMerSyktBarn: 'Når skal du velge "sykt barn eller barnepasser"?',
+    fraværHjelpLesMerSyktBarnListe: [
+        'Du skal velge «Sykt barn eller syk barnepasser» hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk.',
+        'Det er de samme reglene som gjelder for sykt barn/barnepasser som ved egen sykdom. Det vil si at du har rett til full utbetaling de tre første dagene og 75 % resten av arbeidsgiverperioden.',
+        'Du må sende legeerklæring for barnet ditt eller bekreftelse fra barnepasseren fra dag 4 for å ha rett på tiltakspenger i mer enn 3 dager.',
+    ],
+
+    fraværHjelpLesMerFraværGodkjent: 'Når skal du velge "fravær godkjent av Nav"?',
+    fraværHjelpLesMerFraværGodkjentListeStart: [
+        'Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det gjelder hvis fraværet skyldes aktiviteter som du har avtalt med veilederen din.',
+        'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel:',
+    ],
+    fraværHjelpLesMerFraværGodkjentListeÅrsaker: [
+        'jobbintervju',
+        'timeavtale i det offentlige hjelpeapparatet',
+        'alvorlig sykdom/begravelse i nærmeste familie',
+    ],
+    fraværHjelpLesMerFraværGodkjentListeSlutt:
+        'Ta kontakt med veilederen din for å dokumentere årsaken til fraværet og få det godkjent.',
+
+    fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
+    fraværHjelpLesMerFraværAnnetListe: [
+        'Du skal velge «Annet fravær» hvis du har vært fraværende den aktuelle tiltaksdagen.',
+        'Du skal velge «Annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.',
+        'Du skal velge «Annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.',
+    ],
+
+    fraværUkeHjelp: 'Velg hva slags fravær du hadde',
+
+    fraværPanelRegistrer: 'Velg',
 
     fraværModalHeader: 'Hva vil du melde?',
     fraværModalSykIngress:

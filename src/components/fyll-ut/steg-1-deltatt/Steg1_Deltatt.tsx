@@ -6,27 +6,39 @@ import { Tekst } from '@components/tekst/Tekst';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
 import { DeltattHjelp } from '@components/fyll-ut/steg-1-deltatt/hjelp/DeltattHjelp.tsx';
-
-import style from './Steg1_Deltatt.module.css';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
 import { TekstId } from '@tekster/utils.ts';
+
+import style from './Steg1_Deltatt.module.css';
+import { MeldekortDagStatus } from '@typer/meldekort-utfylling.ts';
 
 export const Steg1_Deltatt = () => {
     const [nesteSteg, setNesteSteg] = useState<MeldekortSteg | null>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
 
-    const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
+    const { meldekortUtfylling, setMeldekortSteg, setMeldekortUtfylling } = useMeldekortUtfylling();
 
     const { harForMangeDagerRegistrert } = antallDagerValidering(meldekortUtfylling);
 
     useEffect(() => {
         if (harForMangeDagerRegistrert) {
-            setFeil("forMangeDagerEnkel")
+            setFeil('forMangeDagerEnkel');
         } else {
-            setFeil(null)
+            setFeil(null);
         }
+    }, [harForMangeDagerRegistrert]);
 
-    }, [harForMangeDagerRegistrert])
+    useEffect(() => {
+        setMeldekortUtfylling({
+            ...meldekortUtfylling,
+            dager: meldekortUtfylling.dager.map((dag) => ({
+                ...dag,
+                status: fraværStatusSet.has(dag.status)
+                    ? MeldekortDagStatus.IkkeRegistrert
+                    : dag.status,
+            })),
+        });
+    }, []);
 
     return (
         <>
@@ -43,22 +55,22 @@ export const Steg1_Deltatt = () => {
                 }}
                 className={style.fraværValg}
             >
-                <Radio value={'medFravær'}>
+                <Radio value={'fravær'}>
                     <Tekst id={'deltattStegFraværJa'} />
                 </Radio>
-                <Radio value={'utenFravær'}>
+                <Radio value={'bekreft'}>
                     <Tekst id={'deltattStegFraværNei'} />
                 </Radio>
             </RadioGroup>
             <Button
                 onClick={() => {
                     if (harForMangeDagerRegistrert) {
-                        setFeil("forMangeDagerEnkel")
+                        setFeil('forMangeDagerEnkel');
                         return;
                     }
 
                     if (!nesteSteg) {
-                        setFeil('deltattStegFraværIkkeValgt')
+                        setFeil('deltattStegFraværIkkeValgt');
                         return;
                     }
 
@@ -70,3 +82,10 @@ export const Steg1_Deltatt = () => {
         </>
     );
 };
+
+const fraværStatusSet: ReadonlySet<MeldekortDagStatus> = new Set([
+    MeldekortDagStatus.FraværSyk,
+    MeldekortDagStatus.FraværSyktBarn,
+    MeldekortDagStatus.FraværAnnet,
+    MeldekortDagStatus.IkkeDeltatt,
+]);

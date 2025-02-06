@@ -3,9 +3,9 @@ import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { formatterDato } from '@utils/datetime';
 import { Kalender } from '@components/fyll-ut/kalender/Kalender';
+import { PageHeader } from '@components/page-header/PageHeader.tsx';
 
 import style from './AlleMeldekort.module.css';
-import { Fragment } from 'react';
 
 type Props = {
     alleMeldekort: MeldekortUtfylling[];
@@ -13,7 +13,8 @@ type Props = {
 
 export const AlleMeldekort = ({ alleMeldekort }: Props) => {
     return (
-        <div>
+        <>
+            <PageHeader />
             <div className={style.header}>
                 <Heading size={'medium'} level={'2'}>
                     {'Her er alle meldekortene dine'}
@@ -32,6 +33,6 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                     </Accordion.Item>
                 </Accordion>
             ))}
-        </div>
+        </>
     );
 };

@@ -23,7 +23,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
 
     const { dato, status } = dag;
 
-    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
+    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true, kort: true });
 
     const harDeltatt = status === MeldekortDagStatus.Deltatt;
 
@@ -31,20 +31,20 @@ export const FraværDagPanel = ({ dag }: Props) => {
         <StatiskDagPanel dag={dag} />
     ) : (
         <div className={classNames(style.fravær, meldekortStatusTilStyle[status])}>
-            <BodyLong>{datoTekst}</BodyLong>
-            <div className={style.fraværRad}>
+            <div className={style.datoStatus}>
+                <BodyLong className={style.dato}>{`${datoTekst}: `}</BodyLong>
                 <TekstSegmenter id={statusTilTekstId[status]} weight={'semibold'} />
-                <Button
-                    size={'small'}
-                    variant={'secondary'}
-                    onClick={() => {
-                        setValgtMeldekortDag(dag);
-                    }}
-                    className={style.registrerKnapp}
-                >
-                    <Tekst id={status ? 'fraværPanelEndre' : 'fraværPanelRegistrer'} />
-                </Button>
             </div>
+            <Button
+                size={'small'}
+                variant={'secondary'}
+                onClick={() => {
+                    setValgtMeldekortDag(dag);
+                }}
+                className={style.knapp}
+            >
+                <Tekst id={'fraværPanelRegistrer'} />
+            </Button>
         </div>
     );
 };
