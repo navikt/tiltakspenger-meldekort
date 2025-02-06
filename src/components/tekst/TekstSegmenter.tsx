@@ -4,7 +4,7 @@ import React from 'react';
 
 type Props<Id extends TekstId> = TeksterProps<Id> & Omit<BodyLongProps, 'children' | 'id'>;
 
-export const TekstParagrafer = <Id extends TekstId>(props: Props<Id>) => {
+export const TekstSegmenter = <Id extends TekstId>(props: Props<Id>) => {
     const {
         id,
         locale,

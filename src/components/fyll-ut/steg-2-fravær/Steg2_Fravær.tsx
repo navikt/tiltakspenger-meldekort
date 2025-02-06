@@ -3,7 +3,7 @@ import { Kalender } from '@components/fyll-ut/kalender/Kalender';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
 import { FraværHjelp } from '@components/fyll-ut/hjelp/FraværHjelp';
-import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 
@@ -17,8 +17,8 @@ export const Steg2_Fravær = () => {
     return (
         <>
             <FraværHjelp />
-            <TekstParagrafer id={'fraværStegHeader'} weight={'semibold'} />
-            <TekstParagrafer id={'fraværStegIngress'} />
+            <TekstSegmenter id={'fraværStegHeader'} weight={'semibold'} />
+            <TekstSegmenter id={'fraværStegIngress'} />
             <Kalender meldekort={meldekortUtfylling} steg={'fravær'} />
             <DagerUtfyltTeller meldekortUtfylling={meldekortUtfylling} />
             <div className={style.knapper}>

@@ -1,6 +1,12 @@
 .wrapper {
-    padding: 2rem 0;
-    border-bottom: var(--a-green-400) solid 5px;
+    margin-bottom: 2rem;
+}
+
+.separator {
+    background: var(--a-green-400);
+    height: 5px;
+    margin-inline: calc((100vw - 100%)/-2);
+    margin-top: 1rem;
 }
 
 .header {

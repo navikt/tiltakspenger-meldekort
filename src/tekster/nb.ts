@@ -16,9 +16,10 @@ export const teksterNb = {
     statusIkkeGodkjentFravær: 'Annet fravær',
 
     ikkeRett: 'Ikke rett',
+
+    forMangeDagerEnkel: "Du har fylt ut for mange dager",
     antallDagerRegistrert: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
-
     forMangeDagerRegistrert: ({ antall, maks }: { antall: number; maks: number }) =>
         `Du har fylt ut ${antall} dager. Det er maks ${maks} dager med tiltak i denne perioden.`,
 
@@ -35,15 +36,26 @@ export const teksterNb = {
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
     forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
 
-    fyllUtTittel: 'Fyll ut meldekortet',
-    fyllUtLesMerHeader: 'Les mer om hva som skal føres på meldekortet',
+    deltattHjelpTittel: 'Slik fyller du ut meldekortet',
+    deltattHjelpIngress:
+        'For hver tiltaksdag i meldeperioden må du angi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved enkelte fravær. Det er derfor viktig at du melder for alle avtalte tiltaksdager. Du skal ikke oppgi noe for dager som er utenfor tiltaket.',
+    deltattHjelpLesMerHeader: 'Når skal du føre at du har deltatt?',
+    deltattHjelpLesMerListe: [
+        'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.',
+        'Du kan krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.',
+        'Hvis du har hatt lønn i avtalt tiltakstid den aktuelle dagen, for eksempel lønn fra tiltaksarrangør, har du ikke rett på tiltakspenger og må registrere fravær.',
+    ],
+    deltattHjelpLesMerTekst:
+        'Hvis du ikke har deltatt på alle dagene i tiltaket som var avtalt, oppgir du at du har hatt fravær nederst på denne siden. Hva som var årsaken til fraværet kan du registrere på det neste skrittet i meldekortet.',
+    deltattHjelpGuideTekst: "Ta kontakt med veilederen din hvis du er usikker på hva du skal føre på meldekortet.",
 
-    deltattStegHeader: 'Kryss av for de dagene du deltok på tiltaket som avtalt',
-    deltattStegIngress: 'Hvis du har fravær fra tiltaket, kan du legge inn dette i neste steg.',
+    deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket som avtalt',
     deltattDagPrefix: 'Har deltatt: ',
-    deltattStegFraværSpørsmål: 'Har du hatt fravær fra tiltaket?',
+    deltattStegFraværSpørsmål: 'Har du hatt fravær fra tiltaket? (obligatorisk)',
+    deltattStegFraværSpørsmålUndertekst: 'Hvis du har hatt fravær kan du registrere årsaken på det neste skrittet',
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
     deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',
+    deltattStegFraværIkkeValgt: 'Du må velge et alternativ for å gå videre',
 
     fraværStegHeader:
         'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen',

@@ -5,7 +5,7 @@ import {
     meldekortStatusTilStyle,
     statusTilTekstId,
 } from '@components/fyll-ut/dag-felles/dagFellesUtils';
-import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { TekstId } from '@tekster/utils';
 
 import style from './FraværStatusPanel.module.css';
@@ -21,8 +21,8 @@ export const FraværStatusPanel = ({ status, ingressId, valgtStatus }: Props) =>
 
     return (
         <Radio value={status} className={classNames(style.valg, meldekortStatusTilStyle[status])}>
-            <TekstParagrafer id={statusTilTekstId[status]} weight={'semibold'} />
-            {erValgt && <TekstParagrafer id={ingressId} className={style.ingress} />}
+            <TekstSegmenter id={statusTilTekstId[status]} weight={'semibold'} />
+            {erValgt && <TekstSegmenter id={ingressId} className={style.ingress} />}
         </Radio>
     );
 };

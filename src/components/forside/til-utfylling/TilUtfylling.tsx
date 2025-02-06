@@ -1,7 +1,7 @@
 import { BodyLong, Button, Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { useState } from 'react';
-import { TekstParagrafer } from '@components/tekst/TekstParagrafer.tsx';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { TekstId } from '@tekster/utils';
 import { useNavigate } from '@routing/useNavigate.ts';
 
@@ -15,12 +15,14 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [feilTekstId, setFeilTekstId] = useState<TekstId | null>(null);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <>
-            <Tekst id={'forsideTakk'} as={BodyLong} weight={'semibold'} size={'large'} />
-            <TekstParagrafer id={'forsideOpplysninger'} spacing={true} />
+            <BodyLong weight={'semibold'} size={'large'}>
+                <Tekst id={'forsideTakk'} />
+            </BodyLong>
+            <TekstSegmenter id={'forsideOpplysninger'} spacing={true} />
             <CheckboxGroup
                 legend={''}
                 hideLegend={true}

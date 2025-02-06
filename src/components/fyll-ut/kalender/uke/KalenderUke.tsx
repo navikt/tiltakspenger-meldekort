@@ -6,6 +6,7 @@ import { DeltattDagPanel } from '@components/fyll-ut/steg-1-deltatt/dag/DeltattD
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 import { FraværDagPanel } from '@components/fyll-ut/steg-2-fravær/dag/FraværDagPanel';
 import { StatiskDagPanel } from '@components/fyll-ut/kalender/statisk-dag/StatiskDagPanel';
+import { Tekst } from '@components/tekst/Tekst';
 
 import style from './KalenderUke.module.css';
 
@@ -27,10 +28,11 @@ export const KalenderUke = ({ dager, steg }: Props) => {
     const DagKomponent = DagKomponentForSteg[steg];
 
     return (
-        <div>
-            <Heading size={'medium'} className={style.heading}>
+        <div className={style.wrapper}>
+            <Heading size={'medium'}>
                 {ukenummerTekst}
             </Heading>
+            {steg == 'deltatt' && <Tekst id={'deltattUkeHjelp'} />}
             <ul className={style.liste}>
                 {dager.map((dag) => (
                     <li key={dag.dato}>

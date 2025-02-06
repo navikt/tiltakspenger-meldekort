@@ -8,7 +8,7 @@ import {
     statusTilTekstId,
 } from '@components/fyll-ut/dag-felles/dagFellesUtils';
 import { classNames } from '@utils/classNames.ts';
-import { TekstParagrafer } from '@components/tekst/TekstParagrafer';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { CircleSlashIcon } from '@navikt/aksel-icons';
 
 import style from './StatiskDagPanel.module.css';
@@ -28,7 +28,7 @@ export const StatiskDagPanel = ({ dag }: Props) => {
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
             <IkonKomponent className={style.ikon} />
             <BodyLong>{`${datoTekst}: `}</BodyLong>
-            <TekstParagrafer
+            <TekstSegmenter
                 id={harRett ? statusTilTekstId[status] : 'ikkeRett'}
                 weight={'semibold'}
             />
