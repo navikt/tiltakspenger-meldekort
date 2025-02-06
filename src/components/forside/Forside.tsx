@@ -24,8 +24,6 @@ export const Forside = ({ meldekort }: Props) => {
     return (
         <>
             <TekstParagrafer id={'forsideIngress'} spacing={true} />
-            <TekstParagrafer id={'forsideTakk'} weight={'semibold'} size={'large'} />
-            <TekstParagrafer id={'forsideOpplysninger'} spacing={true} />
             {meldekort.innsendt ? (
                 <SisteMeldekortStatus meldekort={meldekort} />
             ) : (
