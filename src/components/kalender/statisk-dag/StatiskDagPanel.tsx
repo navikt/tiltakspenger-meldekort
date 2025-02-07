@@ -1,12 +1,12 @@
 import React from 'react';
 import { BodyLong } from '@navikt/ds-react';
 import { MeldekortDag } from '@typer/meldekort-utfylling.ts';
-import { formatterDato } from '@utils/datetime';
+import { formatterDato } from '@utils/datetime.ts';
 import {
     statusTilIkon,
     meldekortStatusTilStyle,
     statusTilTekstId,
-} from '@components/fyll-ut/dag-felles/dagFellesUtils';
+} from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { classNames } from '@utils/classNames.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { CircleSlashIcon } from '@navikt/aksel-icons';

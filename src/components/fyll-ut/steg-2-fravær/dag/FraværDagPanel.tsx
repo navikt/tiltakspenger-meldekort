@@ -5,11 +5,11 @@ import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';
 import { classNames } from '@utils/classNames.ts';
 import { Tekst } from '@components/tekst/Tekst';
-import { StatiskDagPanel } from '@components/fyll-ut/kalender/statisk-dag/StatiskDagPanel';
+import { StatiskDagPanel } from '@components/kalender/statisk-dag/StatiskDagPanel';
 import {
     meldekortStatusTilStyle,
     statusTilTekstId,
-} from '@components/fyll-ut/dag-felles/dagFellesUtils';
+} from '@components/kalender/dag-felles/dagFellesUtils';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 
 import style from './FraværDagPanel.module.css';

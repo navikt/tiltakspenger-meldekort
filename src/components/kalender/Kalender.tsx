@@ -1,5 +1,5 @@
-import { KalenderUke } from '@components/fyll-ut/kalender/uke/KalenderUke';
-import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
+import { KalenderUke } from '@components/kalender/uke/KalenderUke.tsx';
+import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { classNames } from '@utils/classNames.ts';
 

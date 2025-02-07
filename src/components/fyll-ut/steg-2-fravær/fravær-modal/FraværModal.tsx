@@ -49,6 +49,7 @@ export const FraværModal = () => {
                 <RadioGroup
                     value={valgtStatus}
                     legend={<Tekst id={'fraværModalHeader'} />}
+                    description={<Tekst id={'fraværModalBeskrivelse'} />}
                     onChange={(value: MeldekortDagStatus) => {
                         setValgtStatus(value);
                     }}
@@ -77,21 +78,19 @@ export const FraværModal = () => {
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    disabled={!valgtStatus}
+                    disabled={valgtStatus === MeldekortDagStatus.IkkeRegistrert}
                     variant={'primary'}
-                    onClick={() => {
-                        lagreOgLukk(valgtStatus);
-                    }}
+                    onClick={() => lagreOgLukk(valgtStatus)}
                 >
                     <Tekst id={'lagre'} />
                 </Button>
                 <Button
                     variant={'secondary'}
-                    onClick={() => {
-                        lagreOgLukk(MeldekortDagStatus.IkkeRegistrert);
-                    }}
+                    onClick={() => lagreOgLukk(MeldekortDagStatus.IkkeRegistrert)}
                 >
-                    <Tekst id={valgtStatus ? 'slett' : 'avbryt'} />
+                    <Tekst
+                        id={valgtStatus === MeldekortDagStatus.IkkeRegistrert ? 'avbryt' : 'slett'}
+                    />
                 </Button>
             </Modal.Footer>
         </Modal>

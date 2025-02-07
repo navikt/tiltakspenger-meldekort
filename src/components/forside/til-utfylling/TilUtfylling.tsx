@@ -2,10 +2,10 @@ import { BodyLong, Button, Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { useState } from 'react';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { TekstId } from '@tekster/utils';
 import { useNavigate } from '@routing/useNavigate.ts';
 
 import style from './TilUtfylling.module.css';
+import { TekstId } from '@tekster/typer.ts';
 
 type Props = {
     nesteMeldekortId: string;

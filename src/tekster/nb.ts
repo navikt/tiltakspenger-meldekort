@@ -1,4 +1,4 @@
-import { TekstResolver } from '@tekster/utils.ts';
+import { TekstResolver } from '@tekster/typer.ts';
 
 export const teksterNb = {
     neste: 'Neste',
@@ -102,23 +102,21 @@ export const teksterNb = {
 
     fraværPanelRegistrer: 'Velg',
 
-    fraværModalHeader: 'Hva vil du melde?',
-    fraværModalSykIngress:
-        'Du kan ha rett til tiltakspenger hvis du er for syk til å delta på tiltaksdagen. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
+    fraværModalHeader: 'Årsaken til fraværet',
+    fraværModalBeskrivelse: 'Du kan ha rett til tiltakspenger selv om du ikke har deltatt',
+    fraværModalSykIngress: 'Hvis du var for syk til å delta på tiltaksdagen.',
     fraværModalSyktBarnIngress:
-        'Du kan ha rett på tiltakspenger hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk. Ta kontakt med veilederen din for å sjekke hva slags dokumentasjon som kreves.',
-    fraværModalAnnetGodkjentIngress: [
-        'Du kan ha rett til tiltakspenger hvis du har gjennomført aktiviteter som er avtalt med og godkjent av veilederen din.',
-        'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel jobbintervju, legetime eller alvorlig sykdom/begravelse i nærmeste familie.',
-    ],
-
-    fraværModalIkkeGodkjentIngress: [
-        'Du har ikke rett på tiltakspenger hvis du har vært fraværende fra tiltaket, og fraværet ikke er godkjent av Nav.',
-    ],
+        'Hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnepasser var syk.',
+    fraværModalAnnetGodkjentIngress:
+        'Hvis du har gjennomført aktiviteter som er avtalt og godkjent av veilederen din.',
+    fraværModalIkkeGodkjentIngress:
+        'Hvis du ikke deltok på tiltaksdagen, og fraværet ikke er godkjent av Nav. Da har du ikke rett på tiltakspenger.',
 
     bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
     bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
 
     kvittering:
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
-} as const satisfies Record<string, string | string[] | TekstResolver>;
+} as const satisfies TeksterBaseRecord;
+
+type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

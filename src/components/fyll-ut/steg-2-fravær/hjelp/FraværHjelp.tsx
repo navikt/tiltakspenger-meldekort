@@ -1,7 +1,7 @@
 import { Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { getTekster } from '@tekster/utils.ts';
+import { getTekster } from '@tekster/tekster.ts';
 
 import style from './FraværHjelp.module.css';
 

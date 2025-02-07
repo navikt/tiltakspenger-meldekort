@@ -2,7 +2,7 @@ import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { formatterDato } from '@utils/datetime';
-import { Kalender } from '@components/fyll-ut/kalender/Kalender';
+import { Kalender } from '@components/kalender/Kalender.tsx';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 
 import style from './AlleMeldekort.module.css';

@@ -1,0 +1,11 @@
+.flash {
+    animation-duration: 0.65s;
+    animation-name: flash;
+    animation-timing-function: ease-in;
+}
+
+@keyframes flash {
+    50% {
+        box-shadow: 0 0 2px 3px var(--a-border-danger);
+    }
+}

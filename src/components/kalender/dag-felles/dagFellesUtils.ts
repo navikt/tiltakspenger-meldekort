@@ -8,9 +8,9 @@ import {
     SunFillIcon,
     XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { TekstId } from '@tekster/utils';
 
 import style from './dagFellesStyle.module.css';
+import { TekstId } from '@tekster/typer.ts';
 
 export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
     [MeldekortDagStatus.Deltatt]: style.deltatt,

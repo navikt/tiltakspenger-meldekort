@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Button, Radio, RadioGroup } from '@navikt/ds-react';
-import { Kalender } from '@components/fyll-ut/kalender/Kalender';
+import { Radio, RadioGroup } from '@navikt/ds-react';
+import { Kalender } from '@components/kalender/Kalender.tsx';
 import { Tekst } from '@components/tekst/Tekst';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
 import { DeltattHjelp } from '@components/fyll-ut/steg-1-deltatt/hjelp/DeltattHjelp.tsx';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
-import { TekstId } from '@tekster/utils.ts';
+import { MeldekortDagStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+import { TekstId } from '@tekster/typer.ts';
 
 import style from './Steg1_Deltatt.module.css';
-import { MeldekortDagStatus } from '@typer/meldekort-utfylling.ts';
+import { BetingetKnapp } from '@components/betinget-knapp/BetingetKnapp.tsx';
 
 export const Steg1_Deltatt = () => {
-    const [nesteSteg, setNesteSteg] = useState<MeldekortSteg | null>(null);
+    const [nesteStegValg, setNesteStegValg] = useState<MeldekortSteg | null>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
 
     const { meldekortUtfylling, setMeldekortSteg, setMeldekortUtfylling } = useMeldekortUtfylling();
@@ -23,21 +24,19 @@ export const Steg1_Deltatt = () => {
     useEffect(() => {
         if (harForMangeDagerRegistrert) {
             setFeil('forMangeDagerEnkel');
-        } else {
+        } else if (feil === 'forMangeDagerEnkel') {
             setFeil(null);
         }
     }, [harForMangeDagerRegistrert]);
 
     useEffect(() => {
-        setMeldekortUtfylling({
-            ...meldekortUtfylling,
-            dager: meldekortUtfylling.dager.map((dag) => ({
-                ...dag,
-                status: fraværStatusSet.has(dag.status)
-                    ? MeldekortDagStatus.IkkeRegistrert
-                    : dag.status,
-            })),
-        });
+        if (nesteStegValg && feil === 'deltattStegFraværIkkeValgt') {
+            setFeil(null);
+        }
+    }, [nesteStegValg])
+
+    useEffect(() => {
+        setMeldekortUtfylling(utenFravær(meldekortUtfylling));
     }, []);
 
     return (
@@ -48,10 +47,10 @@ export const Steg1_Deltatt = () => {
             <RadioGroup
                 legend={<Tekst id={'deltattStegFraværSpørsmål'} />}
                 description={<Tekst id={'deltattStegFraværSpørsmålUndertekst'} />}
-                value={nesteSteg}
+                value={nesteStegValg}
                 error={feil && <Tekst id={feil} />}
                 onChange={(value: MeldekortSteg) => {
-                    setNesteSteg(value);
+                    setNesteStegValg(value);
                 }}
                 className={style.fraværValg}
             >
@@ -62,23 +61,24 @@ export const Steg1_Deltatt = () => {
                     <Tekst id={'deltattStegFraværNei'} />
                 </Radio>
             </RadioGroup>
-            <Button
+            <BetingetKnapp
                 onClick={() => {
                     if (harForMangeDagerRegistrert) {
                         setFeil('forMangeDagerEnkel');
-                        return;
+                        return false;
                     }
 
-                    if (!nesteSteg) {
+                    if (!nesteStegValg) {
                         setFeil('deltattStegFraværIkkeValgt');
-                        return;
+                        return false;
                     }
 
-                    setMeldekortSteg(nesteSteg);
+                    setMeldekortSteg(nesteStegValg);
+                    return true
                 }}
             >
-                {'Neste'}
-            </Button>
+                <Tekst id={'neste'} />
+            </BetingetKnapp>
         </>
     );
 };
@@ -89,3 +89,11 @@ const fraværStatusSet: ReadonlySet<MeldekortDagStatus> = new Set([
     MeldekortDagStatus.FraværAnnet,
     MeldekortDagStatus.IkkeDeltatt,
 ]);
+
+const utenFravær = (meldekortUtfylling: MeldekortUtfylling) => ({
+    ...meldekortUtfylling,
+    dager: meldekortUtfylling.dager.map((dag) => ({
+        ...dag,
+        status: fraværStatusSet.has(dag.status) ? MeldekortDagStatus.IkkeRegistrert : dag.status,
+    })),
+});

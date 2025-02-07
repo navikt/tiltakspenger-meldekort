@@ -4,7 +4,7 @@ import { Alert, Button, Checkbox } from '@navikt/ds-react';
 import { useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
-import { Kalender } from '@components/fyll-ut/kalender/Kalender';
+import { Kalender } from '@components/kalender/Kalender.tsx';
 import { tilMeldekortInnsending } from '@utils/transformMeldekort';
 import { useLocation } from 'wouter';
 
