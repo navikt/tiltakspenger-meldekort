@@ -32,7 +32,7 @@ export const teksterNb = {
     forsideTakk: 'Takk for at du er ærlig!',
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
-    forsideBekrefterFeil: 'Du må huke av for å gå videre',
+    forsideBekrefterFeil: 'Du må bekrefte for å gå videre',
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
     forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
 
@@ -112,8 +112,13 @@ export const teksterNb = {
     fraværModalIkkeGodkjentIngress:
         'Hvis du ikke deltok på tiltaksdagen, og fraværet ikke er godkjent av Nav. Da har du ikke rett på tiltakspenger.',
 
-    bekreftStegCheckbox: 'Jeg bekrefter at disse opplysningene stemmer',
-    bekreftStegIkkeSendtEnnå: 'Meldekortet er ikke sendt ennå!',
+    sendInnBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
+    sendInnBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
+    sendInnIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',
+    sendInnInnsendingFeilet: [
+        'Noe gikk galt ved innsending av meldekortet. Du kan prøve på nytt.',
+        'Dersom problemet vedvarer, kontakt veilederen din.',
+    ],
 
     kvittering:
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',

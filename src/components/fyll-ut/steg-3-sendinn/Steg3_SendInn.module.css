@@ -1,0 +1,9 @@
+.varsel {
+    margin: 1.5rem 0;
+}
+
+.knapper {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}

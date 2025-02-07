@@ -8,8 +8,8 @@ type Props = {
     onClick: (e: React.MouseEvent) => boolean;
 } & Omit<ButtonProps, 'onClick'>;
 
-export const BetingetKnapp = ({ onClick, children, className, ...buttonProps }: Props) => {
-    const [feil, setFeil] = useState<string[]>([]);
+
+export const FlashingButton = ({ onClick, children, className, ...buttonProps }: Props) => {
     const [flash, setFlash] = useState(false);
 
     return (

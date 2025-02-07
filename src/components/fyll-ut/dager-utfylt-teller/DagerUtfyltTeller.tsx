@@ -15,7 +15,7 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
             antallDagerValidering(meldekortUtfylling);
 
         return harForMangeDagerRegistrert ? (
-            <Alert className={className} variant={'warning'} ref={ref}>
+            <Alert className={className} variant={'warning'} ref={ref} tabIndex={-1}>
                 <Tekst
                     id={'forMangeDagerRegistrert'}
                     resolverProps={{

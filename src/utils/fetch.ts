@@ -1,3 +1,6 @@
+import { tilMeldekortInnsending } from '@utils/transformMeldekort.ts';
+import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+
 type Options = RequestInit & { params?: Record<string, unknown> };
 
 const objectToQueryString = (params?: Record<string, unknown>) =>
@@ -51,30 +54,24 @@ export const fetchJson = async <ResponseType>(
             return null;
         });
 
-export const fetchHtml = async (url: string, options?: Options): Promise<string | null> =>
-    fetchWithRetry(url, options)
-        .then((res) => res.text())
-        .catch((e) => {
-            console.error(`Failed to fetch html from ${url} - ${e}`);
-            return null;
-        });
-
-export type FileResponse = {
-    data: ArrayBuffer;
-    mimeType: string;
-    contentDisposition: string | null;
-};
-
-export const fetchFile = async (url: string, options: Options): Promise<FileResponse | null> =>
-    fetchWithRetry(url, options)
-        .then(async (res) => {
-            return {
-                data: await res.arrayBuffer(),
-                mimeType: res.headers.get('content-type') || 'application/octet-stream',
-                contentDisposition: res.headers.get('content-disposition'),
-            };
+export const fetchSendInn = async (meldekortUtfylling: MeldekortUtfylling): Promise<boolean> =>
+    fetch(`/tiltakspenger/meldekort/api/send-inn`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(tilMeldekortInnsending(meldekortUtfylling)),
+    })
+        .then((res) => {
+            if (res.ok) {
+                return true;
+            } else {
+                console.error(`Feil-response ved innsending - ${res.status}`);
+                return false;
+            }
         })
         .catch((e) => {
-            console.error(`Failed to fetch file from ${url} - ${e}`);
-            return null;
+            console.error(`Innsending feilet - ${e}`);
+            return false;
         });

@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from '@navikt/ds-react';
+import { BodyLong } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { FraværModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/FraværModal';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Steg1_Deltatt } from '@components/fyll-ut/steg-1-deltatt/Steg1_Deltatt';
 import { formatterDato, getUkenummer } from '@utils/datetime';
 import { Steg2_Fravær } from '@components/fyll-ut/steg-2-fravær/Steg2_Fravær';
-import { Steg3_Bekreft } from '@components/fyll-ut/steg-3-bekreft/Steg3_Bekreft';
+import { Steg3_SendInn } from '@components/fyll-ut/steg-3-sendinn/Steg3_SendInn.tsx';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 
 import style from './FyllUt.module.css';
@@ -58,7 +58,7 @@ export const FyllUt = ({ meldekort }: Props) => {
             >
                 {meldekortSteg === 'deltatt' && <Steg1_Deltatt />}
                 {meldekortSteg === 'fravær' && <Steg2_Fravær />}
-                {meldekortSteg === 'bekreft' && <Steg3_Bekreft forrigeSteg={forrigeSteg} />}
+                {meldekortSteg === 'bekreft' && <Steg3_SendInn forrigeSteg={forrigeSteg} />}
                 <FraværModal />
             </MeldekortUtfyllingProvider>
         </div>

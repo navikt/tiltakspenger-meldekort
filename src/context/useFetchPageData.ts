@@ -1,5 +1,5 @@
 import useSWR, { preload } from 'swr';
-import { fetchJson } from '@utils/fetchUtils.ts';
+import { fetchJson } from '@utils/fetch.ts';
 
 const basePath = import.meta.env.BASE_URL;
 

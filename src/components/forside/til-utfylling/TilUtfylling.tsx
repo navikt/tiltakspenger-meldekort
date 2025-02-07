@@ -1,11 +1,11 @@
-import { BodyLong, Button, Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import { BodyLong, Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { useState } from 'react';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { useNavigate } from '@routing/useNavigate.ts';
+import { FlashingButton } from '@components/betinget-knapp/FlashingButton.tsx';
 
 import style from './TilUtfylling.module.css';
-import { TekstId } from '@tekster/typer.ts';
 
 type Props = {
     nesteMeldekortId: string;
@@ -13,7 +13,7 @@ type Props = {
 
 export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
-    const [feilTekstId, setFeilTekstId] = useState<TekstId | null>(null);
+    const [visFeil, setVisFeil] = useState(false);
 
     const navigate = useNavigate();
 
@@ -26,11 +26,11 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
             <CheckboxGroup
                 legend={''}
                 hideLegend={true}
-                error={feilTekstId && <Tekst id={feilTekstId} />}
+                error={visFeil && <Tekst id={'forsideBekrefterFeil'} />}
             >
                 <Checkbox
                     onChange={() => {
-                        setFeilTekstId(null);
+                        setVisFeil(false);
                         setHarBekreftet(!harBekreftet);
                     }}
                     value={harBekreftet}
@@ -38,19 +38,20 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
                     <Tekst id={'forsideBekrefter'} />
                 </Checkbox>
             </CheckboxGroup>
-            <Button
+            <FlashingButton
                 className={style.knapp}
                 variant={'primary'}
                 onClick={() => {
                     if (!harBekreftet) {
-                        setFeilTekstId('forsideBekrefterFeil');
-                        return;
+                        setVisFeil(true);
+                        return false;
                     }
                     navigate(`/${nesteMeldekortId}/fyll-ut`);
+                    return true;
                 }}
             >
                 <Tekst id={'neste'} />
-            </Button>
+            </FlashingButton>
         </>
     );
 };

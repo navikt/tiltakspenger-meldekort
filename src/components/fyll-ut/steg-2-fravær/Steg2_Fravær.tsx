@@ -5,7 +5,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { FraværHjelp } from '@components/fyll-ut/steg-2-fravær/hjelp/FraværHjelp.tsx';
-import { BetingetKnapp } from '@components/betinget-knapp/BetingetKnapp.tsx';
+import { FlashingButton } from '@components/betinget-knapp/FlashingButton.tsx';
 import { useRef } from 'react';
 
 import style from './Steg2_Fravær.module.css';
@@ -33,7 +33,7 @@ export const Steg2_Fravær = () => {
                 >
                     <Tekst id={'forrige'} />
                 </Button>
-                <BetingetKnapp
+                <FlashingButton
                     onClick={() => {
                         if (!harForMangeDagerRegistrert) {
                             setMeldekortSteg('bekreft');
@@ -44,7 +44,7 @@ export const Steg2_Fravær = () => {
                     }}
                 >
                     <Tekst id={'neste'} />
-                </BetingetKnapp>
+                </FlashingButton>
             </div>
         </>
     );

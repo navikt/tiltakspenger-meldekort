@@ -9,9 +9,9 @@ import { DeltattHjelp } from '@components/fyll-ut/steg-1-deltatt/hjelp/DeltattHj
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
 import { MeldekortDagStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { TekstId } from '@tekster/typer.ts';
+import { FlashingButton } from '@components/betinget-knapp/FlashingButton.tsx';
 
 import style from './Steg1_Deltatt.module.css';
-import { BetingetKnapp } from '@components/betinget-knapp/BetingetKnapp.tsx';
 
 export const Steg1_Deltatt = () => {
     const [nesteStegValg, setNesteStegValg] = useState<MeldekortSteg | null>(null);
@@ -33,7 +33,7 @@ export const Steg1_Deltatt = () => {
         if (nesteStegValg && feil === 'deltattStegFraværIkkeValgt') {
             setFeil(null);
         }
-    }, [nesteStegValg])
+    }, [nesteStegValg]);
 
     useEffect(() => {
         setMeldekortUtfylling(utenFravær(meldekortUtfylling));
@@ -61,7 +61,7 @@ export const Steg1_Deltatt = () => {
                     <Tekst id={'deltattStegFraværNei'} />
                 </Radio>
             </RadioGroup>
-            <BetingetKnapp
+            <FlashingButton
                 onClick={() => {
                     if (harForMangeDagerRegistrert) {
                         setFeil('forMangeDagerEnkel');
@@ -74,11 +74,11 @@ export const Steg1_Deltatt = () => {
                     }
 
                     setMeldekortSteg(nesteStegValg);
-                    return true
+                    return true;
                 }}
             >
                 <Tekst id={'neste'} />
-            </BetingetKnapp>
+            </FlashingButton>
         </>
     );
 };
