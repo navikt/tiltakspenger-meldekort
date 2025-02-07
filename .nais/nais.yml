@@ -35,6 +35,8 @@ spec:
     sidecar:
       enabled: true
       autoLogin: true
+      autoLoginIgnorePaths:
+        - /tiltakspenger/meldekort/demo/**
       level: idporten-loa-high
   tokenx:
     enabled: true
