@@ -1,7 +1,8 @@
 import { SiteRoutePath, SiteRouteProps } from '@routing/siteRoutes.ts';
 
 export type AppContext = {
-    initialRoute: SiteRoutePath | string;
+    initialPath: SiteRoutePath | string;
     initialProps: SiteRouteProps;
     error?: string;
+    demo?: boolean;
 }

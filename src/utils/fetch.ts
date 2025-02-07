@@ -54,8 +54,11 @@ export const fetchJson = async <ResponseType>(
             return null;
         });
 
-export const fetchSendInn = async (meldekortUtfylling: MeldekortUtfylling): Promise<boolean> =>
-    fetch(`/tiltakspenger/meldekort/api/send-inn`, {
+export const fetchSendInn = async (
+    meldekortUtfylling: MeldekortUtfylling,
+    baseUrl: string
+): Promise<boolean> =>
+    fetch(`${baseUrl}/api/send-inn`, {
         method: 'POST',
         credentials: 'include',
         headers: {

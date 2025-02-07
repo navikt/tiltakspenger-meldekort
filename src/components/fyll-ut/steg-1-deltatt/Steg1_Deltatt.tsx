@@ -9,7 +9,7 @@ import { DeltattHjelp } from '@components/fyll-ut/steg-1-deltatt/hjelp/DeltattHj
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
 import { MeldekortDagStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
 import { TekstId } from '@tekster/typer.ts';
-import { FlashingButton } from '@components/betinget-knapp/FlashingButton.tsx';
+import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 
 import style from './Steg1_Deltatt.module.css';
 

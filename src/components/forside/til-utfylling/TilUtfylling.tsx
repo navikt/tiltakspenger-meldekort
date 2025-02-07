@@ -2,8 +2,8 @@ import { BodyLong, Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { useState } from 'react';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { useNavigate } from '@routing/useNavigate.ts';
-import { FlashingButton } from '@components/betinget-knapp/FlashingButton.tsx';
+import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
+import { useRouting } from '@routing/useRouting.ts';
 
 import style from './TilUtfylling.module.css';
 
@@ -15,7 +15,7 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
 
-    const navigate = useNavigate();
+    const { navigate } = useRouting();
 
     return (
         <>

@@ -14,14 +14,6 @@ type Props = {
 };
 
 export const Forside = ({ meldekort }: Props) => {
-    if (!meldekort) {
-        return (
-            <Alert variant={'info'} contentMaxWidth={false}>
-                {'Denne brukeren har ingen meldekort for tiltakspenger'}
-            </Alert>
-        );
-    }
-
     return (
         <>
             <PageHeader />

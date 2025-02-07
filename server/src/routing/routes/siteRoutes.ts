@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import { initHtmlRenderer } from '@ssr/initHtmlRenderer';
-import { SiteRouteBuilder } from '@routing/SiteRouteBuilder';
+import { SiteRoutesBuilder } from '@routing/SiteRoutesBuilder';
 import { tilMeldekortUtfylling } from '@fetch/transformMeldekort';
-import { fetchFraApi } from '@fetch/apiFetch';
 import { MeldekortTilBrukerDTO } from '@client/typer/meldekort-dto';
 
 export const setupSiteRoutes = async (router: Router) => {
@@ -10,34 +9,31 @@ export const setupSiteRoutes = async (router: Router) => {
         router: router,
     });
 
-    const routeBuilder = new SiteRouteBuilder({ router, renderer: htmlRenderer });
+    const routeBuilder = new SiteRoutesBuilder({ router, renderer: htmlRenderer });
 
-    routeBuilder.route('/', async (req) => {
-        const meldekortDto = await fetchFraApi(req, 'siste', 'GET').then((res) =>
+    routeBuilder.routes('/', async (req, fetcher) => {
+        const meldekortDto = await fetcher(req, 'siste', 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null
         );
         return { meldekort: meldekortDto ? tilMeldekortUtfylling(meldekortDto) : null };
     });
 
-    routeBuilder.route('/alle', async (req) => {
-        const alleMeldekort = await fetchFraApi(req, 'alle', 'GET').then((res) =>
+    routeBuilder.routes('/alle', async (req, fetcher) => {
+        const alleMeldekort = await fetcher(req, 'alle', 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO[]>) : null
         );
-
         return { alleMeldekort: alleMeldekort ? alleMeldekort.map(tilMeldekortUtfylling) : [] }
     });
 
-    routeBuilder.route('/:meldekortId/fyll-ut', async (req) => {
+    routeBuilder.routes('/:meldekortId/fyll-ut', async (req, fetcher) => {
         const meldekortId = req.params.meldekortId;
-
-        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then((res) =>
+        const meldekortDto = await fetcher(req, `meldekort/${meldekortId}`, 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null
         );
-
         return { meldekort: meldekortDto ? tilMeldekortUtfylling(meldekortDto) : null }
     });
 
-    routeBuilder.route('/:meldekortId/kvittering', async (req) => {
+    routeBuilder.routes('/:meldekortId/kvittering', async (req) => {
         return {}
     });
 };

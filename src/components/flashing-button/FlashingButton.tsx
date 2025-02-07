@@ -2,7 +2,7 @@ import { Button, ButtonProps } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { classNames } from '@utils/classNames.ts';
 
-import style from './BetingetKnapp.module.css';
+import style from './FlashingButton.module.css';
 
 type Props = {
     onClick: (e: React.MouseEvent) => boolean;

@@ -4,10 +4,10 @@ import { useRef, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
 import { Kalender } from '@components/kalender/Kalender.tsx';
-import { FlashingButton } from '@components/betinget-knapp/FlashingButton.tsx';
-import { useNavigate } from '@routing/useNavigate.ts';
+import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { fetchSendInn } from '@utils/fetch.ts';
+import { useRouting } from '@routing/useRouting.ts';
 
 import style from './Steg3_SendInn.module.css';
 
@@ -22,12 +22,12 @@ export const Steg3_SendInn = ({ forrigeSteg = 'deltatt' }: Props) => {
 
     const varselRef = useRef<HTMLDivElement>(null);
 
-    const navigate = useNavigate();
+    const { navigate, base } = useRouting();
 
     const { setMeldekortSteg, meldekortUtfylling } = useMeldekortUtfylling();
 
     const sendInn = () => {
-        fetchSendInn(meldekortUtfylling).then((bleSendt) => {
+        fetchSendInn(meldekortUtfylling, base).then((bleSendt) => {
             if (bleSendt) {
                 navigate(`/${meldekortUtfylling!.id}/kvittering`);
             } else {

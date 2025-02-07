@@ -5,7 +5,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { FraværHjelp } from '@components/fyll-ut/steg-2-fravær/hjelp/FraværHjelp.tsx';
-import { FlashingButton } from '@components/betinget-knapp/FlashingButton.tsx';
+import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { useRef } from 'react';
 
 import style from './Steg2_Fravær.module.css';

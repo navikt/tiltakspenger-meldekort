@@ -8,7 +8,9 @@ import { siteRoutes } from '@routing/siteRoutes.ts';
 
 import style from './App.module.css';
 
-export const App = ({ initialRoute, initialProps, error }: AppContext) => {
+export const App = (appContext: AppContext) => {
+    const { error } = appContext;
+
     return (
         <Page className={style.app}>
             <Page.Block width={'md'} as={'main'} id={'maincontent'}>
@@ -16,12 +18,7 @@ export const App = ({ initialRoute, initialProps, error }: AppContext) => {
                     {error && <Alert variant={'error'}>{error}</Alert>}
                     {siteRoutes.map((route) => (
                         <Route path={route.path} key={route.path}>
-                            <RouteComponent
-                                route={route}
-                                initialProps={
-                                    initialRoute === route.path ? initialProps : undefined
-                                }
-                            />
+                            <RouteComponent route={route} appContext={appContext} />
                         </Route>
                     ))}
                 </VStack>

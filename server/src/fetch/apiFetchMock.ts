@@ -1,8 +1,8 @@
-import { fetchFraApi } from '@fetch/apiFetch';
+import { FetchFraApi } from '@fetch/apiFetch';
 import { MeldekortDagStatus } from '@client/typer/meldekort-utfylling';
 import { MeldekortTilBrukerDTO } from '@client/typer/meldekort-dto';
 
-export const fetchFraApiMock: typeof fetchFraApi = async (_1, path, _2, body) => {
+export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
     if (path === 'siste') {
         return mockResponse(200, mockMeldekort[0]);
     }
