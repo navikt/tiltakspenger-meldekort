@@ -47,14 +47,12 @@ export class SiteRoutesBuilder {
                 initialProps: props,
                 initialPath: routePath,
             });
-            console.log('SSR real page');
             res.send(html);
         });
 
         // Serverer json-props for client-side rendering ved navigering
         this.router.get(dataPath, async (req, res) => {
             const props = await dataFetcher(req, this.apiFetchFunc);
-            console.log('SSR real data');
             res.json(props);
         });
 
@@ -78,13 +76,11 @@ export class SiteRoutesBuilder {
                 initialPath: demoRoutePath,
                 demo: true,
             });
-            console.log('SSR mock page');
             res.send(html);
         });
 
         this.router.get(demoDataPath, async (req, res) => {
             const props = await dataFetcher(req, this.mockFetchFunc);
-            console.log('SSR mock data');
             res.json(props);
         });
     }

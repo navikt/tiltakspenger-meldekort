@@ -10,6 +10,18 @@ const sendInnRoute: RequestHandler = async (req, res) => {
     res.status(response?.status ?? 500).send(response?.statusText ?? 'Ukjent feil!');
 };
 
+const sendInnMock: RequestHandler = async (req, res) => {
+    const body = req.body as MeldekortFraBrukerDTO;
+
+    console.log(`Mock innsending for ${body.id}`);
+
+    res.status(200).send('Ok!');
+};
+
 export const setupApiRoutes = (router: Router) => {
     router.post('/api/send-inn', sendInnRoute);
+
+    if (process.env.NAIS_CLUSTER_NAME !== 'prod-gcp') {
+        router.post('/demo/api/send-inn', sendInnMock);
+    }
 };
