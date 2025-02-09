@@ -29,7 +29,7 @@ export class SiteRoutesBuilder {
 
     public routes(
         routePath: string,
-        dataFetcher: (req: Request, apiFetcher: FetchFraApi) => Promise<SiteRouteProps>
+        dataFetcher: (req: Request, fetchFraApi: FetchFraApi) => Promise<SiteRouteProps>
     ) {
         const fullPath = this.joinPaths(appConfig.baseUrl, routePath);
         const dataPath = this.joinPaths(routePath, 'data');

@@ -18,25 +18,8 @@ export const SiteRouter = ({ appContext }: Props) => {
             <Route path={siteRoutes.alle.path}>
                 <RouteComponent route={siteRoutes.alle} appContext={appContext} />
             </Route>
-            <Route path={siteRoutes.fyllUt.path} nest>
-                <Route path={siteRoutes.fyllUt.childRoutes.deltatt.path}>
-                    <RouteComponent
-                        route={siteRoutes.fyllUt.childRoutes.deltatt}
-                        appContext={appContext}
-                    />
-                </Route>
-                <Route path={siteRoutes.fyllUt.childRoutes.fravær.path}>
-                    <RouteComponent
-                        route={siteRoutes.fyllUt.childRoutes.fravær}
-                        appContext={appContext}
-                    />
-                </Route>
-                <Route path={siteRoutes.fyllUt.childRoutes.sendInn.path}>
-                    <RouteComponent
-                        route={siteRoutes.fyllUt.childRoutes.sendInn}
-                        appContext={appContext}
-                    />
-                </Route>
+            <Route path={siteRoutes.fyllUt.path}>
+                <RouteComponent route={siteRoutes.fyllUt} appContext={appContext} />
             </Route>
             <Route path={siteRoutes.kvittering.path}>
                 <RouteComponent route={siteRoutes.kvittering} appContext={appContext} />

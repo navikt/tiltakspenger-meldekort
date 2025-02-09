@@ -55,7 +55,7 @@ export const Steg3_SendInn = ({ forrigeSteg = 'deltatt' }: Props) => {
                 hideLegend={true}
                 error={harKlikketSend && !harBekreftet && <Tekst id={'sendInnBekrefterFeil'} />}
             >
-                <Checkbox onChange={() => setHarBekreftet(!harBekreftet)}>
+                <Checkbox onChange={() => setHarBekreftet(!harBekreftet)} value={harBekreftet}>
                     <Tekst id={'sendInnBekrefter'} />
                 </Checkbox>
             </CheckboxGroup>

@@ -19,10 +19,8 @@ export const RouteComponent = ({ route, appContext }: Props) => {
     const { data, error } = useFetchPageData(
         path,
         base,
-        path === initialPath ? initialProps : undefined,
+        path === initialPath ? initialProps : undefined
     );
-
-    console.log(path, base, data, error)
 
     if (error) {
         return <Alert variant={'error'}>{`Noe gikk galt ved henting av data - ${error}`}</Alert>;
