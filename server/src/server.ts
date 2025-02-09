@@ -1,33 +1,35 @@
 import { createHttpTerminator } from 'http-terminator';
 import express from 'express';
 import compression from 'compression';
-import { setupErrorHandlers } from '@routing/errorHandlers';
+import { setupErrorHandler } from '@routing/errorHandlers';
 import { appConfig } from '@appConfig';
 import { validateEnv } from '@validateEnv';
 import { cspMiddleware } from '@routing/cspMiddleware';
 import { setupInternalRoutes } from '@routing/routes/internalRoutes';
 import { setupSiteRoutes } from '@routing/routes/siteRoutes';
 import { setupApiRoutes } from '@routing/routes/apiRoutes';
+import { initHtmlRenderer } from '@ssr/initHtmlRenderer';
 
 const { port, baseUrl } = appConfig;
 
 validateEnv()
     .then(async () => {
-        const app = express().use(compression());
-        const baseRouter = express.Router()
-        const siteRouter = express.Router().use(express.json(), await cspMiddleware())
+        const app = express();
+        const siteRouter = express.Router().use(compression(), express.json(), await cspMiddleware())
 
-        app.use(baseUrl, baseRouter);
-        baseRouter.use(siteRouter);
+        app.use(baseUrl, siteRouter);
 
         app.get('/', (req, res) => {
             return res.redirect(baseUrl);
         });
 
-        await setupSiteRoutes(siteRouter);
-        setupInternalRoutes(baseRouter);
-        setupApiRoutes(baseRouter);
-        setupErrorHandlers(baseRouter);
+        const htmlRenderer = await initHtmlRenderer(siteRouter)
+
+        await setupSiteRoutes(siteRouter, htmlRenderer);
+
+        setupInternalRoutes(siteRouter);
+        setupApiRoutes(siteRouter);
+        setupErrorHandler(siteRouter, htmlRenderer);
 
         return app;
     })

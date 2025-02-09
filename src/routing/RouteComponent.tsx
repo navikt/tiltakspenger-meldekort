@@ -6,21 +6,23 @@ import { AppContext } from '@routing/appContext.ts';
 import { useRouting } from '@routing/useRouting.ts';
 
 type Props = {
-    route: SiteRouteConfig<any>;
+    route: SiteRouteConfig;
     appContext: AppContext;
 };
 
 export const RouteComponent = ({ route, appContext }: Props) => {
-    const { initialPath, initialProps, baseUrl } = appContext;
+    const { initialPath, initialProps } = appContext;
     const { Component } = route;
 
-    const { path } = useRouting();
+    const { path, base } = useRouting();
 
     const { data, error } = useFetchPageData(
         path,
-        baseUrl,
+        base,
         path === initialPath ? initialProps : undefined,
     );
+
+    console.log(path, base, data, error)
 
     if (error) {
         return <Alert variant={'error'}>{`Noe gikk galt ved henting av data - ${error}`}</Alert>;

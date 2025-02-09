@@ -11,10 +11,10 @@ const parseAppContext = (): AppContext => {
     } catch (e) {
         console.error(`Failed to parse app context - ${e}`);
         return {
-            initialProps: {},
             initialPath: window.location.pathname,
+            initialProps: {},
             baseUrl: import.meta.env.BASE_URL,
-            error: 'Oi sann, noe gikk galt!',
+            status: 500,
         };
     }
 };

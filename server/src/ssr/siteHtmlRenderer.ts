@@ -2,8 +2,10 @@ import { ViteDevServer } from 'vite';
 import { getTemplateWithDecorator } from '@ssr/htmlTemplate';
 import { AppContext } from '@client/routing/appContext';
 
-export type AppHtmlRenderer = (url: string, context: AppContext) => string;
-export type SsrRenderer = (url: string, context: AppContext) => Promise<string>;
+type AppHtmlRenderer = (url: string, context: AppContext) => string;
+export type SiteHtmlRenderer = (url: string, context: AppContext) => Promise<string>;
+
+const SSR_ENTRY_PATH = '/src/main-server.tsx';
 
 const processTemplate = (templateHtml: string, appHtml: string, appContext: AppContext) => {
     return templateHtml
@@ -22,13 +24,13 @@ const devErrorHtml = (e: Error) => {
 };
 
 export const devRenderer =
-    (vite: ViteDevServer, ssrEntryModule: string): SsrRenderer =>
+    (vite: ViteDevServer): SiteHtmlRenderer =>
     async (url, context) => {
         const template = await getTemplateWithDecorator();
         const html = await vite.transformIndexHtml(url, template);
 
         try {
-            const { render } = await vite.ssrLoadModule(ssrEntryModule);
+            const { render } = await vite.ssrLoadModule(SSR_ENTRY_PATH);
             const appHtml = render(url, context);
 
             return processTemplate(html, appHtml, context);
@@ -46,7 +48,7 @@ export const devRenderer =
     };
 
 export const prodRenderer =
-    (render: AppHtmlRenderer): SsrRenderer =>
+    (render: AppHtmlRenderer): SiteHtmlRenderer =>
     async (url, context) => {
         const template = await getTemplateWithDecorator();
 

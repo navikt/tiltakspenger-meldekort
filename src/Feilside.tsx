@@ -1,7 +1,8 @@
 import { BugIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Heading, Link, List, Page, VStack } from '@navikt/ds-react';
 
-export const NotFound = () => {
+// TODO: tilpass siden til ulike feilsituasjoner
+export const Feilside = () => {
     return (
         <Page.Block as="main" width="xl" gutters>
             <Box paddingBlock="20 16">

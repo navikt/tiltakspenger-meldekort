@@ -1,20 +1,14 @@
 import { Router } from 'express';
 import path from 'path';
 import { createServer } from 'vite';
-import { devRenderer, SsrRenderer, prodRenderer } from './htmlRenderer';
+import { devRenderer, SiteHtmlRenderer, prodRenderer } from './siteHtmlRenderer';
 import sirv from 'sirv';
 import { appConfig } from '@appConfig';
 import { render } from '@_ssr-dist/main-server';
 
-const assetsDir = path.resolve(process.cwd(), 'dist', 'client');
+const ASSETS_DIR = path.resolve(process.cwd(), 'dist', 'client');
 
-const ssrModulePath = '/src/main-server.tsx';
-
-type Props = {
-    router: Router;
-};
-
-export const initHtmlRenderer = async ({ router }: Props): Promise<SsrRenderer> => {
+export const initHtmlRenderer = async (router: Router): Promise<SiteHtmlRenderer> => {
     if (process.env.NODE_ENV === 'development') {
         console.log('Configuring site renderer for development mode');
 
@@ -27,14 +21,14 @@ export const initHtmlRenderer = async ({ router }: Props): Promise<SsrRenderer> 
 
         router.use(vite.middlewares);
 
-        return devRenderer(vite, ssrModulePath);
+        return devRenderer(vite);
     }
 
-    console.log(`Configuring site renderer for production mode - Using assets dir ${assetsDir}`);
+    console.log(`Configuring site renderer for production mode - Using assets dir ${ASSETS_DIR}`);
 
     router.use(
         '/',
-        sirv(assetsDir, {
+        sirv(ASSETS_DIR, {
             extensions: [],
         })
     );

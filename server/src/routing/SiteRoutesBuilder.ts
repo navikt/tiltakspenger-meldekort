@@ -1,6 +1,6 @@
-import { SsrRenderer } from '@ssr/htmlRenderer';
+import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { Router, Request } from 'express';
-import { SiteRoutePath, SiteRouteProps } from '@client/routing/siteRoutes';
+import { SiteRouteProps } from '@client/routing/siteRoutes';
 import { appConfig } from '@appConfig';
 import path from 'path';
 import { fetchFraApi, FetchFraApi } from '@fetch/apiFetch';
@@ -8,12 +8,12 @@ import { fetchFraApiMock } from '@fetch/apiFetchMock';
 
 type Props = {
     router: Router;
-    renderer: SsrRenderer;
+    renderer: SiteHtmlRenderer;
 };
 
 export class SiteRoutesBuilder {
     private readonly router: Router;
-    private readonly renderer: SsrRenderer;
+    private readonly renderer: SiteHtmlRenderer;
     private readonly apiFetchFunc: FetchFraApi;
     private readonly mockFetchFunc: FetchFraApi;
 
@@ -27,8 +27,8 @@ export class SiteRoutesBuilder {
         this.mockFetchFunc = this.isProd ? fetchFraApi : fetchFraApiMock;
     }
 
-    public routes<Path extends SiteRoutePath>(
-        routePath: Path,
+    public routes(
+        routePath: string,
         dataFetcher: (req: Request, apiFetcher: FetchFraApi) => Promise<SiteRouteProps>
     ) {
         const fullPath = this.joinPaths(appConfig.baseUrl, routePath);
@@ -41,6 +41,7 @@ export class SiteRoutesBuilder {
                 initialProps: props,
                 initialPath: routePath,
                 baseUrl: appConfig.baseUrl,
+                status: 200
             });
             res.send(html);
         });
@@ -56,8 +57,8 @@ export class SiteRoutesBuilder {
         }
     }
 
-    private demoRoutes<Path extends SiteRoutePath>(
-        routePath: Path,
+    private demoRoutes(
+        routePath: string,
         dataFetcher: (req: Request, apiFetcher: FetchFraApi) => Promise<SiteRouteProps>
     ) {
         const demoRoutePath = this.joinPaths('/demo', routePath);
@@ -70,6 +71,7 @@ export class SiteRoutesBuilder {
                 initialProps: props,
                 initialPath: demoRoutePath,
                 baseUrl: `${appConfig.baseUrl}/demo`,
+                status: 200
             });
             res.send(html);
         });
