@@ -1,27 +1,22 @@
 import { RequestHandler, Router } from 'express';
 import { MeldekortFraBrukerDTO } from '@client/typer/meldekort-dto';
-import { fetchFraApi } from '@fetch/apiFetch';
+import { FetchFraApi, fetchFraApi } from '@fetch/apiFetch';
+import { fetchFraApiMock } from '@fetch/apiFetchMock';
 
-const sendInnRoute: RequestHandler = async (req, res) => {
-    const body = req.body as MeldekortFraBrukerDTO;
+const sendInnRoute =
+    (fetcher: FetchFraApi): RequestHandler =>
+    async (req, res) => {
+        const body = req.body as MeldekortFraBrukerDTO;
 
-    const response = await fetchFraApi(req, 'send-inn', 'POST', JSON.stringify(body));
+        const response = await fetcher(req, 'send-inn', 'POST', JSON.stringify(body));
 
-    res.status(response?.status ?? 500).send(response?.statusText ?? 'Ukjent feil!');
-};
-
-const sendInnMock: RequestHandler = async (req, res) => {
-    const body = req.body as MeldekortFraBrukerDTO;
-
-    console.log(`Mock innsending for ${body.id}`);
-
-    res.status(200).send('Ok!');
-};
+        res.status(response?.status ?? 500).send(response?.statusText ?? 'Ukjent feil!');
+    };
 
 export const setupApiRoutes = (router: Router) => {
-    router.post('/api/send-inn', sendInnRoute);
+    router.post('/api/send-inn', sendInnRoute(fetchFraApi));
 
     if (process.env.NAIS_CLUSTER_NAME !== 'prod-gcp') {
-        router.post('/demo/api/send-inn', sendInnMock);
+        router.post('/demo/api/send-inn', sendInnRoute(fetchFraApiMock));
     }
 };

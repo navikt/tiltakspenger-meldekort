@@ -10,6 +10,9 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
     const analyzeClientBundle = process.env.ANALYZE === "true" && !isSsrBuild;
+
+    // Vi bruker preact (via preact/compat) i prod-bygget for redusert js-bundle størrelse
+    // preact/compat er litt janky i vite dev-modus, så der bruker vi bare standard react
     const usePreact = process.env.NODE_ENV  === "production";
 
     return {
@@ -40,7 +43,8 @@ const preactOptions: UserConfig = {
         },
     },
     ssr: {
-        // noExternal på react deps for at preact compat aliaser skal funke
+        // Må inkludere pakker med transitive react dependencies i SSR-bundle'en
+        // for at preact/compat aliaser skal funke for disse
         noExternal: [
             '@floating-ui/react',
             '@navikt/aksel-icons',

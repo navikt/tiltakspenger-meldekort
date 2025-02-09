@@ -11,15 +11,15 @@ type Props = {
 };
 
 export const RouteComponent = ({ route, appContext }: Props) => {
-    const { initialPath, initialProps, demo } = appContext;
+    const { initialPath, initialProps, baseUrl } = appContext;
     const { Component } = route;
 
     const { path } = useRouting();
 
     const { data, error } = useFetchPageData(
         path,
+        baseUrl,
         path === initialPath ? initialProps : undefined,
-        demo
     );
 
     if (error) {

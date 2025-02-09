@@ -22,7 +22,7 @@ export const initHtmlRenderer = async ({ router }: Props): Promise<SsrRenderer> 
             server: { middlewareMode: true },
             appType: 'custom',
             root: '../',
-            base: appConfig.basePath,
+            base: appConfig.baseUrl,
         });
 
         router.use(vite.middlewares);

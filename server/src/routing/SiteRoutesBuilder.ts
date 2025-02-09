@@ -9,8 +9,6 @@ import { fetchFraApiMock } from '@fetch/apiFetchMock';
 type Props = {
     router: Router;
     renderer: SsrRenderer;
-    apiFetchFunc?: FetchFraApi;
-    mockFetchFunc?: FetchFraApi;
 };
 
 export class SiteRoutesBuilder {
@@ -19,25 +17,21 @@ export class SiteRoutesBuilder {
     private readonly apiFetchFunc: FetchFraApi;
     private readonly mockFetchFunc: FetchFraApi;
 
-    constructor({
-        router,
-        renderer,
-        apiFetchFunc = fetchFraApi,
-        mockFetchFunc = fetchFraApiMock,
-    }: Props) {
+    private readonly isProd = process.env.NAIS_CLUSTER_NAME === 'prod-gcp';
+
+    constructor({ router, renderer }: Props) {
         this.router = router;
         this.renderer = renderer;
-        this.apiFetchFunc = apiFetchFunc;
-        // Aldri mock-data i prod
-        this.mockFetchFunc =
-            process.env.NAIS_CLUSTER_NAME === 'prod-gcp' ? apiFetchFunc : mockFetchFunc;
+        this.apiFetchFunc = fetchFraApi;
+        // Aldri vis mock-data i prod
+        this.mockFetchFunc = this.isProd ? fetchFraApi : fetchFraApiMock;
     }
 
     public routes<Path extends SiteRoutePath>(
         routePath: Path,
         dataFetcher: (req: Request, apiFetcher: FetchFraApi) => Promise<SiteRouteProps>
     ) {
-        const fullPath = this.joinPaths(appConfig.basePath, routePath);
+        const fullPath = this.joinPaths(appConfig.baseUrl, routePath);
         const dataPath = this.joinPaths(routePath, 'data');
 
         // Serverer SSR-html til frontend
@@ -46,6 +40,7 @@ export class SiteRoutesBuilder {
             const html = await this.renderer(fullPath, {
                 initialProps: props,
                 initialPath: routePath,
+                baseUrl: appConfig.baseUrl,
             });
             res.send(html);
         });
@@ -56,7 +51,7 @@ export class SiteRoutesBuilder {
             res.json(props);
         });
 
-        if (process.env.NAIS_CLUSTER_NAME !== 'prod-gcp') {
+        if (!this.isProd) {
             this.demoRoutes(routePath, dataFetcher);
         }
     }
@@ -66,7 +61,7 @@ export class SiteRoutesBuilder {
         dataFetcher: (req: Request, apiFetcher: FetchFraApi) => Promise<SiteRouteProps>
     ) {
         const demoRoutePath = this.joinPaths('/demo', routePath);
-        const demoFullPath = this.joinPaths(appConfig.basePath, demoRoutePath);
+        const demoFullPath = this.joinPaths(appConfig.baseUrl, demoRoutePath);
         const demoDataPath = this.joinPaths(demoRoutePath, 'data');
 
         this.router.get(demoRoutePath, async (req, res) => {
@@ -74,7 +69,7 @@ export class SiteRoutesBuilder {
             const html = await this.renderer(demoFullPath, {
                 initialProps: props,
                 initialPath: demoRoutePath,
-                demo: true,
+                baseUrl: `${appConfig.baseUrl}/demo`,
             });
             res.send(html);
         });

@@ -9,7 +9,7 @@ import { setupInternalRoutes } from '@routing/routes/internalRoutes';
 import { setupSiteRoutes } from '@routing/routes/siteRoutes';
 import { setupApiRoutes } from '@routing/routes/apiRoutes';
 
-const { port, basePath } = appConfig;
+const { port, baseUrl } = appConfig;
 
 validateEnv()
     .then(async () => {
@@ -17,11 +17,11 @@ validateEnv()
         const baseRouter = express.Router()
         const siteRouter = express.Router().use(express.json(), await cspMiddleware())
 
-        app.use(basePath, baseRouter);
+        app.use(baseUrl, baseRouter);
         baseRouter.use(siteRouter);
 
         app.get('/', (req, res) => {
-            return res.redirect(basePath);
+            return res.redirect(baseUrl);
         });
 
         await setupSiteRoutes(siteRouter);

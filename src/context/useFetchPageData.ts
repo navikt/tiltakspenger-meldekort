@@ -2,21 +2,15 @@ import useSWR, { preload } from 'swr';
 import { fetchJson } from '@utils/fetch.ts';
 import { stripTrailingSlash } from '@utils/urls.ts';
 
-const basePath = import.meta.env.BASE_URL;
-
 const isSsr = import.meta.env.SSR;
 
-const fetchPageData = async (pagePath: string) => {
-    return fetchJson<any>(`${basePath}${stripTrailingSlash(pagePath)}/data`);
+const fetchPageData = (baseUrl: string) => async (pagePath: string) => {
+    return fetchJson<any>(`${baseUrl}${stripTrailingSlash(pagePath)}/data`);
 };
 
-const fetchDemoData = async (pagePath: string) => {
-    return fetchJson<any>(`${basePath}/demo${stripTrailingSlash(pagePath)}/data`);
-};
-
-export const useFetchPageData = (path: string, initialProps?: any, demo?: boolean) => {
-    const { isLoading, data, error, mutate } = useSWR(path, demo ? fetchDemoData : fetchPageData, {
-        fallbackData: initialProps,
+export const useFetchPageData = (path: string, baseUrl: string, fallbackData?: any) => {
+    const { isLoading, data, error, mutate } = useSWR(path, fetchPageData(baseUrl), {
+        fallbackData,
     });
 
     return { isLoading, data, error, mutate };

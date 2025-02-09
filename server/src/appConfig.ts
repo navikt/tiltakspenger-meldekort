@@ -1,4 +1,4 @@
 export const appConfig = {
     port: 3050,
-    basePath: '/tiltakspenger/meldekort'
+    baseUrl: '/tiltakspenger/meldekort'
 } as const

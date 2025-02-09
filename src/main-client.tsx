@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { App } from './App';
 import { AppContext } from '@routing/appContext.ts';
 import { Router } from 'wouter';
-import { getBaseUrl } from '@utils/urls.ts';
 
 const parseAppContext = (): AppContext => {
     try {
@@ -14,6 +13,7 @@ const parseAppContext = (): AppContext => {
         return {
             initialProps: {},
             initialPath: window.location.pathname,
+            baseUrl: import.meta.env.BASE_URL,
             error: 'Oi sann, noe gikk galt!',
         };
     }
@@ -24,7 +24,7 @@ const appContext = parseAppContext();
 ReactDOM.hydrateRoot(
     document.getElementById('root')!,
     <React.StrictMode>
-        <Router base={getBaseUrl(appContext)}>
+        <Router base={appContext.baseUrl}>
             <App {...appContext} />
         </Router>
     </React.StrictMode>
