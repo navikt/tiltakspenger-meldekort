@@ -3,9 +3,10 @@ import path from 'path';
 import { createServer } from 'vite';
 import { devRenderer, SiteHtmlRenderer, prodRenderer } from './siteHtmlRenderer';
 import sirv from 'sirv';
-import { appConfig } from '@appConfig';
+import { appConfig } from '@client/appConfig';
 import { render } from '@_ssr-dist/main-server';
 
+// På nais bruker vi CDN for assets
 const ASSETS_DIR = path.resolve(process.cwd(), 'dist', 'client');
 
 export const initHtmlRenderer = async (router: Router): Promise<SiteHtmlRenderer> => {

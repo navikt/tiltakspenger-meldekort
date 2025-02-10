@@ -21,7 +21,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
             tsconfigPaths(),
             ...(analyzeClientBundle ? [visualizer({ open: true, gzipSize: true })] : []),
         ],
-        base: '/tiltakspenger/meldekort',
+        base: process.env.ASSETS_URL ?? '/tiltakspenger/meldekort',
         css: {
             modules: {
                 // Stabile CSS-modules navn for bedre HMR i dev mode

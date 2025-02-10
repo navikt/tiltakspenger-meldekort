@@ -1,7 +1,7 @@
 import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { Router, Request } from 'express';
 import { SiteRouteProps } from '@client/routing/siteRoutes';
-import { appConfig } from '@appConfig';
+import { appConfig } from '@client/appConfig';
 import path from 'path';
 import { fetchFraApi, FetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';

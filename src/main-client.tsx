@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { App } from './App';
 import { AppContext } from '@routing/appContext.ts';
 import { Router } from 'wouter';
+import { appConfig } from '@appConfig.ts';
 
 const parseAppContext = (): AppContext => {
     try {
@@ -13,7 +14,7 @@ const parseAppContext = (): AppContext => {
         return {
             initialPath: window.location.pathname,
             initialProps: {},
-            baseUrl: import.meta.env.BASE_URL,
+            baseUrl: appConfig.baseUrl,
             status: 500,
         };
     }

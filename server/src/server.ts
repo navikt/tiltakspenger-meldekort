@@ -2,7 +2,7 @@ import { createHttpTerminator } from 'http-terminator';
 import express from 'express';
 import compression from 'compression';
 import { setupErrorHandler } from '@routing/errorHandlers';
-import { appConfig } from '@appConfig';
+import { appConfig } from '@client/appConfig';
 import { validateEnv } from '@validateEnv';
 import { cspMiddleware } from '@routing/cspMiddleware';
 import { setupInternalRoutes } from '@routing/routes/internalRoutes';
@@ -10,7 +10,9 @@ import { setupSiteRoutes } from '@routing/routes/siteRoutes';
 import { setupApiRoutes } from '@routing/routes/apiRoutes';
 import { initHtmlRenderer } from '@ssr/initHtmlRenderer';
 
-const { port, baseUrl } = appConfig;
+const { baseUrl } = appConfig;
+
+const PORT = 3050
 
 validateEnv()
     .then(async () => {
@@ -38,8 +40,8 @@ validateEnv()
         throw e;
     })
     .then((app) => {
-        const server = app.listen(port, () => {
-            console.log(`Server starting on port ${port}`);
+        const server = app.listen(PORT, () => {
+            console.log(`Server starting on port ${PORT}`);
         });
 
         const httpTerminator = createHttpTerminator({ server });
