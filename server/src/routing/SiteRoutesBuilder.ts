@@ -74,7 +74,7 @@ export class SiteRoutesBuilder {
             const { props, status } = await dataFetcher(req, this.mockFetchFunc);
             const html = await this.renderer(demoFullPath, {
                 initialProps: props,
-                initialPath: demoRoutePath,
+                initialPath: routePath,
                 baseUrl: `${appConfig.baseUrl}/demo`,
                 status,
             });
