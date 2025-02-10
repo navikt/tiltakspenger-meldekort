@@ -4,8 +4,8 @@ import { MeldekortTilBrukerDTO } from '@client/typer/meldekort-dto';
 import dayjs from 'dayjs';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
-    if (path === 'siste') {
-        return mockResponse(200, mockMeldekort[0]);
+    if (path === 'siste' || path.startsWith('meldekort/')) {
+        return mockResponse(200, lagSisteMeldekort());
     }
 
     if (path === 'alle') {
@@ -30,12 +30,6 @@ export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
         return mockResponse(200, null);
     }
 
-    if (path.startsWith('meldekort/')) {
-        const meldekortId = path.split('/')[1];
-        const meldekort = mockMeldekort.find((mk) => mk.id === meldekortId);
-        return mockResponse(meldekort ? 200 : 404, meldekort);
-    }
-
     return mockResponse(404, null);
 };
 
@@ -50,28 +44,30 @@ const formatDate = (date: string, plusDays: number = 0) => {
     return dayjs(date).add(plusDays, 'days').format('YYYY-MM-DD');
 };
 
+const lagSisteMeldekort = () => ({
+    id: 'meldekort_2',
+    meldeperiodeId: 'periode_2',
+    versjon: 1,
+    meldeperiodeKjedeId: 'kjede_2',
+    fraOgMed: '2025-01-06',
+    tilOgMed: '2025-01-19',
+    maksAntallDager: 8,
+    dager: [
+        ...Array.from({ length: 10 }).map((_, i) => ({
+            status: MeldekortDagStatus.IkkeRegistrert,
+            harRett: true,
+            dag: formatDate('2025-01-06', i),
+        })),
+        ...Array.from({ length: 4 }).map((_, i) => ({
+            status: MeldekortDagStatus.IkkeRegistrert,
+            harRett: false,
+            dag: formatDate('2025-01-16', i),
+        })),
+    ],
+});
+
 const mockMeldekort: MeldekortTilBrukerDTO[] = [
-    {
-        id: 'meldekort_2',
-        meldeperiodeId: 'periode_2',
-        versjon: 1,
-        meldeperiodeKjedeId: 'kjede_2',
-        fraOgMed: '2025-01-06',
-        tilOgMed: '2025-01-19',
-        maksAntallDager: 8,
-        dager: [
-            ...Array.from({ length: 10 }).map((_, i) => ({
-                status: MeldekortDagStatus.IkkeRegistrert,
-                harRett: true,
-                dag: formatDate('2025-01-06', i),
-            })),
-            ...Array.from({ length: 4 }).map((_, i) => ({
-                status: MeldekortDagStatus.IkkeRegistrert,
-                harRett: false,
-                dag: formatDate('2025-01-16', i),
-            })),
-        ],
-    },
+    lagSisteMeldekort(),
     {
         id: 'meldekort_1',
         meldeperiodeId: 'periode_1',
