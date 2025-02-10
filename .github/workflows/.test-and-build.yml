@@ -46,14 +46,14 @@ jobs:
       - name: Build app
         run: npm run build
         env:
-          ASSETS_URL: https://cdn.nav.no/tpts/tp-meldekort/assets
+          ASSETS_URL: https://cdn.nav.no/tpts/tp-meldekort
 
       - name: Upload static assets to Nav CDN
         uses: nais/deploy/actions/cdn-upload/v2@master
         with:
           team: tpts
           source: ./server/dist/client/assets
-          destination: tp-meldekort/assets
+          destination: tp-meldekort
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
