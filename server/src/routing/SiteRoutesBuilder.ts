@@ -6,9 +6,14 @@ import path from 'path';
 import { fetchFraApi, FetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
 
-type Props = {
+type ConstructorProps = {
     router: Router;
     renderer: SiteHtmlRenderer;
+};
+
+type DataFetcherReturn = {
+    status: number;
+    props: SiteRouteProps;
 };
 
 export class SiteRoutesBuilder {
@@ -19,7 +24,7 @@ export class SiteRoutesBuilder {
 
     private readonly isProd = process.env.NAIS_CLUSTER_NAME === 'prod-gcp';
 
-    constructor({ router, renderer }: Props) {
+    constructor({ router, renderer }: ConstructorProps) {
         this.router = router;
         this.renderer = renderer;
         this.apiFetchFunc = fetchFraApi;
@@ -29,27 +34,27 @@ export class SiteRoutesBuilder {
 
     public routes(
         routePath: string,
-        dataFetcher: (req: Request, fetchFraApi: FetchFraApi) => Promise<SiteRouteProps>
+        dataFetcher: (req: Request, fetchFraApi: FetchFraApi) => Promise<DataFetcherReturn>
     ) {
         const fullPath = this.joinPaths(appConfig.baseUrl, routePath);
         const dataPath = this.joinPaths(routePath, 'data');
 
         // Serverer SSR-html til frontend
         this.router.get(routePath, async (req, res) => {
-            const props = await dataFetcher(req, this.apiFetchFunc);
+            const { props, status } = await dataFetcher(req, this.apiFetchFunc);
             const html = await this.renderer(fullPath, {
                 initialProps: props,
                 initialPath: routePath,
                 baseUrl: appConfig.baseUrl,
-                status: 200
+                status,
             });
-            res.send(html);
+            res.status(status).send(html);
         });
 
         // Serverer json-props for client-side rendering ved navigering
         this.router.get(dataPath, async (req, res) => {
-            const props = await dataFetcher(req, this.apiFetchFunc);
-            res.json(props);
+            const { props, status } = await dataFetcher(req, this.apiFetchFunc);
+            res.status(status).json(props);
         });
 
         if (!this.isProd) {
@@ -66,19 +71,19 @@ export class SiteRoutesBuilder {
         const demoDataPath = this.joinPaths(demoRoutePath, 'data');
 
         this.router.get(demoRoutePath, async (req, res) => {
-            const props = await dataFetcher(req, this.mockFetchFunc);
+            const { props, status } = await dataFetcher(req, this.mockFetchFunc);
             const html = await this.renderer(demoFullPath, {
                 initialProps: props,
                 initialPath: demoRoutePath,
                 baseUrl: `${appConfig.baseUrl}/demo`,
-                status: 200
+                status,
             });
-            res.send(html);
+            res.status(status).send(html);
         });
 
         this.router.get(demoDataPath, async (req, res) => {
-            const props = await dataFetcher(req, this.mockFetchFunc);
-            res.json(props);
+            const { props, status } = await dataFetcher(req, this.mockFetchFunc);
+            res.status(status).json(props);
         });
     }
 

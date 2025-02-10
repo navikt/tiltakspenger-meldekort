@@ -12,14 +12,26 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         const meldekortDto = await fetchFraApi(req, 'siste', 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null
         );
-        return { meldekort: meldekortDto ? tilMeldekortUtfylling(meldekortDto) : null };
+
+        return meldekortDto
+            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) }, status: 200 }
+            : {
+                  props: {},
+                  status: 404,
+              };
     });
 
     routeBuilder.routes(siteRoutes.alle.path, async (req, fetchFraApi) => {
         const alleMeldekort = await fetchFraApi(req, 'alle', 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO[]>) : null
         );
-        return { alleMeldekort: alleMeldekort ? alleMeldekort.map(tilMeldekortUtfylling) : [] };
+
+        return alleMeldekort
+            ? { props: { alleMeldekort: alleMeldekort.map(tilMeldekortUtfylling) }, status: 200 }
+            : {
+                  props: {},
+                  status: 404,
+              };
     });
 
     routeBuilder.routes(siteRoutes.fyllUt.path, async (req, fetchFraApi) => {
@@ -27,10 +39,19 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
             (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
         );
-        return { meldekort: meldekortDto ? tilMeldekortUtfylling(meldekortDto) : null };
+
+        return meldekortDto
+            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) }, status: 200 }
+            : {
+                  props: {},
+                  status: 404,
+              };
     });
 
     routeBuilder.routes(siteRoutes.kvittering.path, async (req) => {
-        return {};
+        return {
+            props: {},
+            status: 200,
+        };
     });
 };
