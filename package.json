@@ -9,7 +9,11 @@
     "build": "npm-run-all build:*",
     "build:client": "vite build --outDir server/dist/client",
     "build:ssr": "vite build --ssr src/main-server.tsx --outDir server/src/_ssr-dist",
-    "build:server": "npm run build --workspace server"
+    "build:server": "npm run build --workspace server",
+    "lint": "npm-run-all --parallel lint:*",
+    "lint:tsc": "tsc --noEmit",
+    "lint:tsc-server": "npm run tsc --workspace server",
+    "lint:eslint": "eslint \"**/*.ts\" \"**/*.tsx\""
   },
   "workspaces": [
     "server"
@@ -26,25 +30,25 @@
     "wouter": "3.5.1"
   },
   "devDependencies": {
-    "@types/node": "22.12.0",
+    "@types/node": "22.13.1",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
-    "@typescript-eslint/eslint-plugin": "8.9.0",
-    "@typescript-eslint/parser": "8.9.0",
-    "@preact/preset-vite": "2.10.0",
+    "@typescript-eslint/eslint-plugin": "8.24.0",
+    "@typescript-eslint/parser": "8.24.0",
+    "@preact/preset-vite": "2.10.1",
     "@vitejs/plugin-react": "4.3.4",
     "eslint": "8.57.1",
-    "eslint-plugin-react": "7.37.1",
-    "eslint-plugin-react-hooks": "5.0.0",
-    "eslint-plugin-react-refresh": "0.4.12",
+    "eslint-plugin-react": "7.37.4",
+    "eslint-plugin-react-hooks": "5.1.0",
+    "eslint-plugin-react-refresh": "0.4.19",
     "eslint-plugin-css-modules": "2.12.0",
     "npm-run-all": "4.1.5",
-    "prettier": "3.4.2",
+    "prettier": "3.5.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "rollup-plugin-visualizer": "5.12.0",
+    "rollup-plugin-visualizer": "5.14.0",
     "typescript": "5.7.3",
-    "vite": "6.0.11",
-    "vite-tsconfig-paths": "5.0.1"
+    "vite": "6.1.0",
+    "vite-tsconfig-paths": "5.1.4"
   }
 }

@@ -7,7 +7,7 @@ import { appConfig } from '@appConfig.ts';
 
 const parseAppContext = (): AppContext => {
     try {
-        const contextElement = document.getElementById('app-context')!!;
+        const contextElement = document.getElementById('app-context')!;
         return JSON.parse(contextElement.innerText);
     } catch (e) {
         console.error(`Failed to parse app context - ${e}`);

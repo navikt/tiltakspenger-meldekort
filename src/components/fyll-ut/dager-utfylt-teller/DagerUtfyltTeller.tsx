@@ -34,3 +34,5 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
         );
     }
 );
+
+DagerUtfyltTeller.displayName = 'DagerUtfyltTeller';

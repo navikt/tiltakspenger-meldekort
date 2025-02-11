@@ -27,16 +27,17 @@ export const Steg1_Deltatt = () => {
         } else if (feil === 'forMangeDagerEnkel') {
             setFeil(null);
         }
-    }, [harForMangeDagerRegistrert]);
+    }, [harForMangeDagerRegistrert, feil]);
 
     useEffect(() => {
         if (nesteStegValg && feil === 'deltattStegFraværIkkeValgt') {
             setFeil(null);
         }
-    }, [nesteStegValg]);
+    }, [nesteStegValg, feil]);
 
     useEffect(() => {
         setMeldekortUtfylling(utenFravær(meldekortUtfylling));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

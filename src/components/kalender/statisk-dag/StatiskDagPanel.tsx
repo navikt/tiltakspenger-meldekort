@@ -26,7 +26,7 @@ export const StatiskDagPanel = ({ dag }: Props) => {
 
     return (
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
-            <IkonKomponent className={style.ikon} />
+            <IkonKomponent />
             <BodyLong>{`${datoTekst}: `}</BodyLong>
             <TekstSegmenter
                 id={harRett ? statusTilTekstId[status] : 'ikkeRett'}

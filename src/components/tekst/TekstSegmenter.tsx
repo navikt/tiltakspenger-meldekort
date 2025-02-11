@@ -8,8 +8,6 @@ type Props<Id extends TekstId> = TeksterProps<Id> & Omit<BodyLongProps, 'childre
 export const TekstSegmenter = <Id extends TekstId>(props: Props<Id>) => {
     const {
         id,
-        locale,
-        resolverProps,
         ...bodyLongProps
     } = props;
 
