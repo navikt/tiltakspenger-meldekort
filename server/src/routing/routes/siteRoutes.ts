@@ -5,6 +5,7 @@ import { MeldekortTilBrukerDTO } from '@client/typer/meldekort-dto';
 import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { siteRoutes } from '@client/routing/siteRoutes';
 
+// TODO: bedre feilhåndtering
 export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRenderer) => {
     const routeBuilder = new SiteRoutesBuilder({ router, renderer: htmlRenderer });
 
@@ -13,12 +14,10 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null
         );
 
-        return meldekortDto
-            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) }, status: 200 }
-            : {
-                  props: {},
-                  status: 404,
-              };
+        return {
+            props: { meldekort: meldekortDto ? tilMeldekortUtfylling(meldekortDto) : null },
+            status: 200,
+        };
     });
 
     routeBuilder.routes(siteRoutes.alle.path, async (req, fetchFraApi) => {
