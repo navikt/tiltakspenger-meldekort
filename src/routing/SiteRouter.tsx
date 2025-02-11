@@ -12,18 +12,11 @@ type Props = {
 export const SiteRouter = ({ appContext }: Props) => {
     return (
         <Switch>
-            <Route path={siteRoutes.forside.path}>
-                <RouteComponent route={siteRoutes.forside} appContext={appContext} />
-            </Route>
-            <Route path={siteRoutes.alle.path}>
-                <RouteComponent route={siteRoutes.alle} appContext={appContext} />
-            </Route>
-            <Route path={siteRoutes.fyllUt.path}>
-                <RouteComponent route={siteRoutes.fyllUt} appContext={appContext} />
-            </Route>
-            <Route path={siteRoutes.kvittering.path}>
-                <RouteComponent route={siteRoutes.kvittering} appContext={appContext} />
-            </Route>
+            {Object.values(siteRoutes).map((route) => (
+                <Route path={route.path} key={route.path}>
+                    <RouteComponent route={route} appContext={appContext} />
+                </Route>
+            ))}
             <Route>
                 <Feilside />
             </Route>
