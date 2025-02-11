@@ -27,15 +27,19 @@
     "paths": {
       "@*": [
         "src/*"
+      ],
+      "@common": [
+        "commonSrc/*"
       ]
     }
   },
   "include": [
-    "src"
+    "src",
+    "commonSrc"
   ],
   "references": [
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.vite.json"
     }
   ]
 }

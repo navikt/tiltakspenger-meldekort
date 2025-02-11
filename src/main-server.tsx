@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { App } from '@App';
-import { AppContext } from '@routing/appContext';
+import { AppContext } from '../commonSrc/typer/appContext.ts';
 import { Router, BaseLocationHook } from 'wouter';
 
 export const render = (url: string, appContext: AppContext) => {

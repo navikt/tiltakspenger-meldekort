@@ -3,7 +3,7 @@ import path from 'path';
 import { createServer } from 'vite';
 import { devRenderer, SiteHtmlRenderer, prodRenderer } from './siteHtmlRenderer';
 import sirv from 'sirv';
-import { appConfig } from '@client/appConfig';
+import { appConfig } from '@common/appConfig';
 import { render } from '@_ssr-dist/main-server';
 
 // På nais bruker vi CDN for assets

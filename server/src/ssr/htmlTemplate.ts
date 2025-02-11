@@ -13,6 +13,8 @@ export const getTemplateWithDecorator = async () => {
     return injectDecoratorServerSide({
         ...envProps,
         filePath: templatePath,
-        params: {},
+        params: {
+            simpleFooter: true,
+        },
     });
 };

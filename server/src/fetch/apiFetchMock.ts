@@ -1,6 +1,6 @@
 import { FetchFraApi } from '@fetch/apiFetch';
-import { MeldekortDagStatus } from '@client/typer/meldekort-utfylling';
-import { MeldekortTilBrukerDTO } from '@client/typer/meldekort-dto';
+import { MeldekortDagStatus } from '@common/typer/meldekort-utfylling';
+import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
 import dayjs from 'dayjs';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {

@@ -7,7 +7,10 @@ import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
 import { DeltattHjelp } from '@components/fyll-ut/steg-1-deltatt/hjelp/DeltattHjelp.tsx';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
-import { MeldekortDagStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+import {
+    MeldekortDagStatus,
+    MeldekortUtfylling,
+} from '../../../../commonSrc/typer/meldekort-utfylling.ts';
 import { TekstId } from '@tekster/typer.ts';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 

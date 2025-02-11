@@ -1,4 +1,4 @@
-import { MeldekortDagStatus } from '@typer/meldekort-utfylling.ts';
+import { MeldekortDagStatus } from './meldekort-utfylling';
 
 export type MeldekortFraBrukerDTO = {
     id: string;

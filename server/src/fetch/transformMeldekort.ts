@@ -1,9 +1,7 @@
-import { MeldekortUtfylling } from '@client/typer/meldekort-utfylling';
-import { MeldekortTilBrukerDTO } from '@client/typer/meldekort-dto';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
+import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
 
-export const tilMeldekortUtfylling = (
-    meldekortDto: MeldekortTilBrukerDTO
-): MeldekortUtfylling => {
+export const tilMeldekortUtfylling = (meldekortDto: MeldekortTilBrukerDTO): MeldekortUtfylling => {
     return {
         id: meldekortDto.id,
         periode: {

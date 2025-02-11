@@ -20,14 +20,13 @@
       "@*": [
         "server/src/*"
       ],
-      "@client/*": [
-        "src/*"
+      "@common/*": [
+        "commonSrc/*"
       ]
     }
   },
   "include": [
-    "src/**/*.ts",
-    "../src/*.ts",
-    "../src/*.tsx"
+    "src",
+    "../commonSrc"
   ]
 }

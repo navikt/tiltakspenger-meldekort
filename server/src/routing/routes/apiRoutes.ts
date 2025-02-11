@@ -1,5 +1,5 @@
 import { RequestHandler, Router } from 'express';
-import { MeldekortFraBrukerDTO } from '@client/typer/meldekort-dto';
+import { MeldekortFraBrukerDTO } from '@common/typer/meldekort-dto';
 import { FetchFraApi, fetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
 

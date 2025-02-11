@@ -2,7 +2,7 @@ import { createHttpTerminator } from 'http-terminator';
 import express from 'express';
 import compression from 'compression';
 import { setupErrorHandler } from '@routing/errorHandlers';
-import { appConfig } from '@client/appConfig';
+import { appConfig } from '@common/appConfig';
 import { validateEnv } from '@validateEnv';
 import { cspMiddleware } from '@routing/cspMiddleware';
 import { setupInternalRoutes } from '@routing/routes/internalRoutes';
@@ -12,12 +12,14 @@ import { initHtmlRenderer } from '@ssr/initHtmlRenderer';
 
 const { baseUrl } = appConfig;
 
-const PORT = 3050
+const PORT = 3050;
 
 validateEnv()
     .then(async () => {
         const app = express();
-        const siteRouter = express.Router().use(compression(), express.json(), await cspMiddleware())
+        const siteRouter = express
+            .Router()
+            .use(compression(), express.json(), await cspMiddleware());
 
         app.use(baseUrl, siteRouter);
 
@@ -25,7 +27,7 @@ validateEnv()
             return res.redirect(baseUrl);
         });
 
-        const htmlRenderer = await initHtmlRenderer(siteRouter)
+        const htmlRenderer = await initHtmlRenderer(siteRouter);
 
         await setupSiteRoutes(siteRouter, htmlRenderer);
 

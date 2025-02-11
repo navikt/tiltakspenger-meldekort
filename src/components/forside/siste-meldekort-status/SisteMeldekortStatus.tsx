@@ -1,7 +1,7 @@
 import { Alert, BodyLong } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato, formatterDatoTid } from '@utils/datetime';
-import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+import { MeldekortUtfylling } from '../../../../commonSrc/typer/meldekort-utfylling.ts';
 
 import style from './SisteMeldekortStatus.module.css';
 

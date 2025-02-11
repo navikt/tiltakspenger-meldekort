@@ -1,5 +1,5 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
-import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+import { MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { formatterDato, formatterDatoTid } from '@utils/datetime';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -27,7 +27,11 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                     <Accordion.Item>
                         <Accordion.Header>{`${formatterDato({ dato: meldekort.periode.fraOgMed })} - ${formatterDato({ dato: meldekort.periode.tilOgMed })}`}</Accordion.Header>
                         <Accordion.Content>
-                            <BodyShort>{meldekort.innsendt ? `Innsendt ${formatterDatoTid(meldekort.innsendt)}` : 'Ikke innsendt'}</BodyShort>
+                            <BodyShort>
+                                {meldekort.innsendt
+                                    ? `Innsendt ${formatterDatoTid(meldekort.innsendt)}`
+                                    : 'Ikke innsendt'}
+                            </BodyShort>
                             <Kalender meldekort={meldekort} steg="innsendt" />
                         </Accordion.Content>
                     </Accordion.Item>

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
-import { AppContext } from '@routing/appContext.ts';
+import { AppContext } from '../commonSrc/typer/appContext.ts';
 import { Router } from 'wouter';
-import { appConfig } from '@appConfig.ts';
+import { appConfig } from '../commonSrc/appConfig.ts';
 
 const parseAppContext = (): AppContext => {
     try {

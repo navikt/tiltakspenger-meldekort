@@ -1,6 +1,6 @@
 import { ViteDevServer } from 'vite';
 import { getTemplateWithDecorator } from '@ssr/htmlTemplate';
-import { AppContext } from '@client/routing/appContext';
+import { AppContext } from '@common/typer/appContext';
 
 type AppHtmlRenderer = (url: string, context: AppContext) => string;
 export type SiteHtmlRenderer = (url: string, context: AppContext) => Promise<string>;

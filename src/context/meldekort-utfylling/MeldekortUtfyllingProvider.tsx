@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
-import { MeldekortDag, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+import { MeldekortDag, MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
 
 type Props = {

@@ -3,7 +3,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+import { MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
 import { SisteMeldekortStatus } from '@components/forside/siste-meldekort-status/SisteMeldekortStatus';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 

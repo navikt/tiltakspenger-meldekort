@@ -1,4 +1,7 @@
-import { MeldekortDagStatus, MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+import {
+    MeldekortDagStatus,
+    MeldekortUtfylling,
+} from '../../commonSrc/typer/meldekort-utfylling.ts';
 
 export const antallDagerValidering = (meldekortUtfylling: MeldekortUtfylling) => {
     const antallDagerRegistrert = meldekortUtfylling.dager.filter(

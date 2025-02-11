@@ -1,10 +1,10 @@
 import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { Router, Request } from 'express';
-import { SiteRouteProps } from '@client/routing/siteRoutes';
-import { appConfig } from '@client/appConfig';
+import { appConfig } from '@common/appConfig';
 import path from 'path';
 import { fetchFraApi, FetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
+import { SiteRouteComponentProps } from '@common/typer/appContext';
 
 type ConstructorProps = {
     router: Router;
@@ -13,7 +13,7 @@ type ConstructorProps = {
 
 type DataFetcherReturn = {
     status: number;
-    props: SiteRouteProps;
+    props: SiteRouteComponentProps;
 };
 
 export class SiteRoutesBuilder {
@@ -64,7 +64,7 @@ export class SiteRoutesBuilder {
 
     private demoRoutes(
         routePath: string,
-        dataFetcher: (req: Request, apiFetcher: FetchFraApi) => Promise<SiteRouteProps>
+        dataFetcher: (req: Request, apiFetcher: FetchFraApi) => Promise<SiteRouteComponentProps>
     ) {
         const demoRoutePath = this.joinPaths('/demo', routePath);
         const demoFullPath = this.joinPaths(appConfig.baseUrl, demoRoutePath);

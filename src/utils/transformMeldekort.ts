@@ -1,5 +1,5 @@
-import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
-import { MeldekortFraBrukerDTO } from '@typer/meldekort-dto';
+import { MeldekortUtfylling } from '../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortFraBrukerDTO } from '../../commonSrc/typer/meldekort-dto.ts';
 
 export const tilMeldekortInnsending = (meldekort: MeldekortUtfylling): MeldekortFraBrukerDTO => {
     return {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MeldekortDag } from '@typer/meldekort-utfylling.ts';
+import { MeldekortDag } from '../../../../commonSrc/typer/meldekort-utfylling.ts';
 import { Heading } from '@navikt/ds-react';
 import { getUkenummer } from '@utils/datetime.ts';
 import { DeltattDagPanel } from '@components/fyll-ut/steg-1-deltatt/dag/DeltattDagPanel.tsx';
@@ -29,9 +29,7 @@ export const KalenderUke = ({ dager, steg }: Props) => {
 
     return (
         <div className={style.wrapper}>
-            <Heading size={'medium'}>
-                {ukenummerTekst}
-            </Heading>
+            <Heading size={'medium'}>{ukenummerTekst}</Heading>
             {steg == 'deltatt' && <Tekst id={'deltattUkeHjelp'} />}
             {steg == 'fravær' && <Tekst id={'fraværUkeHjelp'} />}
             <ul className={style.liste}>

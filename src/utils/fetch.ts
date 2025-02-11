@@ -1,5 +1,5 @@
 import { tilMeldekortInnsending } from '@utils/transformMeldekort.ts';
-import { MeldekortUtfylling } from '@typer/meldekort-utfylling.ts';
+import { MeldekortUtfylling } from '../../commonSrc/typer/meldekort-utfylling.ts';
 
 type Options = RequestInit & { params?: Record<string, unknown> };
 
