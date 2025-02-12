@@ -28,6 +28,7 @@ export const teksterNb = {
     forsideIngress: [
         'For å motta tiltakspenger må du være registrert på et tiltak hos Nav og sende meldekort hver 14. dag.',
         'På meldekortet må du registrere om du har deltatt på tiltaket, om du har vært syk, om ditt barn eller barnepasser har vært syk, eller om du har hatt ferie/fravær. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
+        'Vi deler informasjon fra meldekortet med andre systemer i Nav fordi informasjonen har betydning for oppfølgingen du får av Nav.',
     ],
     forsideTakk: 'Takk for at du er ærlig!',
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
@@ -66,14 +67,14 @@ export const teksterNb = {
 
     fraværHjelpLesMerSyk: 'Når skal du velge "syk"?',
     fraværHjelpLesMerSykListe: [
-        'Du skal velge «Syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.',
+        'Du skal velge «syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.',
         'Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 prosent av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.',
         'Du må ha sykmelding fra lege for å ha rett på tiltakspenger i mer enn 3 dager.',
     ],
 
     fraværHjelpLesMerSyktBarn: 'Når skal du velge "sykt barn eller barnepasser"?',
     fraværHjelpLesMerSyktBarnListe: [
-        'Du skal velge «Sykt barn eller syk barnepasser» hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk.',
+        'Du skal velge «sykt barn eller syk barnepasser» hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk.',
         'Det er de samme reglene som gjelder for sykt barn/barnepasser som ved egen sykdom. Det vil si at du har rett til full utbetaling de tre første dagene og 75 % resten av arbeidsgiverperioden.',
         'Du må sende legeerklæring for barnet ditt eller bekreftelse fra barnepasseren fra dag 4 for å ha rett på tiltakspenger i mer enn 3 dager.',
     ],
@@ -93,9 +94,9 @@ export const teksterNb = {
 
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
-        'Du skal velge «Annet fravær» hvis du har vært fraværende den aktuelle tiltaksdagen.',
-        'Du skal velge «Annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.',
-        'Du skal velge «Annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.',
+        'Du skal velge «annet fravær» hvis du har vært fraværende den aktuelle tiltaksdagen.',
+        'Du skal velge «annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.',
+        'Du skal velge «annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.',
     ],
 
     fraværUkeHjelp: 'Velg hva slags fravær du hadde',
