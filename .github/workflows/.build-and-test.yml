@@ -33,7 +33,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run tests
-      run: playwright test --reporter github
+      run: npx playwright test --reporter github
     - name: Notify Slack in case of build failure
       if: failure() && github.ref == 'refs/heads/main'
       run: |
