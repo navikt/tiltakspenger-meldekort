@@ -2,7 +2,7 @@ import { test as base } from '@playwright/test';
 import { klikkCookieBanner, testsBaseUrl } from './utils';
 
 export const test = base.extend({
-    page: async ({ baseURL, page }, use) => {
+    page: async ({ page }, use) => {
         await page.goto(testsBaseUrl);
 
         await klikkCookieBanner(page);
