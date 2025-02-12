@@ -5,6 +5,8 @@ on:
     secrets:
       READER_TOKEN:
         required: true
+      SLACK_VARSEL_WEBHOOK_URL:
+        required: true
 
 jobs:
   test:
@@ -32,3 +34,11 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run tests
       run: npm run test
+    - name: Notify Slack in case of build failure
+      if: failure() && github.ref == 'refs/heads/main'
+      run: |
+        curl -X POST --data-urlencode "payload={ \"attachments\": [{ \"pretext\": \"[${{ github.event.repository.name }}] Bygg eller tester feilet! :cry:\", \"color\": \"danger\", \"fields\": [ { \"title\": \"Author\", \"value\": \"$AUTHOR\", \"short\": false }, { \"title\": \"Commit\", \"value\": \"<https://github.com/${{ github.repository }}/commit/$GITHUB_SHA|$GITHUB_SHA>\", \"short\": false } ] }] }" $WEBHOOK_URL
+      env:
+        BRANCH: ${{ github.ref }}
+        AUTHOR: ${{ github.event.pusher.name }}
+        WEBHOOK_URL: ${{ secrets.SLACK_VARSEL_WEBHOOK_URL }}

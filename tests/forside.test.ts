@@ -1,6 +1,6 @@
 import { getTekst } from '../src/tekster/tekster';
-import { test, expect } from './fixtures';
-import { testsBaseUrl } from './utils';
+import { test, expect } from './helpers/fixtures';
+import { testsBaseUrl } from './helpers/utils';
 
 test('Kan navigere til fyll-ut etter bekreftelse', async ({ page }) => {
     const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }) });

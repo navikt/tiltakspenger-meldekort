@@ -39,7 +39,7 @@
   ],
   "references": [
     {
-      "path": "./tsconfig.config.json"
+      "path": "./tsconfig.configs.json"
     }
   ]
 }
