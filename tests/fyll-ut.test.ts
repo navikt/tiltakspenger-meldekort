@@ -76,6 +76,41 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
 
         await expect(sendInnKnapp).toBeVisible();
     });
+
+    test('Kan sende inn et meldekort', async ({ page }) => {
+        const sendInnKnapp = page.getByRole('button', { name: getTekst({ id: 'sendInn' }) });
+        const bekreftCheckbox = page.getByRole('checkbox', {
+            name: getTekst({ id: 'sendInnBekrefter' }),
+        });
+        const bekreftVarsel = page.getByText(getTekst({ id: 'sendInnBekrefterFeil' }));
+
+        await fyllUtDeltattSteg(page, false, 8);
+
+        await sendInnKnapp.click();
+
+        // Må bekrefte før innsending
+        await expect(bekreftVarsel).toBeVisible();
+        await bekreftCheckbox.click();
+        await expect(bekreftVarsel).not.toBeVisible();
+
+        const sendInnPromise = page
+            .waitForRequest((request) => request.url().endsWith('/api/send-inn'))
+            .then((request) => request.postDataJSON());
+
+        await sendInnKnapp.click();
+
+        await expect(page).toHaveURL(/kvittering$/);
+
+        const sendInnData = await sendInnPromise;
+
+        const dagerDeltatt = sendInnData.dager.filter((dag) => dag.status === 'DELTATT').length;
+        const dagerIkkeRegistrert = sendInnData.dager.filter(
+            (dag) => dag.status === 'IKKE_REGISTRERT'
+        ).length;
+
+        expect(dagerDeltatt).toBe(8);
+        expect(dagerIkkeRegistrert).toBe(6);
+    });
 });
 
 const fyllUtDeltattSteg = async (page: Page, fravær: boolean, antallDager: number) => {
