@@ -21,7 +21,7 @@ npm login --registry=https://npm.pkg.github.com --auth-type=legacy
 
 - Kopier `.env-template` til `.env`
 - Sett `NODE_ENV: production` i `.env`
-- Kjør `npm run start`
+- Kjør `npm run build` + `npm run start`
 
 Appen serveres med mock-data på http://localhost:3050/tiltakspenger/meldekort/demo
 
