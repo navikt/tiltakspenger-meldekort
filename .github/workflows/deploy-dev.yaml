@@ -1,4 +1,4 @@
-name: Build, push, and deploy to dev (manual)
+name: Build, push, and deploy to dev
 
 on:
   push:
@@ -7,9 +7,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    name: Run tests
+    uses: ./.github/workflows/.build-and-test.yml
+    permissions:
+      contents: read
+    secrets:
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
+
   build:
     name: Build and push
-    uses: ./.github/workflows/.test-and-build.yml
+    uses: ./.github/workflows/.build-for-deploy.yml
     permissions:
       contents: read
       id-token: write
@@ -20,7 +28,7 @@ jobs:
 
   deploy-dev:
     name: Deploy to NAIS (dev)
-    needs: build
+    needs: [test, build]
     uses: ./.github/workflows/.deploy-to-nais.yml
     permissions:
       contents: read

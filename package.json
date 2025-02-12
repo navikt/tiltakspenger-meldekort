@@ -14,7 +14,8 @@
     "lint": "npm-run-all --parallel lint:*",
     "lint:tsc": "tsc --noEmit",
     "lint:tsc-server": "npm run tsc --workspace server",
-    "lint:eslint": "eslint \"**/*.ts\" \"**/*.tsx\""
+    "lint:eslint": "eslint \"**/*.ts\" \"**/*.tsx\"",
+    "test": "playwright test"
   },
   "workspaces": [
     "server"
@@ -31,18 +32,19 @@
     "wouter": "3.5.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@preact/preset-vite": "2.10.1",
     "@types/node": "22.13.1",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
     "@typescript-eslint/eslint-plugin": "8.24.0",
     "@typescript-eslint/parser": "8.24.0",
-    "@preact/preset-vite": "2.10.1",
     "@vitejs/plugin-react": "4.3.4",
     "eslint": "8.57.1",
+    "eslint-plugin-css-modules": "2.12.0",
     "eslint-plugin-react": "7.37.4",
     "eslint-plugin-react-hooks": "5.1.0",
     "eslint-plugin-react-refresh": "0.4.19",
-    "eslint-plugin-css-modules": "2.12.0",
     "husky": "9.1.7",
     "lint-staged": "15.4.3",
     "npm-run-all": "4.1.5",

@@ -41,3 +41,11 @@ next-env.d.ts
 /server/dist/
 /server/src/_ssr-dist/
 /stats.html
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests-examples/
