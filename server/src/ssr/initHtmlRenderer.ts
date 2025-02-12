@@ -4,7 +4,7 @@ import { createServer } from 'vite';
 import { devRenderer, SiteHtmlRenderer, prodRenderer } from './siteHtmlRenderer';
 import sirv from 'sirv';
 import { appConfig } from '@common/appConfig';
-// @ts-expect-error - Denne bygges som et separat steg
+// @ts-ignore - Denne bygges som et separat steg
 import { render } from '@_ssr-dist/main-server';
 
 // På nais bruker vi CDN for assets

@@ -16,11 +16,12 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': [
             'warn',
             {
-                argsIgnorePattern: '^_$',
+                argsIgnorePattern: '^(_|req|res|next)$',
             },
         ],
         '@typescript-eslint/no-explicit-any': ['off'],
         'react/react-in-jsx-scope': ['off'],
+        '@typescript-eslint/ban-ts-comment': ['off']
     },
     settings: {
         react: {
