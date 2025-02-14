@@ -39,7 +39,7 @@ export const teksterNb = {
 
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
-        'For hver tiltaksdag i meldeperioden må du angi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved enkelte fravær. Det er derfor viktig at du melder for alle avtalte tiltaksdager. Du skal ikke oppgi noe for dager som er utenfor tiltaket.',
+        'For hver tiltaksdag i meldeperioden må du oppgi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved enkelte fravær. Det er derfor viktig at du melder for alle avtalte tiltaksdager. Du skal ikke oppgi noe for dager som er utenfor tiltaket.',
     deltattHjelpLesMerHeader: 'Når skal du føre at du har deltatt?',
     deltattHjelpLesMerListe: [
         'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.',
@@ -68,7 +68,7 @@ export const teksterNb = {
     fraværHjelpLesMerSyk: 'Når skal du velge "syk"?',
     fraværHjelpLesMerSykListe: [
         'Du skal velge «syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.',
-        'Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 prosent av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.',
+        'Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 % av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.',
         'Du må ha sykmelding fra lege for å ha rett på tiltakspenger i mer enn 3 dager.',
     ],
 
