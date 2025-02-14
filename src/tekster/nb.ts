@@ -26,20 +26,20 @@ export const teksterNb = {
     sideTittel: 'Meldekort for tiltakspenger',
 
     forsideIngress: [
-        'For å motta tiltakspenger må du være registrert på et tiltak hos Nav og sende meldekort hver 14. dag.',
-        'På meldekortet må du registrere om du har deltatt på tiltaket, om du har vært syk, om ditt barn eller barnepasser har vært syk, eller om du har hatt ferie/fravær. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
+        'For å motta tiltakspenger må du delta på et tiltak hos Nav og sende meldekort hver 14. dag.',
+        'På meldekortet må du registrere om du har deltatt på tiltaket, om du har vært syk, om ditt barn eller barnepasser har vært syk, eller om du har hatt ferie eller annet fravær. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
         'Vi deler informasjon fra meldekortet med andre systemer i Nav fordi informasjonen har betydning for oppfølgingen du får av Nav.',
     ],
     forsideTakk: 'Takk for at du er ærlig!',
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
-    forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
+    forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan. (obligatorisk)',
     forsideBekrefterFeil: 'Du må bekrefte for å gå videre',
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
     forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
 
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
-        'For hver tiltaksdag i meldeperioden må du oppgi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved enkelte fravær. Det er derfor viktig at du melder for alle avtalte tiltaksdager. Du skal ikke oppgi noe for dager som er utenfor tiltaket.',
+        'For hver tiltaksdag i meldeperioden må du oppgi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved noen typer fravær. Du skal bare ikke oppgi noe for dager som er utenfor tiltaket.',
     deltattHjelpLesMerHeader: 'Når skal du føre at du har deltatt?',
     deltattHjelpLesMerListe: [
         'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.',
@@ -51,7 +51,7 @@ export const teksterNb = {
     deltattHjelpGuideTekst:
         'Ta kontakt med veilederen din hvis du er usikker på hva du skal føre på meldekortet.',
 
-    deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket som avtalt',
+    deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket.',
     deltattDagPrefix: 'Har deltatt: ',
     deltattStegFraværSpørsmål: 'Har du hatt fravær fra tiltaket? (obligatorisk)',
     deltattStegFraværSpørsmålUndertekst:
@@ -94,7 +94,7 @@ export const teksterNb = {
 
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
-        'Du skal velge «annet fravær» hvis du har vært fraværende den aktuelle tiltaksdagen.',
+        'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',
         'Du skal velge «annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.',
         'Du skal velge «annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.',
     ],
@@ -111,7 +111,7 @@ export const teksterNb = {
     fraværModalAnnetGodkjentIngress:
         'Hvis du har gjennomført aktiviteter som er avtalt og godkjent av veilederen din.',
     fraværModalIkkeGodkjentIngress:
-        'Hvis du ikke deltok på tiltaksdagen, og fraværet ikke er godkjent av Nav. Da har du ikke rett på tiltakspenger.',
+        'Hvis du ikke deltok på hele eller deler av tiltaksdagen, og fraværet ikke var godkjent av Nav, har du ikke rett på tiltakspenger.',
 
     sendInnBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
     sendInnBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
