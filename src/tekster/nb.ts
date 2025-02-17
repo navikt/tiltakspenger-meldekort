@@ -39,7 +39,7 @@ export const teksterNb = {
 
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
-        'For hver tiltaksdag i meldeperioden må du oppgi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved noen typer fravær. Du skal bare ikke oppgi noe for dager som er utenfor tiltaket.',
+        'For hver tiltaksdag i meldeperioden må du oppgi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved noen typer fravær. Du skal ikke oppgi noe for dager som er utenfor tiltaket.',
     deltattHjelpLesMerHeader: 'Når skal du føre at du har deltatt?',
     deltattHjelpLesMerListe: [
         'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.',
