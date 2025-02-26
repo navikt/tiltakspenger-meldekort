@@ -43,6 +43,7 @@ export const teksterNb = {
     deltattHjelpLesMerHeader: 'Når skal du føre at du har deltatt?',
     deltattHjelpLesMerListe: [
         'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.',
+        'Hvis du har vært borte deler av tiltaksdagen, må du registrere dagen med fravær.',
         'Du kan krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.',
         'Hvis du har hatt lønn i avtalt tiltakstid den aktuelle dagen, for eksempel lønn fra tiltaksarrangør, har du ikke rett på tiltakspenger og må registrere fravær.',
     ],
