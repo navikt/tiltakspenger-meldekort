@@ -1,6 +1,6 @@
 import { getTekst } from '../src/tekster/tekster';
 import { test, expect } from './helpers/fixtures';
-import { testsBaseUrl } from './helpers/utils';
+import { axeTestUtenDekoratøren, testsBaseUrl } from './helpers/utils';
 
 test('Kan navigere til fyll-ut etter bekreftelse', async ({ page }) => {
     const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }) });
@@ -20,4 +20,8 @@ test('Kan navigere til fyll-ut etter bekreftelse', async ({ page }) => {
 
     await nesteKnapp.click();
     await expect(page).toHaveURL(/fyll-ut$/);
+});
+
+test('Skal ikke ha UU-feil', async ({ page }) => {
+    await axeTestUtenDekoratøren(page, 'Forsiden');
 });

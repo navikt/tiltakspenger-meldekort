@@ -32,8 +32,10 @@ jobs:
       run: npm run build
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run tests
-      run: npx playwright test --reporter github
+    - name: Run Playwright tests
+      run: npx playwright test
+      env:
+        CI: true
     - name: Notify Slack in case of build failure
       if: failure() && github.ref == 'refs/heads/main'
       run: |
