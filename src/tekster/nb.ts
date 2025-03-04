@@ -32,7 +32,7 @@ export const teksterNb = {
     ],
     forsideTakk: 'Takk for at du er ærlig!',
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
-    forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan. (obligatorisk)',
+    forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
     forsideBekrefterFeil: 'Du må bekrefte for å gå videre',
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
     forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
