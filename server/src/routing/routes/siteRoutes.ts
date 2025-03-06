@@ -10,7 +10,7 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
     const routeBuilder = new SiteRoutesBuilder({ router, renderer: htmlRenderer });
 
     routeBuilder.routes(siteRoutes.forside, async (req, fetchFraApi) => {
-        const meldekortDto = await fetchFraApi(req, 'siste', 'GET').then((res) =>
+        const meldekortDto = await fetchFraApi(req, 'neste', 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null
         );
 

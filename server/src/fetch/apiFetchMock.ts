@@ -4,7 +4,7 @@ import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
 import dayjs from 'dayjs';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
-    if (path === 'siste' || path.startsWith('meldekort/')) {
+    if (path === 'neste' || path.startsWith('meldekort/')) {
         return mockResponse(200, lagSisteMeldekort());
     }
 
