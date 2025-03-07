@@ -1,5 +1,8 @@
-.knapper {
+.knapperOgVarsel {
     margin-top: 3rem;
+}
+
+.knapper {
     display: flex;
     gap: 0.5rem;
 }
@@ -11,4 +14,8 @@
 .teller {
     margin-top: 1rem;
     margin-bottom: 1.5rem;
+}
+
+.varsel {
+    margin-bottom: 1rem;
 }

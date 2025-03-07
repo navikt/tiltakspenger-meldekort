@@ -18,10 +18,13 @@ export const teksterNb = {
     ikkeRett: 'Ikke rett',
 
     forMangeDagerEnkel: 'Du har fylt ut for mange dager',
+    ingenDagerDeltatt: 'Du må velge minst en dag med deltagelse, eller velge fravær',
     antallDagerRegistrert: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerRegistrert: ({ antall, maks }: { antall: number; maks: number }) =>
         `Du har fylt ut ${antall} dager. Det er maks ${maks} dager med tiltak i denne perioden.`,
+    ingenDagerMedFravær:
+        'Du må velge minst en dag med fravær, eller gå tilbake og velge deltagelse.',
 
     sideTittel: 'Meldekort for tiltakspenger',
 

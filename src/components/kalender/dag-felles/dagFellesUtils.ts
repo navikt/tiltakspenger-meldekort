@@ -41,3 +41,10 @@ export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
     [MeldekortDagStatus.IkkeDeltatt]: 'statusIkkeGodkjentFravær',
     [MeldekortDagStatus.IkkeRegistrert]: 'statusIkkeRegistrert',
 };
+
+export const dagStatusMedFravær: ReadonlySet<MeldekortDagStatus> = new Set([
+    MeldekortDagStatus.FraværSyk,
+    MeldekortDagStatus.FraværSyktBarn,
+    MeldekortDagStatus.FraværAnnet,
+    MeldekortDagStatus.IkkeDeltatt,
+]);

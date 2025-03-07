@@ -13,6 +13,7 @@ import {
 } from '../../../../commonSrc/typer/meldekort-utfylling.ts';
 import { TekstId } from '@tekster/typer.ts';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
+import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 
 import style from './Steg1_Deltatt.module.css';
 
@@ -22,24 +23,15 @@ export const Steg1_Deltatt = () => {
 
     const { meldekortUtfylling, setMeldekortSteg, setMeldekortUtfylling } = useMeldekortUtfylling();
 
-    const { harForMangeDagerRegistrert } = antallDagerValidering(meldekortUtfylling);
+    const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
+        antallDagerValidering(meldekortUtfylling);
 
     useEffect(() => {
-        if (harForMangeDagerRegistrert) {
-            setFeil('forMangeDagerEnkel');
-        } else if (feil === 'forMangeDagerEnkel') {
-            setFeil(null);
-        }
-    }, [harForMangeDagerRegistrert, feil]);
+        setFeil(null);
+    }, [nesteStegValg, meldekortUtfylling]);
 
     useEffect(() => {
-        if (nesteStegValg && feil === 'deltattStegFraværIkkeValgt') {
-            setFeil(null);
-        }
-    }, [nesteStegValg, feil]);
-
-    useEffect(() => {
-        setMeldekortUtfylling(utenFravær(meldekortUtfylling));
+        setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -71,13 +63,17 @@ export const Steg1_Deltatt = () => {
                         setFeil('forMangeDagerEnkel');
                         return false;
                     }
-
+                    if (harIngenDagerRegistrert && nesteStegValg !== 'fravær') {
+                        setFeil('ingenDagerDeltatt');
+                        return false;
+                    }
                     if (!nesteStegValg) {
                         setFeil('deltattStegFraværIkkeValgt');
                         return false;
                     }
 
                     setMeldekortSteg(nesteStegValg);
+                    setFeil(null);
                     return true;
                 }}
             >
@@ -87,17 +83,10 @@ export const Steg1_Deltatt = () => {
     );
 };
 
-const fraværStatusSet: ReadonlySet<MeldekortDagStatus> = new Set([
-    MeldekortDagStatus.FraværSyk,
-    MeldekortDagStatus.FraværSyktBarn,
-    MeldekortDagStatus.FraværAnnet,
-    MeldekortDagStatus.IkkeDeltatt,
-]);
-
-const utenFravær = (meldekortUtfylling: MeldekortUtfylling) => ({
+const fjernFravær = (meldekortUtfylling: MeldekortUtfylling) => ({
     ...meldekortUtfylling,
     dager: meldekortUtfylling.dager.map((dag) => ({
         ...dag,
-        status: fraværStatusSet.has(dag.status) ? MeldekortDagStatus.IkkeRegistrert : dag.status,
+        status: dagStatusMedFravær.has(dag.status) ? MeldekortDagStatus.IkkeRegistrert : dag.status,
     })),
 });
