@@ -1,0 +1,9 @@
+ingress: https://www.nav.no/tiltakspenger/meldekort
+env:
+  - name: MELDEKORT_API_URL
+    value: http://tiltakspenger-meldekort-api
+  - name: MELDEKORT_API_SCOPE
+    value: prod-gcp:tpts:tiltakspenger-meldekort-api
+replicas:
+  min: 2
+  max: 4

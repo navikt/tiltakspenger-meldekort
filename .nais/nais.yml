@@ -24,8 +24,10 @@ spec:
           namespace: personbruker
         - application: tiltakspenger-meldekort-api
   replicas:
-    max: 1
-    min: 1
+  {{#with replicas}}
+    max: {{ replicas.min }}
+    min: {{ replicas.max }}
+  {{/with}}
   observability:
     autoInstrumentation:
       enabled: true

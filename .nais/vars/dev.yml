@@ -1,8 +1,9 @@
 ingress: https://www.ansatt.dev.nav.no/tiltakspenger/meldekort
-replyURLs:
-  - https://tiltakspenger-meldekort.ansatt.dev.nav.no/oauth2/callback
 env:
   - name: MELDEKORT_API_URL
     value: http://tiltakspenger-meldekort-api
   - name: MELDEKORT_API_SCOPE
     value: dev-gcp:tpts:tiltakspenger-meldekort-api
+replicas:
+  min: 1
+  max: 2
