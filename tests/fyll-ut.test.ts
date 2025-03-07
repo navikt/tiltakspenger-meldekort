@@ -15,6 +15,11 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
     test('Kan ikke gå videre uten å velge fravær/ikke fravær', async ({ page }) => {
         const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }) });
         const ikkeValgtVarsel = page.getByText(getTekst({ id: 'deltattStegFraværIkkeValgt' }));
+        const deltattCheckboxes = page.getByRole('checkbox', {
+            name: getTekst({ id: 'deltattDagPrefix' }),
+        });
+
+        await deltattCheckboxes.nth(0).click();
 
         await nesteKnapp.click();
 
