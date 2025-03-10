@@ -13,7 +13,7 @@ type MeldekortDagFraBrukerDTO = {
 export type MeldekortTilBrukerDTO = {
     id: string;
     meldeperiodeId: string;
-    meldeperiodeKjedeId: string;
+    kjedeId: string;
     versjon: number;
     fraOgMed: string;
     tilOgMed: string;
