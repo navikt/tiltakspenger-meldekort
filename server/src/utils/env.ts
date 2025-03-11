@@ -14,3 +14,5 @@ export const validateEnv = async () => {
         throw new Error('Missing critical env vars!');
     }
 };
+
+export const isProd = () => process.env.NAIS_CLUSTER_NAME === 'prod-gcp';

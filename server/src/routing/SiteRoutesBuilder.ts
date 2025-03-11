@@ -5,6 +5,7 @@ import path from 'path';
 import { fetchFraApi, FetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
 import { SiteRouteComponentProps } from '@common/typer/appContext';
+import { isProd } from '@utils/env';
 
 type ConstructorProps = {
     router: Router;
@@ -12,8 +13,9 @@ type ConstructorProps = {
 };
 
 type DataFetcherReturn = {
-    status: number;
     props: SiteRouteComponentProps;
+    status?: number;
+    redirectUrl?: string;
 };
 
 export class SiteRoutesBuilder {
@@ -22,14 +24,12 @@ export class SiteRoutesBuilder {
     private readonly apiFetchFunc: FetchFraApi;
     private readonly mockFetchFunc: FetchFraApi;
 
-    private readonly isProd = process.env.NAIS_CLUSTER_NAME === 'prod-gcp';
-
     constructor({ router, renderer }: ConstructorProps) {
         this.router = router;
         this.renderer = renderer;
         this.apiFetchFunc = fetchFraApi;
         // Aldri vis mock-data i prod
-        this.mockFetchFunc = this.isProd ? fetchFraApi : fetchFraApiMock;
+        this.mockFetchFunc = isProd() ? fetchFraApi : fetchFraApiMock;
     }
 
     public routes(
@@ -41,7 +41,11 @@ export class SiteRoutesBuilder {
 
         // Serverer SSR-html til frontend
         this.router.get(routePath, async (req, res) => {
-            const { props, status } = await dataFetcher(req, this.apiFetchFunc);
+            const { props, status = 200, redirectUrl } = await dataFetcher(req, this.apiFetchFunc);
+            if (redirectUrl) {
+                return res.redirect(redirectUrl);
+            }
+
             const html = await this.renderer(fullPath, {
                 initialProps: props,
                 initialPath: routePath,
@@ -53,11 +57,11 @@ export class SiteRoutesBuilder {
 
         // Serverer json-props for client-side rendering ved navigering
         this.router.get(dataPath, async (req, res) => {
-            const { props, status } = await dataFetcher(req, this.apiFetchFunc);
+            const { props, status = 200 } = await dataFetcher(req, this.apiFetchFunc);
             res.status(status).json(props);
         });
 
-        if (!this.isProd) {
+        if (!isProd()) {
             this.demoRoutes(routePath, dataFetcher);
         }
     }

@@ -39,6 +39,7 @@ export const teksterNb = {
     forsideBekrefterFeil: 'Du må bekrefte for å gå videre',
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
     forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
+    forsideIkkeTiltakspenger: 'Du har ingen meldekort for tiltakspenger.',
 
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:

@@ -3,7 +3,7 @@ import express from 'express';
 import compression from 'compression';
 import { setupErrorHandler } from '@routing/errorHandlers';
 import { appConfig } from '@common/appConfig';
-import { validateEnv } from '@validateEnv';
+import { validateEnv } from '@utils/env';
 import { cspMiddleware } from '@routing/cspMiddleware';
 import { setupInternalRoutes } from '@routing/routes/internalRoutes';
 import { setupSiteRoutes } from '@routing/routes/siteRoutes';

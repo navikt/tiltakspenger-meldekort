@@ -31,7 +31,7 @@ export const Forside = ({ meldekort }: Props) => {
                 </>
             ) : (
                 <Alert variant={'info'} contentMaxWidth={false}>
-                    {'Denne brukeren har ingen meldekort for tiltakspenger'}
+                    <Tekst id={'forsideIkkeTiltakspenger'} />
                 </Alert>
             )}
         </>

@@ -4,6 +4,7 @@ import { tilMeldekortUtfylling } from '@fetch/transformMeldekort';
 import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
 import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { siteRoutes } from '@common/siteRoutes';
+import { isProd } from '@utils/env';
 
 // TODO: bedre feilhåndtering
 export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRenderer) => {
@@ -14,9 +15,15 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null
         );
 
+        if (!meldekortDto && isProd()) {
+            return {
+                props: {},
+                redirectUrl: 'https://www.nav.no/meldekort/send-meldekort',
+            };
+        }
+
         return {
             props: { meldekort: meldekortDto ? tilMeldekortUtfylling(meldekortDto) : null },
-            status: 200,
         };
     });
 
@@ -24,6 +31,13 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         const alleMeldekort = await fetchFraApi(req, 'alle', 'GET').then((res) =>
             res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO[]>) : null
         );
+
+        if (!alleMeldekort && isProd()) {
+            return {
+                props: {},
+                redirectUrl: 'https://www.nav.no/meldekort/send-meldekort',
+            };
+        }
 
         return alleMeldekort
             ? { props: { alleMeldekort: alleMeldekort.map(tilMeldekortUtfylling) }, status: 200 }
@@ -40,7 +54,7 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         );
 
         return meldekortDto
-            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) }, status: 200 }
+            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
             : {
                   props: {},
                   status: 404,
@@ -50,7 +64,6 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
     routeBuilder.routes(siteRoutes.kvittering, async (req) => {
         return {
             props: {},
-            status: 200,
         };
     });
 };
