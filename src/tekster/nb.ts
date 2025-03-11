@@ -1,5 +1,4 @@
 import { TekstResolver } from '@tekster/typer.ts';
-import { formatterDatoTid } from '@utils/datetime.ts';
 
 export const teksterNb = {
     neste: 'Neste',
@@ -132,7 +131,7 @@ export const teksterNb = {
 
     alleHeading: 'Her er alle meldekortene dine',
     alleTilbake: 'Tilbake',
-    alleInnsendt: ({ dato }: { dato: string }) => `Innsendt ${formatterDatoTid(dato)}`,
+    alleInnsendt: ({ dato }: { dato: string }) => `Innsendt ${dato}`,
     alleIkkeInnsendt: 'Ikke innsendt',
 } as const satisfies TeksterBaseRecord;
 

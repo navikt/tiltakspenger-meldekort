@@ -1,7 +1,7 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
-import { formatterDato } from '@utils/datetime';
+import { formatterDato, formatterDatoTid } from '@utils/datetime';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
@@ -34,7 +34,9 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                                 {meldekort.innsendt ? (
                                     <Tekst
                                         id={'alleInnsendt'}
-                                        resolverProps={{ dato: meldekort.innsendt }}
+                                        resolverProps={{
+                                            dato: formatterDatoTid(meldekort.innsendt),
+                                        }}
                                     />
                                 ) : (
                                     <Tekst id={'alleIkkeInnsendt'} />
