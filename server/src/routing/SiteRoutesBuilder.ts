@@ -18,6 +18,8 @@ type DataFetcherReturn = {
     redirectUrl?: string;
 };
 
+type DataFetcher = (req: Request, apiFetcher: FetchFraApi) => Promise<DataFetcherReturn>;
+
 export class SiteRoutesBuilder {
     private readonly router: Router;
     private readonly renderer: SiteHtmlRenderer;
@@ -32,10 +34,7 @@ export class SiteRoutesBuilder {
         this.mockFetchFunc = isProd() ? fetchFraApi : fetchFraApiMock;
     }
 
-    public routes(
-        routePath: string,
-        dataFetcher: (req: Request, fetchFraApi: FetchFraApi) => Promise<DataFetcherReturn>
-    ) {
+    public routes(routePath: string, dataFetcher: DataFetcher) {
         const fullPath = this.joinPaths(appConfig.baseUrl, routePath);
         const dataPath = this.joinPaths(routePath, 'data');
 
@@ -66,16 +65,14 @@ export class SiteRoutesBuilder {
         }
     }
 
-    private demoRoutes(
-        routePath: string,
-        dataFetcher: (req: Request, apiFetcher: FetchFraApi) => Promise<SiteRouteComponentProps>
-    ) {
+    private demoRoutes(routePath: string, dataFetcher: DataFetcher) {
         const demoRoutePath = this.joinPaths('/demo', routePath);
         const demoFullPath = this.joinPaths(appConfig.baseUrl, demoRoutePath);
         const demoDataPath = this.joinPaths(demoRoutePath, 'data');
 
         this.router.get(demoRoutePath, async (req, res) => {
-            const { props, status } = await dataFetcher(req, this.mockFetchFunc);
+            const { props, status = 200 } = await dataFetcher(req, this.mockFetchFunc);
+
             const html = await this.renderer(demoFullPath, {
                 initialProps: props,
                 initialPath: routePath,
@@ -86,7 +83,7 @@ export class SiteRoutesBuilder {
         });
 
         this.router.get(demoDataPath, async (req, res) => {
-            const { props, status } = await dataFetcher(req, this.mockFetchFunc);
+            const { props, status = 200 } = await dataFetcher(req, this.mockFetchFunc);
             res.status(status).json(props);
         });
     }
