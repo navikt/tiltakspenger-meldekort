@@ -5,6 +5,7 @@ import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
 import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { siteRoutes } from '@common/siteRoutes';
 import { isProd } from '@utils/env';
+import { appConfig } from '@common/appConfig';
 
 // TODO: bedre feilhåndtering
 export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRenderer) => {
@@ -18,7 +19,7 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         if (!meldekortDto && isProd()) {
             return {
                 props: {},
-                redirectUrl: 'https://www.nav.no/meldekort/send-meldekort',
+                redirectUrl: appConfig.arenaUrl,
             };
         }
 
@@ -35,7 +36,7 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         if (!alleMeldekort && isProd()) {
             return {
                 props: {},
-                redirectUrl: 'https://www.nav.no/meldekort/send-meldekort',
+                redirectUrl: appConfig.arenaUrl,
             };
         }
 
