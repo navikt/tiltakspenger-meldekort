@@ -2,7 +2,7 @@ import { BodyLong } from '@navikt/ds-react';
 import { MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
 import { FraværModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/FraværModal';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Steg1_Deltatt } from '@components/fyll-ut/steg-1-deltatt/Steg1_Deltatt';
 import { formatterDato, getUkenummer } from '@utils/datetime';
 import { Steg2_Fravær } from '@components/fyll-ut/steg-2-fravær/Steg2_Fravær';
@@ -22,6 +22,8 @@ export const FyllUt = ({ meldekort }: Props) => {
     const [meldekortSteg, _setMeldekortSteg] = useState<MeldekortSteg>('deltatt');
     const [forrigeSteg, setForrigeSteg] = useState<MeldekortSteg | undefined>();
 
+    const fyllUtRef = useRef<HTMLDivElement>(null);
+
     const setMeldekortSteg = (valgtSteg: MeldekortSteg) => {
         setForrigeSteg(meldekortSteg);
         _setMeldekortSteg(valgtSteg);
@@ -39,11 +41,14 @@ export const FyllUt = ({ meldekort }: Props) => {
     )}`;
 
     useEffect(() => {
-        scrollTo(0, 0);
-    }, [meldekortSteg]);
+        if (forrigeSteg) {
+            scrollTo(0, 0);
+            fyllUtRef.current?.focus();
+        }
+    }, [meldekortSteg, forrigeSteg]);
 
     return (
-        <div>
+        <div ref={fyllUtRef} tabIndex={-1} className={style.wrapper}>
             <PageHeader
                 underTekst={
                     <div className={style.headerUndertekst}>

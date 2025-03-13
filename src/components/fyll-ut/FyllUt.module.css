@@ -1,3 +1,9 @@
+.wrapper {
+    &:focus {
+        outline: none;
+    }
+}
+
 .headerUndertekst {
     display: inline-flex;
     gap: 0.5rem;
