@@ -41,11 +41,9 @@ export const FyllUt = ({ meldekort }: Props) => {
     )}`;
 
     useEffect(() => {
-        if (forrigeSteg) {
-            scrollTo(0, 0);
-            fyllUtRef.current?.focus();
-        }
-    }, [meldekortSteg, forrigeSteg]);
+        scrollTo(0, 0);
+        fyllUtRef.current?.focus();
+    }, [meldekortSteg]);
 
     return (
         <div ref={fyllUtRef} tabIndex={-1} className={style.wrapper}>

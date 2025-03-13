@@ -3,6 +3,12 @@
     padding: 1rem;
 }
 
+.maincontent {
+    &:focus {
+        outline: none;
+    }
+}
+
 .text {
     margin-top: 2rem;
 }

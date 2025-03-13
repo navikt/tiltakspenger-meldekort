@@ -10,7 +10,13 @@ import style from './App.module.css';
 export const App = (appContext: AppContext) => {
     return (
         <Page className={style.app}>
-            <Page.Block width={'md'} as={'main'} id={'maincontent'}>
+            <Page.Block
+                width={'md'}
+                as={'main'}
+                id={'maincontent'}
+                tabIndex={-1}
+                className={style.maincontent}
+            >
                 <VStack className={style.text}>
                     {appContext.status >= 400 ? (
                         <Feilside />
