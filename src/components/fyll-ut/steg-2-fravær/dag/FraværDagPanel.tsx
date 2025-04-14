@@ -26,7 +26,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
 
     const { dato, status } = dag;
 
-    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true, kort: true });
+    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
     const harDeltatt = status === MeldekortDagStatus.Deltatt;
 
