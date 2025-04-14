@@ -7,12 +7,17 @@ import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './AlleMeldekort.module.css';
+import { useEffect } from 'react';
 
 type Props = {
     alleMeldekort: MeldekortUtfylling[];
 };
 
 export const AlleMeldekort = ({ alleMeldekort }: Props) => {
+    useEffect(() => {
+        scrollTo(0, 0);
+    }, []);
+
     return (
         <>
             <PageHeader />
