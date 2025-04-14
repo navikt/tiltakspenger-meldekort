@@ -1,4 +1,4 @@
-import { BodyLong, Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import { BodyLong, CheckboxGroup, ConfirmationPanel } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { useState } from 'react';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
@@ -28,15 +28,15 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
                 hideLegend={true}
                 error={visFeil && <Tekst id={'forsideBekrefterFeil'} />}
             >
-                <Checkbox
+                <ConfirmationPanel
                     onChange={() => {
                         setVisFeil(false);
                         setHarBekreftet(!harBekreftet);
                     }}
+                    checked={harBekreftet}
                     value={harBekreftet}
-                >
-                    <Tekst id={'forsideBekrefter'} />
-                </Checkbox>
+                    label={<Tekst id={'forsideBekrefter'} />}
+                />
             </CheckboxGroup>
             <FlashingButton
                 className={style.knapp}
