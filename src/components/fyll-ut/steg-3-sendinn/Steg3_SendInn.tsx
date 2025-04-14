@@ -1,5 +1,5 @@
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Alert, Button, Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import { Alert, Button, CheckboxGroup, ConfirmationPanel } from '@navikt/ds-react';
 import { useRef, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
@@ -17,7 +17,7 @@ type Props = {
 
 export const Steg3_SendInn = ({ forrigeSteg = 'deltatt' }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
-    const [harKlikketSend, setHarKlikketSend] = useState(false);
+    const [visFeil, setVisFeil] = useState(false);
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
 
     const varselRef = useRef<HTMLDivElement>(null);
@@ -53,11 +53,17 @@ export const Steg3_SendInn = ({ forrigeSteg = 'deltatt' }: Props) => {
             <CheckboxGroup
                 legend={''}
                 hideLegend={true}
-                error={harKlikketSend && !harBekreftet && <Tekst id={'sendInnBekrefterFeil'} />}
+                error={visFeil && <Tekst id={'sendInnBekrefterFeil'} />}
             >
-                <Checkbox onChange={() => setHarBekreftet(!harBekreftet)} value={harBekreftet}>
-                    <Tekst id={'sendInnBekrefter'} />
-                </Checkbox>
+                <ConfirmationPanel
+                    onChange={() => {
+                        setVisFeil(false);
+                        setHarBekreftet(!harBekreftet);
+                    }}
+                    checked={harBekreftet}
+                    value={harBekreftet}
+                    label={<Tekst id={'sendInnBekrefter'} />}
+                />
             </CheckboxGroup>
             <div className={style.knapper}>
                 <Button
@@ -69,12 +75,10 @@ export const Steg3_SendInn = ({ forrigeSteg = 'deltatt' }: Props) => {
                 </Button>
                 <FlashingButton
                     onClick={() => {
-                        setHarKlikketSend(true);
-
                         if (!harBekreftet) {
+                            setVisFeil(true);
                             return false;
                         }
-
                         sendInn();
                         return true;
                     }}
