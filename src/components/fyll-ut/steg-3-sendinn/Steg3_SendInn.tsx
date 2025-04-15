@@ -67,6 +67,7 @@ export const Steg3_SendInn = ({ forrigeSteg = 'deltatt' }: Props) => {
             </CheckboxGroup>
             <div className={style.knapper}>
                 <Button
+                    variant={'secondary'}
                     onClick={() => {
                         setMeldekortSteg(forrigeSteg);
                     }}

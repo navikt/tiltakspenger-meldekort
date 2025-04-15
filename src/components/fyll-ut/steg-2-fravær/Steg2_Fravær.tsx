@@ -41,6 +41,7 @@ export const Steg2_Fravær = () => {
                 )}
                 <div className={style.knapper}>
                     <Button
+                        variant={'secondary'}
                         onClick={() => {
                             setMeldekortSteg('deltatt');
                         }}
