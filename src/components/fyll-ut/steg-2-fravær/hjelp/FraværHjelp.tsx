@@ -8,14 +8,11 @@ import style from './FraværHjelp.module.css';
 export const FraværHjelp = () => {
     return (
         <>
-            <Heading size={'small'} level={'2'} className={style.header}>
+            <Heading size={'medium'} level={'2'} className={style.header}>
                 <Tekst id={'fraværHjelpTittel'} />
             </Heading>
             <TekstSegmenter id={'fraværHjelpIngress'} />
-            <ReadMore
-                header={getTekster({ id: 'fraværHjelpLesMerSyk' })}
-                className={style.lesMer}
-            >
+            <ReadMore header={getTekster({ id: 'fraværHjelpLesMerSyk' })} className={style.lesMer}>
                 <ul>
                     {getTekster({ id: 'fraværHjelpLesMerSykListe' }).map((tekst) => (
                         <li key={tekst}>{tekst}</li>
@@ -37,17 +34,19 @@ export const FraværHjelp = () => {
                 className={style.lesMer}
             >
                 <ul>
-                    {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeStart' }).map((tekst) => (
-                        <li key={tekst}>{tekst}</li>
-                    ))}
-                    <ul>
-                        {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker' }).map((tekst) => (
+                    {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeStart' }).map(
+                        (tekst) => (
                             <li key={tekst}>{tekst}</li>
-                        ))}
+                        )
+                    )}
+                    <ul>
+                        {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker' }).map(
+                            (tekst) => (
+                                <li key={tekst}>{tekst}</li>
+                            )
+                        )}
                     </ul>
-                    <li>
-                        {getTekster({id: 'fraværHjelpLesMerFraværGodkjentListeSlutt'})}
-                    </li>
+                    <li>{getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeSlutt' })}</li>
                 </ul>
             </ReadMore>
             <ReadMore

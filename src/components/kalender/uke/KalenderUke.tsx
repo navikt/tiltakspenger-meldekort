@@ -29,7 +29,9 @@ export const KalenderUke = ({ dager, steg }: Props) => {
 
     return (
         <div className={style.wrapper}>
-            <Heading size={'medium'}>{ukenummerTekst}</Heading>
+            <Heading size={'medium'} level={'2'}>
+                {ukenummerTekst}
+            </Heading>
             {steg == 'deltatt' && <Tekst id={'deltattUkeHjelp'} />}
             {steg == 'fravær' && <Tekst id={'fraværUkeHjelp'} />}
             <ul className={style.liste}>
