@@ -10,6 +10,7 @@ import { Steg3_SendInn } from '@components/fyll-ut/steg-3-sendinn/Steg3_SendInn.
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 
 import style from './FyllUt.module.css';
+import { TekstId } from '@tekster/typer.ts';
 
 type Props = {
     meldekort: MeldekortUtfylling;
@@ -45,9 +46,19 @@ export const FyllUt = ({ meldekort }: Props) => {
         fyllUtRef.current?.focus();
     }, [meldekortSteg]);
 
+    const tittelForSteg: Record<MeldekortSteg, TekstId> = {
+        deltatt: 'deltattTittel',
+        fravær: 'fraværTittel',
+        bekreft: 'sendInnTittel',
+        // TODO Steg 1-3 (deltatt, fravær, bekreft) håndteres her, men "innsendt" er ikke en del av stegene. 'innsendt' er tatt med her bare for å ikke krangle med MeldekortSteg typen..
+        //  Alle steg (ikke bare kvittering (innsendt) burde kanskje hatt egne paths? Mulig det trengs for historikk som er foreslått over her.
+        innsendt: 'kvitteringTittel',
+    };
+
     return (
         <div ref={fyllUtRef} tabIndex={-1} className={style.wrapper}>
             <PageHeader
+                tekstId={tittelForSteg[meldekortSteg]}
                 underTekst={
                     <div className={style.headerUndertekst}>
                         <BodyLong weight={'semibold'}>{ukerTekst}</BodyLong>

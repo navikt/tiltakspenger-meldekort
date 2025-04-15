@@ -8,7 +8,7 @@ import style from './KvitteringsSide.module.css';
 export const KvitteringsSide = () => {
     return (
         <>
-            <PageHeader />
+            <PageHeader tekstId={'kvitteringTittel'} />
             <div>
                 <Alert variant={'success'} className={style.kvittering}>
                     <TekstSegmenter id={'kvittering'} />
