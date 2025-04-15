@@ -20,7 +20,7 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
 
     return (
         <>
-            <PageHeader />
+            <PageHeader tekstId={'alleTittel'} />
             <div className={style.header}>
                 <Heading size={'medium'} level={'2'}>
                     <Tekst id={'alleHeading'} />

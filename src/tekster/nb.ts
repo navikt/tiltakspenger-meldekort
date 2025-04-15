@@ -40,7 +40,7 @@ export const teksterNb = {
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
     forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
     forsideIkkeTiltakspenger: 'Du har ingen meldekort for tiltakspenger.',
-
+    deltattTittel: 'Meldekort for tiltakspenger – deltakelse',
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
         'For hver tiltaksdag i meldeperioden må du oppgi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved noen typer fravær. Du skal ikke oppgi noe for dager som er utenfor tiltaket.',
@@ -64,7 +64,7 @@ export const teksterNb = {
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
     deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',
     deltattStegFraværIkkeValgt: 'Du må velge et alternativ for å gå videre',
-
+    fraværTittel: 'Meldekort for tiltakspenger – fravær',
     fraværHjelpTittel:
         'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen',
     fraværHjelpIngress:
@@ -118,6 +118,7 @@ export const teksterNb = {
     fraværModalIkkeGodkjentIngress:
         'Hvis du ikke deltok på hele eller deler av tiltaksdagen, og fraværet ikke var godkjent av Nav, har du ikke rett på tiltakspenger.',
 
+    sendInnTittel: 'Meldekort for tiltakspenger - send inn',
     sendInnBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
     sendInnBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
     sendInnIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',
@@ -126,9 +127,10 @@ export const teksterNb = {
         'Dersom problemet vedvarer, kontakt veilederen din.',
     ],
 
+    kvitteringTittel: 'Meldekort for tiltakspenger - kvittering',
     kvittering:
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
-
+    alleTittel: 'Innsendte meldekort',
     alleHeading: 'Her er alle meldekortene dine',
     alleTilbake: 'Tilbake',
     alleInnsendt: ({ dato }: { dato: string }) => `Innsendt ${dato}`,

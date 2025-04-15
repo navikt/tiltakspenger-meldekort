@@ -16,7 +16,7 @@ type Props = {
 export const Forside = ({ meldekort }: Props) => {
     return (
         <>
-            <PageHeader />
+            <PageHeader tekstId={'sideTittel'} />
             {meldekort ? (
                 <>
                     <TekstSegmenter id={'forsideIngress'} spacing={true} />
