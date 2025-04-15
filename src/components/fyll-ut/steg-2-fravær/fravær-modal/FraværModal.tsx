@@ -77,11 +77,7 @@ export const FraværModal = () => {
                 </RadioGroup>
             </Modal.Body>
             <Modal.Footer>
-                <Button
-                    disabled={valgtStatus === MeldekortDagStatus.IkkeRegistrert}
-                    variant={'primary'}
-                    onClick={() => lagreOgLukk(valgtStatus)}
-                >
+                <Button variant={'primary'} onClick={() => lagreOgLukk(valgtStatus)}>
                     <Tekst id={'lagre'} />
                 </Button>
                 <Button
