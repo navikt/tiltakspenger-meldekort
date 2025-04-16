@@ -128,6 +128,7 @@ export const teksterNb = {
     ],
 
     kvitteringTittel: 'Meldekort for tiltakspenger - kvittering',
+    kvitteringTilbake: 'Tilbake til startsiden for meldekort',
     kvittering:
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
     alleTittel: 'Innsendte meldekort',
