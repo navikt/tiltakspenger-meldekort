@@ -133,7 +133,7 @@ export const teksterNb = {
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
     alleTittel: 'Innsendte meldekort',
     alleHeading: 'Her er alle meldekortene dine',
-    alleTilbake: 'Tilbake',
+    alleTilbake: 'Tilbake til startsiden for meldekort',
     alleInnsendt: ({ dato }: { dato: string }) => `Innsendt ${dato}`,
     alleIkkeInnsendt: 'Ikke innsendt',
     allePerMeldekortOverskrift: ({
