@@ -51,6 +51,8 @@ const lagSisteMeldekort = () => ({
     kjedeId: 'kjede_2',
     fraOgMed: '2025-01-06',
     tilOgMed: '2025-01-19',
+    uke1: 2,
+    uke2: 3,
     maksAntallDager: 8,
     dager: [
         ...Array.from({ length: 10 }).map((_, i) => ({
@@ -75,6 +77,8 @@ const mockMeldekort: MeldekortTilBrukerDTO[] = [
         kjedeId: 'kjede_1',
         fraOgMed: '2024-12-23',
         tilOgMed: '2025-01-05',
+        uke1: 52,
+        uke2: 1,
         innsendt: '2025-01-04T07:56:11.995Z',
         maksAntallDager: 10,
         dager: [

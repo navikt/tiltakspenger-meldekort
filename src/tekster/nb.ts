@@ -136,6 +136,17 @@ export const teksterNb = {
     alleTilbake: 'Tilbake',
     alleInnsendt: ({ dato }: { dato: string }) => `Innsendt ${dato}`,
     alleIkkeInnsendt: 'Ikke innsendt',
+    allePerMeldekortOverskrift: ({
+        uke1,
+        uke2,
+        fraOgMed,
+        tilOgMed,
+    }: {
+        uke1: number;
+        uke2: number;
+        fraOgMed: string;
+        tilOgMed: string;
+    }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

@@ -22,6 +22,8 @@ export type MeldekortDag = {
 export type MeldekortUtfylling = {
     id: string;
     periode: Periode;
+    uke1: number;
+    uke2: number;
     maksAntallDager: number;
     innsendt: string | null;
     dager: MeldekortDag[];

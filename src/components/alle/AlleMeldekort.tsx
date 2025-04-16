@@ -33,7 +33,17 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
             {alleMeldekort.map((meldekort) => (
                 <Accordion key={meldekort.id}>
                     <Accordion.Item>
-                        <Accordion.Header>{`${formatterDato({ dato: meldekort.periode.fraOgMed })} - ${formatterDato({ dato: meldekort.periode.tilOgMed })}`}</Accordion.Header>
+                        <Accordion.Header>
+                            <Tekst
+                                id={'allePerMeldekortOverskrift'}
+                                resolverProps={{
+                                    uke1: meldekort.uke1,
+                                    uke2: meldekort.uke2,
+                                    fraOgMed: formatterDato({ dato: meldekort.periode.fraOgMed }),
+                                    tilOgMed: formatterDato({ dato: meldekort.periode.tilOgMed }),
+                                }}
+                            />
+                        </Accordion.Header>
                         <Accordion.Content>
                             <BodyShort>
                                 {meldekort.innsendt ? (
