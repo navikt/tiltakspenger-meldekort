@@ -1,5 +1,5 @@
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Alert, Button, CheckboxGroup, ConfirmationPanel } from '@navikt/ds-react';
+import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react';
 import { useRef, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortSteg } from '@components/fyll-ut/FyllUt.tsx';
@@ -50,21 +50,16 @@ export const Steg3_SendInn = ({ forrigeSteg = 'deltatt' }: Props) => {
                     id={innsendingFeilet ? 'sendInnInnsendingFeilet' : 'sendInnIkkeSendtEnnå'}
                 />
             </Alert>
-            <CheckboxGroup
-                legend={''}
-                hideLegend={true}
+            <ConfirmationPanel
+                onChange={() => {
+                    setVisFeil(false);
+                    setHarBekreftet(!harBekreftet);
+                }}
+                checked={harBekreftet}
+                value={harBekreftet}
+                label={<Tekst id={'sendInnBekrefter'} />}
                 error={visFeil && <Tekst id={'sendInnBekrefterFeil'} />}
-            >
-                <ConfirmationPanel
-                    onChange={() => {
-                        setVisFeil(false);
-                        setHarBekreftet(!harBekreftet);
-                    }}
-                    checked={harBekreftet}
-                    value={harBekreftet}
-                    label={<Tekst id={'sendInnBekrefter'} />}
-                />
-            </CheckboxGroup>
+            />
             <div className={style.knapper}>
                 <Button
                     variant={'secondary'}
