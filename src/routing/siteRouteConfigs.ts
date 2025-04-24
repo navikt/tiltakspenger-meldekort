@@ -1,5 +1,5 @@
 import React from 'react';
-import { SiteRouteName, SiteRoutePath } from '../../commonSrc/siteRoutes.ts';
+import { SiteRouteName, SiteRoutePath } from '@common/siteRoutes.ts';
 import { Forside } from '@components/forside/Forside.tsx';
 import { AlleMeldekort } from '@components/alle/AlleMeldekort.tsx';
 import { Steg1_Deltatt } from '@components/fyll-ut/steg-1-deltatt/Steg1_Deltatt.tsx';

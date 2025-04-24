@@ -10,7 +10,7 @@ import {
     MeldekortDagStatus,
     MeldekortSteg,
     MeldekortUtfylling,
-} from '../../../../commonSrc/typer/meldekort-utfylling.ts';
+} from '@common/typer/meldekort-utfylling.ts';
 import { TekstId } from '@tekster/typer.ts';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';

@@ -1,5 +1,5 @@
 import { KalenderUke } from '@components/kalender/uke/KalenderUke.tsx';
-import { MeldekortSteg, MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortSteg, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import { classNames } from '@utils/classNames.ts';
 
 import style from './Kalender.module.css';

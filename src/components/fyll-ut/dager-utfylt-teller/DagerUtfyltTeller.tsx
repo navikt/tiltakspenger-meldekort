@@ -1,7 +1,7 @@
 import { Alert, BodyLong } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
-import { MeldekortUtfylling } from '../../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import React from 'react';
 
 type Props = {

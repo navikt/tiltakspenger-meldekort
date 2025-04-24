@@ -1,5 +1,5 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
-import { MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { formatterDato, formatterDatoTid } from '@utils/datetime';
 import { Kalender } from '@components/kalender/Kalender.tsx';

@@ -3,7 +3,7 @@ import {
     MeldekortDag,
     MeldekortSteg,
     MeldekortUtfylling,
-} from '../../../commonSrc/typer/meldekort-utfylling.ts';
+} from '@common/typer/meldekort-utfylling.ts';
 
 export type MeldekortUtfyllingState = {
     meldekortUtfylling: MeldekortUtfylling | undefined;

@@ -2,7 +2,7 @@ import React from 'react';
 import { SiteRouteConfig } from '@routing/siteRouteConfigs.ts';
 import { Alert, Loader } from '@navikt/ds-react';
 import { useFetchPageData } from '@context/useFetchPageData.ts';
-import { AppContext } from '../../commonSrc/typer/appContext.ts';
+import { AppContext } from '@common/typer/appContext.ts';
 import { useRouting } from '@routing/useRouting.ts';
 
 type Props = {

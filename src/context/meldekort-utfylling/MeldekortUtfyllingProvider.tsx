@@ -4,7 +4,7 @@ import {
     MeldekortDag,
     MeldekortSteg,
     MeldekortUtfylling,
-} from '../../../commonSrc/typer/meldekort-utfylling.ts';
+} from '@common/typer/meldekort-utfylling.ts';
 import { formatterDato, getUkenummer } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 

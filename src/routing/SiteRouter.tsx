@@ -3,7 +3,7 @@ import { siteRouteConfigs } from '@routing/siteRouteConfigs.ts';
 import { RouteComponent } from '@routing/RouteComponent.tsx';
 import { Feilside } from '@Feilside.tsx';
 import React from 'react';
-import { AppContext } from '../../commonSrc/typer/appContext.ts';
+import { AppContext } from '@common/typer/appContext.ts';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider.tsx';
 
 type Props = {
