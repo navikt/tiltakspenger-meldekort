@@ -7,20 +7,15 @@ import style from './Steg4_Kvittering.module.css';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 
 export const Steg4_Kvittering = () => {
-    const ref = useRef<HTMLDivElement>(null);
     const { getUndertekster } = useMeldekortUtfylling();
     const undertekster = getUndertekster();
 
-    useEffect(() => {
-        scrollTo(0, 0);
-        ref.current?.focus();
-    }, []);
-
     return (
-        <div ref={ref} tabIndex={-1} className={style.wrapper}>
+        <MeldekortStegWrapper>
             <PageHeader
                 tekstId={'kvitteringTittel'}
                 underTekst={
@@ -38,6 +33,6 @@ export const Steg4_Kvittering = () => {
                     <Tekst id={'kvitteringTilbake'} />
                 </InternLenke>
             </div>
-        </div>
+        </MeldekortStegWrapper>
     );
 };

@@ -1,30 +1,24 @@
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { fetchSendInn } from '@utils/fetch.ts';
 import { useRouting } from '@routing/useRouting.ts';
-
-import style from './Steg3_SendInn.module.css';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
+import style from './Steg3_SendInn.module.css';
 
 export const Steg3_SendInn = () => {
     const { meldekortUtfylling, forrigeSteg, getUndertekster } = useMeldekortUtfylling();
-    const ref = useRef<HTMLDivElement>(null);
     const { navigate, base } = useRouting();
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
     const varselRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        scrollTo(0, 0);
-        ref.current?.focus();
-    }, []);
 
     if (!meldekortUtfylling) return;
 
@@ -47,7 +41,7 @@ export const Steg3_SendInn = () => {
             : `/${meldekortUtfylling.id}/deltakelse`;
 
     return (
-        <div ref={ref} tabIndex={-1} className={style.wrapper}>
+        <MeldekortStegWrapper>
             <PageHeader
                 tekstId={'sendInnTittel'}
                 underTekst={
@@ -101,6 +95,6 @@ export const Steg3_SendInn = () => {
                     <Tekst id={'sendInn'} />
                 </FlashingButton>
             </div>
-        </div>
+        </MeldekortStegWrapper>
     );
 };

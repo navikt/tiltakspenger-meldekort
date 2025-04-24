@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -19,6 +19,7 @@ import style from './Steg1_Deltatt.module.css';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -27,6 +28,10 @@ type SSRProps = {
 export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
     const { meldekortUtfylling, setMeldekortUtfylling, setForrigeSteg, getUndertekster } =
         useMeldekortUtfylling();
+    const [nesteStegValg, setNesteStegValg] = useState<MeldekortSteg | null>(null);
+    const [feil, setFeil] = useState<TekstId | null>(null);
+    const { navigate } = useRouting();
+
     // Steg 1 sørger for at meldekortet som skal fylles ut blir lastet inn i context (via SSR)
     useEffect(() => {
         if (meldekort) {
@@ -34,16 +39,8 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
         }
     }, [meldekort, setMeldekortUtfylling]);
 
-    const [nesteStegValg, setNesteStegValg] = useState<MeldekortSteg | null>(null);
-    const [feil, setFeil] = useState<TekstId | null>(null);
-
-    const ref = useRef<HTMLDivElement>(null);
-    const { navigate } = useRouting();
-
     useEffect(() => {
         if (meldekortUtfylling) {
-            scrollTo(0, 0);
-            ref.current?.focus();
             setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +64,7 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
             : `/${meldekortUtfylling.id}/send-inn`;
 
     return (
-        <div ref={ref} tabIndex={-1} className={style.wrapper}>
+        <MeldekortStegWrapper>
             <PageHeader
                 tekstId={'deltattTittel'}
                 underTekst={
@@ -119,7 +116,7 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
             >
                 <Tekst id={'neste'} />
             </FlashingButton>
-        </div>
+        </MeldekortStegWrapper>
     );
 };
 
