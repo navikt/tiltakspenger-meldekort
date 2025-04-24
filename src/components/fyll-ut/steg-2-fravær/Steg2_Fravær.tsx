@@ -6,26 +6,46 @@ import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/Dager
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { FraværHjelp } from '@components/fyll-ut/steg-2-fravær/hjelp/FraværHjelp.tsx';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TekstId } from '@tekster/typer.ts';
-
+import { useRouting } from '@routing/useRouting.ts';
+import { FraværModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/FraværModal.tsx';
+import { PageHeader } from '@components/page-header/PageHeader.tsx';
+import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import style from './Steg2_Fravær.module.css';
 
 export const Steg2_Fravær = () => {
+    const { navigate } = useRouting();
+    const ref = useRef<HTMLDivElement>(null);
     const varselRef = useRef<HTMLDivElement>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
-
-    const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
-
-    const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
-        antallDagerValidering(meldekortUtfylling);
-
+    const { meldekortUtfylling, getUndertekster } = useMeldekortUtfylling();
     useEffect(() => {
         setFeil(null);
     }, [meldekortUtfylling]);
 
+    useEffect(() => {
+        scrollTo(0, 0);
+        ref.current?.focus();
+    }, []);
+
+    if (!meldekortUtfylling) return;
+
+    const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
+        antallDagerValidering(meldekortUtfylling);
+    const undertekster = getUndertekster();
+
     return (
-        <>
+        <div ref={ref} tabIndex={-1} className={style.wrapper}>
+            <PageHeader
+                tekstId={'fraværTittel'}
+                underTekst={
+                    <div className={style.undertekstWrapper}>
+                        <Undertekst tekst={undertekster.ukerTekst} weight={'semibold'} />
+                        <Undertekst tekst={undertekster.datoerTekst} />
+                    </div>
+                }
+            />
             <FraværHjelp />
             <Kalender meldekort={meldekortUtfylling} steg={'fravær'} className={style.kalender} />
             <DagerUtfyltTeller
@@ -42,9 +62,7 @@ export const Steg2_Fravær = () => {
                 <div className={style.knapper}>
                     <Button
                         variant={'secondary'}
-                        onClick={() => {
-                            setMeldekortSteg('deltatt');
-                        }}
+                        onClick={() => navigate(`/${meldekortUtfylling.id}/deltakelse`)}
                     >
                         <Tekst id={'forrige'} />
                     </Button>
@@ -60,7 +78,7 @@ export const Steg2_Fravær = () => {
                             }
 
                             setFeil(null);
-                            setMeldekortSteg('bekreft');
+                            navigate(`/${meldekortUtfylling.id}/send-inn`);
                             return true;
                         }}
                     >
@@ -68,6 +86,7 @@ export const Steg2_Fravær = () => {
                     </FlashingButton>
                 </div>
             </div>
-        </>
+            <FraværModal />
+        </div>
     );
 };

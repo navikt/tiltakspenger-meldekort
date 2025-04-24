@@ -41,7 +41,7 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
                         setVisFeil(true);
                         return false;
                     }
-                    navigate(`/${nesteMeldekortId}/fyll-ut`);
+                    navigate(`/${nesteMeldekortId}/deltakelse`);
                     return true;
                 }}
             >

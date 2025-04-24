@@ -1,7 +1,9 @@
 export const siteRoutes = {
     forside: '/',
     alle: '/alle',
-    fyllUt: '/:meldekortId/fyll-ut',
+    deltakelse: '/:meldekortId/deltakelse',
+    fravær: '/:meldekortId/fraver',
+    sendInn: '/:meldekortId/send-inn',
     kvittering: '/:meldekortId/kvittering',
 } as const satisfies Record<string, string>;
 

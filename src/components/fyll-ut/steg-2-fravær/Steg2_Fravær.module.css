@@ -1,3 +1,9 @@
+.wrapper {
+    &:focus {
+        outline: none;
+    }
+}
+
 .knapperOgVarsel {
     margin-top: 3rem;
 }
@@ -18,4 +24,9 @@
 
 .varsel {
     margin-bottom: 1rem;
+}
+
+.undertekstWrapper {
+    display: inline-flex;
+    gap: 0.5rem;
 }

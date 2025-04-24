@@ -1,14 +1,20 @@
-import { createContext } from 'react';
-import { MeldekortDag, MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
-import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
+import React, { createContext } from 'react';
+import {
+    MeldekortDag,
+    MeldekortSteg,
+    MeldekortUtfylling,
+} from '../../../commonSrc/typer/meldekort-utfylling.ts';
 
 export type MeldekortUtfyllingState = {
-    meldekortUtfylling: MeldekortUtfylling;
+    meldekortUtfylling: MeldekortUtfylling | undefined;
     setMeldekortUtfylling: (meldekort: MeldekortUtfylling) => void;
     valgtMeldekortDag: MeldekortDag | null;
     setValgtMeldekortDag: (dag: MeldekortDag | null) => void;
     lagreMeldekortDag: (dag: MeldekortDag) => void;
-    setMeldekortSteg: (steg: MeldekortSteg) => void;
+    setMeldekortSteg: ((steg: MeldekortSteg) => void) | undefined;
+    forrigeSteg: MeldekortSteg | undefined;
+    setForrigeSteg: ((steg: MeldekortSteg) => void) | undefined;
+    getUndertekster: () => { ukerTekst: React.ReactNode; datoerTekst: React.ReactNode };
 };
 
 export const MeldekortUtfyllingContext = createContext<MeldekortUtfyllingState>(

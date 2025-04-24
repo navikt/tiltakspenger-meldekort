@@ -40,6 +40,9 @@ export const teksterNb = {
     forsideSeOgEndre: 'Se og endre innsendte meldekort',
     forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
     forsideIkkeTiltakspenger: 'Du har ingen meldekort for tiltakspenger.',
+    undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Uke ${uke1} og ${uke2}`,
+    undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
+        `${fraOgMed} til ${tilOgMed}`,
     deltattTittel: 'Meldekort for tiltakspenger – deltakelse',
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
