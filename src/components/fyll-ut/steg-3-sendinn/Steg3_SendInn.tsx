@@ -1,6 +1,7 @@
+import React, { useEffect, useRef, useState } from 'react';
+import style from './Steg3_SendInn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react';
-import React, { useRef, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
@@ -10,34 +11,55 @@ import { useRouting } from '@routing/useRouting.ts';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import style from './Steg3_SendInn.module.css';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
+import { getPathForMeldekortSteg } from '@common/siteRoutes.ts';
 
-export const Steg3_SendInn = () => {
-    const { meldekortUtfylling, forrigeSteg, getUndertekster } = useMeldekortUtfylling();
-    const { navigate, base } = useRouting();
+type SSRProps = {
+    meldekort: MeldekortUtfylling;
+};
+
+export const Steg3_SendInn = ({ meldekort }: SSRProps) => {
+    const { base, navigate } = useRouting();
+    const {
+        meldekortUtfylling,
+        setMeldekortSteg,
+        forrigeSteg,
+        getUndertekster,
+        redirectHvisFeilSteg,
+        redirectHvisMeldekortErInnsendt,
+        nullstillState,
+    } = useMeldekortUtfylling();
+    const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
-    const varselRef = useRef<HTMLDivElement>(null);
-    const { fravær, deltakelse, kvittering } = siteRoutes;
+
+    useEffect(() => {
+        redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'sendInn');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        redirectHvisFeilSteg('sendInn');
+    }, [redirectHvisFeilSteg]);
 
     if (!meldekortUtfylling) return;
 
     const sendInn = () => {
+        setMeldekortSteg('kvittering');
         fetchSendInn(meldekortUtfylling, base).then((bleSendt) => {
             if (bleSendt) {
-                navigate(getPath(kvittering, { meldekortId }));
+                nullstillState();
+                navigate(getPathForMeldekortSteg('kvittering', meldekortUtfylling.id));
             } else {
                 setInnsendingFeilet(true);
+                setMeldekortSteg('sendInn');
                 varselRef.current?.focus();
             }
         });
     };
 
     const undertekster = getUndertekster();
-    const meldekortId = meldekortUtfylling.id;
-    const forrigeStegRoute = forrigeSteg === 'fravær' ? fravær : deltakelse;
 
     return (
         <MeldekortStegWrapper>
@@ -50,7 +72,7 @@ export const Steg3_SendInn = () => {
                     </div>
                 }
             />
-            <Kalender meldekort={meldekortUtfylling} steg={'bekreft'} />
+            <Kalender meldekort={meldekortUtfylling} steg={'sendInn'} />
             <Alert
                 variant={innsendingFeilet ? 'error' : 'info'}
                 className={style.varsel}
@@ -75,7 +97,9 @@ export const Steg3_SendInn = () => {
                 <Button
                     variant={'secondary'}
                     onClick={() => {
-                        navigate(getPath(forrigeStegRoute, { meldekortId }));
+                        if (forrigeSteg) {
+                            navigate(getPathForMeldekortSteg(forrigeSteg, meldekortUtfylling.id));
+                        }
                     }}
                 >
                     <Tekst id={'forrige'} />
@@ -87,7 +111,6 @@ export const Steg3_SendInn = () => {
                             return false;
                         }
                         sendInn();
-                        navigate(getPath(kvittering, { meldekortId }));
                         return true;
                     }}
                 >

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Alert } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
@@ -9,12 +10,22 @@ import { PageHeader } from '@components/page-header/PageHeader.tsx';
 
 import style from './Forside.module.css';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
 
 type Props = {
     meldekort?: MeldekortUtfylling;
 };
 
 export const Forside = ({ meldekort }: Props) => {
+    const { setMeldekortUtfylling } = useMeldekortUtfylling();
+
+    useEffect(() => {
+        if (meldekort) {
+            setMeldekortUtfylling(meldekort);
+        }
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <>
             <PageHeader tekstId={'sideTittel'} />

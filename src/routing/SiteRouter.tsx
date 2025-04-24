@@ -5,6 +5,7 @@ import { Feilside } from '@Feilside.tsx';
 import React from 'react';
 import { AppContext } from '@common/typer/appContext.ts';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider.tsx';
+import { useRouting } from '@routing/useRouting.ts';
 
 type Props = {
     appContext: AppContext;
@@ -12,17 +13,20 @@ type Props = {
 
 export const SiteRouter = ({ appContext }: Props) => {
     const { forside, alle, deltakelse, fravær, sendInn, kvittering } = siteRouteConfigs;
+    const { navigate } = useRouting();
 
     return (
         <Switch>
-            <Route path={forside.path} key={forside.path}>
-                <RouteComponent route={forside} appContext={appContext} />
-            </Route>
             <Route path={alle.path} key={alle.path}>
                 <RouteComponent route={alle} appContext={appContext} />
             </Route>
 
-            <MeldekortUtfyllingProvider>
+            <MeldekortUtfyllingProvider navigate={navigate}>
+                {/*Forsiden trenger å informere provideren om hvilket meldekort som det skal jobbes med i stegene*/}
+                <Route path={forside.path} key={forside.path}>
+                    <RouteComponent route={forside} appContext={appContext} />
+                </Route>
+
                 <Route path={deltakelse.path} key={deltakelse.path}>
                     <RouteComponent route={deltakelse} appContext={appContext} />
                 </Route>

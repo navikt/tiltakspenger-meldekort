@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import style from './Steg1_Deltatt.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -14,53 +15,52 @@ import {
 import { TekstId } from '@tekster/typer.ts';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
-
-import style from './Steg1_Deltatt.module.css';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
-import { useRouting } from '@routing/useRouting.ts';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { useRouting } from '@routing/useRouting.ts';
+import { getPathForMeldekortSteg } from '@common/siteRoutes.ts';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
 };
 
 export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
-    const { meldekortUtfylling, setMeldekortUtfylling, setForrigeSteg, getUndertekster } =
-        useMeldekortUtfylling();
-    const [nesteStegValg, setNesteStegValg] = useState<MeldekortSteg | null>(null);
-    const [feil, setFeil] = useState<TekstId | null>(null);
     const { navigate } = useRouting();
-    const { fravær, sendInn } = siteRoutes;
+    const {
+        meldekortUtfylling,
+        setMeldekortUtfylling,
+        setMeldekortSteg,
+        nesteSteg,
+        setNesteSteg,
+        setForrigeSteg,
+        getUndertekster,
+        redirectHvisMeldekortErInnsendt,
+    } = useMeldekortUtfylling();
+    const [feil, setFeil] = useState<TekstId | null>(null);
+    const utfyllingPåbegynt = meldekort && meldekortUtfylling;
 
-    // Steg 1 sørger for at meldekortet som skal fylles ut blir lastet inn i context (via SSR)
     useEffect(() => {
-        if (meldekort) {
+        // I første steg settes meldekortUtfylling til å være meldekortet fra SSR ved første render dersom det ikke er satt fra før.
+        if (utfyllingPåbegynt) {
+            redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'deltatt');
+        } else {
+            setMeldekortSteg('deltatt');
             setMeldekortUtfylling(meldekort);
-        }
-    }, [meldekort, setMeldekortUtfylling]);
-
-    useEffect(() => {
-        if (meldekortUtfylling) {
-            setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        setFeil(null);
-    }, [nesteStegValg, meldekortUtfylling]);
-
     if (!meldekortUtfylling) {
         return null;
     }
-    const meldekortId = meldekortUtfylling.id;
     const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
         antallDagerValidering(meldekortUtfylling);
     const undertekster = getUndertekster();
 
-    const nesteStegRoute = nesteStegValg === 'fravær' ? fravær : sendInn;
+    // For å få type-safety på radioknappene sine values..
+    const fravær: MeldekortSteg = 'fravær';
+    const sendInn: MeldekortSteg = 'sendInn';
 
     return (
         <MeldekortStegWrapper>
@@ -79,17 +79,23 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
             <RadioGroup
                 legend={<Tekst id={'deltattStegFraværSpørsmål'} />}
                 description={<Tekst id={'deltattStegFraværSpørsmålUndertekst'} />}
-                value={nesteStegValg}
+                value={nesteSteg}
                 error={feil && <Tekst id={feil} />}
                 onChange={(value: MeldekortSteg) => {
-                    setNesteStegValg(value);
+                    setNesteSteg(value);
+
+                    // Dersom bruker har navigert tilbake til siden om deltakelse etter å ha fylt ut fravær og deretter velger at
+                    // de ikke har vært fraværende, så må vi fjerne fravær fra meldekortet.
+                    if (nesteSteg !== 'fravær') {
+                        setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
+                    }
                 }}
                 className={style.fraværValg}
             >
-                <Radio value={'fravær'}>
+                <Radio value={fravær}>
                     <Tekst id={'deltattStegFraværJa'} />
                 </Radio>
-                <Radio value={'bekreft'}>
+                <Radio value={sendInn}>
                     <Tekst id={'deltattStegFraværNei'} />
                 </Radio>
             </RadioGroup>
@@ -99,17 +105,25 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
                         setFeil('forMangeDagerEnkel');
                         return false;
                     }
-                    if (harIngenDagerRegistrert && nesteStegValg !== 'fravær') {
+                    if (harIngenDagerRegistrert && nesteSteg !== 'fravær') {
                         setFeil('ingenDagerDeltatt');
                         return false;
                     }
-                    if (!nesteStegValg) {
+                    if (!nesteSteg) {
                         setFeil('deltattStegFraværIkkeValgt');
                         return false;
                     }
                     setFeil(null);
-                    setForrigeSteg?.(nesteStegValg);
-                    navigate(getPath(nesteStegRoute, { meldekortId }));
+                    setMeldekortSteg(nesteSteg);
+                    if (nesteSteg === 'sendInn') {
+                        // Fordi bruker kan ha fylt ut fravær, gått tilbake til steg 1 og endret valget
+                        // til å si at de ikke har hatt fravær og skal dermed sendes rett til steg 3.
+                        setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
+                        setForrigeSteg('deltatt');
+                    } else {
+                        setForrigeSteg('fravær');
+                    }
+                    navigate(getPathForMeldekortSteg(nesteSteg, meldekortUtfylling.id));
                     return true;
                 }}
             >

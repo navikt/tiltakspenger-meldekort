@@ -18,5 +18,6 @@ export const tilMeldekortUtfylling = (meldekortDto: MeldekortTilBrukerDTO): Meld
             harRett: dag.harRett,
             index,
         })),
+        status: meldekortDto.status,
     };
 };

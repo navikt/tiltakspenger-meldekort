@@ -12,8 +12,8 @@ import style from './KalenderUke.module.css';
 const DagKomponentForSteg: Record<MeldekortSteg, React.FunctionComponent<{ dag: MeldekortDag }>> = {
     deltatt: DeltattDagPanel,
     fravær: FraværDagPanel,
-    bekreft: StatiskDagPanel,
-    innsendt: StatiskDagPanel,
+    sendInn: StatiskDagPanel,
+    kvittering: StatiskDagPanel,
 };
 
 type Props = {

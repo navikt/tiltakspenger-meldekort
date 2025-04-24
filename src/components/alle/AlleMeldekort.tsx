@@ -58,7 +58,7 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                                     <Tekst id={'alleIkkeInnsendt'} />
                                 )}
                             </BodyShort>
-                            <Kalender meldekort={meldekort} steg="innsendt" />
+                            <Kalender meldekort={meldekort} steg="kvittering" />
                         </Accordion.Content>
                     </Accordion.Item>
                 </Accordion>

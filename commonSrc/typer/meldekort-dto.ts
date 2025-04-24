@@ -1,4 +1,4 @@
-import { MeldekortDagStatus } from './meldekort-utfylling';
+import { MeldekortDagStatus, MeldekortStatus } from './meldekort-utfylling';
 
 export type MeldekortFraBrukerDTO = {
     id: string;
@@ -22,6 +22,7 @@ export type MeldekortTilBrukerDTO = {
     maksAntallDager: number;
     innsendt?: string;
     dager: MeldekortDagTilBrukerDTO[];
+    status: MeldekortStatus;
 };
 
 type MeldekortDagTilBrukerDTO = {
