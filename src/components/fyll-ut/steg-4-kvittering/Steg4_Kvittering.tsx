@@ -9,6 +9,7 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import React from 'react';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 export const Steg4_Kvittering = () => {
     const { getUndertekster } = useMeldekortUtfylling();
@@ -29,7 +30,7 @@ export const Steg4_Kvittering = () => {
                 <Alert variant={'success'} className={style.kvittering}>
                     <TekstSegmenter id={'kvittering'} />
                 </Alert>
-                <InternLenke path={'/'}>
+                <InternLenke path={getPath(siteRoutes.forside)}>
                     <Tekst id={'kvitteringTilbake'} />
                 </InternLenke>
             </div>

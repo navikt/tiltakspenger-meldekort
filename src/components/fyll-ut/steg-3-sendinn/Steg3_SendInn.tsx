@@ -11,6 +11,7 @@ import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import style from './Steg3_SendInn.module.css';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 export const Steg3_SendInn = () => {
     const { meldekortUtfylling, forrigeSteg, getUndertekster } = useMeldekortUtfylling();
@@ -19,13 +20,14 @@ export const Steg3_SendInn = () => {
     const [visFeil, setVisFeil] = useState(false);
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
     const varselRef = useRef<HTMLDivElement>(null);
+    const { fravær, deltakelse, kvittering } = siteRoutes;
 
     if (!meldekortUtfylling) return;
 
     const sendInn = () => {
         fetchSendInn(meldekortUtfylling, base).then((bleSendt) => {
             if (bleSendt) {
-                navigate(`/${meldekortUtfylling!.id}/kvittering`);
+                navigate(getPath(kvittering, { meldekortId }));
             } else {
                 setInnsendingFeilet(true);
                 varselRef.current?.focus();
@@ -34,11 +36,8 @@ export const Steg3_SendInn = () => {
     };
 
     const undertekster = getUndertekster();
-
-    const forrigeStegUrl =
-        forrigeSteg === 'fravær'
-            ? `/${meldekortUtfylling.id}/fraver`
-            : `/${meldekortUtfylling.id}/deltakelse`;
+    const meldekortId = meldekortUtfylling.id;
+    const forrigeStegRoute = forrigeSteg === 'fravær' ? fravær : deltakelse;
 
     return (
         <MeldekortStegWrapper>
@@ -76,7 +75,7 @@ export const Steg3_SendInn = () => {
                 <Button
                     variant={'secondary'}
                     onClick={() => {
-                        navigate(forrigeStegUrl);
+                        navigate(getPath(forrigeStegRoute, { meldekortId }));
                     }}
                 >
                     <Tekst id={'forrige'} />
@@ -88,7 +87,7 @@ export const Steg3_SendInn = () => {
                             return false;
                         }
                         sendInn();
-                        navigate(`/${meldekortUtfylling!.id}/kvittering`);
+                        navigate(getPath(kvittering, { meldekortId }));
                         return true;
                     }}
                 >

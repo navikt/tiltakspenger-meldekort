@@ -14,9 +14,11 @@ import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import style from './Steg2_Fravær.module.css';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 export const Steg2_Fravær = () => {
     const { navigate } = useRouting();
+    const { deltakelse, sendInn } = siteRoutes;
     const varselRef = useRef<HTMLDivElement>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
     const { meldekortUtfylling, getUndertekster } = useMeldekortUtfylling();
@@ -25,7 +27,7 @@ export const Steg2_Fravær = () => {
     }, [meldekortUtfylling]);
 
     if (!meldekortUtfylling) return;
-
+    const meldekortId = meldekortUtfylling.id;
     const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
         antallDagerValidering(meldekortUtfylling);
     const undertekster = getUndertekster();
@@ -57,7 +59,7 @@ export const Steg2_Fravær = () => {
                 <div className={style.knapper}>
                     <Button
                         variant={'secondary'}
-                        onClick={() => navigate(`/${meldekortUtfylling.id}/deltakelse`)}
+                        onClick={() => navigate(getPath(deltakelse, { meldekortId }))}
                     >
                         <Tekst id={'forrige'} />
                     </Button>
@@ -73,7 +75,7 @@ export const Steg2_Fravær = () => {
                             }
 
                             setFeil(null);
-                            navigate(`/${meldekortUtfylling.id}/send-inn`);
+                            navigate(getPath(sendInn, { meldekortId }));
                             return true;
                         }}
                     >

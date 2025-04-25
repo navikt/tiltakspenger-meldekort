@@ -8,6 +8,7 @@ import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './AlleMeldekort.module.css';
 import { useEffect } from 'react';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 type Props = {
     alleMeldekort: MeldekortUtfylling[];
@@ -25,7 +26,7 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                 <Heading size={'medium'} level={'2'}>
                     <Tekst id={'alleHeading'} />
                 </Heading>
-                <InternLenke path={'/'}>
+                <InternLenke path={getPath(siteRoutes.forside)}>
                     <Tekst id={'alleTilbake'} />
                 </InternLenke>
             </div>

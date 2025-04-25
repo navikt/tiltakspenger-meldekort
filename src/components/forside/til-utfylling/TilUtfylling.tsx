@@ -6,6 +6,7 @@ import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 
 import style from './TilUtfylling.module.css';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 type Props = {
     nesteMeldekortId: string;
@@ -41,7 +42,7 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
                         setVisFeil(true);
                         return false;
                     }
-                    navigate(`/${nesteMeldekortId}/deltakelse`);
+                    navigate(getPath(siteRoutes.deltakelse, { meldekortId: nesteMeldekortId }));
                     return true;
                 }}
             >

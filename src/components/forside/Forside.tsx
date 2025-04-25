@@ -8,6 +8,7 @@ import { SisteMeldekortStatus } from '@components/forside/siste-meldekort-status
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 
 import style from './Forside.module.css';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 type Props = {
     meldekort?: MeldekortUtfylling;
@@ -25,7 +26,7 @@ export const Forside = ({ meldekort }: Props) => {
                     ) : (
                         <TilUtfylling nesteMeldekortId={meldekort.id} />
                     )}
-                    <InternLenke path={'/alle'} className={style.tidligere}>
+                    <InternLenke path={getPath(siteRoutes.alle)} className={style.tidligere}>
                         <Tekst id={'forsideSeOgEndre'} />
                     </InternLenke>
                 </>

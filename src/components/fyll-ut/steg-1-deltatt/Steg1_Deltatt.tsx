@@ -20,6 +20,7 @@ import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -31,6 +32,7 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
     const [nesteStegValg, setNesteStegValg] = useState<MeldekortSteg | null>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
     const { navigate } = useRouting();
+    const { fravær, sendInn } = siteRoutes;
 
     // Steg 1 sørger for at meldekortet som skal fylles ut blir lastet inn i context (via SSR)
     useEffect(() => {
@@ -53,15 +55,12 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
     if (!meldekortUtfylling) {
         return null;
     }
-
+    const meldekortId = meldekortUtfylling.id;
     const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
         antallDagerValidering(meldekortUtfylling);
     const undertekster = getUndertekster();
 
-    const nesteStegUrl =
-        nesteStegValg === 'fravær'
-            ? `/${meldekortUtfylling.id}/fraver`
-            : `/${meldekortUtfylling.id}/send-inn`;
+    const nesteStegRoute = nesteStegValg === 'fravær' ? fravær : sendInn;
 
     return (
         <MeldekortStegWrapper>
@@ -110,7 +109,7 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
                     }
                     setFeil(null);
                     setForrigeSteg?.(nesteStegValg);
-                    navigate(nesteStegUrl);
+                    navigate(getPath(nesteStegRoute, { meldekortId }));
                     return true;
                 }}
             >
