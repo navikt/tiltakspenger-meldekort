@@ -1,8 +1,9 @@
-import { test, expect } from './helpers/fixtures';
+import { expect, test } from './helpers/fixtures';
 import { axeTestUtenDekoratøren, testsBaseUrl } from './helpers/utils';
 import { getTekst } from '../src/tekster/tekster';
 import { Page } from '@playwright/test';
 import { MeldekortFraBrukerDTO } from '../commonSrc/typer/meldekort-dto';
+import { MeldekortDagStatus } from '../commonSrc/typer/meldekort-utfylling';
 
 // TODO: disse testene er avhengig av mock-dataene fra demo-modusen til appen
 // Burde ha mock-data som defineres i testene
@@ -97,9 +98,11 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
 
         const sendInnData = await sendInnPromise;
 
-        const dagerDeltatt = sendInnData.dager.filter((dag) => dag.status === 'DELTATT').length;
+        const dagerDeltatt = sendInnData.dager.filter(
+            (dag) => dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET
+        ).length;
         const dagerIkkeRegistrert = sendInnData.dager.filter(
-            (dag) => dag.status === 'IKKE_REGISTRERT'
+            (dag) => dag.status === MeldekortDagStatus.IKKE_REGISTRERT
         ).length;
 
         expect(dagerDeltatt).toBe(8);
