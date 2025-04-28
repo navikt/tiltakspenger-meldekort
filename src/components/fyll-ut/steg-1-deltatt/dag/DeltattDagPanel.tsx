@@ -17,7 +17,7 @@ type Props = {
 export const DeltattDagPanel = ({ dag }: Props) => {
     const { lagreMeldekortDag } = useMeldekortUtfylling();
 
-    const erValgt = dag.status === MeldekortDagStatus.Deltatt;
+    const erValgt = dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
 
     return (
         <Checkbox
@@ -25,8 +25,8 @@ export const DeltattDagPanel = ({ dag }: Props) => {
                 lagreMeldekortDag({
                     ...dag,
                     status: e.target.checked
-                        ? MeldekortDagStatus.Deltatt
-                        : MeldekortDagStatus.IkkeRegistrert,
+                        ? MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET
+                        : MeldekortDagStatus.IKKE_REGISTRERT,
                 });
             }}
             checked={erValgt}

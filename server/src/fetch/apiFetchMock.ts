@@ -56,12 +56,12 @@ const lagSisteMeldekort = () => ({
     maksAntallDager: 8,
     dager: [
         ...Array.from({ length: 10 }).map((_, i) => ({
-            status: MeldekortDagStatus.IkkeRegistrert,
+            status: MeldekortDagStatus.IKKE_REGISTRERT,
             harRett: true,
             dag: formatDate('2025-01-06', i),
         })),
         ...Array.from({ length: 4 }).map((_, i) => ({
-            status: MeldekortDagStatus.IkkeRegistrert,
+            status: MeldekortDagStatus.IKKE_REGISTRERT,
             harRett: false,
             dag: formatDate('2025-01-16', i),
         })),
@@ -83,42 +83,42 @@ const mockMeldekort: MeldekortTilBrukerDTO[] = [
         maksAntallDager: 10,
         dager: [
             ...Array.from({ length: 5 }).map((_, i) => ({
-                status: MeldekortDagStatus.Deltatt,
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
                 harRett: true,
                 dag: formatDate('2024-12-23', i),
             })),
             ...Array.from({ length: 2 }).map((_, i) => ({
-                status: MeldekortDagStatus.IkkeRegistrert,
+                status: MeldekortDagStatus.IKKE_REGISTRERT,
                 harRett: true,
                 dag: formatDate('2024-12-28', i),
             })),
             {
-                status: MeldekortDagStatus.FraværSyk,
+                status: MeldekortDagStatus.FRAVÆR_SYK,
                 harRett: true,
                 dag: formatDate('2024-12-30'),
             },
             {
-                status: MeldekortDagStatus.FraværSyktBarn,
+                status: MeldekortDagStatus.FRAVÆR_SYKT_BARN,
                 harRett: true,
                 dag: formatDate('2024-12-31'),
             },
             {
-                status: MeldekortDagStatus.Deltatt,
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
                 harRett: true,
                 dag: formatDate('2025-01-01'),
             },
             {
-                status: MeldekortDagStatus.FraværAnnet,
+                status: MeldekortDagStatus.FRAVÆR_VELFERD_GODKJENT_AV_NAV,
                 harRett: true,
                 dag: formatDate('2025-01-02'),
             },
             {
-                status: MeldekortDagStatus.IkkeDeltatt,
+                status: MeldekortDagStatus.FRAVÆR_VELFERD_IKKE_GODKJENT_AV_NAV,
                 harRett: true,
                 dag: formatDate('2025-01-03'),
             },
             ...Array.from({ length: 2 }).map((_, i) => ({
-                status: MeldekortDagStatus.IkkeRegistrert,
+                status: MeldekortDagStatus.IKKE_REGISTRERT,
                 harRett: true,
                 dag: formatDate('2025-01-04', i),
             })),

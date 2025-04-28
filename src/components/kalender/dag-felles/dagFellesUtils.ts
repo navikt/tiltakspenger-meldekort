@@ -13,38 +13,41 @@ import style from './dagFellesStyle.module.css';
 import { TekstId } from '@tekster/typer.ts';
 
 export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
-    [MeldekortDagStatus.Deltatt]: style.deltatt,
-    [MeldekortDagStatus.FraværSyk]: style.syk,
-    [MeldekortDagStatus.FraværSyktBarn]: style.syktBarn,
-    [MeldekortDagStatus.FraværAnnet]: style.annet,
-    [MeldekortDagStatus.IkkeDeltatt]: style.ikkeDeltatt,
-    [MeldekortDagStatus.IkkeRegistrert]: style.ikkeRegistrert,
+    [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: style.deltatt,
+    [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: style.deltatt,
+    [MeldekortDagStatus.FRAVÆR_SYK]: style.syk,
+    [MeldekortDagStatus.FRAVÆR_SYKT_BARN]: style.syktBarn,
+    [MeldekortDagStatus.FRAVÆR_VELFERD_GODKJENT_AV_NAV]: style.annet,
+    [MeldekortDagStatus.FRAVÆR_VELFERD_IKKE_GODKJENT_AV_NAV]: style.ikkeDeltatt,
+    [MeldekortDagStatus.IKKE_REGISTRERT]: style.ikkeRegistrert,
 };
 
 export const statusTilIkon: Record<
     MeldekortDagStatus,
     React.FunctionComponent<SVGProps<SVGSVGElement>>
 > = {
-    [MeldekortDagStatus.Deltatt]: CheckmarkCircleFillIcon,
-    [MeldekortDagStatus.FraværSyk]: FirstAidFillIcon,
-    [MeldekortDagStatus.FraværSyktBarn]: BabyWrappedFillIcon,
-    [MeldekortDagStatus.FraværAnnet]: SunFillIcon,
-    [MeldekortDagStatus.IkkeDeltatt]: XMarkOctagonFillIcon,
-    [MeldekortDagStatus.IkkeRegistrert]: QuestionmarkDiamondIcon,
+    [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: CheckmarkCircleFillIcon,
+    [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: CheckmarkCircleFillIcon,
+    [MeldekortDagStatus.FRAVÆR_SYK]: FirstAidFillIcon,
+    [MeldekortDagStatus.FRAVÆR_SYKT_BARN]: BabyWrappedFillIcon,
+    [MeldekortDagStatus.FRAVÆR_VELFERD_GODKJENT_AV_NAV]: SunFillIcon,
+    [MeldekortDagStatus.FRAVÆR_VELFERD_IKKE_GODKJENT_AV_NAV]: XMarkOctagonFillIcon,
+    [MeldekortDagStatus.IKKE_REGISTRERT]: QuestionmarkDiamondIcon,
 };
 
 export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
-    [MeldekortDagStatus.Deltatt]: 'statusDeltatt',
-    [MeldekortDagStatus.FraværSyk]: 'statusSyk',
-    [MeldekortDagStatus.FraværSyktBarn]: 'statusSyktBarn',
-    [MeldekortDagStatus.FraværAnnet]: 'statusGodkjentFravær',
-    [MeldekortDagStatus.IkkeDeltatt]: 'statusIkkeGodkjentFravær',
-    [MeldekortDagStatus.IkkeRegistrert]: 'statusIkkeRegistrert',
+    [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: 'statusDeltatt',
+    [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: 'statusDeltatt',
+    [MeldekortDagStatus.FRAVÆR_SYK]: 'statusSyk',
+    [MeldekortDagStatus.FRAVÆR_SYKT_BARN]: 'statusSyktBarn',
+    [MeldekortDagStatus.FRAVÆR_VELFERD_GODKJENT_AV_NAV]: 'statusGodkjentFravær',
+    [MeldekortDagStatus.FRAVÆR_VELFERD_IKKE_GODKJENT_AV_NAV]: 'statusIkkeGodkjentFravær',
+    [MeldekortDagStatus.IKKE_REGISTRERT]: 'statusIkkeRegistrert',
 };
 
 export const dagStatusMedFravær: ReadonlySet<MeldekortDagStatus> = new Set([
-    MeldekortDagStatus.FraværSyk,
-    MeldekortDagStatus.FraværSyktBarn,
-    MeldekortDagStatus.FraværAnnet,
-    MeldekortDagStatus.IkkeDeltatt,
+    MeldekortDagStatus.FRAVÆR_SYK,
+    MeldekortDagStatus.FRAVÆR_SYKT_BARN,
+    MeldekortDagStatus.FRAVÆR_VELFERD_GODKJENT_AV_NAV,
+    MeldekortDagStatus.FRAVÆR_VELFERD_IKKE_GODKJENT_AV_NAV,
 ]);

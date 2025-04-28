@@ -11,7 +11,7 @@ import style from './FraværModal.module.css';
 export const FraværModal = () => {
     const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();
 
-    const initiellStatus = valgtMeldekortDag?.status || MeldekortDagStatus.IkkeRegistrert;
+    const initiellStatus = valgtMeldekortDag?.status || MeldekortDagStatus.IKKE_REGISTRERT;
 
     const [valgtStatus, setValgtStatus] = useState<MeldekortDagStatus>(initiellStatus);
 
@@ -55,22 +55,22 @@ export const FraværModal = () => {
                     }}
                 >
                     <FraværStatusPanel
-                        status={MeldekortDagStatus.FraværSyk}
+                        status={MeldekortDagStatus.FRAVÆR_SYK}
                         ingressId={'fraværModalSykIngress'}
                         valgtStatus={valgtStatus}
                     />
                     <FraværStatusPanel
-                        status={MeldekortDagStatus.FraværSyktBarn}
+                        status={MeldekortDagStatus.FRAVÆR_SYKT_BARN}
                         ingressId={'fraværModalSyktBarnIngress'}
                         valgtStatus={valgtStatus}
                     />
                     <FraværStatusPanel
-                        status={MeldekortDagStatus.FraværAnnet}
+                        status={MeldekortDagStatus.FRAVÆR_VELFERD_GODKJENT_AV_NAV}
                         ingressId={'fraværModalAnnetGodkjentIngress'}
                         valgtStatus={valgtStatus}
                     />
                     <FraværStatusPanel
-                        status={MeldekortDagStatus.IkkeDeltatt}
+                        status={MeldekortDagStatus.FRAVÆR_VELFERD_IKKE_GODKJENT_AV_NAV}
                         ingressId={'fraværModalIkkeGodkjentIngress'}
                         valgtStatus={valgtStatus}
                     />
@@ -82,10 +82,10 @@ export const FraværModal = () => {
                 </Button>
                 <Button
                     variant={'secondary'}
-                    onClick={() => lagreOgLukk(MeldekortDagStatus.IkkeRegistrert)}
+                    onClick={() => lagreOgLukk(MeldekortDagStatus.IKKE_REGISTRERT)}
                 >
                     <Tekst
-                        id={valgtStatus === MeldekortDagStatus.IkkeRegistrert ? 'avbryt' : 'slett'}
+                        id={valgtStatus === MeldekortDagStatus.IKKE_REGISTRERT ? 'avbryt' : 'slett'}
                     />
                 </Button>
             </Modal.Footer>

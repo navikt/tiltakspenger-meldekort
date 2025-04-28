@@ -87,6 +87,8 @@ const fjernFravær = (meldekortUtfylling: MeldekortUtfylling) => ({
     ...meldekortUtfylling,
     dager: meldekortUtfylling.dager.map((dag) => ({
         ...dag,
-        status: dagStatusMedFravær.has(dag.status) ? MeldekortDagStatus.IkkeRegistrert : dag.status,
+        status: dagStatusMedFravær.has(dag.status)
+            ? MeldekortDagStatus.IKKE_REGISTRERT
+            : dag.status,
     })),
 });

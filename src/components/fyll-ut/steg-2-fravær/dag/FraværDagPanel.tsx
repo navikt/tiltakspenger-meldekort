@@ -28,7 +28,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
-    const harDeltatt = status === MeldekortDagStatus.Deltatt;
+    const harDeltatt = status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
 
     return harDeltatt ? (
         <StatiskDagPanel dag={dag} />
