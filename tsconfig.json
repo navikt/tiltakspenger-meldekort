@@ -35,7 +35,8 @@
   },
   "include": [
     "src",
-    "commonSrc"
+    "commonSrc",
+    "globals.d.ts"
   ],
   "references": [
     {
