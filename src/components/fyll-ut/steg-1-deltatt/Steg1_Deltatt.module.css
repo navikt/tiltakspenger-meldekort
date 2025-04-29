@@ -1,3 +1,9 @@
+.wrapper {
+    &:focus {
+        outline: none;
+    }
+}
+
 .teller {
     margin-top: 1rem;
     margin-bottom: 1.5rem;
@@ -5,4 +11,9 @@
 
 .fraværValg {
     margin-bottom: 1rem;
+}
+
+.undertekstWrapper {
+    display: inline-flex;
+    gap: 0.5rem;
 }

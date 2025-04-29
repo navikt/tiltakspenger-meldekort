@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    MeldekortDag,
-    MeldekortDagStatus,
-} from '../../../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';

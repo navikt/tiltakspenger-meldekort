@@ -1,5 +1,5 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
-import { MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { formatterDato, formatterDatoTid } from '@utils/datetime';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -8,6 +8,7 @@ import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './AlleMeldekort.module.css';
 import { useEffect } from 'react';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 type Props = {
     alleMeldekort: MeldekortUtfylling[];
@@ -25,7 +26,7 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                 <Heading size={'medium'} level={'2'}>
                     <Tekst id={'alleHeading'} />
                 </Heading>
-                <InternLenke path={'/'}>
+                <InternLenke path={getPath(siteRoutes.forside)}>
                     <Tekst id={'alleTilbake'} />
                 </InternLenke>
             </div>

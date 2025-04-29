@@ -1,25 +1,31 @@
 import React, { useCallback, useState } from 'react';
 import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
-import { MeldekortDag, MeldekortUtfylling } from '../../../commonSrc/typer/meldekort-utfylling.ts';
-import { MeldekortSteg } from '@components/fyll-ut/FyllUt';
+import {
+    MeldekortDag,
+    MeldekortSteg,
+    MeldekortUtfylling,
+} from '@common/typer/meldekort-utfylling.ts';
+import { formatterDato, getUkenummer } from '@utils/datetime.ts';
+import { Tekst } from '@components/tekst/Tekst.tsx';
 
 type Props = {
-    meldekortUtfylling: MeldekortUtfylling;
-    setMeldekortSteg: (steg: MeldekortSteg) => void;
+    setMeldekortSteg?: (steg: MeldekortSteg) => void;
     children: React.ReactNode;
 };
 
-export const MeldekortUtfyllingProvider = ({
-    meldekortUtfylling: meldekortUtfyllingInitial,
-    setMeldekortSteg,
-    children,
-}: Props) => {
-    const [meldekortUtfylling, setMeldekortUtfylling] =
-        useState<MeldekortUtfylling>(meldekortUtfyllingInitial);
+export const MeldekortUtfyllingProvider = ({ setMeldekortSteg, children }: Props) => {
+    const [meldekortUtfylling, setMeldekortUtfylling] = useState<MeldekortUtfylling | undefined>(
+        undefined
+    );
     const [valgtMeldekortDag, setValgtMeldekortDag] = useState<MeldekortDag | null>(null);
+    const [forrigeSteg, setForrigeSteg] = useState<MeldekortSteg | undefined>(undefined);
 
     const lagreMeldekortDag = useCallback(
         (dag: MeldekortDag) => {
+            if (!meldekortUtfylling) {
+                return;
+            }
+
             const meldekortDagerUpdated = [...meldekortUtfylling.dager];
             meldekortDagerUpdated[dag.index] = dag;
 
@@ -31,15 +37,46 @@ export const MeldekortUtfyllingProvider = ({
         [meldekortUtfylling]
     );
 
+    const getUndertekster = () => {
+        if (!meldekortUtfylling) {
+            return {
+                ukerTekst: <div />,
+                datoerTekst: <div />,
+            };
+        }
+
+        const { fraOgMed, tilOgMed } = meldekortUtfylling.periode;
+        return {
+            ukerTekst: (
+                <Tekst
+                    id={'undertekstUker'}
+                    resolverProps={{ uke1: getUkenummer(fraOgMed), uke2: getUkenummer(tilOgMed) }}
+                />
+            ),
+            datoerTekst: (
+                <Tekst
+                    id={'undertekstDatoer'}
+                    resolverProps={{
+                        fraOgMed: formatterDato({ dato: fraOgMed, medUkeDag: false }),
+                        tilOgMed: formatterDato({ dato: tilOgMed, medUkeDag: false }),
+                    }}
+                />
+            ),
+        };
+    };
+
     return (
         <MeldekortUtfyllingContext.Provider
             value={{
                 meldekortUtfylling,
-                setMeldekortUtfylling,
+                setMeldekortUtfylling: setMeldekortUtfylling,
                 valgtMeldekortDag,
                 setValgtMeldekortDag,
                 lagreMeldekortDag,
                 setMeldekortSteg,
+                forrigeSteg,
+                setForrigeSteg,
+                getUndertekster,
             }}
         >
             {children}

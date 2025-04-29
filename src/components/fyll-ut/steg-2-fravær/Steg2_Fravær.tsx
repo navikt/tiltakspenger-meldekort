@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Button } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
@@ -6,26 +7,42 @@ import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/Dager
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { FraværHjelp } from '@components/fyll-ut/steg-2-fravær/hjelp/FraværHjelp.tsx';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
-import { useEffect, useRef, useState } from 'react';
 import { TekstId } from '@tekster/typer.ts';
-
+import { useRouting } from '@routing/useRouting.ts';
+import { FraværModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/FraværModal.tsx';
+import { PageHeader } from '@components/page-header/PageHeader.tsx';
+import { Undertekst } from '@components/page-header/Undertekst.tsx';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import style from './Steg2_Fravær.module.css';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 export const Steg2_Fravær = () => {
+    const { navigate } = useRouting();
+    const { deltakelse, sendInn } = siteRoutes;
     const varselRef = useRef<HTMLDivElement>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
-
-    const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
-
-    const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
-        antallDagerValidering(meldekortUtfylling);
-
+    const { meldekortUtfylling, getUndertekster } = useMeldekortUtfylling();
     useEffect(() => {
         setFeil(null);
     }, [meldekortUtfylling]);
 
+    if (!meldekortUtfylling) return;
+    const meldekortId = meldekortUtfylling.id;
+    const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
+        antallDagerValidering(meldekortUtfylling);
+    const undertekster = getUndertekster();
+
     return (
-        <>
+        <MeldekortStegWrapper>
+            <PageHeader
+                tekstId={'fraværTittel'}
+                underTekst={
+                    <div className={style.undertekstWrapper}>
+                        <Undertekst tekst={undertekster.ukerTekst} weight={'semibold'} />
+                        <Undertekst tekst={undertekster.datoerTekst} />
+                    </div>
+                }
+            />
             <FraværHjelp />
             <Kalender meldekort={meldekortUtfylling} steg={'fravær'} className={style.kalender} />
             <DagerUtfyltTeller
@@ -42,9 +59,7 @@ export const Steg2_Fravær = () => {
                 <div className={style.knapper}>
                     <Button
                         variant={'secondary'}
-                        onClick={() => {
-                            setMeldekortSteg('deltatt');
-                        }}
+                        onClick={() => navigate(getPath(deltakelse, { meldekortId }))}
                     >
                         <Tekst id={'forrige'} />
                     </Button>
@@ -60,7 +75,7 @@ export const Steg2_Fravær = () => {
                             }
 
                             setFeil(null);
-                            setMeldekortSteg('bekreft');
+                            navigate(getPath(sendInn, { meldekortId }));
                             return true;
                         }}
                     >
@@ -68,6 +83,7 @@ export const Steg2_Fravær = () => {
                     </FlashingButton>
                 </div>
             </div>
-        </>
+            <FraværModal />
+        </MeldekortStegWrapper>
     );
 };

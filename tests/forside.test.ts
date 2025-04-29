@@ -19,7 +19,7 @@ test('Kan navigere til fyll-ut etter bekreftelse', async ({ page }) => {
     await expect(bekreftVarsel).not.toBeVisible();
 
     await nesteKnapp.click();
-    await expect(page).toHaveURL(/fyll-ut$/);
+    await expect(page).toHaveURL(/deltakelse$/);
 });
 
 test('Skal ikke ha UU-feil', async ({ page }) => {

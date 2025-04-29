@@ -1,5 +1,5 @@
 import React, { SVGProps } from 'react';
-import { MeldekortDagStatus } from '../../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
 import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,

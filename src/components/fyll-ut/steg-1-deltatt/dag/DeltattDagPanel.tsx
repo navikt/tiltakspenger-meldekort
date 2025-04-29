@@ -1,7 +1,4 @@
-import {
-    MeldekortDag,
-    MeldekortDagStatus,
-} from '../../../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
 import { Checkbox } from '@navikt/ds-react';
 import { classNames } from '@utils/classNames.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';

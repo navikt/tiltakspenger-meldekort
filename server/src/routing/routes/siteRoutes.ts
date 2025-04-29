@@ -48,7 +48,7 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
               };
     });
 
-    routeBuilder.routes(siteRoutes.fyllUt, async (req, fetchFraApi) => {
+    routeBuilder.routes(siteRoutes.deltakelse, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
             (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
@@ -62,9 +62,16 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
               };
     });
 
+    // Routes som per nå ikke trenger å hente data fra API med Server-side Rendering (SSR)
+    routeBuilder.routes(siteRoutes.fravær, async (req) => {
+        return { props: {} };
+    });
+
+    routeBuilder.routes(siteRoutes.sendInn, async (req) => {
+        return { props: {} };
+    });
+
     routeBuilder.routes(siteRoutes.kvittering, async (req) => {
-        return {
-            props: {},
-        };
+        return { props: {} };
     });
 };

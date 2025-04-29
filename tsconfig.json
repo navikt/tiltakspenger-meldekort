@@ -28,14 +28,15 @@
       "@*": [
         "src/*"
       ],
-      "@common": [
+      "@common/*": [
         "commonSrc/*"
       ]
     }
   },
   "include": [
     "src",
-    "commonSrc"
+    "commonSrc",
+    "globals.d.ts"
   ],
   "references": [
     {

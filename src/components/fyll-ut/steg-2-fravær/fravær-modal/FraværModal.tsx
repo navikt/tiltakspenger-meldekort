@@ -1,5 +1,5 @@
 import { Button, Modal, RadioGroup } from '@navikt/ds-react';
-import { MeldekortDagStatus } from '../../../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
 import { useEffect, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato } from '@utils/datetime';

@@ -29,3 +29,5 @@ export type MeldekortUtfylling = {
     innsendt: string | null;
     dager: MeldekortDag[];
 };
+
+export type MeldekortSteg = 'deltatt' | 'fravær' | 'bekreft' | 'innsendt';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BodyLong } from '@navikt/ds-react';
-import { MeldekortDag } from '../../../../commonSrc/typer/meldekort-utfylling.ts';
+import { MeldekortDag } from '@common/typer/meldekort-utfylling.ts';
 import { formatterDato } from '@utils/datetime.ts';
 import {
     statusTilIkon,
