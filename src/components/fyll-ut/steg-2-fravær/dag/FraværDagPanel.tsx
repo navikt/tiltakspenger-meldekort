@@ -42,6 +42,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
                     setValgtMeldekortDag(dag);
                 }}
                 className={style.knapp}
+                aria-label={`${datoTekst} - Velg årsak til fravær`}
             >
                 <Tekst id={'fraværPanelRegistrer'} />
             </Button>
