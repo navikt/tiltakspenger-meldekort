@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import style from './Steg2_Fravær.module.css';
 import { Alert, Button } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
@@ -8,30 +9,43 @@ import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { FraværHjelp } from '@components/fyll-ut/steg-2-fravær/hjelp/FraværHjelp.tsx';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { TekstId } from '@tekster/typer.ts';
-import { useRouting } from '@routing/useRouting.ts';
 import { FraværModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/FraværModal.tsx';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import style from './Steg2_Fravær.module.css';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
+import { useRouting } from '@routing/useRouting.ts';
+import { getPathForMeldekortSteg } from '@common/siteRoutes.ts';
 
-export const Steg2_Fravær = () => {
+type SSRProps = {
+    meldekort: MeldekortUtfylling;
+};
+
+export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
     const { navigate } = useRouting();
-    const { deltakelse, sendInn } = siteRoutes;
+    const {
+        meldekortUtfylling,
+        setMeldekortSteg,
+        getUndertekster,
+        redirectHvisFeilSteg,
+        redirectHvisMeldekortErInnsendt,
+    } = useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
-    const { meldekortUtfylling, getUndertekster } = useMeldekortUtfylling();
+
     useEffect(() => {
-        setFeil(null);
-    }, [meldekortUtfylling]);
+        redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'fravær');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        redirectHvisFeilSteg('fravær');
+    }, [redirectHvisFeilSteg]);
 
     if (!meldekortUtfylling) return;
-    const meldekortId = meldekortUtfylling.id;
     const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
         antallDagerValidering(meldekortUtfylling);
     const undertekster = getUndertekster();
-
     return (
         <MeldekortStegWrapper>
             <PageHeader
@@ -59,7 +73,10 @@ export const Steg2_Fravær = () => {
                 <div className={style.knapper}>
                     <Button
                         variant={'secondary'}
-                        onClick={() => navigate(getPath(deltakelse, { meldekortId }))}
+                        onClick={() => {
+                            setMeldekortSteg('deltatt');
+                            navigate(getPathForMeldekortSteg('deltatt', meldekortUtfylling.id));
+                        }}
                     >
                         <Tekst id={'forrige'} />
                     </Button>
@@ -75,7 +92,8 @@ export const Steg2_Fravær = () => {
                             }
 
                             setFeil(null);
-                            navigate(getPath(sendInn, { meldekortId }));
+                            setMeldekortSteg('sendInn');
+                            navigate(getPathForMeldekortSteg('sendInn', meldekortUtfylling.id));
                             return true;
                         }}
                     >

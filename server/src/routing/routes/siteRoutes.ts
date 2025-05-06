@@ -62,16 +62,45 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
               };
     });
 
-    // Routes som per nå ikke trenger å hente data fra API med Server-side Rendering (SSR)
-    routeBuilder.routes(siteRoutes.fravær, async (req) => {
-        return { props: {} };
+    routeBuilder.routes(siteRoutes.fravær, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+        );
+
+        return meldekortDto
+            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            : {
+                  props: {},
+                  status: 404,
+              };
     });
 
-    routeBuilder.routes(siteRoutes.sendInn, async (req) => {
-        return { props: {} };
+    routeBuilder.routes(siteRoutes.sendInn, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+        );
+
+        return meldekortDto
+            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            : {
+                  props: {},
+                  status: 404,
+              };
     });
 
-    routeBuilder.routes(siteRoutes.kvittering, async (req) => {
-        return { props: {} };
+    routeBuilder.routes(siteRoutes.kvittering, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+        );
+
+        return meldekortDto
+            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            : {
+                  props: {},
+                  status: 404,
+              };
     });
 };

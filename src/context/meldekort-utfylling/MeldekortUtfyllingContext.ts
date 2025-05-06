@@ -11,10 +11,20 @@ export type MeldekortUtfyllingState = {
     valgtMeldekortDag: MeldekortDag | null;
     setValgtMeldekortDag: (dag: MeldekortDag | null) => void;
     lagreMeldekortDag: (dag: MeldekortDag) => void;
-    setMeldekortSteg: ((steg: MeldekortSteg) => void) | undefined;
-    forrigeSteg: MeldekortSteg | undefined;
-    setForrigeSteg: ((steg: MeldekortSteg) => void) | undefined;
+    meldekortSteg: MeldekortSteg;
+    setMeldekortSteg: (steg: MeldekortSteg) => void;
+    forrigeSteg: MeldekortSteg | null;
+    setForrigeSteg: (steg: MeldekortSteg) => void;
+    nesteSteg: MeldekortSteg | null;
+    setNesteSteg: (steg: MeldekortSteg) => void;
     getUndertekster: () => { ukerTekst: React.ReactNode; datoerTekst: React.ReactNode };
+    redirectHvisFeilSteg: (nåværendeSteg: MeldekortSteg) => void;
+    redirectHvisMeldekortErInnsendt: (
+        meldekortFraBackend: MeldekortUtfylling,
+        meldekortFraKlient: MeldekortUtfylling | undefined,
+        nåværendeSteg: MeldekortSteg
+    ) => void;
+    nullstillState: () => void;
 };
 
 export const MeldekortUtfyllingContext = createContext<MeldekortUtfyllingState>(

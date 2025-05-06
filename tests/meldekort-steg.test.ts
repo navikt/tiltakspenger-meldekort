@@ -73,42 +73,44 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
     });
 
     test('Kan sende inn et meldekort', async ({ page }) => {
-        const sendInnKnapp = page.getByRole('button', { name: getTekst({ id: 'sendInn' }) });
-        const bekreftCheckbox = page.getByRole('checkbox', {
-            name: getTekst({ id: 'sendInnBekrefter' }),
-        });
-        const bekreftVarsel = page.getByText(getTekst({ id: 'sendInnBekrefterFeil' }));
-
         await fyllUtDeltattSteg(page, false, 8);
-
-        await sendInnKnapp.click();
-
-        // Må bekrefte før innsending
-        await expect(bekreftVarsel).toBeVisible();
-        await bekreftCheckbox.click();
-        await expect(bekreftVarsel).not.toBeVisible();
-
-        const sendInnPromise: Promise<MeldekortFraBrukerDTO> = page
-            .waitForRequest((request) => request.url().endsWith('/api/send-inn'))
-            .then((request) => request.postDataJSON());
-
-        await sendInnKnapp.click();
-
-        await expect(page).toHaveURL(/kvittering$/);
-
-        const sendInnData = await sendInnPromise;
-
-        const dagerDeltatt = sendInnData.dager.filter(
-            (dag) => dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET
-        ).length;
-        const dagerIkkeRegistrert = sendInnData.dager.filter(
-            (dag) => dag.status === MeldekortDagStatus.IKKE_REGISTRERT
-        ).length;
-
-        expect(dagerDeltatt).toBe(8);
-        expect(dagerIkkeRegistrert).toBe(6);
-
+        await sendInnOgAssertInnsending(page, {
+            deltatt: 8,
+            fraværSyk: 0,
+            ikkeRegistrert: 6,
+        });
         await axeTestUtenDekoratøren(page, 'Kvittering etter innsending');
+    });
+
+    test('Utfylt fravær fjernes om bruker går til "forrige" og velger at de ikke har hatt fravær', async ({
+        page,
+    }) => {
+        // Fyll ut fravær og gå til forrige steg
+        const forrigeKnapp = page.getByRole('button', {
+            name: getTekst({ id: 'forrige' }),
+            exact: true,
+        });
+        await fyllUtFraværSteg(page, 5, 3);
+        await forrigeKnapp.click();
+        await expect(page).toHaveURL(/deltakelse$/);
+
+        // Endre valget på deltakelse-steget til å si at bruker ikke har hatt fravær
+        const nesteKnapp = page.getByRole('button', {
+            name: getTekst({ id: 'neste' }),
+            exact: true,
+        });
+        const radioHarIkkeHattFravær = page.getByRole('radio', {
+            name: getTekst({ id: 'deltattStegFraværNei' }),
+        });
+        await radioHarIkkeHattFravær.click();
+        await nesteKnapp.click();
+
+        // På steget for bekreftelse skal det ikke være noen dager med fravær
+        await sendInnOgAssertInnsending(page, {
+            deltatt: 5,
+            fraværSyk: 0,
+            ikkeRegistrert: 9,
+        });
     });
 });
 
@@ -151,4 +153,54 @@ const fyllUtFraværSteg = async (page: Page, antallDeltatt: number, antallFravæ
         await sykRadio.click();
         await lagreKnapp.click();
     }
+};
+
+type Antall = {
+    deltatt: number;
+    fraværSyk: number;
+    ikkeRegistrert: number;
+};
+
+/**
+ * Bekreft innsending og assert at det som sendes er som forventet
+ */
+const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
+    await expect(page).toHaveURL(/send-inn$/);
+
+    const sendInnKnapp = page.getByRole('button', { name: getTekst({ id: 'sendInn' }) });
+    const bekreftCheckbox = page.getByRole('checkbox', {
+        name: getTekst({ id: 'sendInnBekrefter' }),
+    });
+    const bekreftVarsel = page.getByText(getTekst({ id: 'sendInnBekrefterFeil' }));
+
+    await sendInnKnapp.click();
+
+    // Må bekrefte før innsending
+    await expect(bekreftVarsel).toBeVisible();
+    await bekreftCheckbox.click();
+    await expect(bekreftVarsel).not.toBeVisible();
+
+    const sendInnPromise: Promise<MeldekortFraBrukerDTO> = page
+        .waitForRequest((request) => request.url().endsWith('/api/send-inn'))
+        .then((request) => request.postDataJSON());
+
+    await sendInnKnapp.click();
+
+    await expect(page).toHaveURL(/kvittering$/);
+
+    const sendInnData = await sendInnPromise;
+
+    const dagerDeltatt = sendInnData.dager.filter(
+        (dag) => dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET
+    ).length;
+    const dagerFraværSyk = sendInnData.dager.filter(
+        (dag) => dag.status === MeldekortDagStatus.FRAVÆR_SYK
+    ).length;
+    const dagerIkkeRegistrert = sendInnData.dager.filter(
+        (dag) => dag.status === MeldekortDagStatus.IKKE_REGISTRERT
+    ).length;
+
+    expect(dagerDeltatt).toBe(antall.deltatt);
+    expect(dagerFraværSyk).toBe(antall.fraværSyk);
+    expect(dagerIkkeRegistrert).toBe(antall.ikkeRegistrert);
 };

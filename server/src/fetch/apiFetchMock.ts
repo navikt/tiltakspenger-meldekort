@@ -1,5 +1,5 @@
 import { FetchFraApi } from '@fetch/apiFetch';
-import { MeldekortDagStatus } from '@common/typer/meldekort-utfylling';
+import { MeldekortDagStatus, MeldekortStatus } from '@common/typer/meldekort-utfylling';
 import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
 import dayjs from 'dayjs';
 
@@ -54,6 +54,7 @@ const lagSisteMeldekort = () => ({
     uke1: 2,
     uke2: 3,
     maksAntallDager: 8,
+    status: MeldekortStatus.KAN_UTFYLLES,
     dager: [
         ...Array.from({ length: 10 }).map((_, i) => ({
             status: MeldekortDagStatus.IKKE_REGISTRERT,
@@ -81,6 +82,7 @@ const mockMeldekort: MeldekortTilBrukerDTO[] = [
         uke2: 1,
         innsendt: '2025-01-04T07:56:11.995Z',
         maksAntallDager: 10,
+        status: MeldekortStatus.KAN_UTFYLLES,
         dager: [
             ...Array.from({ length: 5 }).map((_, i) => ({
                 status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,

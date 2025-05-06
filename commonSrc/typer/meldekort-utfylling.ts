@@ -20,6 +20,11 @@ export type MeldekortDag = {
     index: number;
 };
 
+export enum MeldekortStatus {
+    INNSENDT = 'INNSENDT',
+    KAN_UTFYLLES = 'KAN_UTFYLLES',
+}
+
 export type MeldekortUtfylling = {
     id: string;
     periode: Periode;
@@ -28,6 +33,13 @@ export type MeldekortUtfylling = {
     maksAntallDager: number;
     innsendt: string | null;
     dager: MeldekortDag[];
+    status: MeldekortStatus;
 };
 
-export type MeldekortSteg = 'deltatt' | 'fravær' | 'bekreft' | 'innsendt';
+export type MeldekortSteg = 'deltatt' | 'fravær' | 'sendInn' | 'kvittering';
+
+/**
+ * Rekkefølgen her er viktig for å vite hvor langt brukeren har kommet i utfyllingen. Brukes for å redirecte
+ * brukeren dersom de endrer URLen eller maniuplerer nettleserhistorikken.
+ */
+export const STEG_REKKEFOLGE: MeldekortSteg[] = ['deltatt', 'fravær', 'sendInn', 'kvittering'];
