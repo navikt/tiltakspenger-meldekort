@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { getOboToken } from '@fetch/auth';
 
-const API_BASE_URL = `${process.env.MELDEKORT_API_URL}/meldekort/bruker`;
+const API_BASE_URL = `${process.env.MELDEKORT_API_URL}/brukerfrontend`;
 
 export const fetchFraApi = async (
     req: Request,
