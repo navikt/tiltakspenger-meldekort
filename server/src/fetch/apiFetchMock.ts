@@ -5,12 +5,19 @@ import dayjs from 'dayjs';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
-    if (path === 'bruker' || path.startsWith('meldekort/')) {
+    if (path === 'bruker') {
         return mockResponse(200, mockMeldekortBruker);
     }
 
-    if (path === 'alle') {
-        return mockResponse(200, mockAlleMeldekort);
+    if (path === 'meldekort/alle') {
+        return mockResponse(200, { meldekort: mockAlleMeldekort, bruker: mockMeldekortBruker });
+    }
+
+    if (path.startsWith('meldekort/')) {
+        return mockResponse(
+            200,
+            mockAlleMeldekort.find((mk) => mk.id === path.split('/')[2])
+        );
     }
 
     if (path === 'send-inn') {

@@ -157,6 +157,9 @@ export const teksterNb = {
         fraOgMed: string;
         tilOgMed: string;
     }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
+    alleArenaMeldekort:
+        'Dersom du fikk tiltakspenger i perioder før de som vises her, finner du meldekortene i den ',
+    alleArenaLenke: 'gamle løsningen for meldekort',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;
