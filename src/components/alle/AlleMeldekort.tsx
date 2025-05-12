@@ -8,12 +8,13 @@ import { AlleMeldekortProps } from '@common/typer/alle-meldekort.ts';
 import { useEffect } from 'react';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { appConfig } from '@common/appConfig.ts';
+import { ArenaMeldekortStatus } from '@common/typer/meldekort-bruker.ts';
 
 import style from './AlleMeldekort.module.css';
 
 type Props = AlleMeldekortProps;
 
-export const AlleMeldekort = ({ meldekort: meldekortListe }: Props) => {
+export const AlleMeldekort = ({ meldekort: meldekortListe, arenaMeldekortStatus }: Props) => {
     useEffect(() => {
         scrollTo(0, 0);
     }, []);
@@ -62,7 +63,13 @@ export const AlleMeldekort = ({ meldekort: meldekortListe }: Props) => {
                 </Accordion>
             ))}
             <BodyLong className={style.arenaLenke}>
-                <Tekst id={'alleArenaMeldekort'} />
+                <Tekst
+                    id={
+                        arenaMeldekortStatus === ArenaMeldekortStatus.HAR_MELDEKORT
+                            ? 'alleHarArenaMeldekort'
+                            : 'alleUkjentArenaMeldekort'
+                    }
+                />
                 <Link href={appConfig.arenaUrl} inlineText={true}>
                     <Tekst id={'alleArenaLenke'} />
                 </Link>

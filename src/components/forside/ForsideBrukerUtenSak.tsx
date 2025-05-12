@@ -14,22 +14,17 @@ export const ForsideBrukerUtenSak = ({ meldekortBruker }: Props) => {
 
     return (
         <Alert variant={'info'} contentMaxWidth={false}>
-            {/* Denne vises ikke i prod - skal redirecte til arena-meldekort dersom brukeren har meldekort der og ikke har sak hos oss */}
-            {arenaMeldekortStatus === ArenaMeldekortStatus.HAR_MELDEKORT ? (
-                <>
-                    <Tekst id={'forsideHarArenaMeldekort'} />
-                    <Link href={arenaUrl} inlineText={true}>
-                        <Tekst id={'forsideArenaLenke'} />
-                    </Link>
-                </>
-            ) : (
-                <>
-                    <Tekst id={'forsideIkkeTiltakspenger'} />
-                    <Link href={arenaUrl} inlineText={true}>
-                        <Tekst id={'forsideArenaLenke'} />
-                    </Link>
-                </>
-            )}
+            <Tekst
+                id={
+                    arenaMeldekortStatus === ArenaMeldekortStatus.HAR_MELDEKORT
+                        ? /* Denne vises ikke i prod - skal redirecte til arena-meldekort dersom brukeren har meldekort der og ikke har sak hos oss */
+                          'forsideHarArenaMeldekort'
+                        : 'forsideIkkeTiltakspenger'
+                }
+            />
+            <Link href={arenaUrl} inlineText={true}>
+                <Tekst id={'forsideArenaLenke'} />
+            </Link>
         </Alert>
     );
 };

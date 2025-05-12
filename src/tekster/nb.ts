@@ -157,8 +157,9 @@ export const teksterNb = {
         fraOgMed: string;
         tilOgMed: string;
     }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
-    alleArenaMeldekort:
+    alleUkjentArenaMeldekort:
         'Dersom du fikk tiltakspenger i perioder før de som vises her, finner du meldekortene i den ',
+    alleHarArenaMeldekort: 'Meldekort fra tidligere perioder finner du i den ',
     alleArenaLenke: 'gamle løsningen for meldekort',
 } as const satisfies TeksterBaseRecord;
 
