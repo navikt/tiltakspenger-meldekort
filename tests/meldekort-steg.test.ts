@@ -133,8 +133,9 @@ const fyllUtDeltattSteg = async (page: Page, fravær: boolean, antallDeltatt: nu
 
 const fyllUtFraværSteg = async (page: Page, antallDeltatt: number, antallFravær: number) => {
     const velgFraværKnapper = page.getByRole('button', {
-        name: getTekst({ id: 'fraværPanelRegistrer' }),
-        exact: true,
+        // datoTekst varierer for hver dagså vi matcher på alt utenom den.
+        name: getTekst({ id: 'fraværPanelRegistrerSR', resolverProps: { datoTekst: '' } }),
+        exact: false,
     });
     const sykRadio = page.getByRole('radio', {
         name: getTekst({ id: 'fraværModalSykIngress' }),
@@ -148,6 +149,7 @@ const fyllUtFraværSteg = async (page: Page, antallDeltatt: number, antallFravæ
     await fyllUtDeltattSteg(page, true, antallDeltatt);
 
     for (let i = 0; i < antallFravær; ++i) {
+        await expect(velgFraværKnapper.nth(i)).toHaveText(getTekst({ id: 'fraværPanelRegistrer' }));
         await velgFraværKnapper.nth(i).click();
         await expect(fraværModal).toBeVisible();
         await sykRadio.click();

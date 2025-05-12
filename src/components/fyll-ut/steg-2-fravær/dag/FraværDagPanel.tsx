@@ -13,6 +13,7 @@ import {
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 
 import style from './FraværDagPanel.module.css';
+import { getTekst } from '@tekster/tekster.ts';
 
 type Props = {
     dag: MeldekortDag;
@@ -42,6 +43,10 @@ export const FraværDagPanel = ({ dag }: Props) => {
                     setValgtMeldekortDag(dag);
                 }}
                 className={style.knapp}
+                aria-label={getTekst({
+                    id: 'fraværPanelRegistrerSR',
+                    resolverProps: { datoTekst },
+                })}
             >
                 <Tekst id={'fraværPanelRegistrer'} />
             </Button>

@@ -117,7 +117,8 @@ export const teksterNb = {
     fraværUkeHjelp: 'Velg hva slags fravær du hadde',
 
     fraværPanelRegistrer: 'Velg',
-
+    fraværPanelRegistrerSR: ({ datoTekst }: { datoTekst: string }) =>
+        `${datoTekst} - Velg årsak til fravær`,
     fraværModalHeader: 'Årsaken til fraværet',
     fraværModalBeskrivelse: 'Du kan ha rett til tiltakspenger selv om du ikke har deltatt',
     fraværModalSykIngress: 'Hvis du var for syk til å delta på tiltaksdagen.',
