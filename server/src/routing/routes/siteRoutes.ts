@@ -85,8 +85,6 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
         );
 
-        console.log('meldekort:', meldekortDto);
-
         return meldekortDto
             ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
             : {
