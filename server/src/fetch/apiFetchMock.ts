@@ -139,9 +139,9 @@ const mockMeldekortBruker: MeldekortBrukerDTO = {
     harSak: true,
     arenaMeldekortStatus: ArenaMeldekortStatus.HAR_IKKE_MELDEKORT,
     nesteMeldekort: null, // nesteMeldekort,
-    sisteMeldekort: forrigeMeldekort,
-    nesteInnsending: {
-        kanSendesDato: '2025-05-16',
+    forrigeMeldekort,
+    nesteMeldeperiode: {
+        kanSendes: '2025-05-16',
         periode: {
             fraOgMed: '2025-05-19',
             tilOgMed: '2025-06-01',

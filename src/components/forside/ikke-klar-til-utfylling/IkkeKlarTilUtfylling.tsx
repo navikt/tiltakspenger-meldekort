@@ -10,21 +10,21 @@ type Props = {
 };
 
 export const IkkeKlarTilUtfylling = ({ meldekortBruker }: Props) => {
-    const { forrigeMeldekort, nesteInnsending } = meldekortBruker;
+    const { forrigeMeldekort, nesteMeldeperiode } = meldekortBruker;
 
     return (
         <Alert variant={'info'} contentMaxWidth={false} className={style.wrapper}>
             <BodyLong>
                 <Tekst id={'forsideIngenMeldekort'} />
-                {nesteInnsending && (
+                {nesteMeldeperiode && (
                     <>
                         <Tekst id={'forsideNesteMeldekort1'} />
-                        <strong>{formatterDato({ dato: nesteInnsending.kanSendesDato })}</strong>
+                        <strong>{formatterDato({ dato: nesteMeldeperiode.kanSendes })}</strong>
                         <Tekst id={'forsideNesteMeldekort2'} />
                         <strong>
-                            {formatterDato({ dato: nesteInnsending.periode.fraOgMed })}
+                            {formatterDato({ dato: nesteMeldeperiode.periode.fraOgMed })}
                             {'-'}
-                            {formatterDato({ dato: nesteInnsending.periode.tilOgMed })}
+                            {formatterDato({ dato: nesteMeldeperiode.periode.tilOgMed })}
                         </strong>
                         {'.'}
                     </>

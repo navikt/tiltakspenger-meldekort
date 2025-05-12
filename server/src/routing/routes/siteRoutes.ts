@@ -46,8 +46,6 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             res?.ok ? (res.json() as Promise<AlleMeldekortDTO>) : null
         );
 
-        console.log(alleMeldekortDto);
-
         if (!alleMeldekortDto) {
             return {
                 props: {},

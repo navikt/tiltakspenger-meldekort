@@ -29,12 +29,12 @@ export const tilMeldekortBruker = (dto: MeldekortBrukerDTO): MeldekortBruker => 
         ? {
               harSak: true,
               arenaMeldekortStatus: dto.arenaMeldekortStatus,
-              nesteInnsending: dto.nesteInnsending ?? undefined,
+              nesteMeldeperiode: dto.nesteMeldeperiode ?? undefined,
               nesteMeldekort: dto.nesteMeldekort
                   ? tilMeldekortUtfylling(dto.nesteMeldekort)
                   : undefined,
-              forrigeMeldekort: dto.sisteMeldekort
-                  ? tilMeldekortUtfylling(dto.sisteMeldekort)
+              forrigeMeldekort: dto.forrigeMeldekort
+                  ? tilMeldekortUtfylling(dto.forrigeMeldekort)
                   : undefined,
           }
         : {
