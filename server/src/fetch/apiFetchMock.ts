@@ -6,18 +6,24 @@ import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekor
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
     if (path === 'bruker') {
-        return mockResponse(200, mockMeldekortBruker);
+        return mockResponse(200, mockMeldekortBruker());
     }
 
-    if (path === 'meldekort/alle') {
-        return mockResponse(200, { meldekort: mockAlleMeldekort, bruker: mockMeldekortBruker });
-    }
+    if (path.startsWith('meldekort')) {
+        const meldekortId = path.split('/').at(1);
 
-    if (path.startsWith('meldekort/')) {
-        return mockResponse(
-            200,
-            mockAlleMeldekort.find((mk) => mk.id === path.split('/')[2])
-        );
+        if (!meldekortId) {
+            return mockResponse(404, null);
+        }
+
+        if (meldekortId === 'alle') {
+            return mockResponse(200, {
+                meldekort: mockAlleMeldekort,
+                bruker: mockMeldekortBruker(),
+            });
+        }
+
+        return mockResponse(200, lagNesteMeldekort());
     }
 
     if (path === 'send-inn') {
@@ -52,7 +58,7 @@ const formatDate = (date: string, plusDays: number = 0) => {
     return dayjs(date).add(plusDays, 'days').format('YYYY-MM-DD');
 };
 
-const nesteMeldekort: MeldekortTilBrukerDTO = {
+const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
     id: 'meldekort_2',
     meldeperiodeId: 'periode_2',
     versjon: 1,
@@ -75,7 +81,7 @@ const nesteMeldekort: MeldekortTilBrukerDTO = {
             dag: formatDate('2025-01-16', i),
         })),
     ],
-};
+});
 
 const forrigeMeldekort: MeldekortTilBrukerDTO = {
     id: 'meldekort_1',
@@ -133,12 +139,12 @@ const forrigeMeldekort: MeldekortTilBrukerDTO = {
     ],
 };
 
-const mockAlleMeldekort: MeldekortTilBrukerDTO[] = [nesteMeldekort, forrigeMeldekort];
+const mockAlleMeldekort: MeldekortTilBrukerDTO[] = [lagNesteMeldekort(), forrigeMeldekort];
 
-const mockMeldekortBruker: MeldekortBrukerDTO = {
+const mockMeldekortBruker = (): MeldekortBrukerDTO => ({
     harSak: true,
     arenaMeldekortStatus: ArenaMeldekortStatus.HAR_IKKE_MELDEKORT,
-    nesteMeldekort: null, // nesteMeldekort,
+    nesteMeldekort: lagNesteMeldekort(),
     forrigeMeldekort,
     nesteMeldeperiode: {
         kanSendes: '2025-05-16',
@@ -147,4 +153,4 @@ const mockMeldekortBruker: MeldekortBrukerDTO = {
             tilOgMed: '2025-06-01',
         },
     },
-};
+});

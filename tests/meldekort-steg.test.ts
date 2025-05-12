@@ -9,7 +9,7 @@ import { MeldekortDagStatus } from '../commonSrc/typer/meldekort-utfylling';
 // Burde ha mock-data som defineres i testene
 
 test.beforeEach(async ({ page }) => {
-    await page.goto(`${testsBaseUrl}/mitt_meldekort/deltakelse`);
+    await page.goto(`${testsBaseUrl}/meldekort_2/deltakelse`);
 });
 
 test.describe('Kan fylle ut og sende inn meldekortet', () => {
