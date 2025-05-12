@@ -37,9 +37,16 @@ export const teksterNb = {
     forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
     forsideBekrefterFeil: 'Du må bekrefte for å gå videre',
-    forsideSeOgEndre: 'Se og endre innsendte meldekort',
-    forsideIngenMeldekort: 'Du har ingen meldekort til innsending.',
-    forsideIkkeTiltakspenger: 'Du har ingen meldekort for tiltakspenger.',
+    forsideSeOgEndre: 'Se tidligere innsendte meldekort',
+    forsideIngenMeldekort: 'Du har ingen meldekort klare til innsending. ',
+    forsideNesteMeldekort1: 'Ditt neste meldekort kan sendes inn fra ',
+    forsideNesteMeldekort2: ' for perioden ',
+    forsideForrigeMeldekort1: 'Din forrige innsending var ',
+    forsideForrigeMeldekort2: ' for perioden ',
+    forsideIkkeTiltakspenger:
+        'Fant ingen meldekort for tiltakspenger. Dersom du tidligere har mottatt tiltakspenger, finner du meldekortene dine i ',
+    forsideHarArenaMeldekort: 'Du kan finne meldekortene dine for tiltakspenger i ',
+    forsideArenaLenke: 'den gamle løsningen for meldekort.',
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Uke ${uke1} og ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} til ${tilOgMed}`,
@@ -150,6 +157,10 @@ export const teksterNb = {
         fraOgMed: string;
         tilOgMed: string;
     }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
+    alleUkjentArenaMeldekort:
+        'Dersom du fikk tiltakspenger i perioder før de som vises her, finner du meldekortene i den ',
+    alleHarArenaMeldekort: 'Meldekort fra tidligere perioder finner du i den ',
+    alleArenaLenke: 'gamle løsningen for meldekort',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

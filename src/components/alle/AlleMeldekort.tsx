@@ -1,20 +1,20 @@
-import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
+import { Accordion, BodyLong, BodyShort, Heading, Link } from '@navikt/ds-react';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { formatterDato, formatterDatoTid } from '@utils/datetime';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
-
-import style from './AlleMeldekort.module.css';
+import { AlleMeldekortProps } from '@common/typer/alle-meldekort.ts';
 import { useEffect } from 'react';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { appConfig } from '@common/appConfig.ts';
+import { ArenaMeldekortStatus } from '@common/typer/meldekort-bruker.ts';
 
-type Props = {
-    alleMeldekort: MeldekortUtfylling[];
-};
+import style from './AlleMeldekort.module.css';
 
-export const AlleMeldekort = ({ alleMeldekort }: Props) => {
+type Props = AlleMeldekortProps;
+
+export const AlleMeldekort = ({ meldekort: meldekortListe, arenaMeldekortStatus }: Props) => {
     useEffect(() => {
         scrollTo(0, 0);
     }, []);
@@ -30,8 +30,7 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                     <Tekst id={'alleTilbake'} />
                 </InternLenke>
             </div>
-
-            {alleMeldekort.map((meldekort) => (
+            {meldekortListe.map((meldekort) => (
                 <Accordion key={meldekort.id}>
                     <Accordion.Item>
                         <Accordion.Header>
@@ -63,6 +62,19 @@ export const AlleMeldekort = ({ alleMeldekort }: Props) => {
                     </Accordion.Item>
                 </Accordion>
             ))}
+            <BodyLong className={style.arenaLenke}>
+                <Tekst
+                    id={
+                        arenaMeldekortStatus === ArenaMeldekortStatus.HAR_MELDEKORT
+                            ? 'alleHarArenaMeldekort'
+                            : 'alleUkjentArenaMeldekort'
+                    }
+                />
+                <Link href={appConfig.arenaUrl} inlineText={true}>
+                    <Tekst id={'alleArenaLenke'} />
+                </Link>
+                {'.'}
+            </BodyLong>
         </>
     );
 };

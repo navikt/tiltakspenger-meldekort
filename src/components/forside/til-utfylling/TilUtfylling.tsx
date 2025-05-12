@@ -4,15 +4,16 @@ import { useState } from 'react';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { useRouting } from '@routing/useRouting.ts';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 
 import style from './TilUtfylling.module.css';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 type Props = {
-    nesteMeldekortId: string;
+    nesteMeldekort: MeldekortUtfylling;
 };
 
-export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
+export const TilUtfylling = ({ nesteMeldekort }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
 
@@ -42,7 +43,7 @@ export const TilUtfylling = ({ nesteMeldekortId }: Props) => {
                         setVisFeil(true);
                         return false;
                     }
-                    navigate(getPath(siteRoutes.deltakelse, { meldekortId: nesteMeldekortId }));
+                    navigate(getPath(siteRoutes.deltakelse, { meldekortId: nesteMeldekort.id }));
                     return true;
                 }}
             >

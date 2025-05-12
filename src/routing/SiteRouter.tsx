@@ -23,20 +23,20 @@ export const SiteRouter = ({ appContext }: Props) => {
 
             <MeldekortUtfyllingProvider navigate={navigate}>
                 {/*Forsiden trenger å informere provideren om hvilket meldekort som det skal jobbes med i stegene*/}
-                <Route path={forside.path} key={forside.path}>
+                <Route path={forside.path}>
                     <RouteComponent route={forside} appContext={appContext} />
                 </Route>
 
-                <Route path={deltakelse.path} key={deltakelse.path}>
+                <Route path={deltakelse.path}>
                     <RouteComponent route={deltakelse} appContext={appContext} />
                 </Route>
-                <Route path={fravær.path} key={fravær.path}>
+                <Route path={fravær.path}>
                     <RouteComponent route={fravær} appContext={appContext} />
                 </Route>
-                <Route path={sendInn.path} key={sendInn.path}>
+                <Route path={sendInn.path}>
                     <RouteComponent route={sendInn} appContext={appContext} />
                 </Route>
-                <Route path={kvittering.path} key={kvittering.path}>
+                <Route path={kvittering.path}>
                     <RouteComponent route={kvittering} appContext={appContext} />
                 </Route>
             </MeldekortUtfyllingProvider>
