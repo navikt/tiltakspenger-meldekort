@@ -28,6 +28,20 @@ export const FraværDagPanel = ({ dag }: Props) => {
 
     const harDeltatt = status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
 
+    const skjermleserMelding =
+        status === MeldekortDagStatus.IKKE_REGISTRERT
+            ? getTekst({
+                  id: 'fraværPanelRegistrerSR',
+                  resolverProps: { datoTekst },
+              })
+            : getTekst({
+                  id: 'fraværPanelValgRegistrertSR',
+                  resolverProps: {
+                      datoTekst,
+                      valgtStatusTekst: getTekst({ id: statusTilTekstId[status] }),
+                  },
+              });
+
     return harDeltatt ? (
         <StatiskDagPanel dag={dag} />
     ) : (
@@ -43,10 +57,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
                     setValgtMeldekortDag(dag);
                 }}
                 className={style.knapp}
-                aria-label={getTekst({
-                    id: 'fraværPanelRegistrerSR',
-                    resolverProps: { datoTekst },
-                })}
+                aria-label={skjermleserMelding}
             >
                 <Tekst id={'fraværPanelRegistrer'} />
             </Button>
