@@ -3,8 +3,8 @@ import { BodyLong } from '@navikt/ds-react';
 import { MeldekortDag } from '@common/typer/meldekort-utfylling.ts';
 import { formatterDato } from '@utils/datetime.ts';
 import {
-    statusTilIkon,
     meldekortStatusTilStyle,
+    statusTilIkon,
     statusTilTekstId,
 } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { classNames } from '@utils/classNames.ts';
@@ -26,7 +26,7 @@ export const StatiskDagPanel = ({ dag }: Props) => {
 
     return (
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
-            <IkonKomponent />
+            <IkonKomponent aria-hidden />
             <BodyLong>{`${datoTekst}: `}</BodyLong>
             <TekstSegmenter
                 id={harRett ? statusTilTekstId[status] : 'ikkeRett'}
