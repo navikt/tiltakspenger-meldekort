@@ -1,6 +1,5 @@
 import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
 import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
-import { Periode } from '@common/typer/periode';
 
 export enum ArenaMeldekortStatus {
     HAR_MELDEKORT = 'HAR_MELDEKORT',
@@ -8,18 +7,12 @@ export enum ArenaMeldekortStatus {
     UKJENT = 'UKJENT',
 }
 
-export type NesteMeldeperiode = {
-    kanSendes: string;
-    periode: Periode;
-};
-
 export type MeldekortBrukerDTO =
     | {
           harSak: true;
           arenaMeldekortStatus: ArenaMeldekortStatus;
           nesteMeldekort: MeldekortTilBrukerDTO | null;
           forrigeMeldekort: MeldekortTilBrukerDTO | null;
-          nesteMeldeperiode: NesteMeldeperiode | null;
       }
     | {
           harSak: false;
@@ -31,7 +24,6 @@ export type MeldekortBrukerMedSak = {
     arenaMeldekortStatus: ArenaMeldekortStatus;
     nesteMeldekort?: MeldekortUtfylling;
     forrigeMeldekort?: MeldekortUtfylling;
-    nesteMeldeperiode?: NesteMeldeperiode;
 };
 
 export type MeldekortBrukerUtenSak = {

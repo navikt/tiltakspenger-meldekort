@@ -19,10 +19,11 @@ export type MeldekortTilBrukerDTO = {
     tilOgMed: string;
     uke1: number;
     uke2: number;
+    status: MeldekortStatus;
     maksAntallDager: number;
     innsendt?: string;
     dager: MeldekortDagTilBrukerDTO[];
-    status: MeldekortStatus;
+    kanSendes?: string;
 };
 
 type MeldekortDagTilBrukerDTO = {

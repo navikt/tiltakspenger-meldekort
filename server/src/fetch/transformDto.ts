@@ -21,6 +21,7 @@ export const tilMeldekortUtfylling = (meldekortDto: MeldekortTilBrukerDTO): Meld
             index,
         })),
         status: meldekortDto.status,
+        kanSendes: meldekortDto.kanSendes,
     };
 };
 
@@ -29,7 +30,6 @@ export const tilMeldekortBruker = (dto: MeldekortBrukerDTO): MeldekortBruker => 
         ? {
               harSak: true,
               arenaMeldekortStatus: dto.arenaMeldekortStatus,
-              nesteMeldeperiode: dto.nesteMeldeperiode ?? undefined,
               nesteMeldekort: dto.nesteMeldekort
                   ? tilMeldekortUtfylling(dto.nesteMeldekort)
                   : undefined,

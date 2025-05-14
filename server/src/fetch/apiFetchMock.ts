@@ -146,11 +146,4 @@ const mockMeldekortBruker = (): MeldekortBrukerDTO => ({
     arenaMeldekortStatus: ArenaMeldekortStatus.HAR_IKKE_MELDEKORT,
     nesteMeldekort: lagNesteMeldekort(),
     forrigeMeldekort,
-    nesteMeldeperiode: {
-        kanSendes: '2025-05-16',
-        periode: {
-            fraOgMed: '2025-05-19',
-            tilOgMed: '2025-06-01',
-        },
-    },
 });

@@ -20,6 +20,8 @@ export type MeldekortDag = {
 export enum MeldekortStatus {
     INNSENDT = 'INNSENDT',
     KAN_UTFYLLES = 'KAN_UTFYLLES',
+    IKKE_KLAR = 'IKKE_KLAR',
+    DEAKTIVERT = 'DEAKTIVERT',
 }
 
 export type MeldekortUtfylling = {
@@ -31,6 +33,7 @@ export type MeldekortUtfylling = {
     innsendt: string | null;
     dager: MeldekortDag[];
     status: MeldekortStatus;
+    kanSendes?: string;
 };
 
 export type MeldekortSteg = 'deltatt' | 'fravær' | 'sendInn' | 'kvittering';

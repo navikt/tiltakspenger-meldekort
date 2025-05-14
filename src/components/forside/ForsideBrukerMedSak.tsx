@@ -7,6 +7,7 @@ import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling.tsx
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
+import { MeldekortStatus } from '@common/typer/meldekort-utfylling.ts';
 
 import style from './Forside.module.css';
 
@@ -29,7 +30,7 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
     return (
         <>
             <TekstSegmenter id={'forsideIngress'} spacing={true} />
-            {nesteMeldekort ? (
+            {nesteMeldekort?.status === MeldekortStatus.KAN_UTFYLLES ? (
                 <TilUtfylling nesteMeldekort={nesteMeldekort} />
             ) : (
                 <IkkeKlarTilUtfylling meldekortBruker={meldekortBruker} />
