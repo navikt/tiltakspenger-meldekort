@@ -112,7 +112,7 @@ export const teksterNb = {
         'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',
         'Du skal velge «annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.',
         'Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt ferieperiode for tiltaket.',
-        'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.',
+        'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din. ',
     ],
 
     fraværUkeHjelp: 'Velg hva slags fravær du hadde',
