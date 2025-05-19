@@ -96,7 +96,7 @@ export const teksterNb = {
 
     fraværHjelpLesMerFraværGodkjent: 'Når skal du velge "fravær godkjent av Nav"?',
     fraværHjelpLesMerFraværGodkjentListeStart: [
-        'Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det gjelder hvis fraværet skyldes aktiviteter som du har avtalt med veilederen din.',
+        'Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det gjelder hvis fraværet skyldes aktiviteter som du har avtalt med Nav-veilederen din.',
         'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel:',
     ],
     fraværHjelpLesMerFraværGodkjentListeÅrsaker: [
@@ -105,13 +105,14 @@ export const teksterNb = {
         'alvorlig sykdom/begravelse i nærmeste familie',
     ],
     fraværHjelpLesMerFraværGodkjentListeSlutt:
-        'Ta kontakt med veilederen din for å dokumentere årsaken til fraværet og få det godkjent.',
+        'Du skal bare velge denne hvis fraværet faktisk er godkjent av nav-veilederen din. Ta kontakt med Nav-veilederen din hvis du er i tvil.',
 
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',
         'Du skal velge «annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.',
-        'Du skal velge «annet fravær» hvis du har fått fri/ferie utenom planlagt ferieperiode for tiltaket.',
+        'Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt ferieperiode for tiltaket.',
+        'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.',
     ],
 
     fraværUkeHjelp: 'Velg hva slags fravær du hadde',
@@ -132,7 +133,7 @@ export const teksterNb = {
     fraværModalSyktBarnIngress:
         'Hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnepasser var syk.',
     fraværModalAnnetGodkjentIngress:
-        'Hvis du har gjennomført aktiviteter som er avtalt og godkjent av veilederen din.',
+        'Hvis du har hatt fravær fra tiltaket og Nav har godkjent dette fraværet.',
     fraværModalIkkeGodkjentIngress:
         'Hvis du ikke deltok på hele eller deler av tiltaksdagen, og fraværet ikke var godkjent av Nav, har du ikke rett på tiltakspenger.',
 
