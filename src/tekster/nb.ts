@@ -105,7 +105,7 @@ export const teksterNb = {
         'alvorlig sykdom/begravelse i nærmeste familie',
     ],
     fraværHjelpLesMerFraværGodkjentListeSlutt:
-        'Du skal bare velge denne hvis fraværet faktisk er godkjent av nav-veilederen din. Ta kontakt med Nav-veilederen din hvis du er i tvil.',
+        'Du skal bare velge denne hvis fraværet faktisk er godkjent av Nav-veilederen din. Ta kontakt med Nav-veilederen din hvis du er i tvil.',
 
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
