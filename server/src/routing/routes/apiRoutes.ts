@@ -2,7 +2,7 @@ import { RequestHandler, Router } from 'express';
 import { MeldekortFraBrukerDTO } from '@common/typer/meldekort-dto';
 import { FetchFraApi, fetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
-import { isProd } from '@utils/env';
+import { brukerTesterPågår, isProd } from '@utils/env';
 
 const sendInnRoute =
     (fetcher: FetchFraApi): RequestHandler =>
@@ -17,7 +17,7 @@ const sendInnRoute =
 export const setupApiRoutes = (router: Router) => {
     router.post('/api/send-inn', sendInnRoute(fetchFraApi));
 
-    if (!isProd()) {
+    if (!isProd() || brukerTesterPågår()) {
         router.post('/demo/api/send-inn', sendInnRoute(fetchFraApiMock));
     }
 };

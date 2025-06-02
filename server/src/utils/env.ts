@@ -18,3 +18,5 @@ export const validateEnv = async () => {
 export const isProd = () => process.env.NAIS_CLUSTER_NAME === 'prod-gcp';
 
 export const isDev = () => process.env.NAIS_CLUSTER_NAME === 'dev-gcp';
+
+export const brukerTesterPågår = () => true;

@@ -5,7 +5,7 @@ import path from 'path';
 import { fetchFraApi, FetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
 import { SiteRouteComponentProps } from '@common/typer/appContext';
-import { isProd } from '@utils/env';
+import { brukerTesterPågår, isProd } from '@utils/env';
 
 type ConstructorProps = {
     router: Router;
@@ -25,14 +25,13 @@ export class SiteRoutesBuilder {
     private readonly renderer: SiteHtmlRenderer;
     private readonly apiFetchFunc: FetchFraApi;
     private readonly mockFetchFunc: FetchFraApi;
-    private readonly brukertesterPågår: boolean = true;
 
     constructor({ router, renderer }: ConstructorProps) {
         this.router = router;
         this.renderer = renderer;
         this.apiFetchFunc = fetchFraApi;
         // Aldri vis mock-data i prod
-        this.mockFetchFunc = isProd() && !this.brukertesterPågår ? fetchFraApi : fetchFraApiMock;
+        this.mockFetchFunc = isProd() && !brukerTesterPågår() ? fetchFraApi : fetchFraApiMock;
     }
 
     public routes(routePath: string, dataFetcher: DataFetcher) {
@@ -61,7 +60,7 @@ export class SiteRoutesBuilder {
             res.status(status).json(props);
         });
 
-        if (!isProd() || this.brukertesterPågår) {
+        if (!isProd() || brukerTesterPågår()) {
             this.demoRoutes(routePath, dataFetcher);
         }
     }
