@@ -3,6 +3,7 @@ import { MeldekortDagStatus, MeldekortStatus } from '@common/typer/meldekort-utf
 import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
 import dayjs from 'dayjs';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
+import { brukerTesterPågår } from '@utils/env';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
     if (path === 'bruker') {
@@ -77,7 +78,7 @@ const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
         })),
         ...Array.from({ length: 4 }).map((_, i) => ({
             status: MeldekortDagStatus.IKKE_REGISTRERT,
-            harRett: false,
+            harRett: false || brukerTesterPågår(),
             dag: formatDate('2025-01-16', i),
         })),
     ],
