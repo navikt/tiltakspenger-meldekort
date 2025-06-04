@@ -68,7 +68,7 @@ const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
     tilOgMed: '2025-01-19',
     uke1: 2,
     uke2: 3,
-    maksAntallDager: 8,
+    maksAntallDager: 10,
     status: MeldekortStatus.KAN_UTFYLLES,
     dager: [
         ...Array.from({ length: 10 }).map((_, i) => ({
