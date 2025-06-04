@@ -31,7 +31,7 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
     test('Kan ikke gå videre med for mange dager utfylt', async ({ page }) => {
         const forMangeDagerVarsel = page.getByText(getTekst({ id: 'forMangeDagerEnkel' }));
 
-        await fyllUtDeltattSteg(page, false, 10);
+        await fyllUtDeltattSteg(page, false, 11);
 
         await expect(forMangeDagerVarsel).toBeVisible();
         await axeTestUtenDekoratøren(page, 'Fylt ut deltagelse med for mange dager');
