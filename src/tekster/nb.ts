@@ -38,6 +38,8 @@ export const teksterNb = {
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
     forsideBekrefterFeil: 'Du må bekrefte for å gå videre',
     forsideSeOgEndre: 'Se tidligere innsendte meldekort',
+    forsideIngenMeldekortSoknadUnderBehandling:
+        'Du har ikke fått noen meldekort enda fordi Nav ikke er ferdig med å behandle søknaden din. ',
     forsideIngenMeldekort: 'Du har ingen meldekort klare til innsending. ',
     forsideNesteMeldekort1: 'Ditt neste meldekort kan sendes inn fra ',
     forsideNesteMeldekort2: ' for perioden ',

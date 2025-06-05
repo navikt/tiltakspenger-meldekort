@@ -13,6 +13,7 @@ export type MeldekortBrukerDTO =
           arenaMeldekortStatus: ArenaMeldekortStatus;
           nesteMeldekort: MeldekortTilBrukerDTO | null;
           forrigeMeldekort: MeldekortTilBrukerDTO | null;
+          harSoknadUnderBehandling: boolean;
       }
     | {
           harSak: false;
@@ -24,6 +25,7 @@ export type MeldekortBrukerMedSak = {
     arenaMeldekortStatus: ArenaMeldekortStatus;
     nesteMeldekort?: MeldekortUtfylling;
     forrigeMeldekort?: MeldekortUtfylling;
+    harSoknadUnderBehandling: boolean;
 };
 
 export type MeldekortBrukerUtenSak = {

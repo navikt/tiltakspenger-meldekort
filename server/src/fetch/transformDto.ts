@@ -36,6 +36,7 @@ export const tilMeldekortBruker = (dto: MeldekortBrukerDTO): MeldekortBruker => 
               forrigeMeldekort: dto.forrigeMeldekort
                   ? tilMeldekortUtfylling(dto.forrigeMeldekort)
                   : undefined,
+              harSoknadUnderBehandling: dto.harSoknadUnderBehandling,
           }
         : {
               harSak: false,
