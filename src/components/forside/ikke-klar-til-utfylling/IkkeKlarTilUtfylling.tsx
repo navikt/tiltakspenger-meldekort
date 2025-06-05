@@ -11,27 +11,34 @@ type Props = {
 };
 
 export const IkkeKlarTilUtfylling = ({ meldekortBruker }: Props) => {
-    const { forrigeMeldekort, nesteMeldekort } = meldekortBruker;
+    const { forrigeMeldekort, nesteMeldekort, harSoknadUnderBehandling } = meldekortBruker;
 
     return (
         <Alert variant={'info'} contentMaxWidth={false} className={style.wrapper}>
-            <BodyLong>
-                <Tekst id={'forsideIngenMeldekort'} />
-                {nesteMeldekort?.status === MeldekortStatus.IKKE_KLAR &&
-                    nesteMeldekort.kanSendes && (
-                        <>
-                            <Tekst id={'forsideNesteMeldekort1'} />
-                            <strong>{formatterDato({ dato: nesteMeldekort.kanSendes })}</strong>
-                            <Tekst id={'forsideNesteMeldekort2'} />
-                            <strong>
-                                {formatterDato({ dato: nesteMeldekort.periode.fraOgMed })}
-                                {'-'}
-                                {formatterDato({ dato: nesteMeldekort.periode.tilOgMed })}
-                            </strong>
-                            {'.'}
-                        </>
-                    )}
-            </BodyLong>
+            {harSoknadUnderBehandling && (
+                <BodyLong>
+                    <Tekst id={'forsideIngenMeldekortSoknadUnderBehandling'} />
+                </BodyLong>
+            )}
+            {!harSoknadUnderBehandling && (
+                <BodyLong>
+                    <Tekst id={'forsideIngenMeldekort'} />
+                    {nesteMeldekort?.status === MeldekortStatus.IKKE_KLAR &&
+                        nesteMeldekort.kanSendes && (
+                            <>
+                                <Tekst id={'forsideNesteMeldekort1'} />
+                                <strong>{formatterDato({ dato: nesteMeldekort.kanSendes })}</strong>
+                                <Tekst id={'forsideNesteMeldekort2'} />
+                                <strong>
+                                    {formatterDato({ dato: nesteMeldekort.periode.fraOgMed })}
+                                    {'-'}
+                                    {formatterDato({ dato: nesteMeldekort.periode.tilOgMed })}
+                                </strong>
+                                {'.'}
+                            </>
+                        )}
+                </BodyLong>
+            )}
             {forrigeMeldekort?.innsendt && (
                 <BodyLong>
                     <Tekst id={'forsideForrigeMeldekort1'} />

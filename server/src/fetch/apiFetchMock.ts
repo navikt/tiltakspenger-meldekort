@@ -147,4 +147,5 @@ const mockMeldekortBruker = (): MeldekortBrukerDTO => ({
     arenaMeldekortStatus: ArenaMeldekortStatus.HAR_IKKE_MELDEKORT,
     nesteMeldekort: lagNesteMeldekort(),
     forrigeMeldekort,
+    harSoknadUnderBehandling: false,
 });
