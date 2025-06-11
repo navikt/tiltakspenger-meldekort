@@ -15,12 +15,12 @@ export const IkkeKlarTilUtfylling = ({ meldekortBruker }: Props) => {
 
     return (
         <Alert variant={'info'} contentMaxWidth={false} className={style.wrapper}>
-            {harSoknadUnderBehandling && (
+            {harSoknadUnderBehandling && !nesteMeldekort && (
                 <BodyLong>
                     <Tekst id={'forsideIngenMeldekortSoknadUnderBehandling'} />
                 </BodyLong>
             )}
-            {!harSoknadUnderBehandling && (
+            {(!harSoknadUnderBehandling || nesteMeldekort) && (
                 <BodyLong>
                     <Tekst id={'forsideIngenMeldekort'} />
                     {nesteMeldekort?.status === MeldekortStatus.IKKE_KLAR &&
