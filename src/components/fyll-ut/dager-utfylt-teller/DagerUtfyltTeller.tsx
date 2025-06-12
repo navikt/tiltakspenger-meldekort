@@ -11,25 +11,22 @@ type Props = {
 
 export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
     ({ meldekortUtfylling, className }, ref) => {
-        const { harForMangeDagerRegistrert, antallDagerRegistrert } =
+        const { harForMangeDagerBesvart, antallDagerBesvart } =
             antallDagerValidering(meldekortUtfylling);
 
-        return harForMangeDagerRegistrert ? (
+        return harForMangeDagerBesvart ? (
             <Alert className={className} variant={'warning'} ref={ref} tabIndex={-1}>
                 <Tekst
-                    id={'forMangeDagerRegistrert'}
+                    id={'forMangeDagerBesvart'}
                     resolverProps={{
-                        antall: antallDagerRegistrert,
+                        antall: antallDagerBesvart,
                         maks: meldekortUtfylling.maksAntallDager,
                     }}
                 />
             </Alert>
         ) : (
             <BodyLong className={className} weight={'semibold'}>
-                <Tekst
-                    id={'antallDagerRegistrert'}
-                    resolverProps={{ antall: antallDagerRegistrert }}
-                />
+                <Tekst id={'antallDagerBesvart'} resolverProps={{ antall: antallDagerBesvart }} />
             </BodyLong>
         );
     }

@@ -8,20 +8,20 @@ export const teksterNb = {
     avbryt: 'Avbryt',
     sendInn: 'Send inn',
 
-    statusIkkeRegistrert: 'Ikke registrert',
+    statusIkkeBesvart: 'Ikke besvart',
     statusDeltatt: 'Deltatt',
     statusSyk: 'Syk',
     statusSyktBarn: 'Sykt barn eller syk barnepasser',
     statusGodkjentFravær: 'Fravær godkjent av Nav',
-    statusIkkeGodkjentFravær: 'Annet fravær',
+    statusAnnetFravær: 'Annet fravær',
 
     ikkeRett: 'Ikke rett',
 
     forMangeDagerEnkel: 'Du har fylt ut for mange dager',
     ingenDagerDeltatt: 'Du må velge minst en dag med deltagelse, eller velge fravær',
-    antallDagerRegistrert: ({ antall }: { antall: number }) =>
+    antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
-    forMangeDagerRegistrert: ({ antall, maks }: { antall: number; maks: number }) =>
+    forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
         `Du har fylt ut ${antall} dager. Det er maks ${maks} dager med tiltak i denne perioden.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller gå tilbake og velge deltagelse.',

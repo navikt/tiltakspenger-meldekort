@@ -77,7 +77,7 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
         await sendInnOgAssertInnsending(page, {
             deltatt: 8,
             fraværSyk: 0,
-            ikkeRegistrert: 6,
+            ikkeBesvart: 6,
         });
         await axeTestUtenDekoratøren(page, 'Kvittering etter innsending');
     });
@@ -109,7 +109,7 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
         await sendInnOgAssertInnsending(page, {
             deltatt: 5,
             fraværSyk: 0,
-            ikkeRegistrert: 9,
+            ikkeBesvart: 9,
         });
     });
 });
@@ -160,7 +160,7 @@ const fyllUtFraværSteg = async (page: Page, antallDeltatt: number, antallFravæ
 type Antall = {
     deltatt: number;
     fraværSyk: number;
-    ikkeRegistrert: number;
+    ikkeBesvart: number;
 };
 
 /**
@@ -198,11 +198,11 @@ const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
     const dagerFraværSyk = sendInnData.dager.filter(
         (dag) => dag.status === MeldekortDagStatus.FRAVÆR_SYK
     ).length;
-    const dagerIkkeRegistrert = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.IKKE_REGISTRERT
+    const dagerIkkeBesvart = sendInnData.dager.filter(
+        (dag) => dag.status === MeldekortDagStatus.IKKE_BESVART
     ).length;
 
     expect(dagerDeltatt).toBe(antall.deltatt);
     expect(dagerFraværSyk).toBe(antall.fraværSyk);
-    expect(dagerIkkeRegistrert).toBe(antall.ikkeRegistrert);
+    expect(dagerIkkeBesvart).toBe(antall.ikkeBesvart);
 };
