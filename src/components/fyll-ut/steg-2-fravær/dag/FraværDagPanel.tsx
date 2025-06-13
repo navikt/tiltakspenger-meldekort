@@ -29,7 +29,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
     const harDeltatt = status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
 
     const skjermleserMelding =
-        status === MeldekortDagStatus.IKKE_REGISTRERT
+        status === MeldekortDagStatus.IKKE_BESVART
             ? getTekst({
                   id: 'fraværPanelRegistrerSR',
                   resolverProps: { datoTekst },

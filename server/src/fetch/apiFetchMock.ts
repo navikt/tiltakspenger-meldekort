@@ -72,12 +72,12 @@ const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
     status: MeldekortStatus.KAN_UTFYLLES,
     dager: [
         ...Array.from({ length: 10 }).map((_, i) => ({
-            status: MeldekortDagStatus.IKKE_REGISTRERT,
+            status: MeldekortDagStatus.IKKE_BESVART,
             harRett: true,
             dag: formatDate('2025-01-06', i),
         })),
         ...Array.from({ length: 4 }).map((_, i) => ({
-            status: MeldekortDagStatus.IKKE_REGISTRERT,
+            status: MeldekortDagStatus.IKKE_BESVART,
             harRett: false || brukerTesterPågår(),
             dag: formatDate('2025-01-16', i),
         })),
@@ -103,7 +103,7 @@ const forrigeMeldekort: MeldekortTilBrukerDTO = {
             dag: formatDate('2024-12-23', i),
         })),
         ...Array.from({ length: 2 }).map((_, i) => ({
-            status: MeldekortDagStatus.IKKE_REGISTRERT,
+            status: MeldekortDagStatus.IKKE_BESVART,
             harRett: true,
             dag: formatDate('2024-12-28', i),
         })),
@@ -123,17 +123,17 @@ const forrigeMeldekort: MeldekortTilBrukerDTO = {
             dag: formatDate('2025-01-01'),
         },
         {
-            status: MeldekortDagStatus.FRAVÆR_VELFERD_GODKJENT_AV_NAV,
+            status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
             harRett: true,
             dag: formatDate('2025-01-02'),
         },
         {
-            status: MeldekortDagStatus.FRAVÆR_VELFERD_IKKE_GODKJENT_AV_NAV,
+            status: MeldekortDagStatus.FRAVÆR_ANNET,
             harRett: true,
             dag: formatDate('2025-01-03'),
         },
         ...Array.from({ length: 2 }).map((_, i) => ({
-            status: MeldekortDagStatus.IKKE_REGISTRERT,
+            status: MeldekortDagStatus.IKKE_BESVART,
             harRett: true,
             dag: formatDate('2025-01-04', i),
         })),

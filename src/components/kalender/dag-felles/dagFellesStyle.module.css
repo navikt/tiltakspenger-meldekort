@@ -1,4 +1,4 @@
-.ikkeRegistrert {
+.ikkeBesvart {
     background: var(--a-surface-subtle);
     border-color: var(--a-border-default);
 
@@ -16,7 +16,9 @@
     }
 }
 
-.syk, .syktBarn, .annet {
+.syk,
+.syktBarn,
+.annet {
     background: var(--a-surface-warning-subtle);
     border-color: var(--a-border-warning);
 

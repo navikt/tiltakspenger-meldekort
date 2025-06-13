@@ -54,7 +54,7 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
     if (!meldekortUtfylling) {
         return null;
     }
-    const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
+    const { harForMangeDagerBesvart, harIngenDagerBesvart } =
         antallDagerValidering(meldekortUtfylling);
     const undertekster = getUndertekster();
 
@@ -101,11 +101,11 @@ export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
             </RadioGroup>
             <FlashingButton
                 onClick={() => {
-                    if (harForMangeDagerRegistrert) {
+                    if (harForMangeDagerBesvart) {
                         setFeil('forMangeDagerEnkel');
                         return false;
                     }
-                    if (harIngenDagerRegistrert && nesteSteg !== 'fravær') {
+                    if (harIngenDagerBesvart && nesteSteg !== 'fravær') {
                         setFeil('ingenDagerDeltatt');
                         return false;
                     }
@@ -137,8 +137,6 @@ const fjernFravær = (meldekortUtfylling: MeldekortUtfylling) => ({
     ...meldekortUtfylling,
     dager: meldekortUtfylling.dager.map((dag) => ({
         ...dag,
-        status: dagStatusMedFravær.has(dag.status)
-            ? MeldekortDagStatus.IKKE_REGISTRERT
-            : dag.status,
+        status: dagStatusMedFravær.has(dag.status) ? MeldekortDagStatus.IKKE_BESVART : dag.status,
     })),
 });

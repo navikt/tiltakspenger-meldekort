@@ -23,7 +23,7 @@ export const DeltattDagPanel = ({ dag }: Props) => {
                     ...dag,
                     status: e.target.checked
                         ? MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET
-                        : MeldekortDagStatus.IKKE_REGISTRERT,
+                        : MeldekortDagStatus.IKKE_BESVART,
                 });
             }}
             checked={erValgt}

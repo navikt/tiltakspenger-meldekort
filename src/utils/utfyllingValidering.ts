@@ -3,20 +3,20 @@ import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUt
 
 export const antallDagerValidering = (meldekortUtfylling: MeldekortUtfylling) => {
     const dager = meldekortUtfylling?.dager || [];
-    const { IKKE_REGISTRERT, DELTATT_UTEN_LØNN_I_TILTAKET } = MeldekortDagStatus;
+    const { IKKE_BESVART, DELTATT_UTEN_LØNN_I_TILTAKET } = MeldekortDagStatus;
 
-    const antallDagerRegistrert = dager?.filter((dag) => dag.status !== IKKE_REGISTRERT).length;
-    const harForMangeDagerRegistrert = antallDagerRegistrert > meldekortUtfylling?.maksAntallDager;
-    const harIngenDagerRegistrert = antallDagerRegistrert === 0;
+    const antallDagerBesvart = dager?.filter((dag) => dag.status !== IKKE_BESVART).length;
+    const harForMangeDagerBesvart = antallDagerBesvart > meldekortUtfylling?.maksAntallDager;
+    const harIngenDagerBesvart = antallDagerBesvart === 0;
     const harIngenDagerMedDeltatt = dager?.filter(
         (dag) => dag.status !== DELTATT_UTEN_LØNN_I_TILTAKET
     );
     const harIngenDagerMedFravær = dager?.filter((dag) => dagStatusMedFravær.has(dag.status));
 
     return {
-        antallDagerRegistrert,
-        harForMangeDagerRegistrert,
-        harIngenDagerRegistrert,
+        antallDagerBesvart,
+        harForMangeDagerBesvart,
+        harIngenDagerBesvart,
         harIngenDagerMedDeltatt,
         harIngenDagerMedFravær,
     };

@@ -43,7 +43,7 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
     }, [redirectHvisFeilSteg]);
 
     if (!meldekortUtfylling) return;
-    const { harForMangeDagerRegistrert, harIngenDagerRegistrert } =
+    const { harForMangeDagerBesvart, harIngenDagerBesvart } =
         antallDagerValidering(meldekortUtfylling);
     const undertekster = getUndertekster();
     return (
@@ -82,11 +82,11 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
                     </Button>
                     <FlashingButton
                         onClick={() => {
-                            if (harForMangeDagerRegistrert) {
+                            if (harForMangeDagerBesvart) {
                                 setFeil('forMangeDagerEnkel');
                                 return false;
                             }
-                            if (harIngenDagerRegistrert) {
+                            if (harIngenDagerBesvart) {
                                 setFeil('ingenDagerMedFravær');
                                 return false;
                             }
