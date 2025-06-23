@@ -13,6 +13,6 @@
     background: var(--a-green-100);
 
     &:hover {
-        background: var(--a-green-200)
+        background: var(--a-green-200);
     }
 }

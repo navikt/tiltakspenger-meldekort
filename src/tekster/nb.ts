@@ -78,6 +78,7 @@ export const teksterNb = {
     deltattStegFraværJa: 'Ja, jeg har hatt fravær',
     deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',
     deltattStegFraværIkkeValgt: 'Du må velge et alternativ for å gå videre',
+    lønnTittel: 'Meldekort for tiltakspenger – lønn',
     fraværTittel: 'Meldekort for tiltakspenger – fravær',
     fraværHjelpTittel:
         'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen',

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import style from './Steg4_Kvittering.module.css';
+import style from './Steg6_Kvittering.module.css';
 import { Alert } from '@navikt/ds-react';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
@@ -15,7 +15,7 @@ type SSRProps = {
     meldekort: MeldekortUtfylling;
 };
 
-export const Steg4_Kvittering = ({ meldekort }: SSRProps) => {
+export const Steg6_Kvittering = ({ meldekort }: SSRProps) => {
     const {
         meldekortUtfylling,
         setMeldekortUtfylling,

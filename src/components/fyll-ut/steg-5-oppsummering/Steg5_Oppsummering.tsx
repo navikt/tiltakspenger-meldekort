@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import style from './Steg3_SendInn.module.css';
+import style from './Steg5_Oppsummering.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
@@ -18,7 +18,7 @@ type SSRProps = {
     meldekort: MeldekortUtfylling;
 };
 
-export const Steg3_SendInn = ({ meldekort }: SSRProps) => {
+export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
     const { base, navigate } = useRouting();
     const {
         meldekortUtfylling,

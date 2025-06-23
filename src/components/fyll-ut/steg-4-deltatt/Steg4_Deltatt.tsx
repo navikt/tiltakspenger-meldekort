@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import style from './Steg1_Deltatt.module.css';
+import style from './Steg4_Deltatt.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { Tekst } from '@components/tekst/Tekst';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
-import { DeltattHjelp } from '@components/fyll-ut/steg-1-deltatt/hjelp/DeltattHjelp.tsx';
+import { DeltattHjelp } from '@components/fyll-ut/steg-4-deltatt/hjelp/DeltattHjelp.tsx';
 import {
     MeldekortDagStatus,
     MeldekortSteg,
@@ -25,7 +25,7 @@ type SSRProps = {
     meldekort: MeldekortUtfylling;
 };
 
-export const Steg1_Deltatt = ({ meldekort }: SSRProps) => {
+export const Steg4_Deltatt = ({ meldekort }: SSRProps) => {
     const { navigate } = useRouting();
     const {
         meldekortUtfylling,
