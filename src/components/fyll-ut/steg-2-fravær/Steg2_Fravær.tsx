@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import style from './Steg2_Fravær.module.css';
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
@@ -13,9 +13,10 @@ import { FraværModal } from '@components/fyll-ut/steg-2-fravær/fravær-modal/F
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortDagStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import { useRouting } from '@routing/useRouting.ts';
-import { getPathForMeldekortSteg } from '@common/siteRoutes.ts';
+import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
+import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -27,8 +28,9 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
         meldekortUtfylling,
         setMeldekortSteg,
         getUndertekster,
-        redirectHvisFeilSteg,
         redirectHvisMeldekortErInnsendt,
+        harHattFravær,
+        setHarHattFravær,
     } = useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
@@ -38,14 +40,11 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        redirectHvisFeilSteg('fravær');
-    }, [redirectHvisFeilSteg]);
-
     if (!meldekortUtfylling) return;
     const { harForMangeDagerBesvart, harIngenDagerBesvart } =
         antallDagerValidering(meldekortUtfylling);
     const undertekster = getUndertekster();
+
     return (
         <MeldekortStegWrapper>
             <PageHeader
@@ -57,13 +56,40 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
                     </div>
                 }
             />
-            <FraværHjelp />
-            <Kalender meldekort={meldekortUtfylling} steg={'fravær'} className={style.kalender} />
-            <DagerUtfyltTeller
-                meldekortUtfylling={meldekortUtfylling}
-                className={style.teller}
-                ref={varselRef}
-            />
+
+            <RadioGroup
+                legend={<Tekst id={'fraværStegFraværSpørsmål'} />}
+                value={harHattFravær}
+                error={feil && <Tekst id={feil} />}
+                onChange={(harHattFraværSpørsmålSvar: boolean) => {
+                    setHarHattFravær(harHattFraværSpørsmålSvar);
+                }}
+                className={style.fraværValg}
+            >
+                <Radio value={true}>
+                    <Tekst id={'fraværHarHattFraværSvarJa'} />
+                </Radio>
+                <Radio value={false}>
+                    <Tekst id={'fraværHarHattFraværSvarNei'} />
+                </Radio>
+            </RadioGroup>
+
+            {harHattFravær && (
+                <>
+                    <FraværHjelp />
+                    <Kalender
+                        meldekort={meldekortUtfylling}
+                        steg={'fravær'}
+                        className={style.kalender}
+                    />
+                    <DagerUtfyltTeller
+                        meldekortUtfylling={meldekortUtfylling}
+                        className={style.teller}
+                        ref={varselRef}
+                    />
+                    <FraværModal />
+                </>
+            )}
             <div className={style.knapperOgVarsel}>
                 {feil && (
                     <Alert variant={'error'} className={style.varsel}>
@@ -74,8 +100,8 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
                     <Button
                         variant={'secondary'}
                         onClick={() => {
-                            setMeldekortSteg('deltatt');
-                            navigate(getPathForMeldekortSteg('deltatt', meldekortUtfylling.id));
+                            setMeldekortSteg('fravær');
+                            navigate(getPath(siteRoutes.forside));
                         }}
                     >
                         <Tekst id={'forrige'} />
@@ -86,14 +112,14 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
                                 setFeil('forMangeDagerEnkel');
                                 return false;
                             }
-                            if (harIngenDagerBesvart) {
+                            if (harHattFravær && harIngenDagerBesvart) {
                                 setFeil('ingenDagerMedFravær');
                                 return false;
                             }
 
                             setFeil(null);
-                            setMeldekortSteg('sendInn');
-                            navigate(getPathForMeldekortSteg('sendInn', meldekortUtfylling.id));
+                            setMeldekortSteg('lønn');
+                            navigate(getPathForMeldekortSteg('lønn', meldekortUtfylling.id));
                             return true;
                         }}
                     >
@@ -101,7 +127,14 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
                     </FlashingButton>
                 </div>
             </div>
-            <FraværModal />
         </MeldekortStegWrapper>
     );
 };
+
+const fjernFravær = (meldekortUtfylling: MeldekortUtfylling) => ({
+    ...meldekortUtfylling,
+    dager: meldekortUtfylling.dager.map((dag) => ({
+        ...dag,
+        status: dagStatusMedFravær.has(dag.status) ? MeldekortDagStatus.IKKE_BESVART : dag.status,
+    })),
+});

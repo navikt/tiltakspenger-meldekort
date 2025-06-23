@@ -27,6 +27,11 @@ export const FraværDagPanel = ({ dag }: Props) => {
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
     const harDeltatt = status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
+    const harMottattLønn = status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET;
+
+    if (harDeltatt || harMottattLønn) {
+        return <StatiskDagPanel dag={dag} />;
+    }
 
     const skjermleserMelding =
         status === MeldekortDagStatus.IKKE_BESVART
@@ -42,9 +47,7 @@ export const FraværDagPanel = ({ dag }: Props) => {
                   },
               });
 
-    return harDeltatt ? (
-        <StatiskDagPanel dag={dag} />
-    ) : (
+    return (
         <div className={classNames(style.fravær, meldekortStatusTilStyle[status])}>
             <div className={style.datoStatus}>
                 <BodyLong className={style.dato}>{`${datoTekst}: `}</BodyLong>

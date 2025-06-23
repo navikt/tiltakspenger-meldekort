@@ -43,7 +43,7 @@ export const TilUtfylling = ({ nesteMeldekort }: Props) => {
                         setVisFeil(true);
                         return false;
                     }
-                    navigate(getPath(siteRoutes.deltakelse, { meldekortId: nesteMeldekort.id }));
+                    navigate(getPath(siteRoutes.fravær, { meldekortId: nesteMeldekort.id }));
                     return true;
                 }}
             >

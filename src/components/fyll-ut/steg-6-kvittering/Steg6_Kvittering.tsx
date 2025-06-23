@@ -20,7 +20,6 @@ export const Steg6_Kvittering = ({ meldekort }: SSRProps) => {
         meldekortUtfylling,
         setMeldekortUtfylling,
         getUndertekster,
-        redirectHvisFeilSteg,
         redirectHvisMeldekortErInnsendt,
     } = useMeldekortUtfylling();
     const undertekster = getUndertekster();
@@ -34,10 +33,6 @@ export const Steg6_Kvittering = ({ meldekort }: SSRProps) => {
             setMeldekortUtfylling({ ...meldekortUtfylling, status: MeldekortStatus.INNSENDT });
         }
     }, [meldekort, meldekortUtfylling, redirectHvisMeldekortErInnsendt, setMeldekortUtfylling]);
-
-    useEffect(() => {
-        redirectHvisFeilSteg('kvittering');
-    }, [redirectHvisFeilSteg]);
 
     return (
         <MeldekortStegWrapper>

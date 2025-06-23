@@ -93,6 +93,20 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
               };
     });
 
+    routeBuilder.routes(siteRoutes.lønn, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+        );
+
+        return meldekortDto
+            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            : {
+                  props: {},
+                  status: 404,
+              };
+    });
+
     routeBuilder.routes(siteRoutes.sendInn, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(

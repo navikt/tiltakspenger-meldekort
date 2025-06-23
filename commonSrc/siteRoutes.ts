@@ -3,8 +3,9 @@ import { MeldekortSteg } from '@common/typer/meldekort-utfylling';
 export const siteRoutes = {
     forside: '/',
     alle: '/alle',
-    deltakelse: '/:meldekortId/deltakelse',
     fravær: '/:meldekortId/fraver',
+    lønn: '/:meldekortId/lonn',
+    deltakelse: '/:meldekortId/deltakelse',
     sendInn: '/:meldekortId/send-inn',
     kvittering: '/:meldekortId/kvittering',
 } as const satisfies Record<string, string>;
@@ -27,10 +28,12 @@ export const getPath = (siteRoutePath: SiteRoutePath, params?: Record<string, st
 
 export const getPathForMeldekortSteg = (meldekortSteg: MeldekortSteg, meldekortId: string) => {
     switch (meldekortSteg) {
-        case 'deltatt':
-            return getPath(siteRoutes.deltakelse, { meldekortId });
         case 'fravær':
             return getPath(siteRoutes.fravær, { meldekortId });
+        case 'lønn':
+            return getPath(siteRoutes.lønn, { meldekortId });
+        case 'deltatt':
+            return getPath(siteRoutes.deltakelse, { meldekortId });
         case 'sendInn':
             return getPath(siteRoutes.sendInn, { meldekortId });
         case 'kvittering':

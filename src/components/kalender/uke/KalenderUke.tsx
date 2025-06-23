@@ -8,9 +8,11 @@ import { StatiskDagPanel } from '@components/kalender/statisk-dag/StatiskDagPane
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './KalenderUke.module.css';
+import { LønnDagPanel } from '@components/fyll-ut/steg-3-lønn/dag/LønnDagPanel.tsx';
 
 const DagKomponentForSteg: Record<MeldekortSteg, React.FunctionComponent<{ dag: MeldekortDag }>> = {
     deltatt: DeltattDagPanel,
+    lønn: LønnDagPanel,
     fravær: FraværDagPanel,
     sendInn: StatiskDagPanel,
     kvittering: StatiskDagPanel,

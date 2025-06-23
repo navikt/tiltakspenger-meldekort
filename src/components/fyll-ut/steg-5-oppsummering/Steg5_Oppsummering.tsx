@@ -23,11 +23,8 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
     const {
         meldekortUtfylling,
         setMeldekortSteg,
-        forrigeSteg,
         getUndertekster,
-        redirectHvisFeilSteg,
         redirectHvisMeldekortErInnsendt,
-        nullstillState,
     } = useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
@@ -39,17 +36,12 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        redirectHvisFeilSteg('sendInn');
-    }, [redirectHvisFeilSteg]);
-
     if (!meldekortUtfylling) return;
 
     const sendInn = () => {
         setMeldekortSteg('kvittering');
         fetchSendInn(meldekortUtfylling, base).then((bleSendt) => {
             if (bleSendt) {
-                nullstillState();
                 navigate(getPathForMeldekortSteg('kvittering', meldekortUtfylling.id));
             } else {
                 setInnsendingFeilet(true);
@@ -97,9 +89,7 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
                 <Button
                     variant={'secondary'}
                     onClick={() => {
-                        if (forrigeSteg) {
-                            navigate(getPathForMeldekortSteg(forrigeSteg, meldekortUtfylling.id));
-                        }
+                        navigate(getPathForMeldekortSteg('deltatt', meldekortUtfylling.id));
                     }}
                 >
                     <Tekst id={'forrige'} />
