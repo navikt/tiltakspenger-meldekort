@@ -8,9 +8,11 @@ import { StatiskDagPanel } from '@components/kalender/statisk-dag/StatiskDagPane
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './KalenderUke.module.css';
+import { LønnDagPanel } from '@components/fyll-ut/steg-3-lønn/dag/LønnDagPanel.tsx';
 
 const DagKomponentForSteg: Record<MeldekortSteg, React.FunctionComponent<{ dag: MeldekortDag }>> = {
     deltatt: DeltattDagPanel,
+    lønn: LønnDagPanel,
     fravær: FraværDagPanel,
     sendInn: StatiskDagPanel,
     kvittering: StatiskDagPanel,
@@ -32,6 +34,7 @@ export const KalenderUke = ({ dager, steg }: Props) => {
                 {ukenummerTekst}
             </Heading>
             {steg == 'deltatt' && <Tekst id={'deltattUkeHjelp'} />}
+            {steg == 'lønn' && <Tekst id={'lønnUkeHjelp'} />}
             {steg == 'fravær' && <Tekst id={'fraværUkeHjelp'} />}
             <ul className={style.liste}>
                 {dager.map((dag) => (

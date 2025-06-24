@@ -12,6 +12,9 @@ export const antallDagerValidering = (meldekortUtfylling: MeldekortUtfylling) =>
         (dag) => dag.status !== DELTATT_UTEN_LØNN_I_TILTAKET
     );
     const harIngenDagerMedFravær = dager?.filter((dag) => dagStatusMedFravær.has(dag.status));
+    const harIngenDagerMedLønn = dager?.filter(
+        (dag) => dag.status !== MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET
+    );
 
     return {
         antallDagerBesvart,
@@ -19,5 +22,6 @@ export const antallDagerValidering = (meldekortUtfylling: MeldekortUtfylling) =>
         harIngenDagerBesvart,
         harIngenDagerMedDeltatt,
         harIngenDagerMedFravær,
+        harIngenDagerMedLønn,
     };
 };

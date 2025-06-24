@@ -6,6 +6,7 @@ import { Steg4_Deltatt } from '@components/fyll-ut/steg-4-deltatt/Steg4_Deltatt.
 import { Steg2_Fravær } from '@components/fyll-ut/steg-2-fravær/Steg2_Fravær.tsx';
 import { Steg5_Oppsummering } from '@components/fyll-ut/steg-5-oppsummering/Steg5_Oppsummering.tsx';
 import { Steg6_Kvittering } from '@components/fyll-ut/steg-6-kvittering/Steg6_Kvittering.tsx';
+import { Steg3_Lønn } from '@components/fyll-ut/steg-3-lønn/Steg3_Lønn.tsx';
 
 export type SiteRouteConfig<Props = any> = {
     path: SiteRoutePath;
@@ -28,6 +29,10 @@ export const siteRouteConfigs = {
     fravær: {
         path: '/:meldekortId/fraver',
         Component: Steg2_Fravær,
+    },
+    lønn: {
+        path: '/:meldekortId/lonn',
+        Component: Steg3_Lønn,
     },
     sendInn: {
         path: '/:meldekortId/send-inn',

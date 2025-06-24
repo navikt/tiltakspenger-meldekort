@@ -16,6 +16,15 @@
     }
 }
 
+.lønn {
+    background: var(--a-surface-danger-subtle);
+    border-color: var(--a-border-danger);
+
+    & > svg {
+        color: var(--a-red-600);
+    }
+}
+
 .syk,
 .syktBarn,
 .annet {

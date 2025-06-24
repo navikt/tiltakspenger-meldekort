@@ -8,6 +8,7 @@ import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 
 import style from './TilUtfylling.module.css';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
 
 type Props = {
     nesteMeldekort: MeldekortUtfylling;
@@ -16,6 +17,7 @@ type Props = {
 export const TilUtfylling = ({ nesteMeldekort }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
+    const { setMeldekortSteg } = useMeldekortUtfylling();
 
     const { navigate } = useRouting();
 
@@ -43,11 +45,12 @@ export const TilUtfylling = ({ nesteMeldekort }: Props) => {
                         setVisFeil(true);
                         return false;
                     }
-                    navigate(getPath(siteRoutes.deltakelse, { meldekortId: nesteMeldekort.id }));
+                    setMeldekortSteg('fravær');
+                    navigate(getPath(siteRoutes.fravær, { meldekortId: nesteMeldekort.id }));
                     return true;
                 }}
             >
-                <Tekst id={'neste'} />
+                <Tekst id={'startUtfylling'} />
             </FlashingButton>
         </>
     );

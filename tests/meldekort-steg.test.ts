@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 test.describe('Kan fylle ut og sende inn meldekortet', () => {
     test('Kan ikke gå videre uten å velge fravær/ikke fravær', async ({ page }) => {
         const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }) });
-        const ikkeValgtVarsel = page.getByText(getTekst({ id: 'deltattStegFraværIkkeValgt' }));
+        const ikkeValgtVarsel = page.getByText(getTekst({ id: 'fraværSpørsmålIkkeValgt' }));
         const deltattCheckboxes = page.getByRole('checkbox', {
             name: getTekst({ id: 'deltattDagPrefix' }),
         });
@@ -100,7 +100,7 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
             exact: true,
         });
         const radioHarIkkeHattFravær = page.getByRole('radio', {
-            name: getTekst({ id: 'deltattStegFraværNei' }),
+            name: getTekst({ id: 'fraværHarHattFraværSvarNei' }),
         });
         await radioHarIkkeHattFravær.click();
         await nesteKnapp.click();
@@ -117,7 +117,7 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
 const fyllUtDeltattSteg = async (page: Page, fravær: boolean, antallDeltatt: number) => {
     const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
     const fraværValgRadio = page.getByRole('radio', {
-        name: getTekst({ id: fravær ? 'deltattStegFraværJa' : 'deltattStegFraværNei' }),
+        name: getTekst({ id: fravær ? 'fraværHarHattFraværSvarJa' : 'fraværHarHattFraværSvarNei' }),
     });
     const deltattCheckboxes = page.getByRole('checkbox', {
         name: getTekst({ id: 'deltattDagPrefix' }),

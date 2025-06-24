@@ -4,13 +4,12 @@
     }
 }
 
-.knapperOgVarsel {
-    margin-top: 3rem;
+.lesMer {
+    margin: 1rem 0;
 }
 
-.knapper {
-    display: flex;
-    gap: 0.5rem;
+.knapperOgVarsel {
+    margin-top: 3rem;
 }
 
 .kalender {
@@ -26,7 +25,6 @@
     margin-bottom: 1rem;
 }
 
-.undertekstWrapper {
-    display: inline-flex;
-    gap: 0.5rem;
+.fraværValg {
+    margin-bottom: 2rem;
 }

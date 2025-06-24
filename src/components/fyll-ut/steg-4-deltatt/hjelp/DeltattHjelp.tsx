@@ -1,4 +1,4 @@
-import { BodyLong, GuidePanel, Heading, ReadMore } from '@navikt/ds-react';
+import { BodyLong, Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { getTekster } from '@tekster/tekster.ts';
@@ -25,9 +25,6 @@ export const DeltattHjelp = () => {
                     <Tekst id={'deltattHjelpLesMerTekst'} />
                 </BodyLong>
             </ReadMore>
-            <GuidePanel className={style.guide}>
-                <Tekst id={'deltattHjelpGuideTekst'} />
-            </GuidePanel>
         </>
     );
 };

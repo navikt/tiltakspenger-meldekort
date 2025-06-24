@@ -14,7 +14,8 @@
     gap: 0.5rem;
 }
 
-.undertekstWrapper {
-    display: inline-flex;
-    gap: 0.5rem;
+.errorSummaryItemAsLink {
+    background: none;
+    border: none;
+    text-align: start;
 }

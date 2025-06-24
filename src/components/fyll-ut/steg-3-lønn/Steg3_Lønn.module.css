@@ -1,4 +1,24 @@
-.undertekstWrapper {
-    display: inline-flex;
-    gap: 0.5rem;
+.lesMer {
+    margin: 1rem 0;
+}
+
+.knapperOgVarsel {
+    margin-top: 3rem;
+}
+
+.kalender {
+    margin-top: 2rem;
+}
+
+.lønnValg {
+    margin-bottom: 2rem;
+}
+
+.teller {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.varsel {
+    margin-bottom: 1rem;
 }

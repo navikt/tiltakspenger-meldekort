@@ -9,7 +9,7 @@ import {
 } from '@common/typer/meldekort-utfylling.ts';
 import { formatterDato, getUkenummer } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
-import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 
 type Props = {
     navigate?: (path: string) => void;
@@ -22,8 +22,8 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
     );
     const [valgtMeldekortDag, setValgtMeldekortDag] = useState<MeldekortDag | null>(null);
     const [meldekortSteg, setMeldekortSteg] = useState<MeldekortSteg>(STEG_REKKEFOLGE[0]);
-    const [forrigeSteg, setForrigeSteg] = useState<MeldekortSteg | null>(null);
-    const [nesteSteg, setNesteSteg] = useState<MeldekortSteg | null>(null);
+    const [harHattFravær, setHarHattFravær] = useState<boolean | null>(null);
+    const [harMottattLønn, setHarMottattLønn] = useState<boolean | null>(null);
 
     const lagreMeldekortDag = useCallback(
         (dag: MeldekortDag) => {
@@ -40,28 +40,6 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
             });
         },
         [meldekortUtfylling]
-    );
-
-    const redirectHvisFeilSteg = useCallback(
-        (nåværendeSteg: MeldekortSteg) => {
-            if (!navigate || !meldekortSteg) {
-                return;
-            }
-
-            const nåværendeStegIndex = STEG_REKKEFOLGE.indexOf(nåværendeSteg);
-            const aktivtStegIndex = STEG_REKKEFOLGE.indexOf(meldekortSteg);
-
-            if (aktivtStegIndex < nåværendeStegIndex) {
-                if (meldekortUtfylling?.id) {
-                    navigate(getPathForMeldekortSteg(meldekortSteg, meldekortUtfylling?.id || ''));
-                } else {
-                    // TODO Denne sjekken kan fjernes når meldekort blir mellomlagret: https://trello.com/c/NmpW0rQg/1475-mellomlagring-av-meldekort
-                    // Dette slår til om man f.eks endrer URLen direkte, fordi da blir state nullstilt
-                    navigate(getPath(siteRoutes.forside));
-                }
-            }
-        },
-        [navigate, meldekortSteg, meldekortUtfylling]
     );
 
     const redirectHvisMeldekortErInnsendt = useCallback(
@@ -117,11 +95,6 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
         };
     };
 
-    const nullstillState = () => {
-        setNesteSteg(null);
-        setForrigeSteg(null);
-    };
-
     return (
         <MeldekortUtfyllingContext.Provider
             value={{
@@ -132,14 +105,12 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
                 lagreMeldekortDag,
                 meldekortSteg,
                 setMeldekortSteg,
-                forrigeSteg,
-                setForrigeSteg,
-                nesteSteg,
-                setNesteSteg,
                 getUndertekster,
-                redirectHvisFeilSteg,
                 redirectHvisMeldekortErInnsendt,
-                nullstillState,
+                harHattFravær,
+                setHarHattFravær,
+                harMottattLønn,
+                setHarMottattLønn,
             }}
         >
             {children}
