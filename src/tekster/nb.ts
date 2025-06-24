@@ -1,11 +1,12 @@
 import { TekstResolver } from '@tekster/typer.ts';
 
 export const teksterNb = {
-    neste: 'Neste',
-    forrige: 'Forrige',
+    neste: 'Neste steg',
+    startUtfylling: 'Start utfylling',
+    forrige: 'Forrige steg',
     lagre: 'Lagre',
     slett: 'Slett',
-    avbryt: 'Avbryt',
+    avbryt: 'Avbryt utfylling',
     sendInn: 'Send inn',
 
     statusIkkeBesvart: 'Ikke besvart',
@@ -72,6 +73,8 @@ export const teksterNb = {
 
     deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket.',
     deltattDagPrefix: 'Har deltatt: ',
+    fraværHjelpLesMer:
+        'Du må informere oss dersom du har vært syk eller hatt annet fravær i perioden du var satt opp på tiltak.',
     fraværStegFraværSpørsmål:
         'Har du vært syk eller hatt annet fravær fra tiltaket? (obligatorisk)',
     fraværSpørsmålUndertekst:
@@ -142,16 +145,23 @@ export const teksterNb = {
     fraværModalIkkeGodkjentIngress:
         'Hvis du ikke deltok på hele eller deler av tiltaksdagen, og fraværet ikke var godkjent av Nav, har du ikke rett til tiltakspenger.',
     lønnTittel: 'Meldekort for tiltakspenger – lønn',
+    lønnHjelpLesMer:
+        'Du må informere oss dersom du har mottatt lønn i perioden du var satt opp på tiltak.',
     lønnHarMottattLønnSpørsmål:
         'Har du mottatt lønn i tidsrommet du var satt opp på tiltaket? (obligatorisk)',
     lønnHarMottattLønnSvarJa: 'Ja, jeg har mottatt lønn i tidsrommet jeg var på tiltak',
     lønnHarMottattLønnSvarNei: 'Nei, jeg har ikke mottatt lønn i tidsrommet jeg var på tiltak',
-    lønnDagPrefix: 'Har mottatt lønn: ',
-
+    lønnSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
+    lønnUkeHjelp: 'Kryss av for de dagene du mottok lønn',
+    lønnDagPrefix: 'Mottok lønn: ',
     sendInnTittel: 'Meldekort for tiltakspenger - send inn',
     sendInnBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
     sendInnBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
     sendInnIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',
+    sendInnIngenDagerMedFravær:
+        'Du har svart ja på spørsmålet om du har vært syk eller har hatt fravær. Du må oppgi en fraværsgrunn for minst en dag eller endre svaret ditt til "Nei".',
+    sendInnIngenDagerMedLønn:
+        'Du har svart ja på spørsmålet om du har mottatt lønn, men ikke sjekket av noen dager med lønn. Du må krysse av for minst en dag med lønn eller endre svaret ditt til "Nei".',
     sendInnInnsendingFeilet: [
         'Noe gikk galt ved innsending av meldekortet. Du kan prøve på nytt.',
         'Dersom problemet vedvarer, kontakt veilederen din.',

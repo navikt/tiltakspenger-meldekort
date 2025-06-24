@@ -38,5 +38,7 @@ export const getPathForMeldekortSteg = (meldekortSteg: MeldekortSteg, meldekortI
             return getPath(siteRoutes.sendInn, { meldekortId });
         case 'kvittering':
             return getPath(siteRoutes.kvittering, { meldekortId });
+        default:
+            return getPath(siteRoutes.forside);
     }
 };

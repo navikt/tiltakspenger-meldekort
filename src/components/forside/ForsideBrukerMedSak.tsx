@@ -10,6 +10,7 @@ import { Tekst } from '@components/tekst/Tekst.tsx';
 import { MeldekortStatus } from '@common/typer/meldekort-utfylling.ts';
 
 import style from './Forside.module.css';
+import { GuidePanel } from '@navikt/ds-react';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;
@@ -29,6 +30,9 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
 
     return (
         <>
+            <GuidePanel className={style.guide}>
+                <Tekst id={'deltattHjelpGuideTekst'} />
+            </GuidePanel>
             <TekstSegmenter id={'forsideIngress'} spacing={true} />
             {nesteMeldekort?.status === MeldekortStatus.KAN_UTFYLLES ? (
                 <TilUtfylling nesteMeldekort={nesteMeldekort} />

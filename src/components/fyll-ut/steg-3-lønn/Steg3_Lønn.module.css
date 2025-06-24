@@ -1,15 +1,9 @@
-.undertekstWrapper {
-    display: inline-flex;
-    gap: 0.5rem;
+.lesMer {
+    margin: 1rem 0;
 }
 
 .knapperOgVarsel {
     margin-top: 3rem;
-}
-
-.knapper {
-    display: flex;
-    gap: 0.5rem;
 }
 
 .kalender {

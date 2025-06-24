@@ -3,3 +3,12 @@
         outline: none;
     }
 }
+
+.undertekstWrapper {
+    display: inline-flex;
+    gap: 0.5rem;
+}
+
+.stepper {
+    margin-bottom: 2rem;
+}

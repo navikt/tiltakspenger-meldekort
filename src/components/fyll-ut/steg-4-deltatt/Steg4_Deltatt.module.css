@@ -13,16 +13,10 @@
     margin-bottom: 1rem;
 }
 
-.undertekstWrapper {
-    display: inline-flex;
-    gap: 0.5rem;
-}
-
 .knapperOgVarsel {
     margin-top: 3rem;
 }
 
-.knapper {
-    display: flex;
-    gap: 0.5rem;
+.varsel {
+    margin-bottom: 1rem;
 }

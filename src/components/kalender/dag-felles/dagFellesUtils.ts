@@ -1,5 +1,5 @@
 import React, { SVGProps } from 'react';
-import { MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortDagStatus, MeldekortSteg } from '@common/typer/meldekort-utfylling.ts';
 import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
@@ -43,6 +43,14 @@ export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
     [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: 'statusGodkjentFravær',
     [MeldekortDagStatus.FRAVÆR_ANNET]: 'statusAnnetFravær',
     [MeldekortDagStatus.IKKE_BESVART]: 'statusIkkeBesvart',
+};
+
+export const meldekortStegTilTekstId: Record<MeldekortSteg, TekstId> = {
+    deltatt: 'deltattTittel',
+    fravær: 'fraværTittel',
+    lønn: 'lønnTittel',
+    sendInn: 'sendInnTittel',
+    kvittering: 'kvitteringTittel',
 };
 
 export const dagStatusMedFravær: ReadonlySet<MeldekortDagStatus> = new Set([

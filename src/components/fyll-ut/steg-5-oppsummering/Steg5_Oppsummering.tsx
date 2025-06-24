@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import style from './Steg5_Oppsummering.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Alert, Button, ConfirmationPanel } from '@navikt/ds-react';
+import { Alert, ConfirmationPanel, ErrorSummary } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { Kalender } from '@components/kalender/Kalender.tsx';
-import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { fetchSendInn } from '@utils/fetch.ts';
 import { useRouting } from '@routing/useRouting.ts';
-import { PageHeader } from '@components/page-header/PageHeader.tsx';
-import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
-import { getPathForMeldekortSteg } from '@common/siteRoutes.ts';
+import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
+import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
+import { PaperplaneIcon } from '@navikt/aksel-icons';
+import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -23,13 +23,15 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
     const {
         meldekortUtfylling,
         setMeldekortSteg,
-        getUndertekster,
+        harHattFravær,
+        harMottattLønn,
         redirectHvisMeldekortErInnsendt,
     } = useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
+    const errorRef = React.useRef(null);
 
     useEffect(() => {
         redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'sendInn');
@@ -37,6 +39,12 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
     }, []);
 
     if (!meldekortUtfylling) return;
+    const { harIngenDagerMedFravær, harIngenDagerMedLønn } =
+        antallDagerValidering(meldekortUtfylling);
+
+    const kanIkkeSendeInnPgaFravær = harIngenDagerMedFravær && harHattFravær;
+    const kanIkkeSendeInnPgaLønn = harIngenDagerMedLønn && harMottattLønn;
+    const kanIkkeSendeInnFeilIAndreSteg = kanIkkeSendeInnPgaFravær || kanIkkeSendeInnPgaLønn;
 
     const sendInn = () => {
         setMeldekortSteg('kvittering');
@@ -51,19 +59,8 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
         });
     };
 
-    const undertekster = getUndertekster();
-
     return (
         <MeldekortStegWrapper>
-            <PageHeader
-                tekstId={'sendInnTittel'}
-                underTekst={
-                    <div className={style.undertekstWrapper}>
-                        <Undertekst tekst={undertekster.ukerTekst} weight={'semibold'} />
-                        <Undertekst tekst={undertekster.datoerTekst} />
-                    </div>
-                }
-            />
             <Kalender meldekort={meldekortUtfylling} steg={'sendInn'} />
             <Alert
                 variant={innsendingFeilet ? 'error' : 'info'}
@@ -83,30 +80,61 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
                 checked={harBekreftet}
                 value={harBekreftet}
                 label={<Tekst id={'sendInnBekrefter'} />}
-                error={visFeil && <Tekst id={'sendInnBekrefterFeil'} />}
+                error={!harBekreftet && visFeil && <Tekst id={'sendInnBekrefterFeil'} />}
             />
-            <div className={style.knapper}>
-                <Button
-                    variant={'secondary'}
-                    onClick={() => {
-                        navigate(getPathForMeldekortSteg('deltatt', meldekortUtfylling.id));
-                    }}
-                >
-                    <Tekst id={'forrige'} />
-                </Button>
-                <FlashingButton
-                    onClick={() => {
-                        if (!harBekreftet) {
-                            setVisFeil(true);
-                            return false;
-                        }
-                        sendInn();
-                        return true;
-                    }}
-                >
-                    <Tekst id={'sendInn'} />
-                </FlashingButton>
-            </div>
+            {visFeil && kanIkkeSendeInnFeilIAndreSteg && (
+                <ErrorSummary className={style.varsel} ref={errorRef}>
+                    {kanIkkeSendeInnPgaFravær && (
+                        <ErrorSummary.Item
+                            as="button"
+                            className={style.errorSummaryItemAsLink}
+                            onClick={() => {
+                                setMeldekortSteg('fravær');
+                                navigate(getPathForMeldekortSteg('fravær', meldekortUtfylling.id));
+                            }}
+                        >
+                            <Tekst id={'sendInnIngenDagerMedFravær'} />
+                        </ErrorSummary.Item>
+                    )}
+                    {kanIkkeSendeInnPgaLønn && (
+                        <ErrorSummary.Item
+                            as="button"
+                            className={style.errorSummaryItemAsLink}
+                            onClick={() => {
+                                setMeldekortSteg('lønn');
+                                navigate(getPathForMeldekortSteg('lønn', meldekortUtfylling.id));
+                            }}
+                        >
+                            <Tekst id={'sendInnIngenDagerMedLønn'} />
+                        </ErrorSummary.Item>
+                    )}
+                </ErrorSummary>
+            )}
+            <MeldekortStegButtons
+                onNesteClick={() => {
+                    if (!harBekreftet) {
+                        setVisFeil(true);
+                        return false;
+                    }
+
+                    if (kanIkkeSendeInnFeilIAndreSteg) {
+                        setVisFeil(true);
+                        return false;
+                    }
+
+                    sendInn();
+                    return true;
+                }}
+                nesteButtonTekst={'sendInn'}
+                nesteButtonIcon={<PaperplaneIcon fontSize="1.5rem" aria-hidden />}
+                onForrigeClick={() => {
+                    navigate(getPathForMeldekortSteg('deltatt', meldekortUtfylling.id));
+                }}
+                onAvbrytClick={() => {
+                    setMeldekortSteg('fravær');
+                    navigate(getPath(siteRoutes.forside));
+                }}
+            />
         </MeldekortStegWrapper>
     );
 };
