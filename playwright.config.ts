@@ -6,6 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 import dotenv from 'dotenv';
 import path from 'path';
+
 dotenv.config({ path: path.resolve(process.cwd(), '.env.tests') });
 
 /**
@@ -37,12 +38,20 @@ export default defineConfig({
     /* Configure projects for major browsers */
     projects: [
         {
-            name: 'chromium',
+            name: 'Google Chrome',
             use: { ...devices['Desktop Chrome'] },
         },
         {
-            name: 'webkit',
+            name: 'Safari',
             use: { ...devices['Desktop Safari'] },
+        },
+        {
+            name: 'Firefox',
+            use: { ...devices['Desktop Firefox'] },
+        },
+        {
+            name: 'Microsoft Edge',
+            use: { ...devices['Desktop Edge'] },
         },
         /* Test against mobile viewports. */
         // {
