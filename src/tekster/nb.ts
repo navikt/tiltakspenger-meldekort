@@ -64,10 +64,10 @@ export const teksterNb = {
         'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.',
         'Hvis du har vært borte deler av tiltaksdagen, må du registrere dagen med fravær.',
         'Du kan krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.',
-        'Hvis du har hatt lønn i avtalt tiltakstid den aktuelle dagen, for eksempel lønn fra tiltaksarrangør, har du ikke rett til tiltakspenger og må registrere fravær.',
+        'Hvis du har hatt lønn i avtalt tiltakstid den aktuelle dagen, for eksempel lønn fra tiltaksarrangør, har du ikke rett til tiltakspenger og må at du har mottatt lønn.',
     ],
     deltattHjelpLesMerTekst:
-        'Hvis du ikke har deltatt på alle dagene i tiltaket som var avtalt, oppgir du at du har hatt fravær nederst på denne siden. Hva som var årsaken til fraværet kan du registrere på det neste skrittet i meldekortet.',
+        'Hvis du ikke har deltatt på alle dagene i tiltaket som var avtalt, oppgir du at du har hatt fravær på steget "Fravær".',
     deltattHjelpGuideTekst:
         'Ta kontakt med veilederen din hvis du er usikker på hva du skal føre på meldekortet.',
 

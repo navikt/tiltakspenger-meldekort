@@ -38,8 +38,7 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
     }, []);
 
     if (!meldekortUtfylling) return;
-    const { harForMangeDagerBesvart, harIngenDagerBesvart } =
-        antallDagerValidering(meldekortUtfylling);
+    const { harForMangeDagerBesvart } = antallDagerValidering(meldekortUtfylling);
 
     return (
         <MeldekortStegWrapper>
