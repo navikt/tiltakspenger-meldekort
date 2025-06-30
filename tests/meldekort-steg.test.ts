@@ -9,18 +9,14 @@ import { MeldekortDagStatus } from '../commonSrc/typer/meldekort-utfylling';
 // Burde ha mock-data som defineres i testene
 
 test.beforeEach(async ({ page }) => {
-    await page.goto(`${testsBaseUrl}/meldekort_2/deltakelse`);
+    await page.goto(`${testsBaseUrl}`);
+    await startUtfylling(page);
 });
 
-test.describe('Kan fylle ut og sende inn meldekortet', () => {
+test.describe('Meldekort steg', () => {
     test('Kan ikke gå videre uten å velge fravær/ikke fravær', async ({ page }) => {
         const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }) });
         const ikkeValgtVarsel = page.getByText(getTekst({ id: 'fraværSpørsmålIkkeValgt' }));
-        const deltattCheckboxes = page.getByRole('checkbox', {
-            name: getTekst({ id: 'deltattDagPrefix' }),
-        });
-
-        await deltattCheckboxes.nth(0).click();
 
         await nesteKnapp.click();
 
@@ -31,30 +27,25 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
     test('Kan ikke gå videre med for mange dager utfylt', async ({ page }) => {
         const forMangeDagerVarsel = page.getByText(getTekst({ id: 'forMangeDagerEnkel' }));
 
-        await fyllUtDeltattSteg(page, false, 11);
+        await fyllUtFraværSteg(page, 0);
+        await fyllUtLønnSteg(page, 0);
+        await fyllUtDeltattSteg(page, 11);
 
         await expect(forMangeDagerVarsel).toBeVisible();
         await axeTestUtenDekoratøren(page, 'Fylt ut deltagelse med for mange dager');
     });
 
-    test('Går til send-inn med akseptabelt antall dager utfylt og ingen fravær valgt', async ({
+    test('Går til send-inn med akseptabelt antall dager utfylt og ingen fravær eller lønn valgt', async ({
         page,
     }) => {
-        await fyllUtDeltattSteg(page, false, 8);
+        await fyllUtFraværSteg(page, 0);
+        await fyllUtLønnSteg(page, 0);
+        await fyllUtDeltattSteg(page, 10);
 
         const sendInnKnapp = page.getByRole('button', { name: getTekst({ id: 'sendInn' }) });
 
         await expect(sendInnKnapp).toBeVisible();
-        await axeTestUtenDekoratøren(page, 'Send inn uten fravær');
-    });
-
-    test('Går til utfylling av fravær dersom fravær er valgt', async ({ page }) => {
-        await fyllUtDeltattSteg(page, true, 4);
-
-        const fraværHjelpTittel = page.getByText(getTekst({ id: 'fraværHjelpTittel' }));
-
-        await expect(fraværHjelpTittel).toBeVisible();
-        await axeTestUtenDekoratøren(page, 'Fyll ut fravær');
+        await axeTestUtenDekoratøren(page, 'Send inn uten fravær eller lønn');
     });
 
     test('Kan fylle ut fravær og gå til send-inn', async ({ page }) => {
@@ -64,37 +55,32 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
             exact: true,
         });
 
-        await fyllUtFraværSteg(page, 5, 3);
-
-        await nesteKnapp.click();
+        await fyllUtFraværSteg(page, 2);
+        await fyllUtLønnSteg(page, 0);
+        await fyllUtDeltattSteg(page, 8);
 
         await expect(sendInnKnapp).toBeVisible();
         await axeTestUtenDekoratøren(page, 'Send inn med fravær');
     });
 
     test('Kan sende inn et meldekort', async ({ page }) => {
-        await fyllUtDeltattSteg(page, false, 8);
+        await fyllUtFraværSteg(page, 0);
+        await fyllUtLønnSteg(page, 0);
+        await fyllUtDeltattSteg(page, 10);
         await sendInnOgAssertInnsending(page, {
-            deltatt: 8,
-            fraværSyk: 0,
-            ikkeBesvart: 6,
+            antallDagerMedDeltatt: 10,
+            antallDagerMedFravær: 0,
+            antallDagerMedLønn: 0,
+            antallDagerMedIkkeBesvart: 4,
         });
         await axeTestUtenDekoratøren(page, 'Kvittering etter innsending');
     });
 
-    test('Utfylt fravær fjernes om bruker går til "forrige" og velger at de ikke har hatt fravær', async ({
-        page,
-    }) => {
-        // Fyll ut fravær og gå til forrige steg
+    test('Utfylt fravær fjernes om bruker velger at de ikke har hatt fravær', async ({ page }) => {
         const forrigeKnapp = page.getByRole('button', {
             name: getTekst({ id: 'forrige' }),
             exact: true,
         });
-        await fyllUtFraværSteg(page, 5, 3);
-        await forrigeKnapp.click();
-        await expect(page).toHaveURL(/deltakelse$/);
-
-        // Endre valget på deltakelse-steget til å si at bruker ikke har hatt fravær
         const nesteKnapp = page.getByRole('button', {
             name: getTekst({ id: 'neste' }),
             exact: true,
@@ -102,36 +88,105 @@ test.describe('Kan fylle ut og sende inn meldekortet', () => {
         const radioHarIkkeHattFravær = page.getByRole('radio', {
             name: getTekst({ id: 'fraværHarHattFraværSvarNei' }),
         });
+        await fyllUtFraværSteg(page, 3);
+
+        await forrigeKnapp.click();
+        await expect(page).toHaveURL(/fraver$/);
         await radioHarIkkeHattFravær.click();
         await nesteKnapp.click();
 
+        await fyllUtLønnSteg(page, 0);
+        await fyllUtDeltattSteg(page, 10);
+
         // På steget for bekreftelse skal det ikke være noen dager med fravær
         await sendInnOgAssertInnsending(page, {
-            deltatt: 5,
-            fraværSyk: 0,
-            ikkeBesvart: 9,
+            antallDagerMedDeltatt: 10,
+            antallDagerMedFravær: 0,
+            antallDagerMedLønn: 0,
+            antallDagerMedIkkeBesvart: 4,
+        });
+    });
+
+    test('Utfylt lønn fjernes om bruker velger at de ikke har hatt lønn', async ({ page }) => {
+        const forrigeKnapp = page.getByRole('button', {
+            name: getTekst({ id: 'forrige' }),
+            exact: true,
+        });
+        const nesteKnapp = page.getByRole('button', {
+            name: getTekst({ id: 'neste' }),
+            exact: true,
+        });
+        const radioHarIkkeHattFravær = page.getByRole('radio', {
+            name: getTekst({ id: 'lønnHarMottattLønnSvarNei' }),
+        });
+        await fyllUtFraværSteg(page, 0);
+        await fyllUtLønnSteg(page, 3);
+
+        await forrigeKnapp.click();
+        await expect(page).toHaveURL(/lonn$/);
+        await radioHarIkkeHattFravær.click();
+        await nesteKnapp.click();
+
+        await fyllUtDeltattSteg(page, 10);
+
+        // På steget for bekreftelse skal det ikke være noen dager med fravær
+        await sendInnOgAssertInnsending(page, {
+            antallDagerMedDeltatt: 10,
+            antallDagerMedFravær: 0,
+            antallDagerMedLønn: 0,
+            antallDagerMedIkkeBesvart: 4,
         });
     });
 });
 
-const fyllUtDeltattSteg = async (page: Page, fravær: boolean, antallDeltatt: number) => {
-    const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
-    const fraværValgRadio = page.getByRole('radio', {
-        name: getTekst({ id: fravær ? 'fraværHarHattFraværSvarJa' : 'fraværHarHattFraværSvarNei' }),
+const startUtfylling = async (page: Page) => {
+    const startUtfyllingKnapp = page.getByRole('button', {
+        name: getTekst({ id: 'startUtfylling' }),
     });
+    const bekreftCheckbox = page.getByRole('checkbox', {
+        name: getTekst({ id: 'forsideBekrefter' }),
+    });
+    const bekreftVarsel = page.getByText(getTekst({ id: 'forsideBekrefterFeil' }));
+
+    await expect(startUtfyllingKnapp).toBeVisible();
+
+    await startUtfyllingKnapp.click();
+    await expect(bekreftVarsel).toBeVisible();
+    await expect(page).toHaveURL(testsBaseUrl);
+
+    await bekreftCheckbox.click();
+    await expect(bekreftVarsel).not.toBeVisible();
+
+    await startUtfyllingKnapp.click();
+    await expect(page).toHaveURL(/fraver$/);
+};
+
+const fyllUtDeltattSteg = async (page: Page, antallDagerMedDeltatt: number) => {
+    const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
     const deltattCheckboxes = page.getByRole('checkbox', {
         name: getTekst({ id: 'deltattDagPrefix' }),
     });
 
-    for (let i = 0; i < antallDeltatt; ++i) {
+    for (let i = 0; i < antallDagerMedDeltatt; ++i) {
         await deltattCheckboxes.nth(i).click();
     }
-
-    await fraværValgRadio.click();
     await nesteKnapp.click();
 };
 
-const fyllUtFraværSteg = async (page: Page, antallDeltatt: number, antallFravær: number) => {
+const fyllUtFraværSteg = async (page: Page, antallDagerMedFravær: number) => {
+    const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
+
+    const fraværValgRadio = page.getByRole('radio', {
+        name: getTekst({
+            id:
+                antallDagerMedFravær > 0
+                    ? 'fraværHarHattFraværSvarJa'
+                    : 'fraværHarHattFraværSvarNei',
+        }),
+    });
+
+    await fraværValgRadio.click();
+
     const velgFraværKnapper = page.getByRole('button', {
         // datoTekst varierer for hver dagså vi matcher på alt utenom den.
         name: getTekst({ id: 'fraværPanelRegistrerSR', resolverProps: { datoTekst: '' } }),
@@ -146,21 +201,48 @@ const fyllUtFraværSteg = async (page: Page, antallDeltatt: number, antallFravæ
     });
     const fraværModal = page.getByRole('dialog');
 
-    await fyllUtDeltattSteg(page, true, antallDeltatt);
-
-    for (let i = 0; i < antallFravær; ++i) {
-        await expect(velgFraværKnapper.nth(i)).toHaveText(getTekst({ id: 'fraværPanelRegistrer' }));
-        await velgFraværKnapper.nth(i).click();
-        await expect(fraværModal).toBeVisible();
-        await sykRadio.click();
-        await lagreKnapp.click();
+    if (antallDagerMedFravær > 0) {
+        for (let i = 0; i < antallDagerMedFravær; ++i) {
+            await expect(velgFraværKnapper.nth(i)).toHaveText(
+                getTekst({ id: 'fraværPanelRegistrer' })
+            );
+            await velgFraværKnapper.nth(i).click();
+            await expect(fraværModal).toBeVisible();
+            await sykRadio.click();
+            await lagreKnapp.click();
+        }
     }
+
+    await nesteKnapp.click();
+};
+
+const fyllUtLønnSteg = async (page: Page, antallDagerMedLønn: number) => {
+    const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
+    const lønnValgRadio = page.getByRole('radio', {
+        name: getTekst({
+            id: antallDagerMedLønn > 0 ? 'lønnHarMottattLønnSvarJa' : 'lønnHarMottattLønnSvarNei',
+        }),
+    });
+    const lønnCheckboxes = page.getByRole('checkbox', {
+        name: getTekst({ id: 'lønnDagPrefix' }),
+    });
+
+    await lønnValgRadio.click();
+
+    if (antallDagerMedLønn > 0) {
+        for (let i = 0; i < antallDagerMedLønn; ++i) {
+            await lønnCheckboxes.nth(i).click();
+        }
+    }
+
+    await nesteKnapp.click();
 };
 
 type Antall = {
-    deltatt: number;
-    fraværSyk: number;
-    ikkeBesvart: number;
+    antallDagerMedDeltatt: number;
+    antallDagerMedFravær: number;
+    antallDagerMedLønn: number;
+    antallDagerMedIkkeBesvart: number;
 };
 
 /**
@@ -198,11 +280,15 @@ const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
     const dagerFraværSyk = sendInnData.dager.filter(
         (dag) => dag.status === MeldekortDagStatus.FRAVÆR_SYK
     ).length;
+    const dagerMedLønn = sendInnData.dager.filter(
+        (dag) => dag.status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET
+    ).length;
     const dagerIkkeBesvart = sendInnData.dager.filter(
         (dag) => dag.status === MeldekortDagStatus.IKKE_BESVART
     ).length;
 
-    expect(dagerDeltatt).toBe(antall.deltatt);
-    expect(dagerFraværSyk).toBe(antall.fraværSyk);
-    expect(dagerIkkeBesvart).toBe(antall.ikkeBesvart);
+    expect(dagerDeltatt).toBe(antall.antallDagerMedDeltatt);
+    expect(dagerFraværSyk).toBe(antall.antallDagerMedFravær);
+    expect(dagerMedLønn).toBe(antall.antallDagerMedLønn);
+    expect(dagerIkkeBesvart).toBe(antall.antallDagerMedIkkeBesvart);
 };
