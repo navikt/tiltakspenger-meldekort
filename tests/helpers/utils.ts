@@ -7,7 +7,7 @@ export const testsBaseUrl = 'http://localhost:3050/tiltakspenger/meldekort/demo'
 
 // Dekoratørens cookie banner legger seg noen ganger over elementer på siden, må sørge for å klikke den vekk
 export const klikkCookieBanner = async (page: Page) =>
-    page.getByRole('button', { name: 'Nei' }).click();
+    page.getByTestId('consent-banner-refuse-optional').click();
 
 export const axeTestUtenDekoratøren = async (page: Page, failMsg: string) => {
     const result = await new AxeBuilder({ page })
