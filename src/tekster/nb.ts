@@ -21,7 +21,7 @@ export const teksterNb = {
     ikkeRett: 'Ikke rett',
 
     forMangeDagerEnkel: 'Du har fylt ut for mange dager',
-    ingenDagerDeltatt: 'Du må velge minst en dag med deltagelse, eller velge fravær',
+    ingenDagerDeltatt: 'Du må velge minst én dag med deltagelse, eller velge fravær',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>

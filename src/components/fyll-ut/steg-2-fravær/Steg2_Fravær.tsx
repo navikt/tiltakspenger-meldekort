@@ -24,6 +24,7 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
     const { navigate } = useRouting();
     const {
         meldekortUtfylling,
+        setMeldekortUtfylling,
         setMeldekortSteg,
         redirectHvisMeldekortErInnsendt,
         harHattFravær,
@@ -57,6 +58,9 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
                 onChange={(harHattFraværSpørsmålSvar: boolean) => {
                     setFeil(null);
                     setHarHattFravær(harHattFraværSpørsmålSvar);
+                    if (harHattFraværSpørsmålSvar === false) {
+                        setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
+                    }
                 }}
                 className={style.fraværValg}
             >
@@ -85,7 +89,7 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
                 </>
             )}
             <div className={style.knapperOgVarsel}>
-                {feil && (
+                {feil && feil !== 'fraværSpørsmålIkkeValgt' && (
                     <Alert variant={'error'} className={style.varsel}>
                         <Tekst id={feil} />
                     </Alert>

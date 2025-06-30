@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from './Steg3_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortDagStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import { Alert, BodyLong, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstId } from '@tekster/typer.ts';
@@ -18,10 +18,21 @@ type SSRProps = {
 
 export const Steg3_Lønn = ({ meldekort }: SSRProps) => {
     const { navigate } = useRouting();
-    const { meldekortUtfylling, setMeldekortSteg, harMottattLønn, setHarMottattLønn } =
-        useMeldekortUtfylling();
+    const {
+        meldekortUtfylling,
+        setMeldekortUtfylling,
+        setMeldekortSteg,
+        harMottattLønn,
+        setHarMottattLønn,
+        redirectHvisMeldekortErInnsendt,
+    } = useMeldekortUtfylling();
     const [feil, setFeil] = useState<TekstId | null>(null);
     const varselRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'lønn');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (!meldekortUtfylling) return;
 
@@ -42,6 +53,9 @@ export const Steg3_Lønn = ({ meldekort }: SSRProps) => {
                 onChange={(harMottattLønnSpørsmålSvar: boolean) => {
                     setFeil(null);
                     setHarMottattLønn(harMottattLønnSpørsmålSvar);
+                    if (harMottattLønnSpørsmålSvar === false) {
+                        setMeldekortUtfylling(fjernLønn(meldekortUtfylling));
+                    }
                 }}
                 className={style.lønnValg}
             >
@@ -97,3 +111,14 @@ export const Steg3_Lønn = ({ meldekort }: SSRProps) => {
         </MeldekortStegWrapper>
     );
 };
+
+const fjernLønn = (meldekortUtfylling: MeldekortUtfylling) => ({
+    ...meldekortUtfylling,
+    dager: meldekortUtfylling.dager.map((dag) => ({
+        ...dag,
+        status:
+            dag.status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET
+                ? MeldekortDagStatus.IKKE_BESVART
+                : dag.status,
+    })),
+});
