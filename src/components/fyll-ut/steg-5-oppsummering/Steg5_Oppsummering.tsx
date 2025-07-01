@@ -54,17 +54,11 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <Kalender meldekort={meldekortUtfylling} steg={'sendInn'} />
-            <Alert
-                variant={innsendingFeilet ? 'error' : 'info'}
-                className={style.varsel}
-                ref={varselRef}
-                tabIndex={-1}
-            >
-                <TekstSegmenter
-                    id={innsendingFeilet ? 'sendInnInnsendingFeilet' : 'sendInnIkkeSendtEnnå'}
-                />
+            <Tekst id="sendInnIngress" />
+            <Alert variant="info" className={style.varsel}>
+                <TekstSegmenter id={'sendInnIkkeSendtEnnå'} />
             </Alert>
+            <Kalender meldekort={meldekortUtfylling} steg={'sendInn'} />
             <ConfirmationPanel
                 onChange={() => {
                     setVisFeil(false);
@@ -75,6 +69,11 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
                 label={<Tekst id={'sendInnBekrefter'} />}
                 error={!harBekreftet && visFeil && <Tekst id={'sendInnBekrefterFeil'} />}
             />
+            {innsendingFeilet && (
+                <Alert variant="error" className={style.varsel} ref={varselRef} tabIndex={-1}>
+                    <TekstSegmenter id="sendInnInnsendingFeilet" />
+                </Alert>
+            )}
             {visFeil && kanIkkeSendeInnFeilIAndreSteg && (
                 <ErrorSummary className={style.varsel} ref={errorRef}>
                     {kanIkkeSendeInnPgaFravær && (

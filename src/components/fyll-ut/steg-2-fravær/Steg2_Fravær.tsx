@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import style from './Steg2_Fravær.module.css';
-import { Alert, BodyLong, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import { Alert, Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
@@ -40,14 +40,6 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <ReadMore
-                header={'Når skal du melde ifra om at du har hatt fravær?'}
-                className={style.lesMer}
-            >
-                <BodyLong>
-                    <Tekst id={'fraværHjelpLesMer'} />
-                </BodyLong>
-            </ReadMore>
             <RadioGroup
                 legend={<Tekst id={'fraværStegFraværSpørsmål'} />}
                 value={harHattFravær}

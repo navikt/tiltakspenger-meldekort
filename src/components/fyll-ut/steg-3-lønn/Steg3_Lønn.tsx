@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import style from './Steg3_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
@@ -12,6 +12,9 @@ import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes
 import { useRouting } from '@routing/useRouting';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
+import { getTekster } from '@tekster/tekster.ts';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
+import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -40,8 +43,19 @@ export const Steg3_Lønn = ({ meldekort }: SSRProps) => {
                 className={style.lesMer}
             >
                 <BodyLong>
-                    <Tekst id={'lønnHjelpLesMer'} />
+                    <Tekst id={'lønnHjelpLesMerAvsnitt1'} />
                 </BodyLong>
+                <ul>
+                    {getTekster({ id: 'lønnHjelpLesMerListe' }).map((tekst) => (
+                        <li key={tekst}>{tekst}</li>
+                    ))}
+                </ul>
+                <TekstSegmenter id={'lønnHjelpLesMerAvsnitt2'} />
+                <TekstMedLenke
+                    tekst="taKontaktMedNav"
+                    tekstLenke="taKontaktMedNavLenke"
+                    lenke="https://www.nav.no/kontaktoss"
+                />
             </ReadMore>
             <RadioGroup
                 legend={<Tekst id={'lønnHarMottattLønnSpørsmål'} />}

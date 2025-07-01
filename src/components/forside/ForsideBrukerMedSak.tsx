@@ -1,6 +1,6 @@
 import { MeldekortBrukerMedSak } from '@common/typer/meldekort-bruker.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { IkkeKlarTilUtfylling } from '@components/forside/ikke-klar-til-utfylling/IkkeKlarTilUtfylling.tsx';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling.tsx';
@@ -11,6 +11,7 @@ import { MeldekortStatus } from '@common/typer/meldekort-utfylling.ts';
 
 import style from './Forside.module.css';
 import { GuidePanel } from '@navikt/ds-react';
+import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;
@@ -31,7 +32,11 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
     return (
         <>
             <GuidePanel className={style.guide}>
-                <Tekst id={'deltattHjelpGuideTekst'} />
+                <TekstMedLenke
+                    tekst="taKontaktMedNav"
+                    tekstLenke="taKontaktMedNavLenke"
+                    lenke="https://www.nav.no/kontaktoss"
+                />
             </GuidePanel>
             <TekstSegmenter id={'forsideIngress'} spacing={true} />
             {nesteMeldekort?.status === MeldekortStatus.KAN_UTFYLLES ? (

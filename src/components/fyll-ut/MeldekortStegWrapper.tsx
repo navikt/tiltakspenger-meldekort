@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import style from './MeldekortStegWrapper.module.css';
-import { Stepper } from '@navikt/ds-react';
+import { Heading, Stepper } from '@navikt/ds-react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
 import { STEG_REKKEFOLGE } from '@common/typer/meldekort-utfylling.ts';
 import { getPathForMeldekortSteg } from '@common/siteRoutes';
 import { useRouting } from '@routing/useRouting.ts';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
+import { getTekst } from '@tekster/tekster.ts';
 import { meldekortStegTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 
 type Props = {
@@ -31,7 +32,7 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
     return (
         <div ref={ref} tabIndex={-1} className={style.wrapper}>
             <PageHeader
-                tekstId={meldekortStegTilTekstId[meldekortSteg]}
+                tekstId={'sideTittel'}
                 underTekst={
                     <div className={style.undertekstWrapper}>
                         <Undertekst tekst={undertekster.ukerTekst} weight={'semibold'} />
@@ -51,28 +52,31 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('fravær', id))}
                     >
-                        Fravær
+                        {getTekst({ id: 'fraværTittel' })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('lønn', id))}
                     >
-                        Lønn
+                        {getTekst({ id: 'lønnTittel' })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('deltatt', id))}
                     >
-                        Deltakelse
+                        {getTekst({ id: 'deltattTittel' })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('sendInn', id))}
                     >
-                        Oppsummering
+                        {getTekst({ id: 'kvitteringTittel' })}
                     </Stepper.Step>
                 </Stepper>
             )}
+            <Heading level="2" size="large" className={style.stegTitle}>
+                {getTekst({ id: meldekortStegTilTekstId[meldekortSteg] })}
+            </Heading>
             {children}
         </div>
     );
