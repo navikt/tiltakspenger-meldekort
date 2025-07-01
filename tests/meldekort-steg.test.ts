@@ -1,15 +1,14 @@
-import { expect, test } from './helpers/fixtures';
-import { axeTestUtenDekoratøren, testsBaseUrl } from './helpers/utils';
+import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 import { getTekst } from '../src/tekster/tekster';
-import { Page } from '@playwright/test';
+import test, { expect, Page } from '@playwright/test';
 import { MeldekortFraBrukerDTO } from '../commonSrc/typer/meldekort-dto';
 import { MeldekortDagStatus } from '../commonSrc/typer/meldekort-utfylling';
 
 // TODO: disse testene er avhengig av mock-dataene fra demo-modusen til appen
 // Burde ha mock-data som defineres i testene
-
 test.beforeEach(async ({ page }) => {
     await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
+    await klikkCookieBanner(page);
 });
 
 test.describe('Meldekort steg', () => {

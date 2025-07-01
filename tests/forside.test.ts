@@ -1,6 +1,11 @@
+import test, { expect } from '@playwright/test';
 import { getTekst } from '../src/tekster/tekster';
-import { test, expect } from './helpers/fixtures';
-import { axeTestUtenDekoratøren, testsBaseUrl } from './helpers/utils';
+import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
+
+test.beforeEach(async ({ page }) => {
+    await page.goto(`${testsBaseUrl}`);
+    await klikkCookieBanner(page);
+});
 
 test('Kan navigere til meldekort utfyllingen etter bekreftelse', async ({ page }) => {
     const startUtfyllingKnapp = page.getByRole('button', {
