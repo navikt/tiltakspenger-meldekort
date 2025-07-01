@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import style from './Steg4_Deltatt.module.css';
+import style from './Steg3_Deltakelse.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert, BodyLong } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -18,7 +18,7 @@ type SSRProps = {
     meldekort: MeldekortUtfylling;
 };
 
-export const Steg4_Deltatt = ({ meldekort }: SSRProps) => {
+export const Steg3_Deltakelse = ({ meldekort }: SSRProps) => {
     const { navigate } = useRouting();
     const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
     const [feil, setFeil] = useState<TekstId | null>(null);
@@ -55,8 +55,8 @@ export const Steg4_Deltatt = ({ meldekort }: SSRProps) => {
                             return false;
                         }
                         setFeil(null);
-                        setMeldekortSteg('sendInn');
-                        navigate(getPathForMeldekortSteg('sendInn', meldekortUtfylling.id));
+                        setMeldekortSteg('oppsummering');
+                        navigate(getPathForMeldekortSteg('oppsummering', meldekortUtfylling.id));
                         return true;
                     }}
                     onForrigeClick={() => {

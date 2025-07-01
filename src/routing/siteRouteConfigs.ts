@@ -2,11 +2,11 @@ import React from 'react';
 import { SiteRouteName, SiteRoutePath } from '@common/siteRoutes.ts';
 import { Forside } from '@components/forside/Forside.tsx';
 import { AlleMeldekort } from '@components/alle/AlleMeldekort.tsx';
-import { Steg4_Deltatt } from '@components/fyll-ut/steg-4-deltatt/Steg4_Deltatt.tsx';
-import { Steg2_Fravær } from '@components/fyll-ut/steg-2-fravær/Steg2_Fravær.tsx';
-import { Steg5_Oppsummering } from '@components/fyll-ut/steg-5-oppsummering/Steg5_Oppsummering.tsx';
-import { Steg6_Kvittering } from '@components/fyll-ut/steg-6-kvittering/Steg6_Kvittering.tsx';
-import { Steg3_Lønn } from '@components/fyll-ut/steg-3-lønn/Steg3_Lønn.tsx';
+import { Steg3_Deltakelse } from '@components/fyll-ut/steg-3-deltakelse/Steg3_Deltakelse.tsx';
+import { Steg1_Fravær } from '@components/fyll-ut/steg-1-fravær/Steg1_Fravær.tsx';
+import { Steg4_Oppsummering } from '@components/fyll-ut/steg-4-oppsummering/Steg4_Oppsummering.tsx';
+import { Steg5_Kvittering } from '@components/fyll-ut/steg-5-kvittering/Steg5_Kvittering.tsx';
+import { Steg2_Lønn } from '@components/fyll-ut/steg-2-lønn/Steg2_Lønn.tsx';
 
 export type SiteRouteConfig<Props = any> = {
     path: SiteRoutePath;
@@ -24,22 +24,22 @@ export const siteRouteConfigs = {
     },
     deltakelse: {
         path: '/:meldekortId/deltakelse',
-        Component: Steg4_Deltatt,
+        Component: Steg3_Deltakelse,
     },
     fravær: {
         path: '/:meldekortId/fraver',
-        Component: Steg2_Fravær,
+        Component: Steg1_Fravær,
     },
     lønn: {
         path: '/:meldekortId/lonn',
-        Component: Steg3_Lønn,
+        Component: Steg2_Lønn,
     },
     sendInn: {
         path: '/:meldekortId/send-inn',
-        Component: Steg5_Oppsummering,
+        Component: Steg4_Oppsummering,
     },
     kvittering: {
         path: '/:meldekortId/kvittering',
-        Component: Steg6_Kvittering,
+        Component: Steg5_Kvittering,
     },
 } as const satisfies Record<SiteRouteName, SiteRouteConfig>;

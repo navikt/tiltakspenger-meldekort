@@ -68,7 +68,7 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
-                        onClick={() => navigate(getPathForMeldekortSteg('sendInn', id))}
+                        onClick={() => navigate(getPathForMeldekortSteg('oppsummering', id))}
                     >
                         {getTekst({ id: 'kvitteringTittel' })}
                     </Stepper.Step>

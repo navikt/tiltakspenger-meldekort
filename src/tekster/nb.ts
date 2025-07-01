@@ -149,17 +149,17 @@ export const teksterNb = {
     lønnSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
     lønnUkeHjelp: 'Kryss av for de dagene du mottok lønn',
     lønnDagPrefix: 'Mottok lønn: ',
-    sendInnTittel: 'Oppsummering',
-    sendInnIngress:
+    oppsummeringTittel: 'Oppsummering',
+    oppsummeringIngress:
         'Sjekk at dagene du har registrert er riktige før du sender inn. Du kan gå tilbake og rette opp hvis noe ikke stemmer.',
-    sendInnBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
-    sendInnBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
-    sendInnIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',
-    sendInnIngenDagerMedFravær:
+    oppsummeringBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
+    oppsummeringBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
+    oppsummeringIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',
+    oppsummeringIngenDagerMedFravær:
         'Du har svart ja på spørsmålet om du har vært syk eller har hatt fravær. Du må oppgi en fraværsgrunn for minst en dag eller endre svaret ditt til "Nei".',
-    sendInnIngenDagerMedLønn:
+    oppsummeringIngenDagerMedLønn:
         'Du har svart ja på spørsmålet om du har mottatt lønn, men ikke sjekket av noen dager med lønn. Du må krysse av for minst en dag med lønn eller endre svaret ditt til "Nei".',
-    sendInnInnsendingFeilet: [
+    oppsummeringInnsendingFeilet: [
         'Noe gikk galt ved innsending av meldekortet. Du kan prøve på nytt.',
         'Dersom problemet vedvarer, kontakt veilederen din.',
     ],

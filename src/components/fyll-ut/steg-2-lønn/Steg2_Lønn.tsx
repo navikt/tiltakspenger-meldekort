@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import style from './Steg3_Lønn.module.css';
+import style from './Steg2_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { MeldekortDagStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
@@ -20,7 +20,7 @@ type SSRProps = {
     meldekort: MeldekortUtfylling;
 };
 
-export const Steg3_Lønn = ({ meldekort }: SSRProps) => {
+export const Steg2_Lønn = ({ meldekort }: SSRProps) => {
     const { navigate } = useRouting();
     const {
         meldekortUtfylling,

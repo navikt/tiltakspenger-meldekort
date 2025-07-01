@@ -229,9 +229,9 @@ const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
 
     const sendInnKnapp = page.getByRole('button', { name: getTekst({ id: 'sendInn' }) });
     const bekreftCheckbox = page.getByRole('checkbox', {
-        name: getTekst({ id: 'sendInnBekrefter' }),
+        name: getTekst({ id: 'oppsummeringBekrefter' }),
     });
-    const bekreftVarsel = page.getByText(getTekst({ id: 'sendInnBekrefterFeil' }));
+    const bekreftVarsel = page.getByText(getTekst({ id: 'oppsummeringBekrefterFeil' }));
 
     await sendInnKnapp.click();
 

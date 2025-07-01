@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import style from './Steg5_Oppsummering.module.css';
+import style from './Steg4_Oppsummering.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert, ConfirmationPanel, ErrorSummary } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
@@ -19,7 +19,7 @@ type SSRProps = {
     meldekort: MeldekortUtfylling;
 };
 
-export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
+export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
     const { base, navigate } = useRouting();
     const { meldekortUtfylling, setMeldekortSteg, harHattFravær, harMottattLønn } =
         useMeldekortUtfylling();
@@ -29,7 +29,7 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
     const errorRef = React.useRef(null);
 
-    useInitMeldekortSteg(meldekort, 'sendInn');
+    useInitMeldekortSteg(meldekort, 'oppsummering');
 
     if (!meldekortUtfylling) return;
     const { harIngenDagerMedFravær, harIngenDagerMedLønn } =
@@ -46,7 +46,7 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
                 navigate(getPathForMeldekortSteg('kvittering', meldekortUtfylling.id));
             } else {
                 setInnsendingFeilet(true);
-                setMeldekortSteg('sendInn');
+                setMeldekortSteg('oppsummering');
                 varselRef.current?.focus();
             }
         });
@@ -54,11 +54,11 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <Tekst id="sendInnIngress" />
+            <Tekst id="oppsummeringIngress" />
             <Alert variant="info" className={style.varsel}>
-                <TekstSegmenter id={'sendInnIkkeSendtEnnå'} />
+                <TekstSegmenter id={'oppsummeringIkkeSendtEnnå'} />
             </Alert>
-            <Kalender meldekort={meldekortUtfylling} steg={'sendInn'} />
+            <Kalender meldekort={meldekortUtfylling} steg={'oppsummering'} />
             <ConfirmationPanel
                 onChange={() => {
                     setVisFeil(false);
@@ -66,12 +66,12 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
                 }}
                 checked={harBekreftet}
                 value={harBekreftet}
-                label={<Tekst id={'sendInnBekrefter'} />}
-                error={!harBekreftet && visFeil && <Tekst id={'sendInnBekrefterFeil'} />}
+                label={<Tekst id={'oppsummeringBekrefter'} />}
+                error={!harBekreftet && visFeil && <Tekst id={'oppsummeringBekrefterFeil'} />}
             />
             {innsendingFeilet && (
                 <Alert variant="error" className={style.varsel} ref={varselRef} tabIndex={-1}>
-                    <TekstSegmenter id="sendInnInnsendingFeilet" />
+                    <TekstSegmenter id="oppsummeringInnsendingFeilet" />
                 </Alert>
             )}
             {visFeil && kanIkkeSendeInnFeilIAndreSteg && (
@@ -85,7 +85,7 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
                                 navigate(getPathForMeldekortSteg('fravær', meldekortUtfylling.id));
                             }}
                         >
-                            <Tekst id={'sendInnIngenDagerMedFravær'} />
+                            <Tekst id={'oppsummeringIngenDagerMedFravær'} />
                         </ErrorSummary.Item>
                     )}
                     {kanIkkeSendeInnPgaLønn && (
@@ -97,7 +97,7 @@ export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
                                 navigate(getPathForMeldekortSteg('lønn', meldekortUtfylling.id));
                             }}
                         >
-                            <Tekst id={'sendInnIngenDagerMedLønn'} />
+                            <Tekst id={'oppsummeringIngenDagerMedLønn'} />
                         </ErrorSummary.Item>
                     )}
                 </ErrorSummary>

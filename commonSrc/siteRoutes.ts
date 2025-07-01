@@ -34,7 +34,7 @@ export const getPathForMeldekortSteg = (meldekortSteg: MeldekortSteg, meldekortI
             return getPath(siteRoutes.lønn, { meldekortId });
         case 'deltatt':
             return getPath(siteRoutes.deltakelse, { meldekortId });
-        case 'sendInn':
+        case 'oppsummering':
             return getPath(siteRoutes.sendInn, { meldekortId });
         case 'kvittering':
             return getPath(siteRoutes.kvittering, { meldekortId });

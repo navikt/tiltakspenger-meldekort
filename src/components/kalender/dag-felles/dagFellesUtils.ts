@@ -49,7 +49,7 @@ export const meldekortStegTilTekstId: Record<MeldekortSteg, TekstId> = {
     deltatt: 'deltattTittel',
     fravær: 'fraværTittel',
     lønn: 'lønnTittel',
-    sendInn: 'sendInnTittel',
+    oppsummering: 'oppsummeringTittel',
     kvittering: 'kvitteringTittel',
 };
 
