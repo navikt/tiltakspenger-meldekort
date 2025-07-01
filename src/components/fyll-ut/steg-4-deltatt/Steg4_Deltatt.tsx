@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import style from './Steg4_Deltatt.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert } from '@navikt/ds-react';
@@ -13,6 +13,7 @@ import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.t
 import { useRouting } from '@routing/useRouting.ts';
 import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -20,29 +21,13 @@ type SSRProps = {
 
 export const Steg4_Deltatt = ({ meldekort }: SSRProps) => {
     const { navigate } = useRouting();
-    const {
-        meldekortUtfylling,
-        setMeldekortUtfylling,
-        setMeldekortSteg,
-        redirectHvisMeldekortErInnsendt,
-    } = useMeldekortUtfylling();
+    const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
     const [feil, setFeil] = useState<TekstId | null>(null);
-    const utfyllingPåbegynt = meldekort && meldekortUtfylling;
 
-    useEffect(() => {
-        // I første steg settes meldekortUtfylling til å være meldekortet fra SSR ved første render dersom det ikke er satt fra før.
-        if (utfyllingPåbegynt) {
-            redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'deltatt');
-        } else {
-            setMeldekortSteg('deltatt');
-            setMeldekortUtfylling(meldekort);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    useInitMeldekortSteg(meldekort, 'deltatt');
 
-    if (!meldekortUtfylling) {
-        return null;
-    }
+    if (!meldekortUtfylling) return;
+
     const { harForMangeDagerBesvart, harIngenDagerBesvart } =
         antallDagerValidering(meldekortUtfylling);
 

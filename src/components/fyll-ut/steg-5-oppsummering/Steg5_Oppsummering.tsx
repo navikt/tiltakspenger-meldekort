@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import style from './Steg5_Oppsummering.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert, ConfirmationPanel, ErrorSummary } from '@navikt/ds-react';
@@ -13,6 +13,7 @@ import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -20,23 +21,15 @@ type SSRProps = {
 
 export const Steg5_Oppsummering = ({ meldekort }: SSRProps) => {
     const { base, navigate } = useRouting();
-    const {
-        meldekortUtfylling,
-        setMeldekortSteg,
-        harHattFravær,
-        harMottattLønn,
-        redirectHvisMeldekortErInnsendt,
-    } = useMeldekortUtfylling();
+    const { meldekortUtfylling, setMeldekortSteg, harHattFravær, harMottattLønn } =
+        useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
     const errorRef = React.useRef(null);
 
-    useEffect(() => {
-        redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'sendInn');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    useInitMeldekortSteg(meldekort, 'sendInn');
 
     if (!meldekortUtfylling) return;
     const { harIngenDagerMedFravær, harIngenDagerMedLønn } =

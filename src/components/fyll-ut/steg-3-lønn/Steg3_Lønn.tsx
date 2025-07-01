@@ -11,6 +11,7 @@ import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/Dager
 import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
 import { useRouting } from '@routing/useRouting';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -24,15 +25,11 @@ export const Steg3_Lønn = ({ meldekort }: SSRProps) => {
         setMeldekortSteg,
         harMottattLønn,
         setHarMottattLønn,
-        redirectHvisMeldekortErInnsendt,
     } = useMeldekortUtfylling();
     const [feil, setFeil] = useState<TekstId | null>(null);
     const varselRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'lønn');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    useInitMeldekortSteg(meldekort, 'lønn');
 
     if (!meldekortUtfylling) return;
 

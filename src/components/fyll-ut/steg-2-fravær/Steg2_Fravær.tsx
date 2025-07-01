@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import style from './Steg2_Fravær.module.css';
 import { Alert, BodyLong, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -15,6 +15,7 @@ import { useRouting } from '@routing/useRouting.ts';
 import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
@@ -26,17 +27,13 @@ export const Steg2_Fravær = ({ meldekort }: SSRProps) => {
         meldekortUtfylling,
         setMeldekortUtfylling,
         setMeldekortSteg,
-        redirectHvisMeldekortErInnsendt,
         harHattFravær,
         setHarHattFravær,
     } = useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
 
-    useEffect(() => {
-        redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'fravær');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    useInitMeldekortSteg(meldekort, 'fravær');
 
     if (!meldekortUtfylling) return;
     const { harForMangeDagerBesvart } = antallDagerValidering(meldekortUtfylling);

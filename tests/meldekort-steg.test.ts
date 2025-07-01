@@ -9,8 +9,7 @@ import { MeldekortDagStatus } from '../commonSrc/typer/meldekort-utfylling';
 // Burde ha mock-data som defineres i testene
 
 test.beforeEach(async ({ page }) => {
-    await page.goto(`${testsBaseUrl}`);
-    await startUtfylling(page);
+    await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
 });
 
 test.describe('Meldekort steg', () => {
@@ -138,28 +137,6 @@ test.describe('Meldekort steg', () => {
         });
     });
 });
-
-const startUtfylling = async (page: Page) => {
-    const startUtfyllingKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'startUtfylling' }),
-    });
-    const bekreftCheckbox = page.getByRole('checkbox', {
-        name: getTekst({ id: 'forsideBekrefter' }),
-    });
-    const bekreftVarsel = page.getByText(getTekst({ id: 'forsideBekrefterFeil' }));
-
-    await expect(startUtfyllingKnapp).toBeVisible();
-
-    await startUtfyllingKnapp.click();
-    await expect(bekreftVarsel).toBeVisible();
-    await expect(page).toHaveURL(testsBaseUrl);
-
-    await bekreftCheckbox.click();
-    await expect(bekreftVarsel).not.toBeVisible();
-
-    await startUtfyllingKnapp.click();
-    await expect(page).toHaveURL(/fraver$/);
-};
 
 const fyllUtDeltattSteg = async (page: Page, antallDagerMedDeltatt: number) => {
     const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
