@@ -2,7 +2,7 @@ import path from 'path';
 import { DecoratorEnvProps } from '@navikt/nav-dekoratoren-moduler';
 import { injectDecoratorServerSide } from '@navikt/nav-dekoratoren-moduler/ssr';
 
-const envProps: DecoratorEnvProps = { env: 'dev' };
+const envProps: DecoratorEnvProps = { env: 'prod' };
 
 export const getTemplateWithDecorator = async () => {
     const templatePath =
