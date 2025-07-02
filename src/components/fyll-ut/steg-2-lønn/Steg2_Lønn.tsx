@@ -3,7 +3,7 @@ import style from './Steg2_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { MeldekortDagStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
-import { Alert, BodyLong, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstId } from '@tekster/typer.ts';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -12,7 +12,7 @@ import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes
 import { useRouting } from '@routing/useRouting';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
-import { getTekster } from '@tekster/tekster.ts';
+import { getTekst } from '@tekster/tekster.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
 
@@ -38,22 +38,11 @@ export const Steg2_Lønn = ({ meldekort }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <ReadMore
-                header={'Når skal du melde ifra om at du har mottatt lønn?'}
-                className={style.lesMer}
-            >
-                <BodyLong>
-                    <Tekst id={'lønnHjelpLesMerAvsnitt1'} />
-                </BodyLong>
-                <ul>
-                    {getTekster({ id: 'lønnHjelpLesMerListe' }).map((tekst) => (
-                        <li key={tekst}>{tekst}</li>
-                    ))}
-                </ul>
-                <TekstSegmenter id={'lønnHjelpLesMerAvsnitt2'} />
+            <ReadMore header={getTekst({ id: 'lønnHjelpLesMerTittel' })} className={style.lesMer}>
+                <TekstSegmenter id={'lønnHjelpLesMerAvsnitt'} />
                 <TekstMedLenke
-                    tekst="taKontaktMedNav"
-                    tekstLenke="taKontaktMedNavLenke"
+                    tekst="lønnHjelpLesMerTekstFørLenke"
+                    tekstLenke="lønnHjelpLesMerLenkeTekst"
                     lenke="https://www.nav.no/kontaktoss"
                 />
             </ReadMore>

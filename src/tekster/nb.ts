@@ -30,8 +30,9 @@ export const teksterNb = {
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
     sideTittel: 'Meldekort for tiltakspenger',
-    taKontaktMedNav: 'Hvis du er usikker på hva du skal fylle inn i meldekortet, ',
-    taKontaktMedNavLenke: 'ta kontakt med Nav.',
+    forsideGuidePanelTekst:
+        'Ta kontakt med Nav hvis du er usikker på hva du skal føre på meldekortet. ',
+    forsideGuidePanelLenkeTekst: 'Se hvordan du kan ta kontakt med Nav.',
     forsideIngress: [
         'For å motta tiltakspenger må du delta på et tiltak hos Nav og sende meldekort hver 14. dag.',
         'På meldekortet må du registrere om du har deltatt på tiltaket, om du har vært syk, om ditt barn eller barnepasser har vært syk, om du har hatt ferie/fravær eller mottatt lønn mens du har vært i tiltaket. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
@@ -105,9 +106,9 @@ export const teksterNb = {
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',
-        'Du skal velge «annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.',
+        'Du skal velge «annet fravær» hvis du har arbeidet i stedet for å delta på tiltaket. For eksempel: Du har avtalt tiltakstid 09-15 og arbeidet fra 09-10 i stedet for å delta hele den avtalte tiden på tiltaket.',
         'Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt ferieperiode for tiltaket.',
-        'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din. ',
+        'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.',
     ],
 
     fraværUkeHjelp: 'Velg hva slags fravær du hadde',
@@ -132,20 +133,17 @@ export const teksterNb = {
     fraværModalIkkeGodkjentIngress:
         'Hvis du ikke deltok på hele eller deler av tiltaksdagen, og fraværet ikke var godkjent av Nav, har du ikke rett til tiltakspenger.',
     lønnTittel: 'Lønn for tid i tiltak',
-    lønnHjelpLesMerAvsnitt1: 'Lønn betyr penger du får for arbeid du gjør – enten det er fra:',
-    lønnHjelpLesMerAvsnitt2: [
-        'Det gjelder uansett om du har jobbet hele dagen eller bare noen timer. Du får ikke tiltakspenger for dager du har fått lønn. Det spiller ingen rolle om det er fast lønn, timelønn eller honorar.',
-        'For eksempel: Hvis du jobber to timer på en tirsdag og får betalt for det, skal du krysse av for lønn den dagen.',
+    lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
+    lønnHjelpLesMerAvsnitt: [
+        'Hvis du får lønn for arbeid som er en del av tiltaket ditt, skal du registrere det som lønn. Arbeid er en del av tiltaket når dette er en avtalt aktivet. Det gjelder uansett om du har arbeidet hele dagen eller bare noen timer.  Tiltakspenger fra Nav regnes ikke som lønn.',
         'Du kan ikke få tiltakspenger for dager du får lønn.',
+        'Har du arbeidet i stedet for å delta på tiltaket, skal du føre “annet fravær” fra tiltaket i forrige steg.',
     ],
-    lønnHjelpLesMerListe: [
-        'Tiltaksarrangøren (den som har ansvar for tiltaket)',
-        'En annen arbeidsgiver, hvis arbeidet skjer samtidig med tiltaket',
-    ],
-    lønnHarMottattLønnSpørsmål:
-        'Har du mottatt lønn i tidsrommet du var satt opp på tiltaket? (obligatorisk)',
-    lønnHarMottattLønnSvarJa: 'Ja, jeg har hatt mottatt lønn for tiden i tiltak',
-    lønnHarMottattLønnSvarNei: 'Nei, jeg har ikke mottatt lønn for tiden i tiltak',
+    lønnHjelpLesMerTekstFørLenke: 'Hvis du er usikker på hva du skal fylle inn i meldekortet, ',
+    lønnHjelpLesMerLenkeTekst: 'ta kontakt med Nav.',
+    lønnHarMottattLønnSpørsmål: 'Har du mottatt lønn i tiden i tiltaket? (obligatorisk)',
+    lønnHarMottattLønnSvarJa: 'Ja, jeg har hatt mottatt lønn for tiden i tiltaket',
+    lønnHarMottattLønnSvarNei: 'Nei, jeg har ikke mottatt lønn for tiden i tiltaket',
     lønnSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
     lønnUkeHjelp: 'Kryss av for de dagene du mottok lønn',
     lønnDagPrefix: 'Mottok lønn: ',

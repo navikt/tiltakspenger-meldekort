@@ -33,8 +33,8 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
         <>
             <GuidePanel className={style.guide}>
                 <TekstMedLenke
-                    tekst="taKontaktMedNav"
-                    tekstLenke="taKontaktMedNavLenke"
+                    tekst="forsideGuidePanelTekst"
+                    tekstLenke="forsideGuidePanelLenkeTekst"
                     lenke="https://www.nav.no/kontaktoss"
                 />
             </GuidePanel>
