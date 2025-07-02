@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const SiteRouter = ({ appContext }: Props) => {
-    const { forside, alle, deltakelse, fravær, sendInn, kvittering } = siteRouteConfigs;
+    const { forside, alle, deltakelse, fravær, lønn, sendInn, kvittering } = siteRouteConfigs;
     const { navigate } = useRouting();
 
     return (
@@ -32,6 +32,9 @@ export const SiteRouter = ({ appContext }: Props) => {
                 </Route>
                 <Route path={fravær.path}>
                     <RouteComponent route={fravær} appContext={appContext} />
+                </Route>
+                <Route path={lønn.path}>
+                    <RouteComponent route={lønn} appContext={appContext} />
                 </Route>
                 <Route path={sendInn.path}>
                     <RouteComponent route={sendInn} appContext={appContext} />

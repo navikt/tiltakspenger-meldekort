@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import style from './Steg6_Kvittering.module.css';
+import style from './Steg5_Kvittering.module.css';
 import { Alert } from '@navikt/ds-react';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
-import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { MeldekortStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
@@ -15,15 +13,9 @@ type SSRProps = {
     meldekort: MeldekortUtfylling;
 };
 
-export const Steg6_Kvittering = ({ meldekort }: SSRProps) => {
-    const {
-        meldekortUtfylling,
-        setMeldekortUtfylling,
-        getUndertekster,
-        redirectHvisFeilSteg,
-        redirectHvisMeldekortErInnsendt,
-    } = useMeldekortUtfylling();
-    const undertekster = getUndertekster();
+export const Steg5_Kvittering = ({ meldekort }: SSRProps) => {
+    const { meldekortUtfylling, setMeldekortUtfylling, redirectHvisMeldekortErInnsendt } =
+        useMeldekortUtfylling();
 
     useEffect(() => {
         redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, 'kvittering');
@@ -35,21 +27,8 @@ export const Steg6_Kvittering = ({ meldekort }: SSRProps) => {
         }
     }, [meldekort, meldekortUtfylling, redirectHvisMeldekortErInnsendt, setMeldekortUtfylling]);
 
-    useEffect(() => {
-        redirectHvisFeilSteg('kvittering');
-    }, [redirectHvisFeilSteg]);
-
     return (
         <MeldekortStegWrapper>
-            <PageHeader
-                tekstId={'kvitteringTittel'}
-                underTekst={
-                    <div className={style.undertekstWrapper}>
-                        <Undertekst tekst={undertekster.ukerTekst} weight={'semibold'} />
-                        <Undertekst tekst={undertekster.datoerTekst} />
-                    </div>
-                }
-            />
             <div>
                 <Alert variant={'success'} className={style.kvittering}>
                     <TekstSegmenter id={'kvittering'} />

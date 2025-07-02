@@ -5,16 +5,24 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 import { formatterDato } from '@utils/datetime';
 import { Tekst } from '@components/tekst/Tekst';
 
-import style from './DeltattDagPanel.module.css';
+import style from './LønnDagPanel.module.css';
+import { StatiskDagPanel } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
+import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 
 type Props = {
     dag: MeldekortDag;
 };
 
-export const DeltattDagPanel = ({ dag }: Props) => {
+export const LønnDagPanel = ({ dag }: Props) => {
     const { lagreMeldekortDag } = useMeldekortUtfylling();
 
-    const erValgt = dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
+    const erValgt = dag.status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET;
+    const harHattFravær = dagStatusMedFravær.has(dag.status);
+    const harDeltatt = dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
+
+    if (harHattFravær || harDeltatt) {
+        return <StatiskDagPanel dag={dag} />;
+    }
 
     return (
         <Checkbox
@@ -22,14 +30,14 @@ export const DeltattDagPanel = ({ dag }: Props) => {
                 lagreMeldekortDag({
                     ...dag,
                     status: e.target.checked
-                        ? MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET
+                        ? MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET
                         : MeldekortDagStatus.IKKE_BESVART,
                 });
             }}
             checked={erValgt}
-            className={classNames(style.dag, erValgt && style.valgt)}
+            className={classNames(style.dag, erValgt && style.valgtLønn)}
         >
-            <Tekst id={'deltattDagPrefix'} />
+            <Tekst id={'lønnDagPrefix'} />
             {formatterDato({ dato: dag.dato, medUkeDag: true })}
         </Checkbox>
     );

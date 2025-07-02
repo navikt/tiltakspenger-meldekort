@@ -1,16 +1,17 @@
 import { TekstResolver } from '@tekster/typer.ts';
 
 export const teksterNb = {
-    neste: 'Neste',
-    forrige: 'Forrige',
+    neste: 'Neste steg',
+    startUtfylling: 'Start utfylling',
+    forrige: 'Forrige steg',
     lagre: 'Lagre',
     slett: 'Slett',
-    avbryt: 'Avbryt',
+    avbryt: 'Avbryt utfylling',
     sendInn: 'Send inn',
 
     statusIkkeBesvart: 'Ikke besvart',
     statusDeltatt: 'Deltatt',
-    statusDeltattMedLønn: 'Deltatt med lønn',
+    statusDeltattMedLønn: 'Mottok lønn',
     statusSyk: 'Syk',
     statusSyktBarn: 'Sykt barn eller syk barnepasser',
     statusGodkjentFravær: 'Fravær godkjent av Nav',
@@ -20,19 +21,21 @@ export const teksterNb = {
     ikkeRett: 'Ikke rett',
 
     forMangeDagerEnkel: 'Du har fylt ut for mange dager',
-    ingenDagerDeltatt: 'Du må velge minst en dag med deltagelse, eller velge fravær',
+    ingenDagerDeltatt: 'Du må velge minst én dag med deltagelse, eller velge fravær',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
         `Du har fylt ut ${antall} dager. Det er maks ${maks} dager med tiltak i denne perioden.`,
     ingenDagerMedFravær:
-        'Du må velge minst en dag med fravær, eller gå tilbake og velge deltagelse.',
+        'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
     sideTittel: 'Meldekort for tiltakspenger',
-
+    forsideGuidePanelTekst:
+        'Ta kontakt med Nav hvis du er usikker på hva du skal føre på meldekortet. ',
+    forsideGuidePanelLenkeTekst: 'Se hvordan du kan ta kontakt med Nav.',
     forsideIngress: [
         'For å motta tiltakspenger må du delta på et tiltak hos Nav og sende meldekort hver 14. dag.',
-        'På meldekortet må du registrere om du har deltatt på tiltaket, om du har vært syk, om ditt barn eller barnepasser har vært syk, eller om du har hatt ferie eller annet fravær. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
+        'På meldekortet må du registrere om du har deltatt på tiltaket, om du har vært syk, om ditt barn eller barnepasser har vært syk, om du har hatt ferie/fravær eller mottatt lønn mens du har vært i tiltaket. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
         'Vi deler informasjon fra meldekortet med andre systemer i Nav fordi informasjonen har betydning for oppfølgingen du får av Nav.',
     ],
     forsideTakk: 'Takk for at du er ærlig!',
@@ -54,37 +57,25 @@ export const teksterNb = {
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Uke ${uke1} og ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} til ${tilOgMed}`,
-    deltattTittel: 'Meldekort for tiltakspenger – deltakelse',
+    deltattTittel: 'Deltakelse i tiltak',
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
-        'For hver tiltaksdag i meldeperioden må du oppgi om du har deltatt eller ikke. Du kan ha rett til tiltakspenger ved noen typer fravær. Du skal ikke oppgi noe for dager som er utenfor tiltaket.',
-    deltattHjelpLesMerHeader: 'Når skal du føre at du har deltatt?',
-    deltattHjelpLesMerListe: [
-        'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt.',
-        'Hvis du har vært borte deler av tiltaksdagen, må du registrere dagen med fravær.',
-        'Du kan krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.',
-        'Hvis du har hatt lønn i avtalt tiltakstid den aktuelle dagen, for eksempel lønn fra tiltaksarrangør, har du ikke rett til tiltakspenger og må registrere fravær.',
-    ],
-    deltattHjelpLesMerTekst:
-        'Hvis du ikke har deltatt på alle dagene i tiltaket som var avtalt, oppgir du at du har hatt fravær nederst på denne siden. Hva som var årsaken til fraværet kan du registrere på det neste skrittet i meldekortet.',
-    deltattHjelpGuideTekst:
-        'Ta kontakt med veilederen din hvis du er usikker på hva du skal føre på meldekortet.',
-
+        'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt eller hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt. ',
     deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket.',
     deltattDagPrefix: 'Har deltatt: ',
-    deltattStegFraværSpørsmål: 'Har du hatt fravær fra tiltaket? (obligatorisk)',
-    deltattStegFraværSpørsmålUndertekst:
-        'Hvis du har hatt fravær kan du registrere årsaken på det neste skrittet',
-    deltattStegFraværJa: 'Ja, jeg har hatt fravær',
-    deltattStegFraværNei: 'Nei, jeg har ikke hatt fravær',
-    deltattStegFraværIkkeValgt: 'Du må velge et alternativ for å gå videre',
-    lønnTittel: 'Meldekort for tiltakspenger – lønn',
-    fraværTittel: 'Meldekort for tiltakspenger – fravær',
-    fraværHjelpTittel:
-        'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen',
-    fraværHjelpIngress:
+    fraværHjelpLesMer:
+        'Du må informere oss dersom du har vært syk eller hatt annet fravær i perioden du var satt opp på tiltak.',
+    fraværStegFraværSpørsmål:
+        'Har du vært syk eller hatt annet fravær fra tiltaket? (obligatorisk)',
+    fraværHarHattFraværSvarJa: 'Ja, jeg har vært syk eller hatt annet fravær',
+    fraværHarHattFraværSvarNei: 'Nei, jeg har ikke vært syk eller hatt annet fravær',
+    fraværSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
+    fraværTittel: 'Fravær og sykdom',
+    fraværHjelpTittel: 'Slik fyller du ut fravær',
+    fraværHjelpIngress: [
+        'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen.',
         'Velg hva slags fravær du hadde. Noen typer fravær gir rett til utbetaling, mens andre gjør det ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere.',
-
+    ],
     fraværHjelpLesMerSyk: 'Når skal du velge "syk"?',
     fraværHjelpLesMerSykListe: [
         'Du skal velge «syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.',
@@ -115,9 +106,9 @@ export const teksterNb = {
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',
-        'Du skal velge «annet fravær» hvis du har fått lønn for tiden du deltok i tiltaket den aktuelle dagen.',
+        'Du skal velge «annet fravær» hvis du har arbeidet i stedet for å delta på tiltaket. For eksempel: Du har avtalt tiltakstid 09-15 og arbeidet fra 09-10 i stedet for å delta hele den avtalte tiden på tiltaket.',
         'Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt ferieperiode for tiltaket.',
-        'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din. ',
+        'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.',
     ],
 
     fraværUkeHjelp: 'Velg hva slags fravær du hadde',
@@ -141,17 +132,37 @@ export const teksterNb = {
         'Hvis du har hatt fravær fra tiltaket og Nav har godkjent dette fraværet.',
     fraværModalIkkeGodkjentIngress:
         'Hvis du ikke deltok på hele eller deler av tiltaksdagen, og fraværet ikke var godkjent av Nav, har du ikke rett til tiltakspenger.',
-
-    sendInnTittel: 'Meldekort for tiltakspenger - send inn',
-    sendInnBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
-    sendInnBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
-    sendInnIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',
-    sendInnInnsendingFeilet: [
+    lønnTittel: 'Lønn for tid i tiltak',
+    lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
+    lønnHjelpLesMerAvsnitt: [
+        'Hvis du får lønn for arbeid som er en del av tiltaket ditt, skal du registrere det som lønn. Arbeid er en del av tiltaket når dette er en avtalt aktivet. Det gjelder uansett om du har arbeidet hele dagen eller bare noen timer.  Tiltakspenger fra Nav regnes ikke som lønn.',
+        'Du kan ikke få tiltakspenger for dager du får lønn.',
+        'Har du arbeidet i stedet for å delta på tiltaket, skal du føre “annet fravær” fra tiltaket i forrige steg.',
+    ],
+    lønnHjelpLesMerTekstFørLenke: 'Hvis du er usikker på hva du skal fylle inn i meldekortet, ',
+    lønnHjelpLesMerLenkeTekst: 'ta kontakt med Nav.',
+    lønnHarMottattLønnSpørsmål: 'Har du mottatt lønn i tiden i tiltaket? (obligatorisk)',
+    lønnHarMottattLønnSvarJa: 'Ja, jeg har hatt mottatt lønn for tiden i tiltaket',
+    lønnHarMottattLønnSvarNei: 'Nei, jeg har ikke mottatt lønn for tiden i tiltaket',
+    lønnSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
+    lønnUkeHjelp: 'Kryss av for de dagene du mottok lønn',
+    lønnDagPrefix: 'Mottok lønn: ',
+    oppsummeringTittel: 'Oppsummering',
+    oppsummeringIngress:
+        'Sjekk at dagene du har registrert er riktige før du sender inn. Du kan gå tilbake og rette opp hvis noe ikke stemmer.',
+    oppsummeringBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
+    oppsummeringBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
+    oppsummeringIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',
+    oppsummeringIngenDagerMedFravær:
+        'Du har svart ja på spørsmålet om du har vært syk eller har hatt fravær. Du må oppgi en fraværsgrunn for minst en dag eller endre svaret ditt til "Nei".',
+    oppsummeringIngenDagerMedLønn:
+        'Du har svart ja på spørsmålet om du har mottatt lønn, men ikke sjekket av noen dager med lønn. Du må krysse av for minst en dag med lønn eller endre svaret ditt til "Nei".',
+    oppsummeringInnsendingFeilet: [
         'Noe gikk galt ved innsending av meldekortet. Du kan prøve på nytt.',
         'Dersom problemet vedvarer, kontakt veilederen din.',
     ],
 
-    kvitteringTittel: 'Meldekort for tiltakspenger - kvittering',
+    kvitteringTittel: 'Oppsummering',
     kvitteringTilbake: 'Tilbake til startsiden for meldekort',
     kvittering:
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',

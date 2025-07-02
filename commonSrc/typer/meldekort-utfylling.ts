@@ -36,15 +36,15 @@ export type MeldekortUtfylling = {
     kanSendes?: string;
 };
 
-export type MeldekortSteg = 'deltatt' | 'fravær' | 'sendInn' | 'kvittering';
+export type MeldekortSteg = 'fravær' | 'lønn' | 'deltatt' | 'oppsummering' | 'kvittering';
 
 /**
  * Rekkefølgen her er viktig for å vite hvor langt brukeren har kommet i utfyllingen. Brukes for å redirecte
  * brukeren dersom de endrer URLen eller maniuplerer nettleserhistorikken.
  */
 export const STEG_REKKEFOLGE: MeldekortSteg[] = [
-    'deltatt',
     'fravær',
-    'sendInn',
-    'kvittering',
+    'lønn',
+    'deltatt',
+    'oppsummering',
 ] as const;

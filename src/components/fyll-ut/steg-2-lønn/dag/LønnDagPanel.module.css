@@ -1,0 +1,26 @@
+.dag {
+    padding: 0.25rem 0.625rem;
+    border: 1px solid var(--a-gray-400);
+    border-radius: var(--a-border-radius-large);
+
+    &:hover {
+        background: var(--a-gray-100);
+        color: unset;
+    }
+}
+
+.valgt {
+    background: var(--a-green-100);
+
+    &:hover {
+        background: var(--a-green-200);
+    }
+}
+
+.valgtLønn {
+    background: var(--a-red-100);
+
+    &:hover {
+        background: var(--a-red-200);
+    }
+}
