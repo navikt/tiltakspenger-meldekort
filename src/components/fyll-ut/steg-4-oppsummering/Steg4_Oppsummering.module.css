@@ -13,9 +13,3 @@
     display: flex;
     gap: 0.5rem;
 }
-
-.errorSummaryItemAsLink {
-    background: none;
-    border: none;
-    text-align: start;
-}

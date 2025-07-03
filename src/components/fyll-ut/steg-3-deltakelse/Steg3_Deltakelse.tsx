@@ -51,7 +51,7 @@ export const Steg3_Deltakelse = ({ meldekort }: SSRProps) => {
                             return false;
                         }
                         if (harIngenDagerBesvart) {
-                            setFeil('ingenDagerDeltatt');
+                            setFeil('ingenDagerFyltUt');
                             return false;
                         }
                         setFeil(null);

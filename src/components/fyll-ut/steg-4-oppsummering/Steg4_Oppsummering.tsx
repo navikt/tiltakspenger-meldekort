@@ -14,9 +14,17 @@ import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.t
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
+import { OppsummeringError } from '@components/fyll-ut/steg-4-oppsummering/OppsummeringError.tsx';
+import { TekstId } from '@tekster/typer.ts';
 
 type SSRProps = {
     meldekort: MeldekortUtfylling;
+};
+
+type ErrorSummaryItem = {
+    tekstId: TekstId;
+    onClick?: () => void;
+    href?: string;
 };
 
 export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
@@ -27,17 +35,21 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
-    const errorRef = React.useRef(null);
+    const errorRef = React.useRef<HTMLDivElement>(null);
+    const [errors, setErrors] = useState<ErrorSummaryItem[]>([]);
 
     useInitMeldekortSteg(meldekort, 'oppsummering');
 
     if (!meldekortUtfylling) return;
-    const { harIngenDagerMedFravær, harIngenDagerMedLønn } =
-        antallDagerValidering(meldekortUtfylling);
+    const {
+        harIngenDagerMedFravær,
+        harIngenDagerMedLønn,
+        harIngenDagerBesvart,
+        harForMangeDagerBesvart,
+    } = antallDagerValidering(meldekortUtfylling);
 
     const kanIkkeSendeInnPgaFravær = harIngenDagerMedFravær && harHattFravær;
     const kanIkkeSendeInnPgaLønn = harIngenDagerMedLønn && harMottattLønn;
-    const kanIkkeSendeInnFeilIAndreSteg = kanIkkeSendeInnPgaFravær || kanIkkeSendeInnPgaLønn;
 
     const sendInn = () => {
         setMeldekortSteg('kvittering');
@@ -52,6 +64,59 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
         });
     };
 
+    const redirectTilFraværSteg = () => {
+        setMeldekortSteg('fravær');
+        navigate(getPathForMeldekortSteg('fravær', meldekortUtfylling.id));
+    };
+
+    const redirectTilLønnSteg = () => {
+        setMeldekortSteg('lønn');
+        navigate(getPathForMeldekortSteg('lønn', meldekortUtfylling.id));
+    };
+
+    const validerMeldekortUtfylling = () => {
+        const currentValidationErrors: ErrorSummaryItem[] = [];
+
+        if (harIngenDagerBesvart) {
+            currentValidationErrors.push({
+                href: '#oppsummering',
+                tekstId: 'ingenDagerFyltUt',
+            });
+        }
+        if (harForMangeDagerBesvart) {
+            currentValidationErrors.push({
+                onClick: redirectTilFraværSteg,
+                tekstId: 'forMangeDagerEnkel',
+            });
+        }
+        if (harHattFravær === null) {
+            currentValidationErrors.push({
+                onClick: redirectTilFraværSteg,
+                tekstId: 'fraværSpørsmålIkkeValgt',
+            });
+        }
+        if (harMottattLønn === null) {
+            currentValidationErrors.push({
+                onClick: redirectTilLønnSteg,
+                tekstId: 'lønnSpørsmålIkkeValgt',
+            });
+        }
+        if (kanIkkeSendeInnPgaFravær) {
+            currentValidationErrors.push({
+                onClick: redirectTilFraværSteg,
+                tekstId: 'oppsummeringIngenDagerMedFravær',
+            });
+        }
+        if (kanIkkeSendeInnPgaLønn) {
+            currentValidationErrors.push({
+                onClick: redirectTilLønnSteg,
+                tekstId: 'oppsummeringIngenDagerMedLønn',
+            });
+        }
+        setErrors(currentValidationErrors);
+        return currentValidationErrors;
+    };
+
     return (
         <MeldekortStegWrapper>
             <Tekst id="oppsummeringIngress" />
@@ -60,8 +125,8 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
             </Alert>
             <Kalender meldekort={meldekortUtfylling} steg={'oppsummering'} />
             <ConfirmationPanel
+                id={'bekreft'}
                 onChange={() => {
-                    setVisFeil(false);
                     setHarBekreftet(!harBekreftet);
                 }}
                 checked={harBekreftet}
@@ -74,32 +139,16 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
                     <TekstSegmenter id="oppsummeringInnsendingFeilet" />
                 </Alert>
             )}
-            {visFeil && kanIkkeSendeInnFeilIAndreSteg && (
+            {visFeil && errors.length > 0 && (
                 <ErrorSummary className={style.varsel} ref={errorRef}>
-                    {kanIkkeSendeInnPgaFravær && (
-                        <ErrorSummary.Item
-                            as="button"
-                            className={style.errorSummaryItemAsLink}
-                            onClick={() => {
-                                setMeldekortSteg('fravær');
-                                navigate(getPathForMeldekortSteg('fravær', meldekortUtfylling.id));
-                            }}
-                        >
-                            <Tekst id={'oppsummeringIngenDagerMedFravær'} />
-                        </ErrorSummary.Item>
-                    )}
-                    {kanIkkeSendeInnPgaLønn && (
-                        <ErrorSummary.Item
-                            as="button"
-                            className={style.errorSummaryItemAsLink}
-                            onClick={() => {
-                                setMeldekortSteg('lønn');
-                                navigate(getPathForMeldekortSteg('lønn', meldekortUtfylling.id));
-                            }}
-                        >
-                            <Tekst id={'oppsummeringIngenDagerMedLønn'} />
-                        </ErrorSummary.Item>
-                    )}
+                    {errors.map((error, index) => (
+                        <OppsummeringError
+                            key={`${index}-${error.tekstId}`}
+                            onClick={error.onClick}
+                            tekstId={error.tekstId}
+                            href={error.href}
+                        />
+                    ))}
                 </ErrorSummary>
             )}
             <MeldekortStegButtons
@@ -109,11 +158,13 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
                         return false;
                     }
 
-                    if (kanIkkeSendeInnFeilIAndreSteg) {
+                    const currentValidationErrors = validerMeldekortUtfylling();
+
+                    if (currentValidationErrors.length > 0) {
                         setVisFeil(true);
+                        errorRef.current?.focus();
                         return false;
                     }
-
                     sendInn();
                     return true;
                 }}

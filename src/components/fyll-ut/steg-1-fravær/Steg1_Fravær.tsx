@@ -47,7 +47,7 @@ export const Steg1_Fravær = ({ meldekort }: SSRProps) => {
                 onChange={(harHattFraværSpørsmålSvar: boolean) => {
                     setFeil(null);
                     setHarHattFravær(harHattFraværSpørsmålSvar);
-                    if (harHattFraværSpørsmålSvar === false) {
+                    if (!harHattFraværSpørsmålSvar) {
                         setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
                     }
                 }}

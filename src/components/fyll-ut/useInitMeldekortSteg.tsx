@@ -14,11 +14,11 @@ export function useInitMeldekortSteg(meldekort: MeldekortUtfylling, steg: Meldek
     } = useMeldekortUtfylling();
 
     useEffect(() => {
+        setMeldekortSteg(steg);
         const utfyllingPåbegynt = meldekort && meldekortUtfylling;
         if (utfyllingPåbegynt) {
             redirectHvisMeldekortErInnsendt(meldekort, meldekortUtfylling, steg);
         } else {
-            setMeldekortSteg(steg);
             setMeldekortUtfylling(meldekort);
         }
         // Skal bare kjøre en gang ved initial render.
