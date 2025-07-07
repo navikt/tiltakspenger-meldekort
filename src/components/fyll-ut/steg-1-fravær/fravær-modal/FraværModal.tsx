@@ -85,7 +85,9 @@ export const FraværModal = () => {
                     onClick={() => lagreOgLukk(MeldekortDagStatus.IKKE_BESVART)}
                 >
                     <Tekst
-                        id={valgtStatus === MeldekortDagStatus.IKKE_BESVART ? 'avbryt' : 'slett'}
+                        id={
+                            valgtStatus === MeldekortDagStatus.IKKE_BESVART ? 'avbryt' : 'nullstill'
+                        }
                     />
                 </Button>
             </Modal.Footer>

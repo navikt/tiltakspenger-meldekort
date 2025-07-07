@@ -6,7 +6,9 @@ export const teksterNb = {
     forrige: 'Forrige steg',
     lagre: 'Lagre',
     slett: 'Slett',
-    avbryt: 'Avbryt utfylling',
+    nullstill: 'Nullstill',
+    avbryt: 'Avbryt',
+    avbrytUtfylling: 'Avbryt utfylling',
     sendInn: 'Send inn',
 
     statusIkkeBesvart: 'Ikke besvart',

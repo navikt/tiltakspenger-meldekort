@@ -49,7 +49,7 @@ export const MeldekortStegButtons = ({
                 </div>
             </div>
             <Button variant={'tertiary'} onClick={onAvbrytClick}>
-                <Tekst id={'avbryt'} />
+                <Tekst id={'avbrytUtfylling'} />
             </Button>
         </div>
     );
