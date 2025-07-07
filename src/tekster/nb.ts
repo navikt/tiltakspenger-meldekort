@@ -23,11 +23,14 @@ export const teksterNb = {
     ikkeRett: 'Ikke rett',
 
     forMangeDagerEnkel: 'Du har fylt ut for mange dager',
+    forFaDagerEnkel: 'Du har fylt ut for få dager',
     ingenDagerFyltUt: 'Du må fylle ut minst én dag med fravær, lønn eller deltagelse.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
-        `Du har fylt ut ${antall} dager. Det er maks ${maks} dager med tiltak i denne perioden.`,
+        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har registrert for ${antall} dager. Gå tilbake og sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
+    forFaDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
+        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har bare registrert for ${antall} dager. Gå tilbake og sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 

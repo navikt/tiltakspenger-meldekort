@@ -29,11 +29,18 @@ type ErrorSummaryItem = {
 
 export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
     const { base, navigate } = useRouting();
-    const { meldekortUtfylling, setMeldekortSteg, harHattFravær, harMottattLønn } =
-        useMeldekortUtfylling();
+    const {
+        meldekortUtfylling,
+        setMeldekortSteg,
+        harHattFravær,
+        setHarHattFravær,
+        harMottattLønn,
+        setHarMottattLønn,
+        visValideringsfeil,
+        setVisValideringsfeil,
+    } = useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
-    const [visFeil, setVisFeil] = useState(false);
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
     const errorRef = React.useRef<HTMLDivElement>(null);
     const [errors, setErrors] = useState<ErrorSummaryItem[]>([]);
@@ -46,6 +53,7 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
         harIngenDagerMedLønn,
         harIngenDagerBesvart,
         harForMangeDagerBesvart,
+        harForFaDagerBesvart,
     } = antallDagerValidering(meldekortUtfylling);
 
     const kanIkkeSendeInnPgaFravær = harIngenDagerMedFravær && harHattFravær;
@@ -55,6 +63,10 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
         setMeldekortSteg('kvittering');
         fetchSendInn(meldekortUtfylling, base).then((bleSendt) => {
             if (bleSendt) {
+                setVisValideringsfeil(null);
+                setHarHattFravær(null);
+                setHarMottattLønn(null);
+
                 navigate(getPathForMeldekortSteg('kvittering', meldekortUtfylling.id));
             } else {
                 setInnsendingFeilet(true);
@@ -87,6 +99,12 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
             currentValidationErrors.push({
                 onClick: redirectTilFraværSteg,
                 tekstId: 'forMangeDagerEnkel',
+            });
+        }
+        if (harForFaDagerBesvart) {
+            currentValidationErrors.push({
+                onClick: redirectTilFraværSteg,
+                tekstId: 'forFaDagerEnkel',
             });
         }
         if (harHattFravær === null) {
@@ -132,14 +150,17 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
                 checked={harBekreftet}
                 value={harBekreftet}
                 label={<Tekst id={'oppsummeringBekrefter'} />}
-                error={!harBekreftet && visFeil && <Tekst id={'oppsummeringBekrefterFeil'} />}
+                error={
+                    !harBekreftet &&
+                    visValideringsfeil && <Tekst id={'oppsummeringBekrefterFeil'} />
+                }
             />
             {innsendingFeilet && (
                 <Alert variant="error" className={style.varsel} ref={varselRef} tabIndex={-1}>
                     <TekstSegmenter id="oppsummeringInnsendingFeilet" />
                 </Alert>
             )}
-            {visFeil && errors.length > 0 && (
+            {visValideringsfeil && errors.length > 0 && (
                 <ErrorSummary className={style.varsel} ref={errorRef}>
                     {errors.map((error, index) => (
                         <OppsummeringError
@@ -154,14 +175,14 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
             <MeldekortStegButtons
                 onNesteClick={() => {
                     if (!harBekreftet) {
-                        setVisFeil(true);
+                        setVisValideringsfeil(true);
                         return false;
                     }
 
                     const currentValidationErrors = validerMeldekortUtfylling();
 
                     if (currentValidationErrors.length > 0) {
-                        setVisFeil(true);
+                        setVisValideringsfeil(true);
                         errorRef.current?.focus();
                         return false;
                     }
