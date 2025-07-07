@@ -24,6 +24,7 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
     const [meldekortSteg, setMeldekortSteg] = useState<MeldekortSteg>(STEG_REKKEFOLGE[0]);
     const [harHattFravær, setHarHattFravær] = useState<boolean | null>(null);
     const [harMottattLønn, setHarMottattLønn] = useState<boolean | null>(null);
+    const [visValideringsfeil, setVisValideringsfeil] = useState<boolean | null>(null);
 
     const lagreMeldekortDag = useCallback(
         (dag: MeldekortDag) => {
@@ -111,6 +112,8 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
                 setHarHattFravær,
                 harMottattLønn,
                 setHarMottattLønn,
+                visValideringsfeil,
+                setVisValideringsfeil,
             }}
         >
             {children}

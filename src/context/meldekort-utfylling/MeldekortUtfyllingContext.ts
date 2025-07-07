@@ -20,9 +20,11 @@ export type MeldekortUtfyllingState = {
         nåværendeSteg: MeldekortSteg
     ) => void;
     harHattFravær: boolean | null;
-    setHarHattFravær: (harHattFravær: boolean) => void;
+    setHarHattFravær: (harHattFravær: boolean | null) => void;
     harMottattLønn: boolean | null;
-    setHarMottattLønn: (harMottattLønn: boolean) => void;
+    setHarMottattLønn: (harMottattLønn: boolean | null) => void;
+    visValideringsfeil: boolean | null;
+    setVisValideringsfeil: (visValideringsfeil: boolean | null) => void;
 };
 
 export const MeldekortUtfyllingContext = createContext<MeldekortUtfyllingState>(

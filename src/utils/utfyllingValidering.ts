@@ -7,6 +7,7 @@ export const antallDagerValidering = (meldekortUtfylling: MeldekortUtfylling) =>
 
     const antallDagerBesvart = dager?.filter((dag) => dag.status !== IKKE_BESVART).length;
     const harForMangeDagerBesvart = antallDagerBesvart > meldekortUtfylling?.maksAntallDager;
+    const harForFaDagerBesvart = antallDagerBesvart < meldekortUtfylling?.maksAntallDager;
     const harIngenDagerBesvart = antallDagerBesvart === 0;
     const harIngenDagerMedFravær =
         dager?.filter((dag) => dagStatusMedFravær.has(dag.status)).length === 0;
@@ -19,5 +20,6 @@ export const antallDagerValidering = (meldekortUtfylling: MeldekortUtfylling) =>
         harIngenDagerBesvart,
         harIngenDagerMedFravær,
         harIngenDagerMedLønn,
+        harForFaDagerBesvart,
     };
 };
