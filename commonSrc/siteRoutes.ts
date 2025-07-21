@@ -8,6 +8,8 @@ export const siteRoutes = {
     deltakelse: '/:meldekortId/deltakelse',
     sendInn: '/:meldekortId/send-inn',
     kvittering: '/:meldekortId/kvittering',
+    endreMeldekort: '/:meldekortId/endre',
+    endreMeldekortOppsummering: '/:meldekortId/endre-oppsummering',
 } as const satisfies Record<string, string>;
 
 export type SiteRouteName = keyof typeof siteRoutes;
@@ -22,7 +24,7 @@ export const getPath = (siteRoutePath: SiteRoutePath, params?: Record<string, st
 
     return Object.keys(params).reduce(
         (path, paramKey) => path.replace(`:${paramKey}`, params[paramKey]),
-        siteRoutePath
+        siteRoutePath,
     );
 };
 

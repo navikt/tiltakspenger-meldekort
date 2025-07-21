@@ -7,6 +7,8 @@ import { Steg1_Fravær } from '@components/fyll-ut/steg-1-fravær/Steg1_Fravær.
 import { Steg4_Oppsummering } from '@components/fyll-ut/steg-4-oppsummering/Steg4_Oppsummering.tsx';
 import { Steg5_Kvittering } from '@components/fyll-ut/steg-5-kvittering/Steg5_Kvittering.tsx';
 import { Steg2_Lønn } from '@components/fyll-ut/steg-2-lønn/Steg2_Lønn.tsx';
+import EndreMeldekort from '@components/endreMeldekort/EndreMeldekort';
+import EndreMeldekortOppsummering from '@components/endreMeldekort/EndreMeldekortOppsummering';
 
 export type SiteRouteConfig<Props = any> = {
     path: SiteRoutePath;
@@ -41,5 +43,13 @@ export const siteRouteConfigs = {
     kvittering: {
         path: '/:meldekortId/kvittering',
         Component: Steg5_Kvittering,
+    },
+    endreMeldekort: {
+        path: '/:meldekortId/endre',
+        Component: EndreMeldekort,
+    },
+    endreMeldekortOppsummering: {
+        path: '/:meldekortId/endre-oppsummering',
+        Component: EndreMeldekortOppsummering,
     },
 } as const satisfies Record<SiteRouteName, SiteRouteConfig>;

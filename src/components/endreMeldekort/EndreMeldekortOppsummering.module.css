@@ -1,0 +1,24 @@
+.meldekortDagerContainer {
+    width: max-content;
+    align-self: center;
+}
+
+.oppsummeringUkeContainer {
+    li {
+        list-style: none;
+    }
+}
+
+.oppsummeringUkeContainer > :not(:last-child) {
+    margin-bottom: 4px;
+}
+
+.alertInfo {
+    background: transparent;
+    border: none;
+    padding-left: 0;
+}
+
+.avbrytEndringButton {
+    align-self: start;
+}
