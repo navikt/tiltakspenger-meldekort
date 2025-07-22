@@ -62,7 +62,7 @@ export const AlleMeldekort = ({ meldekort: meldekortListe, arenaMeldekortStatus 
                                             variant="secondary"
                                             onClick={() => {
                                                 navigate(
-                                                    getPath(siteRoutes.endreMeldekort, {
+                                                    getPath(siteRoutes.korrigerMeldekort, {
                                                         meldekortId: meldekort.id,
                                                     }),
                                                 );

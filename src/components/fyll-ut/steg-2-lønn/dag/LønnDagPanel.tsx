@@ -6,7 +6,7 @@ import { formatterDato } from '@utils/datetime';
 import { Tekst } from '@components/tekst/Tekst';
 
 import style from './LønnDagPanel.module.css';
-import { StatiskDagPanel } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
+import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 
 type Props = {
@@ -21,7 +21,7 @@ export const LønnDagPanel = ({ dag }: Props) => {
     const harDeltatt = dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
 
     if (harHattFravær || harDeltatt) {
-        return <StatiskDagPanel dag={dag} />;
+        return <MeldekortdagOppsummering dag={dag} />;
     }
 
     return (

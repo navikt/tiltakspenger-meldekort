@@ -135,7 +135,7 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
               };
     });
 
-    routeBuilder.routes(siteRoutes.endreMeldekort, async (req, fetchFraApi) => {
+    routeBuilder.routes(siteRoutes.korrigerMeldekort, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
             (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null),
@@ -148,13 +148,25 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
               };
     });
 
-    routeBuilder.routes(siteRoutes.endreMeldekortOppsummering, async (req, fetchFraApi) => {
+    routeBuilder.routes(siteRoutes.korrigerMeldekortOppsummering, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
             (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null),
         );
         return meldekortDto
-            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? { props: { originaleMeldekort: tilMeldekortUtfylling(meldekortDto) } }
+            : {
+                  props: {},
+                  status: 404,
+              };
+    });
+    routeBuilder.routes(siteRoutes.korrigerMeldekortKvittering, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null),
+        );
+        return meldekortDto
+            ? { props: { originaleMeldekort: tilMeldekortUtfylling(meldekortDto) } }
             : {
                   props: {},
                   status: 404,

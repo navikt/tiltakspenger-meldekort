@@ -7,8 +7,9 @@ import { Steg1_Fravær } from '@components/fyll-ut/steg-1-fravær/Steg1_Fravær.
 import { Steg4_Oppsummering } from '@components/fyll-ut/steg-4-oppsummering/Steg4_Oppsummering.tsx';
 import { Steg5_Kvittering } from '@components/fyll-ut/steg-5-kvittering/Steg5_Kvittering.tsx';
 import { Steg2_Lønn } from '@components/fyll-ut/steg-2-lønn/Steg2_Lønn.tsx';
-import EndreMeldekort from '@components/endreMeldekort/EndreMeldekort';
-import EndreMeldekortOppsummering from '@components/endreMeldekort/EndreMeldekortOppsummering';
+import KorrigerMeldekort from '@components/korrigerMeldekort/KorrigerMeldekort';
+import KorrigerMeldekortOppsummering from '@components/korrigerMeldekort/KorrigerMeldekortOppsummering';
+import KorrigerMeldekortKvittering from '@components/korrigerMeldekort/KorrigerMeldekortKvittering';
 
 export type SiteRouteConfig<Props = any> = {
     path: SiteRoutePath;
@@ -44,12 +45,16 @@ export const siteRouteConfigs = {
         path: '/:meldekortId/kvittering',
         Component: Steg5_Kvittering,
     },
-    endreMeldekort: {
-        path: '/:meldekortId/endre',
-        Component: EndreMeldekort,
+    korrigerMeldekort: {
+        path: '/:meldekortId/korrigering',
+        Component: KorrigerMeldekort,
     },
-    endreMeldekortOppsummering: {
-        path: '/:meldekortId/endre-oppsummering',
-        Component: EndreMeldekortOppsummering,
+    korrigerMeldekortOppsummering: {
+        path: '/:meldekortId/korrigering/oppsummering',
+        Component: KorrigerMeldekortOppsummering,
+    },
+    korrigerMeldekortKvittering: {
+        path: '/:meldekortId/korrigering/kvittering',
+        Component: KorrigerMeldekortKvittering,
     },
 } as const satisfies Record<SiteRouteName, SiteRouteConfig>;

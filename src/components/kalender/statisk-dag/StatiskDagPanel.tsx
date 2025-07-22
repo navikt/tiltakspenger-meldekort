@@ -1,6 +1,6 @@
 import React from 'react';
 import { BodyLong } from '@navikt/ds-react';
-import { MeldekortDag } from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
 import { formatterDato } from '@utils/datetime.ts';
 import {
     meldekortStatusTilStyle,
@@ -17,7 +17,7 @@ type Props = {
     dag: MeldekortDag;
 };
 
-export const StatiskDagPanel = ({ dag }: Props) => {
+export const MeldekortdagOppsummering = ({ dag }: Props) => {
     const { status, dato, harRett } = dag;
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
@@ -32,6 +32,25 @@ export const StatiskDagPanel = ({ dag }: Props) => {
                 id={harRett ? statusTilTekstId[status] : 'ikkeRett'}
                 weight={'semibold'}
             />
+        </div>
+    );
+};
+
+export const StrippedMeldekortDagOppsummering = ({
+    dag,
+}: {
+    dag: { dato: string; status: MeldekortDagStatus };
+}) => {
+    const { dato, status } = dag;
+    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
+
+    const IkonKomponent = statusTilIkon[status];
+
+    return (
+        <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
+            <IkonKomponent aria-hidden />
+            <BodyLong>{`${datoTekst}: `}</BodyLong>
+            <TekstSegmenter id={statusTilTekstId[status]} weight={'semibold'} />
         </div>
     );
 };

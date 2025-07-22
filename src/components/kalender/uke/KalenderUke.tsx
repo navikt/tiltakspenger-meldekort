@@ -4,7 +4,7 @@ import { Heading } from '@navikt/ds-react';
 import { getUkenummer } from '@utils/datetime.ts';
 import { DeltattDagPanel } from '@components/fyll-ut/steg-3-deltakelse/dag/DeltattDagPanel.tsx';
 import { FraværDagPanel } from '@components/fyll-ut/steg-1-fravær/dag/FraværDagPanel.tsx';
-import { StatiskDagPanel } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
+import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './KalenderUke.module.css';
@@ -14,8 +14,8 @@ const DagKomponentForSteg: Record<MeldekortSteg, React.FunctionComponent<{ dag: 
     deltatt: DeltattDagPanel,
     lønn: LønnDagPanel,
     fravær: FraværDagPanel,
-    oppsummering: StatiskDagPanel,
-    kvittering: StatiskDagPanel,
+    oppsummering: MeldekortdagOppsummering,
+    kvittering: MeldekortdagOppsummering,
 };
 
 type Props = {
@@ -39,7 +39,11 @@ export const KalenderUke = ({ dager, steg }: Props) => {
             <ul className={style.liste}>
                 {dager.map((dag) => (
                     <li key={dag.dato}>
-                        {dag.harRett ? <DagKomponent dag={dag} /> : <StatiskDagPanel dag={dag} />}
+                        {dag.harRett ? (
+                            <DagKomponent dag={dag} />
+                        ) : (
+                            <MeldekortdagOppsummering dag={dag} />
+                        )}
                     </li>
                 ))}
             </ul>

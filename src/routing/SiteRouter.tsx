@@ -5,6 +5,7 @@ import { Feilside } from '@Feilside.tsx';
 import { AppContext } from '@common/typer/appContext.ts';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider.tsx';
 import { useRouting } from '@routing/useRouting.ts';
+import { KorrigerMeldekortProvider } from '@components/korrigerMeldekort/KorrigerMeldekortContext';
 
 type Props = {
     appContext: AppContext;
@@ -19,8 +20,9 @@ export const SiteRouter = ({ appContext }: Props) => {
         lønn,
         sendInn,
         kvittering,
-        endreMeldekort,
-        endreMeldekortOppsummering,
+        korrigerMeldekort,
+        korrigerMeldekortOppsummering,
+        korrigerMeldekortKvittering,
     } = siteRouteConfigs;
     const { navigate } = useRouting();
 
@@ -31,7 +33,7 @@ export const SiteRouter = ({ appContext }: Props) => {
             </Route>
 
             <MeldekortUtfyllingProvider navigate={navigate}>
-                {/*Forsiden trenger å informere provideren om hvilket meldekort som det skal jobbes med i stegene*/}
+                {/* Forsiden trenger å informere provideren om hvilket meldekort som det skal jobbes med i stegene */}
                 <Route path={forside.path}>
                     <RouteComponent route={forside} appContext={appContext} />
                 </Route>
@@ -51,14 +53,32 @@ export const SiteRouter = ({ appContext }: Props) => {
                 <Route path={kvittering.path}>
                     <RouteComponent route={kvittering} appContext={appContext} />
                 </Route>
-                <Route path={endreMeldekort.path}>
-                    <RouteComponent route={endreMeldekort} appContext={appContext} />
-                </Route>
-                <Route path={endreMeldekortOppsummering.path}>
-                    <RouteComponent route={endreMeldekortOppsummering} appContext={appContext} />
-                </Route>
+
+                {/*pga match av provideren over, må alle routes være innenfor denne - Eventuelt hvis den er en fully-standalone route - over provideren. Litt dumt at base
+                    pathen må wrappes i en provider*/}
+                <KorrigerMeldekortProvider>
+                    <Route path={korrigerMeldekort.path}>
+                        <RouteComponent route={korrigerMeldekort} appContext={appContext} />
+                    </Route>
+                    <Route path={korrigerMeldekortOppsummering.path}>
+                        <RouteComponent
+                            route={korrigerMeldekortOppsummering}
+                            appContext={appContext}
+                        />
+                    </Route>
+                    <Route path={korrigerMeldekortKvittering.path}>
+                        <RouteComponent
+                            route={korrigerMeldekortKvittering}
+                            appContext={appContext}
+                        />
+                    </Route>
+                </KorrigerMeldekortProvider>
             </MeldekortUtfyllingProvider>
 
+            {/* 
+                Denne routen vil aldri matche fordi provideren vil alltid bli sett på som en match - Vi er derimot heldige fordi at appContext.status i App.tsx fie oss feilsiden. 
+                Kan enten flytte den inn i provideren, eller finne en annen måte å håndtere dette på. 
+                */}
             <Route>
                 <Feilside />
             </Route>
