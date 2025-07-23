@@ -6,6 +6,7 @@ import {
     MeldekortStatus,
     MeldekortUtfylling,
 } from '../commonSrc/typer/meldekort-utfylling';
+import { KorrigerMeldekortStatus } from '../src/components/korrigerMeldekort/KorrigerMeldekortUtils';
 
 const nyMeldekortDag = ({
     dato = '2023-01-01',
@@ -236,4 +237,54 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
     // Verifiserer at vi kommer til bekreftelse
     expect(page.url()).toContain('/12345/korrigering/kvittering');
     expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
+});
+
+test('forrige steg på oppsummering tar deg tilbake til korrigering med den korrigerte dataen', async ({
+    page,
+}) => {
+    await page.goto(`${testsBaseUrl}/alle`);
+    await klikkCookieBanner(page);
+    //Skal kunne navigere seg til korrigering
+    await page.getByText('Meldekort uke 1 - 2').click();
+    await page.getByText('Endre meldekort').click();
+
+    expect(page.url()).toContain('/12345/korrigering');
+    // Endrer på statuser for uke 1
+    await page.selectOption('#select-2023-01-01', 'Deltatt');
+    await page.selectOption('#select-2023-01-03', 'Deltatt');
+    await page.selectOption('#select-2023-01-04', 'Deltatt');
+    await page.selectOption('#select-2023-01-05', 'Deltatt');
+    // Endrer på statuser for uke 2
+    await page.selectOption('#select-2023-01-08', 'Mottatt lønn');
+    await page.selectOption('#select-2023-01-09', 'Syk barn eller syk barnepasser');
+    await page.selectOption('#select-2023-01-10', 'Annet fravær');
+    await page.selectOption('#select-2023-01-11', 'Deltatt');
+    await page.selectOption('#select-2023-01-12', 'Fravær godkjent av Nav');
+
+    await page.getByText('Neste steg').click();
+    expect(page.url()).toContain('/12345/korrigering/oppsummering');
+
+    // Går tilbake til korrigering
+    await page.getByText('Forrige steg').click();
+    expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/12345/korrigering');
+
+    // Verifiserer at de endrede statusene er der
+    expect(page.locator('#select-2023-01-01')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
+    expect(page.locator('#select-2023-01-03')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
+    expect(page.locator('#select-2023-01-04')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
+    expect(page.locator('#select-2023-01-05')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
+    expect(page.locator('#select-2023-01-06')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
+    expect(page.locator('#select-2023-01-07')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
+
+    expect(page.locator('#select-2023-01-08')).toHaveValue(KorrigerMeldekortStatus.MOTTAT_LØNN);
+    expect(page.locator('#select-2023-01-09')).toHaveValue(
+        KorrigerMeldekortStatus.SYK_BARN_ELLER_SYK_BARNEPASSER,
+    );
+    expect(page.locator('#select-2023-01-10')).toHaveValue(KorrigerMeldekortStatus.ANNET_FRAVÆR);
+    expect(page.locator('#select-2023-01-11')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
+    expect(page.locator('#select-2023-01-12')).toHaveValue(
+        KorrigerMeldekortStatus.FRAVÆR_GODKJENT_AV_NAV,
+    );
+    expect(page.locator('#select-2023-01-13')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
+    expect(page.locator('#select-2023-01-14')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
 });
