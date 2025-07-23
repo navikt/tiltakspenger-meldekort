@@ -288,3 +288,106 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     expect(page.locator('#select-2023-01-13')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
     expect(page.locator('#select-2023-01-14')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
 });
+
+test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
+    const meldekortMedDagerUtenRett = nyUtfylltMeldekort({
+        dager: [
+            nyMeldekortDag({
+                dato: '2023-01-06',
+                status: MeldekortDagStatus.IKKE_BESVART,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-07',
+                status: MeldekortDagStatus.IKKE_BESVART,
+                harRett: false,
+                index: 1,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-08',
+                status: MeldekortDagStatus.FRAVÆR_SYKT_BARN,
+                index: 2,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-09',
+                status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
+                index: 3,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-10',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+                index: 4,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-11',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+                index: 5,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-12',
+                status: MeldekortDagStatus.FRAVÆR_ANNET,
+                index: 6,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-13',
+                status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+                index: 7,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-14',
+                status: MeldekortDagStatus.IKKE_BESVART,
+                index: 8,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-15',
+                status: MeldekortDagStatus.IKKE_BESVART,
+                index: 9,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-16',
+                status: MeldekortDagStatus.IKKE_BESVART,
+                index: 10,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-17',
+                status: MeldekortDagStatus.IKKE_BESVART,
+                index: 11,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-18',
+                status: MeldekortDagStatus.IKKE_BESVART,
+                index: 12,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-19',
+                status: MeldekortDagStatus.IKKE_BESVART,
+                index: 13,
+            }),
+            nyMeldekortDag({
+                dato: '2023-01-20',
+                status: MeldekortDagStatus.IKKE_BESVART,
+                index: 14,
+            }),
+        ],
+    });
+    await page.route('*/**/alle/data', async (route) => {
+        await route.fulfill({
+            json: {
+                meldekort: [meldekortMedDagerUtenRett],
+                arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
+            },
+        });
+    });
+    await page.route('*/**/12345/korrigering/data', async (route) => {
+        await route.fulfill({ json: { meldekort: meldekortMedDagerUtenRett } });
+    });
+    await page.goto(`${testsBaseUrl}/alle`);
+    await klikkCookieBanner(page);
+    //Skal kunne navigere seg til korrigering
+    await page.getByText('Meldekort uke 1 - 2').click();
+    await page.getByText('Endre meldekort').click();
+
+    expect(page.url()).toContain('/12345/korrigering');
+    // Verifiserer at dager uten rett ikke kan endres - vi har ikke en god måte å faktisk teste dette, så vi bare sjekker at de har en readonly class
+    const formField = page.locator(`label[for="select-2023-01-07"]`).locator('..');
+    await expect(formField).toHaveClass(/navds-form-field--readonly/);
+});
