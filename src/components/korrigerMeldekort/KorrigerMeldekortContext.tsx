@@ -1,30 +1,14 @@
-import { MeldekortDagStatus } from '@common/typer/meldekort-utfylling';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
+import { KorrigerMeldekortStatus, KorrigertMeldekortDag } from './KorrigerMeldekortUtils';
 
 export interface KorrigerMeldekortContextState {
-    dager: Array<{ dato: string; status: MeldekortDagStatus }>;
-    setDager: (dager: Array<{ dato: string; status: MeldekortDagStatus }>) => void;
-    oppdaterDag: (dato: string, status: MeldekortDagStatus) => void;
+    dager: KorrigertMeldekortDag[];
+    setDager: (dager: KorrigertMeldekortDag[]) => void;
+    oppdaterDag: (dato: string, status: KorrigerMeldekortStatus) => void;
 }
 
 export const KorrigerMeldekortContext = createContext<KorrigerMeldekortContextState>(
     {} as KorrigerMeldekortContextState,
 );
-
-export const KorrigerMeldekortProvider = (props: { children: React.ReactNode }) => {
-    const [dager, setDager] = useState<Array<{ dato: string; status: MeldekortDagStatus }>>([]);
-
-    const oppdaterDag = (dato: string, status: MeldekortDagStatus) => {
-        setDager((prevDager) =>
-            prevDager.map((dag) => (dag.dato === dato ? { ...dag, status } : dag)),
-        );
-    };
-
-    return (
-        <KorrigerMeldekortContext.Provider value={{ dager, setDager, oppdaterDag }}>
-            {props.children}
-        </KorrigerMeldekortContext.Provider>
-    );
-};
 
 export const useKorrigerMeldekortContext = () => useContext(KorrigerMeldekortContext);

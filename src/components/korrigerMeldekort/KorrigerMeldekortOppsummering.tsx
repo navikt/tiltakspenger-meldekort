@@ -1,5 +1,5 @@
-import { MeldekortDagStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
-import { StrippedMeldekortDagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
+
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
 import {
@@ -21,6 +21,8 @@ import { Link } from 'wouter';
 import { useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
+import { KorrigertMeldekortDag } from './KorrigerMeldekortUtils';
+import { OppsummeringAvKorrigertMeldekortDag } from './oppsummeringAvKorrigertMeldekortDag/OppsummeringAvKorrigertMeldekortDag';
 
 const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtfylling }) => {
     const { navigate } = useRouting();
@@ -45,7 +47,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
                 }
             />
 
-            <VStack gap="8">
+            <VStack gap="8" style={{}}>
                 <Heading size="large" level="3">
                     Oppsummering av endret meldekort
                 </Heading>
@@ -64,7 +66,9 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
                     </Alert>
                 ) : (
                     <>
-                        <OppsummeringAvMeldekortDager dager={korrigerMeldekortContext.dager} />
+                        <OppsummeringAvKorrigertMeldekortDager
+                            dager={korrigerMeldekortContext.dager}
+                        />
                         <ConfirmationPanel
                             label={'Jeg bekrefter at disse opplysningene stemmer'}
                             checked={harBekreftet}
@@ -130,9 +134,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
 
 export default KorrigerMeldekortOppsummering;
 
-const OppsummeringAvMeldekortDager = (props: {
-    dager: Array<{ dato: string; status: MeldekortDagStatus }>;
-}) => {
+const OppsummeringAvKorrigertMeldekortDager = (props: { dager: KorrigertMeldekortDag[] }) => {
     return (
         <HStack className={styles.meldekortDagerContainer}>
             <OppsummeringAvMeldekortUke dager={props.dager} ukeNummer="1" />
@@ -142,7 +144,7 @@ const OppsummeringAvMeldekortDager = (props: {
 };
 
 const OppsummeringAvMeldekortUke = (props: {
-    dager: Array<{ dato: string; status: MeldekortDagStatus }>;
+    dager: KorrigertMeldekortDag[];
     ukeNummer: '1' | '2';
 }) => {
     const uke1 = props.dager.slice(0, 7);
@@ -153,14 +155,14 @@ const OppsummeringAvMeldekortUke = (props: {
             {props.ukeNummer === '1'
                 ? uke1.map((dag) => (
                       <li key={`uke1-${dag.dato}`}>
-                          <StrippedMeldekortDagOppsummering dag={dag} />
+                          <OppsummeringAvKorrigertMeldekortDag dag={dag} />
                       </li>
                   ))
                 : null}
             {props.ukeNummer === '2'
                 ? uke2.map((dag) => (
                       <li key={`uke2-${dag.dato}`}>
-                          <StrippedMeldekortDagOppsummering dag={dag} />
+                          <OppsummeringAvKorrigertMeldekortDag dag={dag} />
                       </li>
                   ))
                 : null}

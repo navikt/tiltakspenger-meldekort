@@ -5,7 +5,7 @@ import { Feilside } from '@Feilside.tsx';
 import { AppContext } from '@common/typer/appContext.ts';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider.tsx';
 import { useRouting } from '@routing/useRouting.ts';
-import { KorrigerMeldekortProvider } from '@components/korrigerMeldekort/KorrigerMeldekortContext';
+import { KorrigerMeldekortProvider } from '@components/korrigerMeldekort/KorrigerMeldekortProvider';
 
 type Props = {
     appContext: AppContext;

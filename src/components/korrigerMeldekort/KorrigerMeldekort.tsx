@@ -1,4 +1,4 @@
-import { MeldekortDagStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
+import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
@@ -18,6 +18,12 @@ import { useEffect } from 'react';
 import styles from './KorrigerMeldekort.module.css';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from './KorrigerMeldekortContext';
+import {
+    KorrigerMeldekortStatus,
+    korrigerMeldekortStatusTextMapper,
+    KorrigertMeldekortDag,
+    mapUtfylltMeldekortDagerTilKorrigerteDager,
+} from './KorrigerMeldekortUtils';
 
 const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
     const { navigate } = useRouting();
@@ -29,7 +35,7 @@ const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
 
     useEffect(() => {
         if (dager.length === 0) {
-            setDager(props.meldekort.dager);
+            setDager(mapUtfylltMeldekortDagerTilKorrigerteDager(props.meldekort.dager));
         }
     }, [props.meldekort.dager, setDager, dager]);
 
@@ -65,13 +71,8 @@ const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
                 </BodyLong>
 
                 <MeldekortUkeBehandling
-                    dager={dager.map((dag) => ({
-                        dato: dag.dato,
-                        status: dag.status,
-                    }))}
-                    onChange={(dag, nyStatus) => {
-                        oppdaterDag(dag, nyStatus);
-                    }}
+                    dager={dager}
+                    onChange={(dag, nyStatus) => oppdaterDag(dag, nyStatus)}
                 />
 
                 <VStack gap="2">
@@ -105,8 +106,8 @@ const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
 export default KorrigerMeldekort;
 
 export const MeldekortUkeBehandling = (props: {
-    dager: Array<{ dato: string; status: MeldekortDagStatus }>;
-    onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
+    dager: KorrigertMeldekortDag[];
+    onChange: (dag: string, nyStatus: KorrigerMeldekortStatus) => void;
 }) => {
     const dagerUke1 = props.dager.slice(0, 7);
     const dagerUke2 = props.dager.slice(7, 14);
@@ -117,14 +118,20 @@ export const MeldekortUkeBehandling = (props: {
                 <VStack gap="4">
                     {dagerUke1.map((dag) => (
                         <Select
+                            id={`select-uke1-${dag.dato}`}
                             key={`uke1-${dag.dato}`}
                             label={formatterDato({ medUkeDag: true, dato: dag.dato })}
                             value={dag.status}
                             onChange={(e) => {
-                                props.onChange(dag.dato, e.target.value as MeldekortDagStatus);
+                                props.onChange(dag.dato, e.target.value as KorrigerMeldekortStatus);
                             }}
+                            readOnly={!dag.harRett}
                         >
-                            {getDagStatusOptions()}
+                            {Object.values(KorrigerMeldekortStatus).map((status) => (
+                                <option key={status} value={status}>
+                                    {korrigerMeldekortStatusTextMapper(status)}
+                                </option>
+                            ))}
                         </Select>
                     ))}
                 </VStack>
@@ -132,14 +139,19 @@ export const MeldekortUkeBehandling = (props: {
                 <VStack gap="4">
                     {dagerUke2.map((dag) => (
                         <Select
+                            id={`select-uke2-${dag.dato}`}
                             key={`uke2-${dag.dato}`}
                             label={formatterDato({ medUkeDag: true, dato: dag.dato })}
                             value={dag.status}
                             onChange={(e) => {
-                                props.onChange(dag.dato, e.target.value as MeldekortDagStatus);
+                                props.onChange(dag.dato, e.target.value as KorrigerMeldekortStatus);
                             }}
                         >
-                            {getDagStatusOptions()}
+                            {Object.values(KorrigerMeldekortStatus).map((status) => (
+                                <option key={status} value={status}>
+                                    {korrigerMeldekortStatusTextMapper(status)}
+                                </option>
+                            ))}
                         </Select>
                     ))}
                 </VStack>
@@ -263,35 +275,4 @@ const InformasjonOmKorrigeringAvMeldekort = () => {
             </Accordion.Item>
         </Accordion>
     );
-};
-
-const getDagStatusOptions = () => {
-    return Object.values(MeldekortDagStatus).map((status) => (
-        <option key={status} value={status}>
-            {dagStatusTekstMapper(status)}
-        </option>
-    ));
-};
-
-//TODO - kan vi virkelig forvente alle disse statusene ved endring av meldekort?
-//TODO - vi må ha 'ikke tiltaksdag' fra brukersperspektiv. Hvordan skal vi mappe disse til / fra backend
-const dagStatusTekstMapper = (status: MeldekortDagStatus): string => {
-    switch (status) {
-        case MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET:
-            return 'Mottatt lønn';
-        case MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET:
-            return 'Deltatt';
-        case MeldekortDagStatus.FRAVÆR_SYK:
-            return 'Syk';
-        case MeldekortDagStatus.FRAVÆR_SYKT_BARN:
-            return 'Syk barn eller syk barnepasser';
-        case MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV:
-            return 'Fravær godkjent av NAV';
-        case MeldekortDagStatus.FRAVÆR_ANNET:
-            return 'Annet fravær';
-        case MeldekortDagStatus.IKKE_BESVART:
-            return 'Ikke besvart';
-        default:
-            return 'Ukjent status';
-    }
 };

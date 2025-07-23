@@ -1,9 +1,12 @@
 .meldekortDagerContainer {
-    width: max-content;
-    align-self: center;
-}
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--a-spacing-6);
 
-.oppsummeringUkeContainer {
+    ul {
+        padding: 0;
+    }
+
     li {
         list-style: none;
     }
