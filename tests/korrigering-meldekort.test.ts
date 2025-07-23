@@ -214,3 +214,26 @@ test.describe('kan avbryte korrigering av et meldekort', () => {
         expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/');
     });
 });
+
+test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
+    await page.goto(`${testsBaseUrl}/alle`);
+    await klikkCookieBanner(page);
+    //Skal kunne navigere seg til korrigering
+    await page.getByText('Meldekort uke 1 - 2').click();
+    await page.getByText('Endre meldekort').click();
+
+    expect(page.url()).toContain('/12345/korrigering');
+    await page.getByText('Neste steg').click();
+    expect(page.url()).toContain('/12345/korrigering/oppsummering');
+
+    // Prøver å sende inn uten å bekrefte
+    await page.getByText('Send meldekortet').click();
+    expect(page.getByText('Du må bekrefte for å gå videre')).toBeVisible();
+    expect(page.url()).toContain('/12345/korrigering/oppsummering');
+
+    await page.getByText('Jeg bekrefter at disse opplysningene stemmer').click();
+    await page.getByText('Send meldekortet').click();
+    // Verifiserer at vi kommer til bekreftelse
+    expect(page.url()).toContain('/12345/korrigering/kvittering');
+    expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
+});

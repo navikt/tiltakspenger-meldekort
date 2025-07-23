@@ -25,6 +25,9 @@ import {
     mapUtfylltMeldekortDagerTilKorrigerteDager,
 } from './KorrigerMeldekortUtils';
 
+/**
+ * TODO - skal vi ha noe form for validering her?
+ */
 const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
     const { navigate } = useRouting();
     const { dager, setDager, oppdaterDag } = useKorrigerMeldekortContext();
