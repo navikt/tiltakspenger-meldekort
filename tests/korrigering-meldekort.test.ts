@@ -6,7 +6,6 @@ import {
     MeldekortStatus,
     MeldekortUtfylling,
 } from '../commonSrc/typer/meldekort-utfylling';
-import { beforeEach } from 'node:test';
 
 const nyMeldekortDag = ({
     dato = '2023-01-01',
@@ -153,16 +152,16 @@ test('kan korrigere meldekort', async ({ page }) => {
 
     expect(page.url()).toContain('/12345/korrigering');
     // Endrer på statuser for uke 1
-    await page.selectOption('#select-uke1-2023-01-01', 'Deltatt');
-    await page.selectOption('#select-uke1-2023-01-03', 'Deltatt');
-    await page.selectOption('#select-uke1-2023-01-04', 'Deltatt');
-    await page.selectOption('#select-uke1-2023-01-05', 'Deltatt');
+    await page.selectOption('#select-2023-01-01', 'Deltatt');
+    await page.selectOption('#select-2023-01-03', 'Deltatt');
+    await page.selectOption('#select-2023-01-04', 'Deltatt');
+    await page.selectOption('#select-2023-01-05', 'Deltatt');
     // Endrer på statuser for uke 2
-    await page.selectOption('#select-uke2-2023-01-08', 'Mottatt lønn');
-    await page.selectOption('#select-uke2-2023-01-09', 'Syk barn eller syk barnepasser');
-    await page.selectOption('#select-uke2-2023-01-10', 'Annet fravær');
-    await page.selectOption('#select-uke2-2023-01-11', 'Deltatt');
-    await page.selectOption('#select-uke2-2023-01-12', 'Fravær godkjent av Nav');
+    await page.selectOption('#select-2023-01-08', 'Mottatt lønn');
+    await page.selectOption('#select-2023-01-09', 'Syk barn eller syk barnepasser');
+    await page.selectOption('#select-2023-01-10', 'Annet fravær');
+    await page.selectOption('#select-2023-01-11', 'Deltatt');
+    await page.selectOption('#select-2023-01-12', 'Fravær godkjent av Nav');
 
     await page.getByText('Neste steg').click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');

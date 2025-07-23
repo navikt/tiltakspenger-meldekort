@@ -109,53 +109,32 @@ export const MeldekortUkeBehandling = (props: {
     dager: KorrigertMeldekortDag[];
     onChange: (dag: string, nyStatus: KorrigerMeldekortStatus) => void;
 }) => {
-    const dagerUke1 = props.dager.slice(0, 7);
-    const dagerUke2 = props.dager.slice(7, 14);
-
     return (
         <VStack>
-            <HStack gap="24">
-                <VStack gap="4">
-                    {dagerUke1.map((dag) => (
-                        <Select
-                            id={`select-uke1-${dag.dato}`}
-                            key={`uke1-${dag.dato}`}
-                            label={formatterDato({ medUkeDag: true, dato: dag.dato })}
-                            value={dag.status}
-                            onChange={(e) => {
-                                props.onChange(dag.dato, e.target.value as KorrigerMeldekortStatus);
-                            }}
-                            readOnly={!dag.harRett}
-                        >
-                            {Object.values(KorrigerMeldekortStatus).map((status) => (
+            <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
+                {props.dager.map((dag) => (
+                    <Select
+                        id={`select-${dag.dato}`}
+                        key={dag.dato}
+                        label={formatterDato({ medUkeDag: true, dato: dag.dato })}
+                        value={dag.status}
+                        onChange={(e) => {
+                            props.onChange(dag.dato, e.target.value as KorrigerMeldekortStatus);
+                        }}
+                        readOnly={!dag.harRett}
+                    >
+                        {dag.harRett ? (
+                            Object.values(KorrigerMeldekortStatus).map((status) => (
                                 <option key={status} value={status}>
                                     {korrigerMeldekortStatusTextMapper(status)}
                                 </option>
-                            ))}
-                        </Select>
-                    ))}
-                </VStack>
-
-                <VStack gap="4">
-                    {dagerUke2.map((dag) => (
-                        <Select
-                            id={`select-uke2-${dag.dato}`}
-                            key={`uke2-${dag.dato}`}
-                            label={formatterDato({ medUkeDag: true, dato: dag.dato })}
-                            value={dag.status}
-                            onChange={(e) => {
-                                props.onChange(dag.dato, e.target.value as KorrigerMeldekortStatus);
-                            }}
-                        >
-                            {Object.values(KorrigerMeldekortStatus).map((status) => (
-                                <option key={status} value={status}>
-                                    {korrigerMeldekortStatusTextMapper(status)}
-                                </option>
-                            ))}
-                        </Select>
-                    ))}
-                </VStack>
-            </HStack>
+                            ))
+                        ) : (
+                            <option>Ikke rett på tiltakspenger</option>
+                        )}
+                    </Select>
+                ))}
+            </VStack>
         </VStack>
     );
 };
