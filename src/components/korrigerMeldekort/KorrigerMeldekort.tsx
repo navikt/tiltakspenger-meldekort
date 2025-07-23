@@ -254,21 +254,22 @@ const InformasjonOmKorrigeringAvMeldekort = () => {
                     <Label>Når skal du velge “Annet fravær”?</Label>
                     <ul>
                         <li>
-                            Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det gjelder
-                            hvis fraværet skyldes aktiviteter som du har avtalt med veilederen din.
+                            Du skal velge «annet fravær» hvis du har vært fraværende hele eller
+                            deler av den aktuelle tiltaksdagen.
                         </li>
                         <li>
-                            Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for
-                            eksempel:
-                            <ul>
-                                <li>jobbintervju</li>
-                                <li>timeavtale i det offentlige hjelpeapparatet</li>
-                                <li>alvorlig sykdom/begravelse i nærmeste familie</li>
-                            </ul>
+                            Du skal velge «annet fravær» hvis du har arbeidet i stedet for å delta
+                            på tiltaket. For eksempel: Du har avtalt tiltakstid 09-15 og arbeidet
+                            fra 09-10 i stedet for å delta hele den avtalte tiden på tiltaket.
                         </li>
                         <li>
-                            Ta kontakt med veilederen din for å dokumentere årsaken til fraværet og
-                            få det godkjent.
+                            Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt
+                            ferieperiode for tiltaket.
+                        </li>
+                        <li>
+                            Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du
+                            kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen
+                            din.
                         </li>
                     </ul>
                 </Accordion.Content>
