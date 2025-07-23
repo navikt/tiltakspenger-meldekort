@@ -136,36 +136,12 @@ export default KorrigerMeldekortOppsummering;
 
 const OppsummeringAvKorrigertMeldekortDager = (props: { dager: KorrigertMeldekortDag[] }) => {
     return (
-        <HStack className={styles.meldekortDagerContainer}>
-            <OppsummeringAvMeldekortUke dager={props.dager} ukeNummer="1" />
-            <OppsummeringAvMeldekortUke dager={props.dager} ukeNummer="2" />
-        </HStack>
-    );
-};
-
-const OppsummeringAvMeldekortUke = (props: {
-    dager: KorrigertMeldekortDag[];
-    ukeNummer: '1' | '2';
-}) => {
-    const uke1 = props.dager.slice(0, 7);
-    const uke2 = props.dager.slice(7, 14);
-
-    return (
-        <ul className={styles.oppsummeringUkeContainer}>
-            {props.ukeNummer === '1'
-                ? uke1.map((dag) => (
-                      <li key={`uke1-${dag.dato}`}>
-                          <OppsummeringAvKorrigertMeldekortDag dag={dag} />
-                      </li>
-                  ))
-                : null}
-            {props.ukeNummer === '2'
-                ? uke2.map((dag) => (
-                      <li key={`uke2-${dag.dato}`}>
-                          <OppsummeringAvKorrigertMeldekortDag dag={dag} />
-                      </li>
-                  ))
-                : null}
+        <ul className={styles.dagOppsummeringContainer}>
+            {props.dager.map((dag) => (
+                <li key={`${dag.dato}`}>
+                    <OppsummeringAvKorrigertMeldekortDag dag={dag} />
+                </li>
+            ))}
         </ul>
     );
 };
