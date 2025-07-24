@@ -1,4 +1,8 @@
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
+import {
+    MeldekortDag,
+    MeldekortDagStatus,
+    MeldekortUtfylling,
+} from '@common/typer/meldekort-utfylling';
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
@@ -18,12 +22,7 @@ import { useEffect } from 'react';
 import styles from './KorrigerMeldekort.module.css';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from './KorrigerMeldekortContext';
-import {
-    KorrigerMeldekortStatus,
-    korrigerMeldekortStatusTextMapper,
-    KorrigertMeldekortDag,
-    mapUtfylltMeldekortDagerTilKorrigerteDager,
-} from './KorrigerMeldekortUtils';
+import { korrigerMeldekortStatusTextMapper } from './KorrigerMeldekortUtils';
 
 /**
  * TODO - skal vi ha noe form for validering her?
@@ -38,7 +37,7 @@ const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
 
     useEffect(() => {
         if (dager.length === 0) {
-            setDager(mapUtfylltMeldekortDagerTilKorrigerteDager(props.meldekort.dager));
+            setDager(props.meldekort.dager);
         }
     }, [props.meldekort.dager, setDager, dager]);
 
@@ -109,8 +108,8 @@ const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
 export default KorrigerMeldekort;
 
 export const MeldekortUkeBehandling = (props: {
-    dager: KorrigertMeldekortDag[];
-    onChange: (dag: string, nyStatus: KorrigerMeldekortStatus) => void;
+    dager: MeldekortDag[];
+    onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
 }) => {
     return (
         <VStack>
@@ -122,16 +121,18 @@ export const MeldekortUkeBehandling = (props: {
                         label={formatterDato({ medUkeDag: true, dato: dag.dato })}
                         value={dag.status}
                         onChange={(e) => {
-                            props.onChange(dag.dato, e.target.value as KorrigerMeldekortStatus);
+                            props.onChange(dag.dato, e.target.value as MeldekortDagStatus);
                         }}
                         readOnly={!dag.harRett}
                     >
                         {dag.harRett ? (
-                            Object.values(KorrigerMeldekortStatus).map((status) => (
-                                <option key={status} value={status}>
-                                    {korrigerMeldekortStatusTextMapper(status)}
-                                </option>
-                            ))
+                            Object.values(MeldekortDagStatus)
+                                .filter((status) => status !== MeldekortDagStatus.IKKE_BESVART)
+                                .map((status) => (
+                                    <option key={status} value={status}>
+                                        {korrigerMeldekortStatusTextMapper(status)}
+                                    </option>
+                                ))
                         ) : (
                             <option>Ikke rett på tiltakspenger</option>
                         )}

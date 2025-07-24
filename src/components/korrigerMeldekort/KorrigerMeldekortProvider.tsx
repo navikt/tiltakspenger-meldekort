@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { KorrigerMeldekortStatus, KorrigertMeldekortDag } from './KorrigerMeldekortUtils';
 import { KorrigerMeldekortContext } from './KorrigerMeldekortContext';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling';
 
 export const KorrigerMeldekortProvider = (props: { children: React.ReactNode }) => {
-    const [dager, setDager] = useState<KorrigertMeldekortDag[]>([]);
+    const [dager, setDager] = useState<MeldekortDag[]>([]);
 
-    const oppdaterDag = (dato: string, status: KorrigerMeldekortStatus) => {
+    const oppdaterDag = (dato: string, status: MeldekortDagStatus) => {
         setDager((prevDager) =>
             prevDager.map((dag) => (dag.dato === dato ? { ...dag, status } : dag)),
         );

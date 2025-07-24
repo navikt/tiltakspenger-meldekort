@@ -1,4 +1,4 @@
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
+import { MeldekortDag, MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
 
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
@@ -18,17 +18,72 @@ import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from './KorrigerMeldekortContext';
 import { Link } from 'wouter';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
-import { KorrigertMeldekortDag } from './KorrigerMeldekortUtils';
-import { OppsummeringAvKorrigertMeldekortDag } from './oppsummeringAvKorrigertMeldekortDag/OppsummeringAvKorrigertMeldekortDag';
+import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
+
+const useSendKorrigerteDager = (
+    korrigerteDager: MeldekortDag[],
+    baseUrl: string,
+): {
+    status: 'success' | 'error' | 'loading' | 'initial';
+    response: unknown;
+    callFn: () => void;
+} => {
+    const [response, setResponse] = useState<unknown>(null);
+    const [status, setStatus] = useState<'success' | 'error' | 'loading' | 'initial'>('initial');
+
+    const callFn = useCallback(() => {
+        setStatus('loading');
+        fetch(`${baseUrl}/api/korrigerte-dager`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(
+                korrigerteDager.map((dag) => ({ dato: dag.dato, status: dag.status })),
+            ),
+        })
+            .then((res) => {
+                if (res.ok) {
+                    setStatus('success');
+                    setResponse(res);
+                } else {
+                    console.error(`Feil-response ved innsending - ${res.status}`);
+                    setStatus('error');
+                    setResponse(res);
+                }
+            })
+            .catch((e) => {
+                console.error(`Innsending feilet - ${e}`);
+                setStatus('error');
+            });
+    }, [korrigerteDager, baseUrl]);
+
+    return { status, response, callFn };
+};
 
 const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtfylling }) => {
-    const { navigate } = useRouting();
+    const { navigate, base } = useRouting();
+
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
     const korrigerMeldekortContext = useKorrigerMeldekortContext();
+    const [innsendingFeilet, setInnsendingFeilet] = useState(false);
+    const { status, response, callFn } = useSendKorrigerteDager(
+        korrigerMeldekortContext.dager,
+        base,
+    );
+
+    useEffect(() => {
+        if (status === 'error') {
+            setInnsendingFeilet(true);
+        } else {
+            setInnsendingFeilet(false);
+        }
+    }, [status]);
 
     return (
         <div>
@@ -83,6 +138,11 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
                             Meldekortet er ikke sendt inn.
                         </Alert>
 
+                        {innsendingFeilet && (
+                            <Alert variant="error">
+                                Innsending av meldekortet feilet. Prøv igjen
+                            </Alert>
+                        )}
                         <HStack gap="2">
                             <Button
                                 variant="secondary"
@@ -98,18 +158,15 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
                                 Forrige steg
                             </Button>
                             <FlashingButton
+                                loading={status === 'loading'}
                                 onClick={() => {
-                                    console.log('Sender inn meldekortet');
                                     if (!harBekreftet) {
                                         setVisFeil(true);
                                         return false;
                                     }
 
-                                    navigate(
-                                        getPath(siteRoutes.korrigerMeldekortKvittering, {
-                                            meldekortId: props.originaleMeldekort.id,
-                                        }),
-                                    );
+                                    callFn();
+
                                     return true;
                                 }}
                                 icon={<PaperplaneIcon title="pil-høyre" fontSize="1.5rem" />}
@@ -134,12 +191,12 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
 
 export default KorrigerMeldekortOppsummering;
 
-const OppsummeringAvKorrigertMeldekortDager = (props: { dager: KorrigertMeldekortDag[] }) => {
+const OppsummeringAvKorrigertMeldekortDager = (props: { dager: MeldekortDag[] }) => {
     return (
         <ul className={styles.dagOppsummeringContainer}>
             {props.dager.map((dag) => (
                 <li key={`${dag.dato}`}>
-                    <OppsummeringAvKorrigertMeldekortDag dag={dag} />
+                    <MeldekortdagOppsummering dag={dag} ikkeBesvartSomIkkeTiltaksdag />
                 </li>
             ))}
         </ul>

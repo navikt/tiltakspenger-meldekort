@@ -1,10 +1,10 @@
 import { createContext, useContext } from 'react';
-import { KorrigerMeldekortStatus, KorrigertMeldekortDag } from './KorrigerMeldekortUtils';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling';
 
 export interface KorrigerMeldekortContextState {
-    dager: KorrigertMeldekortDag[];
-    setDager: (dager: KorrigertMeldekortDag[]) => void;
-    oppdaterDag: (dato: string, status: KorrigerMeldekortStatus) => void;
+    dager: MeldekortDag[];
+    setDager: (dager: MeldekortDag[]) => void;
+    oppdaterDag: (dato: string, status: MeldekortDagStatus) => void;
 }
 
 export const KorrigerMeldekortContext = createContext<KorrigerMeldekortContextState>(
