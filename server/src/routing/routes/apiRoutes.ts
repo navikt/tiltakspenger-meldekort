@@ -3,6 +3,7 @@ import { MeldekortFraBrukerDTO } from '@common/typer/meldekort-dto';
 import { FetchFraApi, fetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
 import { brukerTesterPågår, isProd } from '@utils/env';
+import { KorrigerMeldekortRequest } from '@common/typer/KorrigerMeldekort';
 
 const sendInnRoute =
     (fetcher: FetchFraApi): RequestHandler =>
@@ -17,13 +18,13 @@ const sendInnRoute =
 const korrigerteDagerRoute =
     (fetcher: FetchFraApi): RequestHandler =>
     async (req, res) => {
-        const korrigerteDager = req.body as { dato: string; status: string }[];
+        const request = req.body as KorrigerMeldekortRequest;
 
         const response = await fetcher(
             req,
-            'korrigerte-dager',
-            'POST',
-            JSON.stringify(korrigerteDager),
+            `${request.meldekortId}/korriger`,
+            'PATCH',
+            JSON.stringify(request.korrigerteDager),
         );
 
         res.status(response?.status ?? 500).send(response?.statusText ?? 'Ukjent feil!');
@@ -36,9 +37,9 @@ export const setupApiRoutes = (router: Router) => {
         router.post('/demo/api/send-inn', sendInnRoute(fetchFraApiMock));
     }
 
-    router.post('/api/korrigerte-dager', korrigerteDagerRoute(fetchFraApi));
+    router.patch('/api/korriger', korrigerteDagerRoute(fetchFraApi));
 
     if (!isProd() || brukerTesterPågår()) {
-        router.post('/demo/api/korrigerte-dager', korrigerteDagerRoute(fetchFraApiMock));
+        router.patch('/demo/api/korriger', korrigerteDagerRoute(fetchFraApiMock));
     }
 };

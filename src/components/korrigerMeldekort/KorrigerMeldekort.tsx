@@ -126,13 +126,11 @@ export const MeldekortUkeBehandling = (props: {
                         readOnly={!dag.harRett}
                     >
                         {dag.harRett ? (
-                            Object.values(MeldekortDagStatus)
-                                .filter((status) => status !== MeldekortDagStatus.IKKE_BESVART)
-                                .map((status) => (
-                                    <option key={status} value={status}>
-                                        {korrigerMeldekortStatusTextMapper(status)}
-                                    </option>
-                                ))
+                            Object.values(MeldekortDagStatus).map((status) => (
+                                <option key={status} value={status}>
+                                    {korrigerMeldekortStatusTextMapper(status)}
+                                </option>
+                            ))
                         ) : (
                             <option>Ikke rett på tiltakspenger</option>
                         )}

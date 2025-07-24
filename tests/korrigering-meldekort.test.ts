@@ -6,7 +6,6 @@ import {
     MeldekortStatus,
     MeldekortUtfylling,
 } from '../commonSrc/typer/meldekort-utfylling';
-import { KorrigerMeldekortStatus } from '../src/components/korrigerMeldekort/KorrigerMeldekortUtils';
 
 const nyMeldekortDag = ({
     dato = '2023-01-01',
@@ -145,6 +144,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('kan korrigere meldekort', async ({ page }) => {
+    await page.route(`*/**/api/korriger`, async (route) => {
+        await route.fulfill({ status: 200 });
+    });
+
     await page.goto(`${testsBaseUrl}/alle`);
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
@@ -217,6 +220,10 @@ test.describe('kan avbryte korrigering av et meldekort', () => {
 });
 
 test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
+    await page.route(`*/**/api/korriger`, async (route) => {
+        await route.fulfill({ status: 200 });
+    });
+
     await page.goto(`${testsBaseUrl}/alle`);
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
@@ -234,6 +241,7 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
 
     await page.getByText('Jeg bekrefter at disse opplysningene stemmer').click();
     await page.getByText('Send meldekortet').click();
+
     // Verifiserer at vi kommer til bekreftelse
     expect(page.url()).toContain('/12345/korrigering/kvittering');
     expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
@@ -269,24 +277,34 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/12345/korrigering');
 
     // Verifiserer at de endrede statusene er der
-    expect(page.locator('#select-2023-01-01')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
-    expect(page.locator('#select-2023-01-03')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
-    expect(page.locator('#select-2023-01-04')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
-    expect(page.locator('#select-2023-01-05')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
-    expect(page.locator('#select-2023-01-06')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
-    expect(page.locator('#select-2023-01-07')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
+    expect(page.locator('#select-2023-01-01')).toHaveValue(
+        MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+    );
+    expect(page.locator('#select-2023-01-03')).toHaveValue(
+        MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+    );
+    expect(page.locator('#select-2023-01-04')).toHaveValue(
+        MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+    );
+    expect(page.locator('#select-2023-01-05')).toHaveValue(
+        MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+    );
+    expect(page.locator('#select-2023-01-06')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
+    expect(page.locator('#select-2023-01-07')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
 
-    expect(page.locator('#select-2023-01-08')).toHaveValue(KorrigerMeldekortStatus.MOTTAT_LØNN);
-    expect(page.locator('#select-2023-01-09')).toHaveValue(
-        KorrigerMeldekortStatus.SYK_BARN_ELLER_SYK_BARNEPASSER,
+    expect(page.locator('#select-2023-01-08')).toHaveValue(
+        MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
     );
-    expect(page.locator('#select-2023-01-10')).toHaveValue(KorrigerMeldekortStatus.ANNET_FRAVÆR);
-    expect(page.locator('#select-2023-01-11')).toHaveValue(KorrigerMeldekortStatus.DELTATT);
+    expect(page.locator('#select-2023-01-09')).toHaveValue(MeldekortDagStatus.FRAVÆR_SYKT_BARN);
+    expect(page.locator('#select-2023-01-10')).toHaveValue(MeldekortDagStatus.FRAVÆR_ANNET);
+    expect(page.locator('#select-2023-01-11')).toHaveValue(
+        MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+    );
     expect(page.locator('#select-2023-01-12')).toHaveValue(
-        KorrigerMeldekortStatus.FRAVÆR_GODKJENT_AV_NAV,
+        MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
     );
-    expect(page.locator('#select-2023-01-13')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
-    expect(page.locator('#select-2023-01-14')).toHaveValue(KorrigerMeldekortStatus.IKKE_TILTAKSDAG);
+    expect(page.locator('#select-2023-01-13')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
+    expect(page.locator('#select-2023-01-14')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
 });
 
 test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {

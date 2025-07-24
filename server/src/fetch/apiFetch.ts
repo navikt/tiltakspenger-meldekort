@@ -6,8 +6,8 @@ const API_BASE_URL = `${process.env.MELDEKORT_API_URL}/brukerfrontend`;
 export const fetchFraApi = async (
     req: Request,
     path: string,
-    method: 'GET' | 'POST',
-    body?: BodyInit
+    method: 'GET' | 'POST' | 'PATCH',
+    body?: BodyInit,
 ) => {
     const oboToken = await getOboToken(req);
 

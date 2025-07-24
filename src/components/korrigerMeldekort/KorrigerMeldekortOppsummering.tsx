@@ -24,43 +24,51 @@ import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
 
 const useSendKorrigerteDager = (
+    meldekortId: string,
     korrigerteDager: MeldekortDag[],
     baseUrl: string,
 ): {
     status: 'success' | 'error' | 'loading' | 'initial';
     response: unknown;
-    callFn: () => void;
+    callFn: (args: { onSuccess?: () => void; onError?: () => void }) => void;
 } => {
     const [response, setResponse] = useState<unknown>(null);
     const [status, setStatus] = useState<'success' | 'error' | 'loading' | 'initial'>('initial');
 
-    const callFn = useCallback(() => {
-        setStatus('loading');
-        fetch(`${baseUrl}/api/korrigerte-dager`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify(
-                korrigerteDager.map((dag) => ({ dato: dag.dato, status: dag.status })),
-            ),
-        })
-            .then((res) => {
-                if (res.ok) {
-                    setStatus('success');
-                    setResponse(res);
-                } else {
-                    console.error(`Feil-response ved innsending - ${res.status}`);
-                    setStatus('error');
-                    setResponse(res);
-                }
+    const callFn = useCallback(
+        ({ onSuccess, onError }: { onSuccess?: () => void; onError?: () => void }) => {
+            setStatus('loading');
+            fetch(`${baseUrl}/api/korriger`, {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({
+                    meldekortId: meldekortId,
+                    korrigerteDager: korrigerteDager.map((dag) => ({
+                        dato: dag.dato,
+                        status: dag.status,
+                    })),
+                }),
             })
-            .catch((e) => {
-                console.error(`Innsending feilet - ${e}`);
-                setStatus('error');
-            });
-    }, [korrigerteDager, baseUrl]);
+                .then((res) => {
+                    if (res.ok) {
+                        setStatus('success');
+                        setResponse(res);
+                        onSuccess?.();
+                    } else {
+                        console.error(`Feil-response ved innsending - ${res.status}`);
+                        setStatus('error');
+                        setResponse(res);
+                        onError?.();
+                    }
+                })
+                .catch((e) => {
+                    console.error(`Innsending feilet - ${e}`);
+                    setStatus('error');
+                });
+        },
+        [meldekortId, korrigerteDager, baseUrl],
+    );
 
     return { status, response, callFn };
 };
@@ -73,14 +81,13 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
     const korrigerMeldekortContext = useKorrigerMeldekortContext();
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
     const { status, response, callFn } = useSendKorrigerteDager(
+        props.originaleMeldekort.id,
         korrigerMeldekortContext.dager,
         base,
     );
 
     useEffect(() => {
-        if (status === 'error') {
-            setInnsendingFeilet(true);
-        } else {
+        if (status === 'loading') {
             setInnsendingFeilet(false);
         }
     }, [status]);
@@ -165,7 +172,18 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
                                         return false;
                                     }
 
-                                    callFn();
+                                    callFn({
+                                        onSuccess: () => {
+                                            navigate(
+                                                getPath(siteRoutes.korrigerMeldekortKvittering, {
+                                                    meldekortId: props.originaleMeldekort.id,
+                                                }),
+                                            );
+                                        },
+                                        onError: () => {
+                                            setInnsendingFeilet(true);
+                                        },
+                                    });
 
                                     return true;
                                 }}
