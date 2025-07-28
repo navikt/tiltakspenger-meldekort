@@ -7,6 +7,7 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
+//Hva er behovet for å ha .env.tests her? Denne gjør at vi må kjøre appen lokalt for at vi skal kunne kjøre på aktive endringer vi har gjort i koden.
 dotenv.config({ path: path.resolve(process.cwd(), '.env.tests') });
 
 /**
