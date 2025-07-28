@@ -189,6 +189,7 @@ test('kan korrigere meldekort', async ({ page }) => {
     await page.getByText('Send meldekortet').click();
 
     // Verifiserer at vi kommer til bekreftelse
+    await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen.
     expect(page.url()).toContain('/12345/korrigering/kvittering');
     expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
 });
@@ -243,6 +244,7 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
     await page.getByText('Send meldekortet').click();
 
     // Verifiserer at vi kommer til bekreftelse
+    await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen.
     expect(page.url()).toContain('/12345/korrigering/kvittering');
     expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
 });
