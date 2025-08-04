@@ -15,7 +15,7 @@
         "@navikt/oasis": "3.6.0",
         "compression": "1.7.5",
         "csp-header": "6.0.0",
-        "dotenv": "16.4.7",
+        "dotenv": "17.2.1",
         "express": "5.0.1",
         "http-terminator": "3.2.0",
         "sirv": "3.0.0"
