@@ -8,13 +8,13 @@ export enum MeldekortDagStatus {
     FRAVÆR_GODKJENT_AV_NAV = 'FRAVÆR_GODKJENT_AV_NAV',
     FRAVÆR_ANNET = 'FRAVÆR_ANNET',
     IKKE_BESVART = 'IKKE_BESVART',
+    IKKE_TILTAKSDAG = 'IKKE_TILTAKSDAG',
+    IKKE_RETT_TIL_TILTAKSPENGER = 'IKKE_RETT_TIL_TILTAKSPENGER',
 }
 
 export type MeldekortDag = {
     dato: string;
     status: MeldekortDagStatus;
-    harRett: boolean;
-    index: number;
 };
 
 export enum MeldekortStatus {

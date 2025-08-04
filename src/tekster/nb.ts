@@ -18,7 +18,7 @@ export const teksterNb = {
     statusSyktBarn: 'Syk barn eller syk barnepasser',
     statusGodkjentFravær: 'Fravær godkjent av Nav',
     statusAnnetFravær: 'Annet fravær',
-    ikkeTiltaksdag: 'Ikke tiltaksdag',
+    statusIkkeTiltaksdag: 'Ikke tiltaksdag',
 
     ikkeRett: 'Ikke rett',
 

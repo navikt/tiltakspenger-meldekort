@@ -9,17 +9,17 @@ const objectToQueryString = (params?: Record<string, unknown>) =>
               (acc, [k, v], i) =>
                   v !== undefined
                       ? `${acc}${i ? '&' : '?'}${k}=${encodeURIComponent(
-                            typeof v === 'object' ? JSON.stringify(v) : v.toString()
+                            typeof v === 'object' ? JSON.stringify(v) : v.toString(),
                         )}`
                       : acc,
-              ''
+              '',
           )
         : '';
 
 const fetchWithRetry = async (
     url: string,
     options: Options = {},
-    retries = 1
+    retries = 1,
 ): Promise<Response> => {
     const { params, ...init } = options;
 
@@ -45,7 +45,7 @@ const fetchWithRetry = async (
 
 export const fetchJson = async <ResponseType>(
     url: string,
-    options?: Options
+    options?: Options,
 ): Promise<ResponseType | null> =>
     fetchWithRetry(url, options)
         .then((res) => res.json() as ResponseType)
@@ -56,7 +56,7 @@ export const fetchJson = async <ResponseType>(
 
 export const fetchSendInn = async (
     meldekortUtfylling: MeldekortUtfylling,
-    baseUrl: string
+    baseUrl: string,
 ): Promise<boolean> =>
     fetch(`${baseUrl}/api/send-inn`, {
         method: 'POST',

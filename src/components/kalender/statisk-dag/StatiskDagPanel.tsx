@@ -14,21 +14,16 @@ import style from './StatiskDagPanel.module.css';
 
 type Props = {
     dag: MeldekortDag;
-    ikkeBesvartSomIkkeTiltaksdag?: boolean;
 };
 
-export const MeldekortdagOppsummering = ({ dag, ikkeBesvartSomIkkeTiltaksdag }: Props) => {
+export const MeldekortdagOppsummering = ({ dag }: Props) => {
     const { status, dato, harRett } = dag;
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
     const IkonKomponent = harRett ? statusTilIkon[status] : CircleSlashIcon;
 
-    const tekstId = harRett
-        ? ikkeBesvartSomIkkeTiltaksdag && status === MeldekortDagStatus.IKKE_BESVART
-            ? 'ikkeTiltaksdag'
-            : statusTilTekstId[status]
-        : 'ikkeRett';
+    const tekstId = harRett ? statusTilTekstId[status] : 'ikkeRett';
 
     return (
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>

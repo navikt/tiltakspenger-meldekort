@@ -4,6 +4,7 @@ import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
     FirstAidFillIcon,
+    MinusCircleIcon,
     QuestionmarkDiamondIcon,
     SunFillIcon,
     XMarkOctagonFillIcon,
@@ -13,13 +14,14 @@ import style from './dagFellesStyle.module.css';
 import { TekstId } from '@tekster/typer.ts';
 
 export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
-    [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: style.deltatt,
-    [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: style.lønn,
+    [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: style.deltattUtenLønn,
+    [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: style.deltattMedLønn,
     [MeldekortDagStatus.FRAVÆR_SYK]: style.syk,
     [MeldekortDagStatus.FRAVÆR_SYKT_BARN]: style.syktBarn,
-    [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: style.annet,
-    [MeldekortDagStatus.FRAVÆR_ANNET]: style.ikkeDeltatt,
+    [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: style.fraværGodkjentAvNav,
+    [MeldekortDagStatus.FRAVÆR_ANNET]: style.fraværAnnet,
     [MeldekortDagStatus.IKKE_BESVART]: style.ikkeBesvart,
+    [MeldekortDagStatus.IKKE_TILTAKSDAG]: style.ikkeTiltaksdag,
 };
 
 export const statusTilIkon: Record<
@@ -33,6 +35,7 @@ export const statusTilIkon: Record<
     [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: SunFillIcon,
     [MeldekortDagStatus.FRAVÆR_ANNET]: XMarkOctagonFillIcon,
     [MeldekortDagStatus.IKKE_BESVART]: QuestionmarkDiamondIcon,
+    [MeldekortDagStatus.IKKE_TILTAKSDAG]: MinusCircleIcon,
 };
 
 export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
@@ -43,6 +46,7 @@ export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
     [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: 'statusGodkjentFravær',
     [MeldekortDagStatus.FRAVÆR_ANNET]: 'statusAnnetFravær',
     [MeldekortDagStatus.IKKE_BESVART]: 'statusIkkeBesvart',
+    [MeldekortDagStatus.IKKE_TILTAKSDAG]: 'statusIkkeTiltaksdag',
 };
 
 export const meldekortStegTilTekstId: Record<MeldekortSteg, TekstId> = {

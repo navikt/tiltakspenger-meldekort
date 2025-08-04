@@ -214,7 +214,7 @@ const OppsummeringAvKorrigertMeldekortDager = (props: { dager: MeldekortDag[] })
         <ul className={styles.dagOppsummeringContainer}>
             {props.dager.map((dag) => (
                 <li key={`${dag.dato}`}>
-                    <MeldekortdagOppsummering dag={dag} ikkeBesvartSomIkkeTiltaksdag />
+                    <MeldekortdagOppsummering dag={dag} />
                 </li>
             ))}
         </ul>

@@ -127,7 +127,11 @@ export const MeldekortUkeBehandling = (props: {
                     >
                         {dag.harRett ? (
                             Object.values(MeldekortDagStatus).map((status) => (
-                                <option key={status} value={status}>
+                                <option
+                                    hidden={status === MeldekortDagStatus.IKKE_BESVART}
+                                    key={status}
+                                    value={status}
+                                >
                                     {korrigerMeldekortStatusTextMapper(status)}
                                 </option>
                             ))

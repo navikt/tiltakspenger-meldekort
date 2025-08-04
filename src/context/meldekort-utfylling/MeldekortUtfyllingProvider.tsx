@@ -18,7 +18,7 @@ type Props = {
 
 export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
     const [meldekortUtfylling, setMeldekortUtfylling] = useState<MeldekortUtfylling | undefined>(
-        undefined
+        undefined,
     );
     const [valgtMeldekortDag, setValgtMeldekortDag] = useState<MeldekortDag | null>(null);
     const [meldekortSteg, setMeldekortSteg] = useState<MeldekortSteg>(STEG_REKKEFOLGE[0]);
@@ -32,22 +32,23 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
                 return;
             }
 
-            const meldekortDagerUpdated = [...meldekortUtfylling.dager];
-            meldekortDagerUpdated[dag.index] = dag;
+            const meldekortDagerUpdated = [...meldekortUtfylling.dager].map((d) =>
+                d.dato === dag.dato ? dag : d,
+            );
 
             setMeldekortUtfylling({
                 ...meldekortUtfylling,
                 dager: meldekortDagerUpdated,
             });
         },
-        [meldekortUtfylling]
+        [meldekortUtfylling],
     );
 
     const redirectHvisMeldekortErInnsendt = useCallback(
         (
             meldekortFraBackend: MeldekortUtfylling,
             meldekortFraKlient: MeldekortUtfylling | undefined,
-            nåværendeSteg: MeldekortSteg
+            nåværendeSteg: MeldekortSteg,
         ) => {
             // Kvitteringssiden sin redirect kan ikke sjekke meldekortutfylling i state da denne blir oppdatert
             // etter innsending. Den sjekker derfor bare meldekortet fra backend (via SSR) for å fange opp caser
@@ -65,7 +66,7 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
                 return;
             }
         },
-        [navigate]
+        [navigate],
     );
 
     const getUndertekster = () => {

@@ -14,11 +14,9 @@ export const tilMeldekortUtfylling = (meldekortDto: MeldekortTilBrukerDTO): Meld
         uke2: meldekortDto.uke2,
         maksAntallDager: meldekortDto.maksAntallDager,
         innsendt: meldekortDto.innsendt ?? null,
-        dager: meldekortDto.dager.map((dag, index) => ({
+        dager: meldekortDto.dager.map((dag) => ({
             status: dag.status,
             dato: dag.dag,
-            harRett: dag.harRett,
-            index,
         })),
         status: meldekortDto.status,
         kanSendes: meldekortDto.kanSendes,

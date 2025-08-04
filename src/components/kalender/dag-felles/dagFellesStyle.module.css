@@ -1,3 +1,12 @@
+.ikkeTiltaksdag {
+    background-color: var(--a-surface-action-subtle);
+    border-color: var(--a-surface-action);
+
+    & > svg {
+        color: var(--a-blue-800);
+    }
+}
+
 .ikkeBesvart {
     background: var(--a-surface-subtle);
     border-color: var(--a-border-default);
@@ -7,7 +16,7 @@
     }
 }
 
-.deltatt {
+.deltattUtenLønn {
     background: var(--a-surface-success-subtle);
     border-color: var(--a-border-success);
 
@@ -16,7 +25,7 @@
     }
 }
 
-.lønn {
+.deltattMedLønn {
     background: var(--a-surface-danger-subtle);
     border-color: var(--a-border-danger);
 
@@ -27,7 +36,7 @@
 
 .syk,
 .syktBarn,
-.annet {
+.fraværGodkjentAvNav {
     background: var(--a-surface-warning-subtle);
     border-color: var(--a-border-warning);
 
@@ -36,7 +45,7 @@
     }
 }
 
-.ikkeDeltatt {
+.fraværAnnet {
     background: var(--a-surface-danger-subtle);
     border-color: var(--a-border-danger);
 
