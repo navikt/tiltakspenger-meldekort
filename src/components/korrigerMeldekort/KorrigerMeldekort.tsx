@@ -123,12 +123,15 @@ export const MeldekortUkeBehandling = (props: {
                         onChange={(e) => {
                             props.onChange(dag.dato, e.target.value as MeldekortDagStatus);
                         }}
-                        readOnly={!dag.harRett}
+                        readOnly={dag.status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER}
                     >
-                        {dag.harRett ? (
+                        {dag.status !== MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER ? (
                             Object.values(MeldekortDagStatus).map((status) => (
                                 <option
-                                    hidden={status === MeldekortDagStatus.IKKE_BESVART}
+                                    hidden={
+                                        status === MeldekortDagStatus.IKKE_BESVART ||
+                                        status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER
+                                    }
                                     key={status}
                                     value={status}
                                 >

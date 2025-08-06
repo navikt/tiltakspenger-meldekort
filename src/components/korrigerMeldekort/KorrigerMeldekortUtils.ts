@@ -18,5 +18,7 @@ export const korrigerMeldekortStatusTextMapper = (status: MeldekortDagStatus): s
             return 'Ikke besvart';
         case MeldekortDagStatus.IKKE_TILTAKSDAG:
             return 'Ikke tiltaksdag';
+        case MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER:
+            return 'Ikke rett';
     }
 };

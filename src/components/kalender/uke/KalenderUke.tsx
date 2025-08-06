@@ -1,5 +1,9 @@
 import React from 'react';
-import { MeldekortDag, MeldekortSteg } from '@common/typer/meldekort-utfylling.ts';
+import {
+    MeldekortDag,
+    MeldekortDagStatus,
+    MeldekortSteg,
+} from '@common/typer/meldekort-utfylling.ts';
 import { Heading } from '@navikt/ds-react';
 import { getUkenummer } from '@utils/datetime.ts';
 import { DeltattDagPanel } from '@components/fyll-ut/steg-3-deltakelse/dag/DeltattDagPanel.tsx';
@@ -39,7 +43,7 @@ export const KalenderUke = ({ dager, steg }: Props) => {
             <ul className={style.liste}>
                 {dager.map((dag) => (
                     <li key={dag.dato}>
-                        {dag.harRett ? (
+                        {dag.status !== MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER ? (
                             <DagKomponent dag={dag} />
                         ) : (
                             <MeldekortdagOppsummering dag={dag} />

@@ -22,6 +22,7 @@ export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
     [MeldekortDagStatus.FRAVÆR_ANNET]: style.fraværAnnet,
     [MeldekortDagStatus.IKKE_BESVART]: style.ikkeBesvart,
     [MeldekortDagStatus.IKKE_TILTAKSDAG]: style.ikkeTiltaksdag,
+    [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: style.ikkeBesvart,
 };
 
 export const statusTilIkon: Record<
@@ -36,6 +37,7 @@ export const statusTilIkon: Record<
     [MeldekortDagStatus.FRAVÆR_ANNET]: XMarkOctagonFillIcon,
     [MeldekortDagStatus.IKKE_BESVART]: QuestionmarkDiamondIcon,
     [MeldekortDagStatus.IKKE_TILTAKSDAG]: MinusCircleIcon,
+    [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: QuestionmarkDiamondIcon,
 };
 
 export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
@@ -47,6 +49,7 @@ export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
     [MeldekortDagStatus.FRAVÆR_ANNET]: 'statusAnnetFravær',
     [MeldekortDagStatus.IKKE_BESVART]: 'statusIkkeBesvart',
     [MeldekortDagStatus.IKKE_TILTAKSDAG]: 'statusIkkeTiltaksdag',
+    [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: 'statusIkkeRettTilTiltakspenger',
 };
 
 export const meldekortStegTilTekstId: Record<MeldekortSteg, TekstId> = {

@@ -19,6 +19,7 @@ export const teksterNb = {
     statusGodkjentFravær: 'Fravær godkjent av Nav',
     statusAnnetFravær: 'Annet fravær',
     statusIkkeTiltaksdag: 'Ikke tiltaksdag',
+    statusIkkeRettTilTiltakspenger: 'Ikke rett',
 
     ikkeRett: 'Ikke rett',
 

@@ -1,5 +1,5 @@
 import { BodyLong } from '@navikt/ds-react';
-import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortDag } from '@common/typer/meldekort-utfylling.ts';
 import { formatterDato } from '@utils/datetime.ts';
 import {
     meldekortStatusTilStyle,
@@ -8,7 +8,6 @@ import {
 } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { classNames } from '@utils/classNames.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { CircleSlashIcon } from '@navikt/aksel-icons';
 
 import style from './StatiskDagPanel.module.css';
 
@@ -17,13 +16,12 @@ type Props = {
 };
 
 export const MeldekortdagOppsummering = ({ dag }: Props) => {
-    const { status, dato, harRett } = dag;
+    const { status, dato } = dag;
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
-    const IkonKomponent = harRett ? statusTilIkon[status] : CircleSlashIcon;
-
-    const tekstId = harRett ? statusTilTekstId[status] : 'ikkeRett';
+    const IkonKomponent = statusTilIkon[status];
+    const tekstId = statusTilTekstId[status];
 
     return (
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
