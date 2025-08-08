@@ -1,4 +1,13 @@
-import { Accordion, BodyLong, Button, Heading, HStack, Link } from '@navikt/ds-react';
+import {
+    Accordion,
+    Alert,
+    BodyLong,
+    Button,
+    Heading,
+    HStack,
+    Link,
+    VStack,
+} from '@navikt/ds-react';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { formatterDato, formatterDatoTid } from '@utils/datetime';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -23,7 +32,7 @@ export const AlleMeldekort = ({ meldekort: meldekortListe, arenaMeldekortStatus 
     const { navigate } = useRouting();
     const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
     const [meldekortTilKorrigering, setMeldekortTilKorrigering] = useState<string | null>(null);
-    const { trigger, isLoading } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
+    const { trigger, isLoading, error } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
         path: '/meldeperiode',
         handler: (payload) =>
             apiFetcher({
@@ -63,7 +72,13 @@ export const AlleMeldekort = ({ meldekort: meldekortListe, arenaMeldekortStatus 
                             />
                         </Accordion.Header>
                         <Accordion.Content>
-                            <div>
+                            <VStack gap="4">
+                                {meldekortTilKorrigering === meldekort.id && error && (
+                                    <Alert variant="error" size="small">
+                                        Kunne ikke hente siste opplysninger om meldekortet. Prøv
+                                        igjen senere. Hvis problemet vedvarer, kontakt Nav.
+                                    </Alert>
+                                )}
                                 {meldekort.innsendt ? (
                                     <HStack justify="space-between">
                                         <Tekst
@@ -106,7 +121,7 @@ export const AlleMeldekort = ({ meldekort: meldekortListe, arenaMeldekortStatus 
                                 ) : (
                                     <Tekst id={'alleIkkeInnsendt'} />
                                 )}
-                            </div>
+                            </VStack>
                             <Kalender meldekort={meldekort} steg="kvittering" />
                         </Accordion.Content>
                     </Accordion.Item>
