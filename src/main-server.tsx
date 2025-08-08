@@ -12,6 +12,6 @@ export const render = (url: string, appContext: AppContext) => {
             <Router base={appContext.baseUrl} ssrPath={url} hook={ssrLocationHook}>
                 <App {...appContext} />
             </Router>
-        </React.StrictMode>
+        </React.StrictMode>,
     );
 };

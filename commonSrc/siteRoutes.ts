@@ -1,4 +1,4 @@
-import { MeldekortSteg } from '@common/typer/meldekort-utfylling';
+import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
 
 export const siteRoutes = {
     forside: '/',

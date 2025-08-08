@@ -1,13 +1,12 @@
-import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
+import { Meldekort } from '@common/typer/MeldekortBruker';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
 
 export type AlleMeldekortDTO = {
-    meldekort: MeldekortTilBrukerDTO[];
+    meldekort: Meldekort[];
     bruker: MeldekortBrukerDTO;
 };
 
 export type AlleMeldekortProps = {
-    meldekort: MeldekortUtfylling[];
+    meldekort: Meldekort[];
     arenaMeldekortStatus: ArenaMeldekortStatus;
 };

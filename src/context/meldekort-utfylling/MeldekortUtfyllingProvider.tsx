@@ -1,15 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
-import {
-    MeldekortDag,
-    MeldekortStatus,
-    MeldekortSteg,
-    MeldekortUtfylling,
-    STEG_REKKEFOLGE,
-} from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortSteg, STEG_REKKEFOLGE } from '@common/typer/BrukersMeldekortUtfylling';
 import { formatterDato, getUkenummer } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { Meldekort, MeldekortDag, MeldekortStatus } from '@common/typer/MeldekortBruker';
 
 type Props = {
     navigate?: (path: string) => void;
@@ -17,9 +12,7 @@ type Props = {
 };
 
 export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
-    const [meldekortUtfylling, setMeldekortUtfylling] = useState<MeldekortUtfylling | undefined>(
-        undefined,
-    );
+    const [meldekortUtfylling, setMeldekortUtfylling] = useState<Meldekort | undefined>(undefined);
     const [valgtMeldekortDag, setValgtMeldekortDag] = useState<MeldekortDag | null>(null);
     const [meldekortSteg, setMeldekortSteg] = useState<MeldekortSteg>(STEG_REKKEFOLGE[0]);
     const [harHattFravær, setHarHattFravær] = useState<boolean | null>(null);
@@ -33,7 +26,7 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
             }
 
             const meldekortDagerUpdated = [...meldekortUtfylling.dager].map((d) =>
-                d.dato === dag.dato ? dag : d,
+                d.dag === dag.dag ? dag : d,
             );
 
             setMeldekortUtfylling({
@@ -46,8 +39,8 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
 
     const redirectHvisMeldekortErInnsendt = useCallback(
         (
-            meldekortFraBackend: MeldekortUtfylling,
-            meldekortFraKlient: MeldekortUtfylling | undefined,
+            meldekortFraBackend: Meldekort,
+            meldekortFraKlient: Meldekort | undefined,
             nåværendeSteg: MeldekortSteg,
         ) => {
             // Kvitteringssiden sin redirect kan ikke sjekke meldekortutfylling i state da denne blir oppdatert
@@ -77,7 +70,7 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
             };
         }
 
-        const { fraOgMed, tilOgMed } = meldekortUtfylling.periode;
+        const { fraOgMed, tilOgMed } = meldekortUtfylling;
         return {
             ukerTekst: (
                 <Tekst

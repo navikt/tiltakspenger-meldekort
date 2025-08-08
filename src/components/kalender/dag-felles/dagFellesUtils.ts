@@ -1,5 +1,5 @@
 import React, { SVGProps } from 'react';
-import { MeldekortDagStatus, MeldekortSteg } from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
 import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
@@ -12,6 +12,7 @@ import {
 
 import style from './dagFellesStyle.module.css';
 import { TekstId } from '@tekster/typer.ts';
+import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
     [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: style.deltattUtenLønn,

@@ -10,18 +10,18 @@ import { FraværHjelp } from '@components/fyll-ut/steg-1-fravær/hjelp/FraværHj
 import { TekstId } from '@tekster/typer.ts';
 import { FraværModal } from '@components/fyll-ut/steg-1-fravær/fravær-modal/FraværModal.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { MeldekortDagStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import { useRouting } from '@routing/useRouting.ts';
 import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
+import { Meldekort, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 type SSRProps = {
-    meldekort: MeldekortUtfylling;
+    brukersMeldekort: Meldekort;
 };
 
-export const Steg1_Fravær = ({ meldekort }: SSRProps) => {
+export const Steg1_Fravær = ({ brukersMeldekort }: SSRProps) => {
     const { navigate } = useRouting();
     const {
         meldekortUtfylling,
@@ -33,10 +33,10 @@ export const Steg1_Fravær = ({ meldekort }: SSRProps) => {
     const varselRef = useRef<HTMLDivElement>(null);
     const [feil, setFeil] = useState<TekstId | null>(null);
 
-    useInitMeldekortSteg(meldekort, 'fravær');
+    useInitMeldekortSteg(brukersMeldekort, 'fravær');
 
     if (!meldekortUtfylling) return;
-    const { harForMangeDagerBesvart } = antallDagerValidering(meldekortUtfylling);
+    const { harForMangeDagerBesvart } = antallDagerValidering(brukersMeldekort, meldekortUtfylling);
 
     return (
         <MeldekortStegWrapper>
@@ -70,6 +70,7 @@ export const Steg1_Fravær = ({ meldekort }: SSRProps) => {
                         className={style.kalender}
                     />
                     <DagerUtfyltTeller
+                        brukersMeldekort={brukersMeldekort}
                         meldekortUtfylling={meldekortUtfylling}
                         className={style.teller}
                         ref={varselRef}
@@ -115,7 +116,7 @@ export const Steg1_Fravær = ({ meldekort }: SSRProps) => {
     );
 };
 
-const fjernFravær = (meldekortUtfylling: MeldekortUtfylling) => ({
+const fjernFravær = (meldekortUtfylling: Meldekort) => ({
     ...meldekortUtfylling,
     dager: meldekortUtfylling.dager.map((dag) => ({
         ...dag,

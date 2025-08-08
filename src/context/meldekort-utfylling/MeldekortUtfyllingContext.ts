@@ -1,13 +1,10 @@
 import React, { createContext } from 'react';
-import {
-    MeldekortDag,
-    MeldekortSteg,
-    MeldekortUtfylling,
-} from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
+import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
 
 export type MeldekortUtfyllingState = {
-    meldekortUtfylling: MeldekortUtfylling | undefined;
-    setMeldekortUtfylling: (meldekort: MeldekortUtfylling) => void;
+    meldekortUtfylling: Meldekort | undefined;
+    setMeldekortUtfylling: (meldekort: Meldekort) => void;
     valgtMeldekortDag: MeldekortDag | null;
     setValgtMeldekortDag: (dag: MeldekortDag | null) => void;
     lagreMeldekortDag: (dag: MeldekortDag) => void;
@@ -15,9 +12,9 @@ export type MeldekortUtfyllingState = {
     setMeldekortSteg: (steg: MeldekortSteg) => void;
     getUndertekster: () => { ukerTekst: React.ReactNode; datoerTekst: React.ReactNode };
     redirectHvisMeldekortErInnsendt: (
-        meldekortFraBackend: MeldekortUtfylling,
-        meldekortFraKlient: MeldekortUtfylling | undefined,
-        nåværendeSteg: MeldekortSteg
+        meldekortFraBackend: Meldekort,
+        meldekortFraKlient: Meldekort | undefined,
+        nåværendeSteg: MeldekortSteg,
     ) => void;
     harHattFravær: boolean | null;
     setHarHattFravær: (harHattFravær: boolean | null) => void;
@@ -28,5 +25,5 @@ export type MeldekortUtfyllingState = {
 };
 
 export const MeldekortUtfyllingContext = createContext<MeldekortUtfyllingState>(
-    {} as MeldekortUtfyllingState
+    {} as MeldekortUtfyllingState,
 );

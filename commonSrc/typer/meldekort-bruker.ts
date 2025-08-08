@@ -1,5 +1,4 @@
-import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
+import { Meldekort } from '@common/typer/MeldekortBruker';
 
 export enum ArenaMeldekortStatus {
     HAR_MELDEKORT = 'HAR_MELDEKORT',
@@ -11,8 +10,8 @@ export type MeldekortBrukerDTO =
     | {
           harSak: true;
           arenaMeldekortStatus: ArenaMeldekortStatus;
-          nesteMeldekort: MeldekortTilBrukerDTO | null;
-          forrigeMeldekort: MeldekortTilBrukerDTO | null;
+          nesteMeldekort: Meldekort | null;
+          forrigeMeldekort: Meldekort | null;
           harSoknadUnderBehandling: boolean;
       }
     | {
@@ -23,8 +22,8 @@ export type MeldekortBrukerDTO =
 export type MeldekortBrukerMedSak = {
     harSak: true;
     arenaMeldekortStatus: ArenaMeldekortStatus;
-    nesteMeldekort?: MeldekortUtfylling;
-    forrigeMeldekort?: MeldekortUtfylling;
+    nesteMeldekort?: Meldekort;
+    forrigeMeldekort?: Meldekort;
     harSoknadUnderBehandling: boolean;
 };
 

@@ -1,19 +1,17 @@
-import {
-    MeldekortDag,
-    MeldekortDagStatus,
-    MeldekortUtfylling,
-} from '@common/typer/meldekort-utfylling';
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
     Accordion,
+    Alert,
     BodyLong,
+    BodyShort,
     Button,
     Heading,
     HStack,
     Label,
     Select,
+    Skeleton,
     VStack,
 } from '@navikt/ds-react';
 import { useRouting } from '@routing/useRouting';
@@ -21,25 +19,55 @@ import { formatterDato } from '@utils/datetime';
 import { useEffect } from 'react';
 import styles from './KorrigerMeldekort.module.css';
 import { getPath, siteRoutes } from '@common/siteRoutes';
-import { useKorrigerMeldekortContext } from './KorrigerMeldekortContext';
+import { useKorrigerMeldekortContext } from '../../context/korriger/KorrigerMeldekortContext';
 import { korrigerMeldekortStatusTextMapper } from './KorrigerMeldekortUtils';
+import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
+import { apiFetcher, useApi } from '@utils/fetch';
+import { Periode } from '@common/typer/periode';
+import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
+import { Meldekort, MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+import { Link } from 'wouter';
 
 /**
  * TODO - skal vi ha noe form for validering her?
  */
-const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
-    const { navigate } = useRouting();
-    const { dager, setDager, oppdaterDag } = useKorrigerMeldekortContext();
+const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
+    const { meldeperiodeForPeriode, setMeldeperiodeForPeriode } =
+        useMeldeperiodeForPeriodeContext();
+
+    //TODO - kan sikkert flytte denne hentingen til server-side
+    const { trigger, error, isLoading } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
+        path: '/meldeperiode',
+        handler: (payload) =>
+            apiFetcher({
+                url: 'meldeperiode',
+                method: 'POST',
+                body: payload,
+            }),
+    });
 
     useEffect(() => {
         scrollTo(0, 0);
     }, []);
 
     useEffect(() => {
-        if (dager.length === 0) {
-            setDager(props.meldekort.dager);
+        if (!meldeperiodeForPeriode) {
+            trigger(
+                { fraOgMed: props.meldekort.fraOgMed, tilOgMed: props.meldekort.tilOgMed },
+                {
+                    onSuccess: (response) => {
+                        setMeldeperiodeForPeriode(response);
+                    },
+                },
+            );
         }
-    }, [props.meldekort.dager, setDager, dager]);
+    }, [
+        props.meldekort.fraOgMed,
+        props.meldekort.tilOgMed,
+        trigger,
+        meldeperiodeForPeriode,
+        setMeldeperiodeForPeriode,
+    ]);
 
     return (
         <div>
@@ -52,7 +80,7 @@ const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.meldekort.periode.fraOgMed })} til ${formatterDato({ dato: props.meldekort.periode.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: props.meldekort.fraOgMed })} til ${formatterDato({ dato: props.meldekort.tilOgMed })})`}
                         />
                     </HStack>
                 }
@@ -61,45 +89,42 @@ const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
                 <Heading size="large" level="3">
                     Endre meldekort
                 </Heading>
+
                 <InformasjonOmKorrigeringAvMeldekort />
 
-                <Heading size="medium" level="4">
-                    Slik endrer du meldekortet
-                </Heading>
-                <BodyLong>
-                    Nedenfor ser du hva du har tidligere registrert i meldekortet. Endre valgene på
-                    de dagene som er feilregistrert. Etter du har sendt inn endringen vil endringen
-                    saksbehandles før det eventuelt blir endringer i utbetalingen din.
-                </BodyLong>
+                {isLoading && (
+                    <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
+                        {Array.from({ length: props.meldekort.dager.length }).map((_, index) => (
+                            <Skeleton height="80px" width="300px" key={`skeleton-${index}`} />
+                        ))}
+                    </VStack>
+                )}
 
-                <MeldekortUkeBehandling
-                    dager={dager}
-                    onChange={(dag, nyStatus) => oppdaterDag(dag, nyStatus)}
-                />
+                {error && (
+                    <Alert variant="error">
+                        <BodyShort>
+                            Vi får ikke innhentet siste opplysninger om meldekortet ditt. Prøv igjen
+                            senere. Hvis problemet vedvarer, kontakt Nav.
+                        </BodyShort>
+                        <Link href={`/`}>Tilbake til forsiden</Link>
+                    </Alert>
+                )}
 
-                <VStack gap="2">
-                    <Button
-                        className={styles.button}
-                        onClick={() => {
-                            navigate(
-                                getPath(siteRoutes.korrigerMeldekortOppsummering, {
-                                    meldekortId: props.meldekort.id,
-                                }),
-                            );
-                        }}
-                        iconPosition="right"
-                        icon={<ArrowRightIcon title="pil-høyre" fontSize="1.5rem" />}
-                    >
-                        Neste steg
-                    </Button>
-                    <Button
-                        variant="tertiary"
-                        className={styles.button}
-                        onClick={() => navigate(getPath(siteRoutes.forside))}
-                    >
-                        Avbryt endring
-                    </Button>
-                </VStack>
+                {meldeperiodeForPeriode &&
+                    meldeperiodeForPeriode.meldeperiodeId !== props.meldekort.meldeperiodeId && (
+                        <Alert variant="info">
+                            Meldekortet ditt har blitt oppdatert - Meldekortet inneholder nå de
+                            seneste opplysningene registrert. Verifiser at disse er korrekt, eller
+                            endre valgene på de dagene som er feilregistrert.
+                        </Alert>
+                    )}
+
+                {meldeperiodeForPeriode && (
+                    <KorrigeringAvMeldekort
+                        meldekort={props.meldekort}
+                        sisteMeldeperiode={meldeperiodeForPeriode}
+                    />
+                )}
             </VStack>
         </div>
     );
@@ -107,7 +132,81 @@ const KorrigerMeldekort = (props: { meldekort: MeldekortUtfylling }) => {
 
 export default KorrigerMeldekort;
 
-export const MeldekortUkeBehandling = (props: {
+const KorrigeringAvMeldekort = (props: {
+    meldekort: Meldekort;
+    sisteMeldeperiode: MeldeperiodeForPeriodeResponse;
+}) => {
+    const { navigate } = useRouting();
+    const { dager, setDager, oppdaterDag } = useKorrigerMeldekortContext();
+
+    useEffect(() => {
+        if (dager.length === 0) {
+            if (props.sisteMeldeperiode.meldeperiodeId !== props.meldekort.meldeperiodeId) {
+                setDager(props.sisteMeldeperiode.dager);
+            } else {
+                setDager(props.meldekort.dager);
+            }
+        }
+    }, [
+        props.sisteMeldeperiode.meldeperiodeId,
+        props.sisteMeldeperiode,
+        props.meldekort.meldeperiodeId,
+        props.meldekort.dager,
+        setDager,
+        dager,
+    ]);
+
+    return (
+        <VStack gap="8">
+            {props.sisteMeldeperiode.meldeperiodeId !== props.meldekort.meldeperiodeId && (
+                <Alert variant="info">
+                    Meldekortet ditt har blitt oppdatert - Meldekortet inneholder nå den seneste
+                    dataen registrert.
+                </Alert>
+            )}
+
+            <Heading size="medium" level="4">
+                Slik endrer du meldekortet
+            </Heading>
+            <BodyLong>
+                Nedenfor ser du hva du har tidligere registrert i meldekortet. Endre valgene på de
+                dagene som er feilregistrert. Etter du har sendt inn endringen vil endringen
+                saksbehandles før det eventuelt blir endringer i utbetalingen din.
+            </BodyLong>
+
+            <MeldekortUkeBehandling
+                dager={dager}
+                onChange={(dag, nyStatus) => oppdaterDag(dag, nyStatus)}
+            />
+
+            <VStack gap="2">
+                <Button
+                    className={styles.button}
+                    onClick={() => {
+                        navigate(
+                            getPath(siteRoutes.korrigerMeldekortOppsummering, {
+                                meldekortId: props.meldekort.id,
+                            }),
+                        );
+                    }}
+                    iconPosition="right"
+                    icon={<ArrowRightIcon title="pil-høyre" fontSize="1.5rem" />}
+                >
+                    Neste steg
+                </Button>
+                <Button
+                    variant="tertiary"
+                    className={styles.button}
+                    onClick={() => navigate(getPath(siteRoutes.forside))}
+                >
+                    Avbryt endring
+                </Button>
+            </VStack>
+        </VStack>
+    );
+};
+
+const MeldekortUkeBehandling = (props: {
     dager: MeldekortDag[];
     onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
 }) => {
@@ -116,12 +215,12 @@ export const MeldekortUkeBehandling = (props: {
             <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
                 {props.dager.map((dag) => (
                     <Select
-                        id={`select-${dag.dato}`}
-                        key={dag.dato}
-                        label={formatterDato({ medUkeDag: true, dato: dag.dato })}
+                        id={`select-${dag.dag}`}
+                        key={dag.dag}
+                        label={formatterDato({ medUkeDag: true, dato: dag.dag })}
                         value={dag.status}
                         onChange={(e) => {
-                            props.onChange(dag.dato, e.target.value as MeldekortDagStatus);
+                            props.onChange(dag.dag, e.target.value as MeldekortDagStatus);
                         }}
                         readOnly={dag.status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER}
                     >

@@ -1,5 +1,5 @@
 import { BodyLong } from '@navikt/ds-react';
-import { MeldekortDag } from '@common/typer/meldekort-utfylling.ts';
+
 import { formatterDato } from '@utils/datetime.ts';
 import {
     meldekortStatusTilStyle,
@@ -10,13 +10,14 @@ import { classNames } from '@utils/classNames.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 
 import style from './StatiskDagPanel.module.css';
+import { MeldekortDag } from '@common/typer/MeldekortBruker';
 
 type Props = {
     dag: MeldekortDag;
 };
 
 export const MeldekortdagOppsummering = ({ dag }: Props) => {
-    const { status, dato } = dag;
+    const { status, dag: dato } = dag;
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 

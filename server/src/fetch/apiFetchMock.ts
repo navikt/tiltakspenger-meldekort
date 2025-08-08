@@ -1,6 +1,6 @@
 import { FetchFraApi } from '@fetch/apiFetch';
-import { MeldekortDagStatus, MeldekortStatus } from '@common/typer/meldekort-utfylling';
-import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
+
+import { Meldekort, MeldekortDagStatus, MeldekortStatus } from '@common/typer/MeldekortBruker';
 import dayjs from 'dayjs';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { brukerTesterPågår } from '@utils/env';
@@ -62,7 +62,7 @@ const formatDate = (date: string, plusDays: number = 0) => {
     return dayjs(date).add(plusDays, 'days').format('YYYY-MM-DD');
 };
 
-const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
+const lagNesteMeldekort = (): Meldekort => ({
     id: 'meldekort_2',
     meldeperiodeId: 'periode_2',
     versjon: 1,
@@ -73,6 +73,8 @@ const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
     uke2: 3,
     maksAntallDager: 10,
     status: MeldekortStatus.KAN_UTFYLLES,
+    innsendt: null,
+    kanSendes: null,
     dager: [
         ...Array.from({ length: 10 }).map((_, i) => ({
             status: MeldekortDagStatus.IKKE_BESVART,
@@ -87,7 +89,7 @@ const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
     ],
 });
 
-const forrigeMeldekort: MeldekortTilBrukerDTO = {
+const forrigeMeldekort: Meldekort = {
     id: 'meldekort_1',
     meldeperiodeId: 'periode_1',
     versjon: 1,
@@ -99,6 +101,7 @@ const forrigeMeldekort: MeldekortTilBrukerDTO = {
     innsendt: '2025-01-04T07:56:11.995Z',
     maksAntallDager: 10,
     status: MeldekortStatus.INNSENDT,
+    kanSendes: null,
     dager: [
         ...Array.from({ length: 5 }).map((_, i) => ({
             status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
@@ -143,7 +146,7 @@ const forrigeMeldekort: MeldekortTilBrukerDTO = {
     ],
 };
 
-const mockAlleMeldekort: MeldekortTilBrukerDTO[] = [lagNesteMeldekort(), forrigeMeldekort];
+const mockAlleMeldekort: Meldekort[] = [lagNesteMeldekort(), forrigeMeldekort];
 
 const mockMeldekortBruker = (): MeldekortBrukerDTO => ({
     harSak: true,

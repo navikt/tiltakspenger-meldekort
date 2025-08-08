@@ -1,5 +1,5 @@
 import { Button, Modal, RadioGroup } from '@navikt/ds-react';
-import { MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
+
 import { useEffect, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato } from '@utils/datetime';
@@ -7,6 +7,7 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 import { FraværStatusPanel } from '@components/fyll-ut/steg-1-fravær/fravær-modal/status/FraværStatusPanel';
 
 import style from './FraværModal.module.css';
+import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 export const FraværModal = () => {
     const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();
@@ -39,7 +40,7 @@ export const FraværModal = () => {
             onClose={lukk}
             header={{
                 heading: valgtMeldekortDag
-                    ? formatterDato({ dato: valgtMeldekortDag.dato, medUkeDag: true })
+                    ? formatterDato({ dato: valgtMeldekortDag.dag, medUkeDag: true })
                     : '',
             }}
             closeOnBackdropClick={true}

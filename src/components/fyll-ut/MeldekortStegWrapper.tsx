@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import style from './MeldekortStegWrapper.module.css';
 import { Heading, Stepper } from '@navikt/ds-react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
-import { STEG_REKKEFOLGE } from '@common/typer/meldekort-utfylling.ts';
+import { STEG_REKKEFOLGE } from '@common/typer/BrukersMeldekortUtfylling';
 import { getPathForMeldekortSteg } from '@common/siteRoutes';
 import { useRouting } from '@routing/useRouting.ts';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';

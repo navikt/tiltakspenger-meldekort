@@ -1,26 +1,9 @@
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
-import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
+import { Meldekort } from '@common/typer/MeldekortBruker';
 import { MeldekortBruker, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { AlleMeldekortDTO, AlleMeldekortProps } from '@common/typer/alle-meldekort';
 
-export const tilMeldekortUtfylling = (meldekortDto: MeldekortTilBrukerDTO): MeldekortUtfylling => {
-    return {
-        id: meldekortDto.id,
-        periode: {
-            fraOgMed: meldekortDto.fraOgMed,
-            tilOgMed: meldekortDto.tilOgMed,
-        },
-        uke1: meldekortDto.uke1,
-        uke2: meldekortDto.uke2,
-        maksAntallDager: meldekortDto.maksAntallDager,
-        innsendt: meldekortDto.innsendt ?? null,
-        dager: meldekortDto.dager.map((dag) => ({
-            status: dag.status,
-            dato: dag.dag,
-        })),
-        status: meldekortDto.status,
-        kanSendes: meldekortDto.kanSendes,
-    };
+export const tilMeldekortUtfylling = (meldekortDto: Meldekort): Meldekort => {
+    return meldekortDto;
 };
 
 export const tilMeldekortBruker = (dto: MeldekortBrukerDTO): MeldekortBruker => {

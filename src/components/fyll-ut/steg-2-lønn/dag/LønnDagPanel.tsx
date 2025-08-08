@@ -1,4 +1,3 @@
-import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
 import { Checkbox } from '@navikt/ds-react';
 import { classNames } from '@utils/classNames.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
@@ -8,6 +7,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import style from './LønnDagPanel.module.css';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 type Props = {
     dag: MeldekortDag;
@@ -38,7 +38,7 @@ export const LønnDagPanel = ({ dag }: Props) => {
             className={classNames(style.dag, erValgt && style.valgtLønn)}
         >
             <Tekst id={'lønnDagPrefix'} />
-            {formatterDato({ dato: dag.dato, medUkeDag: true })}
+            {formatterDato({ dato: dag.dag, medUkeDag: true })}
         </Checkbox>
     );
 };

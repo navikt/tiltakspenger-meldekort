@@ -1,11 +1,11 @@
 import { KalenderUke } from '@components/kalender/uke/KalenderUke.tsx';
-import { MeldekortSteg, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
+import { BrukersMeldekortUtfylling, MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
 import { classNames } from '@utils/classNames.ts';
 
 import style from './Kalender.module.css';
 
 type Props = {
-    meldekort: MeldekortUtfylling;
+    meldekort: BrukersMeldekortUtfylling;
     steg: MeldekortSteg;
     className?: string;
 };

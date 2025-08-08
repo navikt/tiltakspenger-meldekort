@@ -1,10 +1,10 @@
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
+import { Meldekort } from '@common/typer/MeldekortBruker';
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
 import { Alert, BodyShort, HStack } from '@navikt/ds-react';
 import { formatterDato } from '@utils/datetime';
 
-const KorrigerMeldekortKvittering = (props: { originaleMeldekort: MeldekortUtfylling }) => {
+const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) => {
     return (
         <div>
             <PageHeader
@@ -16,7 +16,7 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: MeldekortUtfyl
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.originaleMeldekort.periode.fraOgMed })} til ${formatterDato({ dato: props.originaleMeldekort.periode.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: props.originaleMeldekort.fraOgMed })} til ${formatterDato({ dato: props.originaleMeldekort.tilOgMed })})`}
                         />
                     </HStack>
                 }

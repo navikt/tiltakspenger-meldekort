@@ -1,27 +1,21 @@
 import test, { expect } from '@playwright/test';
 import { klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 import {
+    Meldekort,
     MeldekortDag,
     MeldekortDagStatus,
     MeldekortStatus,
-    MeldekortUtfylling,
-} from '../commonSrc/typer/meldekort-utfylling';
+} from '../commonSrc/typer/MeldekortBruker';
 
 const nyMeldekortDag = ({
     dato = '2023-01-01',
     status = MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-    harRett = true,
-    index = 0,
 }: {
     dato?: string;
     status?: MeldekortDagStatus;
-    harRett?: boolean;
-    index?: number;
 }): MeldekortDag => ({
-    dato,
+    dag: dato,
     status,
-    harRett,
-    index,
 });
 
 const nyUtfylltMeldekort = ({
@@ -36,72 +30,58 @@ const nyUtfylltMeldekort = ({
         nyMeldekortDag({
             dato: '2023-01-01',
             status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
-            index: 0,
         }),
         nyMeldekortDag({
             dato: '2023-01-02',
             status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-            index: 1,
         }),
         nyMeldekortDag({
             dato: '2023-01-03',
             status: MeldekortDagStatus.FRAVÆR_ANNET,
-            index: 2,
         }),
         nyMeldekortDag({
             dato: '2023-01-04',
             status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
-            index: 3,
         }),
         nyMeldekortDag({
             dato: '2023-01-05',
             status: MeldekortDagStatus.FRAVÆR_SYK,
-            index: 4,
         }),
         nyMeldekortDag({
             dato: '2023-01-06',
             status: MeldekortDagStatus.IKKE_BESVART,
-            index: 5,
         }),
         nyMeldekortDag({
             dato: '2023-01-07',
             status: MeldekortDagStatus.IKKE_BESVART,
-            index: 6,
         }),
         nyMeldekortDag({
             dato: '2023-01-08',
             status: MeldekortDagStatus.FRAVÆR_SYKT_BARN,
-            index: 7,
         }),
         nyMeldekortDag({
             dato: '2023-01-09',
             status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
-            index: 8,
         }),
         nyMeldekortDag({
             dato: '2023-01-10',
             status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-            index: 9,
         }),
         nyMeldekortDag({
             dato: '2023-01-11',
             status: MeldekortDagStatus.FRAVÆR_ANNET,
-            index: 10,
         }),
         nyMeldekortDag({
             dato: '2023-01-12',
             status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
-            index: 11,
         }),
         nyMeldekortDag({
             dato: '2023-01-13',
             status: MeldekortDagStatus.IKKE_BESVART,
-            index: 12,
         }),
         nyMeldekortDag({
             dato: '2023-01-14',
             status: MeldekortDagStatus.IKKE_BESVART,
-            index: 13,
         }),
     ],
 }: {
@@ -113,13 +93,18 @@ const nyUtfylltMeldekort = ({
     innsendt?: string | null;
     dager?: MeldekortDag[];
     status?: MeldekortStatus;
-}): MeldekortUtfylling => ({
+}): Meldekort => ({
     id,
-    periode,
+    meldeperiodeId: '12345',
+    kjedeId: '67890',
+    versjon: 1,
+    fraOgMed: periode.fraOgMed,
+    tilOgMed: periode.tilOgMed,
     uke1,
     uke2,
     maksAntallDager,
     innsendt,
+    kanSendes: null,
     dager,
     status,
 });
@@ -318,74 +303,59 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
             }),
             nyMeldekortDag({
                 dato: '2023-01-07',
-                status: MeldekortDagStatus.IKKE_BESVART,
-                harRett: false,
-                index: 1,
+                status: MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER,
             }),
             nyMeldekortDag({
                 dato: '2023-01-08',
                 status: MeldekortDagStatus.FRAVÆR_SYKT_BARN,
-                index: 2,
             }),
             nyMeldekortDag({
                 dato: '2023-01-09',
                 status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
-                index: 3,
             }),
             nyMeldekortDag({
                 dato: '2023-01-10',
                 status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-                index: 4,
             }),
             nyMeldekortDag({
                 dato: '2023-01-11',
                 status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-                index: 5,
             }),
             nyMeldekortDag({
                 dato: '2023-01-12',
                 status: MeldekortDagStatus.FRAVÆR_ANNET,
-                index: 6,
             }),
             nyMeldekortDag({
                 dato: '2023-01-13',
                 status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
-                index: 7,
             }),
             nyMeldekortDag({
                 dato: '2023-01-14',
                 status: MeldekortDagStatus.IKKE_BESVART,
-                index: 8,
             }),
             nyMeldekortDag({
                 dato: '2023-01-15',
                 status: MeldekortDagStatus.IKKE_BESVART,
-                index: 9,
             }),
             nyMeldekortDag({
                 dato: '2023-01-16',
                 status: MeldekortDagStatus.IKKE_BESVART,
-                index: 10,
             }),
             nyMeldekortDag({
                 dato: '2023-01-17',
                 status: MeldekortDagStatus.IKKE_BESVART,
-                index: 11,
             }),
             nyMeldekortDag({
                 dato: '2023-01-18',
                 status: MeldekortDagStatus.IKKE_BESVART,
-                index: 12,
             }),
             nyMeldekortDag({
                 dato: '2023-01-19',
                 status: MeldekortDagStatus.IKKE_BESVART,
-                index: 13,
             }),
             nyMeldekortDag({
                 dato: '2023-01-20',
                 status: MeldekortDagStatus.IKKE_BESVART,
-                index: 14,
             }),
         ],
     });

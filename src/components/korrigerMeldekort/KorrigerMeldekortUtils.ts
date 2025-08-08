@@ -1,4 +1,4 @@
-import { MeldekortDagStatus } from '@common/typer/meldekort-utfylling';
+import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 export const korrigerMeldekortStatusTextMapper = (status: MeldekortDagStatus): string => {
     switch (status) {

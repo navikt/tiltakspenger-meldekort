@@ -1,5 +1,3 @@
-import { MeldekortDag, MeldekortUtfylling } from '@common/typer/meldekort-utfylling';
-
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
 import {
@@ -16,12 +14,13 @@ import styles from './KorrigerMeldekortOppsummering.module.css';
 import { ArrowLeftIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutes } from '@common/siteRoutes';
-import { useKorrigerMeldekortContext } from './KorrigerMeldekortContext';
+import { useKorrigerMeldekortContext } from '../../context/korriger/KorrigerMeldekortContext';
 import { Link } from 'wouter';
 import { useCallback, useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
+import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
 
 const useSendKorrigerteDager = (
     meldekortId: string,
@@ -45,7 +44,7 @@ const useSendKorrigerteDager = (
                 body: JSON.stringify({
                     meldekortId: meldekortId,
                     korrigerteDager: korrigerteDager.map((dag) => ({
-                        dato: dag.dato,
+                        dato: dag.dag,
                         status: dag.status,
                     })),
                 }),
@@ -73,7 +72,7 @@ const useSendKorrigerteDager = (
     return { status, response, callFn };
 };
 
-const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtfylling }) => {
+const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort }) => {
     const { navigate, base } = useRouting();
 
     const [visFeil, setVisFeil] = useState(false);
@@ -103,7 +102,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: MeldekortUtf
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.originaleMeldekort.periode.fraOgMed })} til ${formatterDato({ dato: props.originaleMeldekort.periode.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: props.originaleMeldekort.fraOgMed })} til ${formatterDato({ dato: props.originaleMeldekort.tilOgMed })})`}
                         />
                     </HStack>
                 }
@@ -213,7 +212,7 @@ const OppsummeringAvKorrigertMeldekortDager = (props: { dager: MeldekortDag[] })
     return (
         <ul className={styles.dagOppsummeringContainer}>
             {props.dager.map((dag) => (
-                <li key={`${dag.dato}`}>
+                <li key={`${dag.dag}`}>
                     <MeldekortdagOppsummering dag={dag} />
                 </li>
             ))}

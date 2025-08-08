@@ -1,5 +1,3 @@
-import React from 'react';
-import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';
@@ -14,6 +12,7 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 
 import style from './FraværDagPanel.module.css';
 import { getTekst } from '@tekster/tekster.ts';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 type Props = {
     dag: MeldekortDag;
@@ -22,7 +21,7 @@ type Props = {
 export const FraværDagPanel = ({ dag }: Props) => {
     const { setValgtMeldekortDag } = useMeldekortUtfylling();
 
-    const { dato, status } = dag;
+    const { dag: dato, status } = dag;
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 

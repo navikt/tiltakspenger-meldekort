@@ -1,4 +1,4 @@
-import { MeldekortDag } from './meldekort-utfylling';
+import { MeldekortDag } from './MeldekortBruker';
 
 export interface KorrigerMeldekortRequest {
     meldekortId: string;

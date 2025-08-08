@@ -1,5 +1,5 @@
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 import { createContext, useContext } from 'react';
-import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling';
 
 export interface KorrigerMeldekortContextState {
     dager: MeldekortDag[];
