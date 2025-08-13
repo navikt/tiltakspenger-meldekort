@@ -488,6 +488,7 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     await page.getByText('Meldekort uke 1 - 2').click();
     await page.getByText('Endre meldekort').click();
 
+    await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
     // Verifiserer at dager uten rett ikke kan endres - vi har ikke en god måte å faktisk teste dette, så vi bare sjekker at de har en readonly class
     const formField = page.locator(`label[for="select-2023-01-07"]`).locator('..');

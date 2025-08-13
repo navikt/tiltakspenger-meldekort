@@ -17,7 +17,7 @@ export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
             return mockResponse(404, null);
         }
 
-        if (meldekortId === 'alle') {
+        if (meldekortId === 'innsendte') {
             return mockResponse(200, {
                 meldekort: mockAlleMeldekort,
                 bruker: mockMeldekortBruker(),
