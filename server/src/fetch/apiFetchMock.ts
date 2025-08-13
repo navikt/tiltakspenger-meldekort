@@ -1,6 +1,6 @@
 import { FetchFraApi } from '@fetch/apiFetch';
-import { MeldekortDagStatus, MeldekortStatus } from '@common/typer/meldekort-utfylling';
-import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
+
+import { Meldekort, MeldekortDagStatus, MeldekortStatus } from '@common/typer/MeldekortBruker';
 import dayjs from 'dayjs';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { brukerTesterPågår } from '@utils/env';
@@ -17,11 +17,14 @@ export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
             return mockResponse(404, null);
         }
 
-        if (meldekortId === 'alle') {
+        if (meldekortId === 'innsendte') {
             return mockResponse(200, {
                 meldekort: mockAlleMeldekort,
                 bruker: mockMeldekortBruker(),
             });
+        }
+        if (meldekortId === 'meldekort_1') {
+            return mockResponse(200, forrigeMeldekort);
         }
 
         return mockResponse(200, lagNesteMeldekort());
@@ -59,7 +62,7 @@ const formatDate = (date: string, plusDays: number = 0) => {
     return dayjs(date).add(plusDays, 'days').format('YYYY-MM-DD');
 };
 
-const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
+const lagNesteMeldekort = (): Meldekort => ({
     id: 'meldekort_2',
     meldeperiodeId: 'periode_2',
     versjon: 1,
@@ -68,8 +71,11 @@ const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
     tilOgMed: '2025-01-19',
     uke1: 2,
     uke2: 3,
+    minAntallDager: 10,
     maksAntallDager: 10,
     status: MeldekortStatus.KAN_UTFYLLES,
+    innsendt: null,
+    kanSendes: null,
     dager: [
         ...Array.from({ length: 10 }).map((_, i) => ({
             status: MeldekortDagStatus.IKKE_BESVART,
@@ -84,7 +90,7 @@ const lagNesteMeldekort = (): MeldekortTilBrukerDTO => ({
     ],
 });
 
-const forrigeMeldekort: MeldekortTilBrukerDTO = {
+const forrigeMeldekort: Meldekort = {
     id: 'meldekort_1',
     meldeperiodeId: 'periode_1',
     versjon: 1,
@@ -94,8 +100,10 @@ const forrigeMeldekort: MeldekortTilBrukerDTO = {
     uke1: 52,
     uke2: 1,
     innsendt: '2025-01-04T07:56:11.995Z',
+    minAntallDager: 10,
     maksAntallDager: 10,
     status: MeldekortStatus.INNSENDT,
+    kanSendes: null,
     dager: [
         ...Array.from({ length: 5 }).map((_, i) => ({
             status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
@@ -140,7 +148,7 @@ const forrigeMeldekort: MeldekortTilBrukerDTO = {
     ],
 };
 
-const mockAlleMeldekort: MeldekortTilBrukerDTO[] = [lagNesteMeldekort(), forrigeMeldekort];
+const mockAlleMeldekort: Meldekort[] = [lagNesteMeldekort(), forrigeMeldekort];
 
 const mockMeldekortBruker = (): MeldekortBrukerDTO => ({
     harSak: true,

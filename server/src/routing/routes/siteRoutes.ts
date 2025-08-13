@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import { SiteRoutesBuilder } from '@routing/SiteRoutesBuilder';
 import {
-    tilAlleMeldekortProps,
+    tilInnsendteMeldekortProps,
     tilMeldekortBruker,
     tilMeldekortUtfylling,
 } from '@fetch/transformDto';
-import { MeldekortTilBrukerDTO } from '@common/typer/meldekort-dto';
+import { Meldekort } from '@common/typer/MeldekortBruker';
 import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { siteRoutes } from '@common/siteRoutes';
 import { MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { skalRedirecteTilArena } from '@utils/arenaRedirect';
 import { appConfig } from '@common/appConfig';
-import { AlleMeldekortDTO } from '@common/typer/alle-meldekort';
+import { InnsendteMeldekortDTO } from '@common/typer/alle-meldekort';
 
 // TODO: bedre feilhåndtering
 export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRenderer) => {
@@ -19,7 +19,7 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
 
     routeBuilder.routes(siteRoutes.forside, async (req, fetchFraApi) => {
         const meldekortBrukerDto = await fetchFraApi(req, 'bruker', 'GET').then((res) =>
-            res?.ok ? (res.json() as Promise<MeldekortBrukerDTO>) : null
+            res?.ok ? (res.json() as Promise<MeldekortBrukerDTO>) : null,
         );
 
         if (!meldekortBrukerDto) {
@@ -41,21 +41,21 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         return { props };
     });
 
-    routeBuilder.routes(siteRoutes.alle, async (req, fetchFraApi) => {
-        const alleMeldekortDto = await fetchFraApi(req, 'meldekort/alle', 'GET').then((res) =>
-            res?.ok ? (res.json() as Promise<AlleMeldekortDTO>) : null
+    routeBuilder.routes(siteRoutes.innsendte, async (req, fetchFraApi) => {
+        const innsendteMeldekortDto = await fetchFraApi(req, 'meldekort/innsendte', 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<InnsendteMeldekortDTO>) : null),
         );
 
-        if (!alleMeldekortDto) {
+        if (!innsendteMeldekortDto) {
             return {
                 props: {},
                 status: 500,
             };
         }
 
-        const props = tilAlleMeldekortProps(alleMeldekortDto);
+        const props = tilInnsendteMeldekortProps(innsendteMeldekortDto);
 
-        if (skalRedirecteTilArena(alleMeldekortDto.bruker)) {
+        if (skalRedirecteTilArena(innsendteMeldekortDto.bruker)) {
             return {
                 props,
                 redirectUrl: appConfig.arenaUrl,
@@ -68,11 +68,11 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
     routeBuilder.routes(siteRoutes.deltakelse, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
         return meldekortDto
-            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
             : {
                   props: {},
                   status: 404,
@@ -82,11 +82,11 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
     routeBuilder.routes(siteRoutes.fravær, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
         return meldekortDto
-            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
             : {
                   props: {},
                   status: 404,
@@ -96,11 +96,11 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
     routeBuilder.routes(siteRoutes.lønn, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
         return meldekortDto
-            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
             : {
                   props: {},
                   status: 404,
@@ -110,11 +110,11 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
     routeBuilder.routes(siteRoutes.sendInn, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
         return meldekortDto
-            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
             : {
                   props: {},
                   status: 404,
@@ -124,11 +124,50 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
     routeBuilder.routes(siteRoutes.kvittering, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
         const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<MeldekortTilBrukerDTO>) : null)
+            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
         return meldekortDto
+            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
+            : {
+                  props: {},
+                  status: 404,
+              };
+    });
+
+    routeBuilder.routes(siteRoutes.korrigerMeldekort, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
+        );
+        return meldekortDto
             ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            : {
+                  props: {},
+                  status: 404,
+              };
+    });
+
+    routeBuilder.routes(siteRoutes.korrigerMeldekortOppsummering, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
+        );
+        return meldekortDto
+            ? { props: { originaleMeldekort: tilMeldekortUtfylling(meldekortDto) } }
+            : {
+                  props: {},
+                  status: 404,
+              };
+    });
+    routeBuilder.routes(siteRoutes.korrigerMeldekortKvittering, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
+        );
+        return meldekortDto
+            ? { props: { originaleMeldekort: tilMeldekortUtfylling(meldekortDto) } }
             : {
                   props: {},
                   status: 404,

@@ -13,12 +13,13 @@ export const teksterNb = {
 
     statusIkkeBesvart: 'Ikke besvart',
     statusDeltatt: 'Deltatt',
-    statusDeltattMedLønn: 'Mottok lønn',
+    statusDeltattMedLønn: 'Mottatt lønn',
     statusSyk: 'Syk',
-    statusSyktBarn: 'Sykt barn eller syk barnepasser',
+    statusSyktBarn: 'Syk barn eller syk barnepasser',
     statusGodkjentFravær: 'Fravær godkjent av Nav',
     statusAnnetFravær: 'Annet fravær',
     statusIkkeTiltaksdag: 'Ikke tiltaksdag',
+    statusIkkeRettTilTiltakspenger: 'Ikke rett',
 
     ikkeRett: 'Ikke rett',
 
@@ -27,10 +28,10 @@ export const teksterNb = {
     ingenDagerFyltUt: 'Du må fylle ut minst én dag med fravær, lønn eller deltagelse.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
-    forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har registrert for ${antall} dager. Gå tilbake og sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
-    forFaDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har bare registrert for ${antall} dager. Gå tilbake og sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
+    forMangeDagerBesvart: ({ antall, min, maks }: { antall: number; min: number; maks: number }) =>
+        `Du har fått innvilget tiltakspenger for ${min}-${maks} dager i perioden, men har registrert for ${antall} dager. Gå tilbake og sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
+    forFaDagerBesvart: ({ antall, min, maks }: { antall: number; min: number; maks: number }) =>
+        `Du har fått innvilget tiltakspenger for ${min}-${maks} dager i perioden, men har bare registrert for ${antall} dager. Gå tilbake og sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
@@ -171,12 +172,13 @@ export const teksterNb = {
     kvitteringTilbake: 'Tilbake til startsiden for meldekort',
     kvittering:
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
-    alleTittel: 'Innsendte meldekort',
-    alleHeading: 'Her er alle meldekortene dine',
-    alleTilbake: 'Tilbake til startsiden for meldekort',
+    innsendteTittel: 'Innsendte meldekort',
+    innsendteHeading: 'Her er alle innsendte meldekortene dine',
+    ingenInnsendteMeldekort: 'Du har ingen innsendte meldekort',
+    innsendteTilbake: 'Tilbake til startsiden for meldekort',
     alleInnsendt: ({ dato }: { dato: string }) => `Innsendt ${dato}`,
-    alleIkkeInnsendt: 'Ikke innsendt',
-    allePerMeldekortOverskrift: ({
+    ikkeInnsendt: 'Ikke innsendt',
+    innsendtMeldekortAccordionHeader: ({
         uke1,
         uke2,
         fraOgMed,

@@ -1,25 +1,22 @@
 {
-  "compilerOptions": {
-    "composite": true,
-    "target": "ES2022",
-    "lib": ["ES2023"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+    "compilerOptions": {
+        "composite": true,
+        "target": "ES2022",
+        "lib": ["ES2023"],
+        "module": "ESNext",
+        "skipLibCheck": true,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "isolatedModules": true,
+        "moduleDetection": "force",
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["vite.config.ts", "playwright.config.ts",
-    "globals.d.ts"
-  ]
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true
+    },
+    "include": ["vite.config.ts", "playwright.config.ts", "globals.d.ts"]
 }

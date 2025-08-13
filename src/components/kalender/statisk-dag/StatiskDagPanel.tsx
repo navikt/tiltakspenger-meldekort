@@ -1,6 +1,5 @@
-import React from 'react';
 import { BodyLong } from '@navikt/ds-react';
-import { MeldekortDag } from '@common/typer/meldekort-utfylling.ts';
+
 import { formatterDato } from '@utils/datetime.ts';
 import {
     meldekortStatusTilStyle,
@@ -9,29 +8,27 @@ import {
 } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { classNames } from '@utils/classNames.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { CircleSlashIcon } from '@navikt/aksel-icons';
 
 import style from './StatiskDagPanel.module.css';
+import { MeldekortDag } from '@common/typer/MeldekortBruker';
 
 type Props = {
     dag: MeldekortDag;
 };
 
-export const StatiskDagPanel = ({ dag }: Props) => {
-    const { status, dato, harRett } = dag;
+export const MeldekortdagOppsummering = ({ dag }: Props) => {
+    const { status, dag: dato } = dag;
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
-    const IkonKomponent = harRett ? statusTilIkon[status] : CircleSlashIcon;
+    const IkonKomponent = statusTilIkon[status];
+    const tekstId = statusTilTekstId[status];
 
     return (
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
             <IkonKomponent aria-hidden />
             <BodyLong>{`${datoTekst}: `}</BodyLong>
-            <TekstSegmenter
-                id={harRett ? statusTilTekstId[status] : 'ikkeRett'}
-                weight={'semibold'}
-            />
+            <TekstSegmenter id={tekstId} weight={'semibold'} />
         </div>
     );
 };

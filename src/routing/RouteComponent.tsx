@@ -19,7 +19,7 @@ export const RouteComponent = ({ route, appContext }: Props) => {
     const { data, error } = useFetchPageData(
         path,
         base,
-        path === initialPath ? initialProps : undefined
+        path === initialPath ? initialProps : undefined,
     );
 
     if (error) {

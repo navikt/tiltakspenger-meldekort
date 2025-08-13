@@ -7,11 +7,11 @@ import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling.tsx
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
-import { MeldekortStatus } from '@common/typer/meldekort-utfylling.ts';
 
 import style from './Forside.module.css';
 import { GuidePanel } from '@navikt/ds-react';
 import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
+import { MeldekortStatus } from '@common/typer/MeldekortBruker';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;
@@ -44,7 +44,7 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
             ) : (
                 <IkkeKlarTilUtfylling meldekortBruker={meldekortBruker} />
             )}
-            <InternLenke path={getPath(siteRoutes.alle)} className={style.tidligere}>
+            <InternLenke path={getPath(siteRoutes.innsendte)} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />
             </InternLenke>
         </>

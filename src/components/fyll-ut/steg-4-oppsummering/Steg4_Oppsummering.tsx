@@ -8,7 +8,7 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { fetchSendInn } from '@utils/fetch.ts';
 import { useRouting } from '@routing/useRouting.ts';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
+
 import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
@@ -16,9 +16,10 @@ import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 import { OppsummeringError } from '@components/fyll-ut/steg-4-oppsummering/OppsummeringError.tsx';
 import { TekstId } from '@tekster/typer.ts';
+import { Meldekort } from '@common/typer/MeldekortBruker';
 
 type SSRProps = {
-    meldekort: MeldekortUtfylling;
+    brukersMeldekort: Meldekort;
 };
 
 type ErrorSummaryItem = {
@@ -27,7 +28,7 @@ type ErrorSummaryItem = {
     href?: string;
 };
 
-export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
+export const Steg4_Oppsummering = ({ brukersMeldekort }: SSRProps) => {
     const { base, navigate } = useRouting();
     const {
         meldekortUtfylling,
@@ -45,7 +46,7 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
     const errorRef = React.useRef<HTMLDivElement>(null);
     const [errors, setErrors] = useState<ErrorSummaryItem[]>([]);
 
-    useInitMeldekortSteg(meldekort, 'oppsummering');
+    useInitMeldekortSteg(brukersMeldekort, 'oppsummering');
 
     if (!meldekortUtfylling) return;
     const {
@@ -54,7 +55,7 @@ export const Steg4_Oppsummering = ({ meldekort }: SSRProps) => {
         harIngenDagerBesvart,
         harForMangeDagerBesvart,
         harForFaDagerBesvart,
-    } = antallDagerValidering(meldekortUtfylling);
+    } = antallDagerValidering(brukersMeldekort, meldekortUtfylling);
 
     const kanIkkeSendeInnPgaFravær = harIngenDagerMedFravær && harHattFravær;
     const kanIkkeSendeInnPgaLønn = harIngenDagerMedLønn && harMottattLønn;

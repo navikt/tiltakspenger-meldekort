@@ -2,9 +2,9 @@ import { Alert, BodyLong } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDato, formatterDatoTid } from '@utils/datetime';
 import { MeldekortBrukerMedSak } from '@common/typer/meldekort-bruker.ts';
-import { MeldekortStatus } from '@common/typer/meldekort-utfylling.ts';
 
 import style from './IkkeKlarTilUtfylling.module.css';
+import { MeldekortStatus } from '@common/typer/MeldekortBruker';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;
@@ -30,9 +30,9 @@ export const IkkeKlarTilUtfylling = ({ meldekortBruker }: Props) => {
                                 <strong>{formatterDato({ dato: nesteMeldekort.kanSendes })}</strong>
                                 <Tekst id={'forsideNesteMeldekort2'} />
                                 <strong>
-                                    {formatterDato({ dato: nesteMeldekort.periode.fraOgMed })}
+                                    {formatterDato({ dato: nesteMeldekort.fraOgMed })}
                                     {'-'}
-                                    {formatterDato({ dato: nesteMeldekort.periode.tilOgMed })}
+                                    {formatterDato({ dato: nesteMeldekort.tilOgMed })}
                                 </strong>
                                 {'.'}
                             </>
@@ -45,9 +45,9 @@ export const IkkeKlarTilUtfylling = ({ meldekortBruker }: Props) => {
                     <strong>{formatterDatoTid(forrigeMeldekort.innsendt)}</strong>
                     <Tekst id={'forsideForrigeMeldekort2'} />
                     <strong>
-                        {formatterDato({ dato: forrigeMeldekort.periode.fraOgMed })}
+                        {formatterDato({ dato: forrigeMeldekort.fraOgMed })}
                         {'-'}
-                        {formatterDato({ dato: forrigeMeldekort.periode.tilOgMed })}
+                        {formatterDato({ dato: forrigeMeldekort.tilOgMed })}
                     </strong>
                     {'.'}
                 </BodyLong>

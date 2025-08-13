@@ -1,13 +1,16 @@
-import { MeldekortSteg } from '@common/typer/meldekort-utfylling';
+import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
 
 export const siteRoutes = {
     forside: '/',
-    alle: '/alle',
+    innsendte: '/innsendte',
     fravær: '/:meldekortId/fraver',
     lønn: '/:meldekortId/lonn',
     deltakelse: '/:meldekortId/deltakelse',
     sendInn: '/:meldekortId/send-inn',
     kvittering: '/:meldekortId/kvittering',
+    korrigerMeldekort: '/:meldekortId/korrigering',
+    korrigerMeldekortOppsummering: '/:meldekortId/korrigering/oppsummering',
+    korrigerMeldekortKvittering: '/:meldekortId/korrigering/kvittering',
 } as const satisfies Record<string, string>;
 
 export type SiteRouteName = keyof typeof siteRoutes;
@@ -22,7 +25,7 @@ export const getPath = (siteRoutePath: SiteRoutePath, params?: Record<string, st
 
     return Object.keys(params).reduce(
         (path, paramKey) => path.replace(`:${paramKey}`, params[paramKey]),
-        siteRoutePath
+        siteRoutePath,
     );
 };
 

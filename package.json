@@ -1,71 +1,72 @@
 {
-  "name": "tiltakspenger-meldekort",
-  "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "prepare": "husky",
-    "dev": "npm run dev --workspace server",
-    "start": "npm run start --workspace server",
-    "build": "npm-run-all build:*",
-    "build:client": "vite build --outDir server/dist/client",
-    "build:ssr": "vite build --ssr src/main-server.tsx --outDir server/src/_ssr-dist",
-    "build:server": "npm run build --workspace server",
-    "lint": "npm-run-all --parallel lint:*",
-    "lint:tsc": "tsc --noEmit",
-    "lint:tsc-server": "npm run tsc --workspace server",
-    "lint:eslint": "eslint \"**/*.ts\" \"**/*.tsx\"",
-    "test": "playwright test"
-  },
-  "workspaces": [
-    "server"
-  ],
-  "dependencies": {
-    "@navikt/aksel-icons": "7.27.0",
-    "@navikt/ds-css": "7.27.0",
-    "@navikt/ds-react": "7.27.0",
-    "@navikt/nav-dekoratoren-moduler": "3.4.0",
-    "@preact/compat": "18.3.1",
-    "dayjs": "1.11.13",
-    "preact-render-to-string": "6.5.13",
-    "swr": "2.3.5",
-    "wouter": "3.7.1"
-  },
-  "devDependencies": {
-    "@axe-core/playwright": "^4.10.2",
-    "@eslint/js": "^9.33.0",
-    "@playwright/test": "^1.54.2",
-    "@preact/preset-vite": "2.10.2",
-    "@types/node": "24.2.1",
-    "@types/react": "19.1.9",
-    "@types/react-dom": "19.1.7",
-    "@typescript-eslint/eslint-plugin": "8.39.0",
-    "@typescript-eslint/parser": "8.39.0",
-    "@vitejs/plugin-react": "5.0.0",
-    "eslint": "^9.33.0",
-    "eslint-plugin-css-modules": "^2.12.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.3.0",
-    "husky": "9.1.7",
-    "lint-staged": "16.1.5",
-    "npm-run-all": "4.1.5",
-    "playwright": "^1.54.2",
-    "prettier": "3.6.2",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "rollup-plugin-visualizer": "5.14.0",
-    "typescript": "5.9.2",
-    "vite": "^7.1.1",
-    "vite-tsconfig-paths": "^5.1.4"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint"
+    "name": "tiltakspenger-meldekort",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "prepare": "husky",
+        "dev": "npm run dev --workspace server",
+        "start": "npm run start --workspace server",
+        "build": "npm-run-all build:*",
+        "build:client": "vite build --outDir server/dist/client",
+        "build:ssr": "vite build --ssr src/main-server.tsx --outDir server/src/_ssr-dist",
+        "build:server": "npm run build --workspace server",
+        "lint": "npm-run-all --parallel lint:*",
+        "lint:tsc": "tsc --noEmit",
+        "lint:tsc-server": "npm run tsc --workspace server",
+        "lint:eslint": "eslint \"**/*.ts\" \"**/*.tsx\"",
+        "test": "playwright test",
+        "test:ui": "playwright test --ui"
+    },
+    "workspaces": [
+        "server"
     ],
-    "*.{ts,tsx,css}": [
-      "prettier --write"
-    ]
-  }
+    "dependencies": {
+        "@navikt/aksel-icons": "7.27.0",
+        "@navikt/ds-css": "7.27.0",
+        "@navikt/ds-react": "7.27.0",
+        "@navikt/nav-dekoratoren-moduler": "3.4.0",
+        "@preact/compat": "18.3.1",
+        "dayjs": "1.11.13",
+        "preact-render-to-string": "6.5.13",
+        "swr": "2.3.5",
+        "wouter": "3.7.1"
+    },
+    "devDependencies": {
+        "@axe-core/playwright": "^4.10.2",
+        "@eslint/js": "^9.33.0",
+        "@playwright/test": "^1.54.2",
+        "@preact/preset-vite": "2.10.2",
+        "@types/node": "24.2.1",
+        "@types/react": "19.1.9",
+        "@types/react-dom": "19.1.7",
+        "@typescript-eslint/eslint-plugin": "8.39.0",
+        "@typescript-eslint/parser": "8.39.0",
+        "@vitejs/plugin-react": "5.0.0",
+        "eslint": "^9.33.0",
+        "eslint-plugin-css-modules": "^2.12.0",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^5.2.0",
+        "eslint-plugin-react-refresh": "^0.4.20",
+        "globals": "^16.3.0",
+        "husky": "9.1.7",
+        "lint-staged": "16.1.5",
+        "npm-run-all": "4.1.5",
+        "playwright": "^1.54.2",
+        "prettier": "3.6.2",
+        "react": "^19.1.1",
+        "react-dom": "^19.1.1",
+        "rollup-plugin-visualizer": "5.14.0",
+        "typescript": "5.9.2",
+        "vite": "^7.1.1",
+        "vite-tsconfig-paths": "^5.1.4"
+    },
+    "lint-staged": {
+        "*.{ts,tsx}": [
+            "eslint"
+        ],
+        "*.{ts,tsx,css}": [
+            "prettier --write"
+        ]
+    }
 }

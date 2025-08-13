@@ -1,19 +1,21 @@
 import { Alert, BodyLong } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import React from 'react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
+import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling';
+import { Meldekort } from '@common/typer/MeldekortBruker';
 
 type Props = {
-    meldekortUtfylling: MeldekortUtfylling;
+    brukersMeldekort: Meldekort;
+    meldekortUtfylling: BrukersMeldekortUtfylling;
     className?: string;
 };
 
 export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
-    ({ meldekortUtfylling, className }, ref) => {
+    ({ brukersMeldekort, meldekortUtfylling, className }, ref) => {
         const { harForMangeDagerBesvart, antallDagerBesvart, harForFaDagerBesvart } =
-            antallDagerValidering(meldekortUtfylling);
+            antallDagerValidering(brukersMeldekort, meldekortUtfylling);
         const { visValideringsfeil } = useMeldekortUtfylling();
 
         if (visValideringsfeil && harForFaDagerBesvart) {
@@ -23,7 +25,8 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                         id={'forFaDagerBesvart'}
                         resolverProps={{
                             antall: antallDagerBesvart,
-                            maks: meldekortUtfylling.maksAntallDager,
+                            min: brukersMeldekort.minAntallDager,
+                            maks: brukersMeldekort.maksAntallDager,
                         }}
                     />
                 </Alert>
@@ -36,7 +39,8 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                         id={'forMangeDagerBesvart'}
                         resolverProps={{
                             antall: antallDagerBesvart,
-                            maks: meldekortUtfylling.maksAntallDager,
+                            min: brukersMeldekort.minAntallDager,
+                            maks: brukersMeldekort.maksAntallDager,
                         }}
                     />
                 </Alert>
@@ -47,7 +51,7 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                 <Tekst id={'antallDagerBesvart'} resolverProps={{ antall: antallDagerBesvart }} />
             </BodyLong>
         );
-    }
+    },
 );
 
 DagerUtfyltTeller.displayName = 'DagerUtfyltTeller';

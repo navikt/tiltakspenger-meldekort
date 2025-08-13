@@ -5,13 +5,13 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 
 import style from './TilUtfylling.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
+import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling';
 
 type Props = {
-    nesteMeldekort: MeldekortUtfylling;
+    nesteMeldekort: BrukersMeldekortUtfylling;
 };
 
 export const TilUtfylling = ({ nesteMeldekort }: Props) => {

@@ -1,0 +1,24 @@
+import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+
+export const korrigerMeldekortStatusTextMapper = (status: MeldekortDagStatus): string => {
+    switch (status) {
+        case MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET:
+            return 'Mottatt lønn';
+        case MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET:
+            return 'Deltatt';
+        case MeldekortDagStatus.FRAVÆR_SYK:
+            return 'Syk';
+        case MeldekortDagStatus.FRAVÆR_SYKT_BARN:
+            return 'Syk barn eller syk barnepasser';
+        case MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV:
+            return 'Fravær godkjent av Nav';
+        case MeldekortDagStatus.FRAVÆR_ANNET:
+            return 'Annet fravær';
+        case MeldekortDagStatus.IKKE_BESVART:
+            return 'Ikke besvart';
+        case MeldekortDagStatus.IKKE_TILTAKSDAG:
+            return 'Ikke tiltaksdag';
+        case MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER:
+            return 'Ikke rett';
+    }
+};

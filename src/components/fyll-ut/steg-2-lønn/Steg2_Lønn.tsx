@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import style from './Steg2_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { MeldekortDagStatus, MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
 import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstId } from '@tekster/typer.ts';
@@ -15,12 +14,13 @@ import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.t
 import { getTekst } from '@tekster/tekster.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
+import { Meldekort, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 type SSRProps = {
-    meldekort: MeldekortUtfylling;
+    brukersMeldekort: Meldekort;
 };
 
-export const Steg2_Lønn = ({ meldekort }: SSRProps) => {
+export const Steg2_Lønn = ({ brukersMeldekort }: SSRProps) => {
     const { navigate } = useRouting();
     const {
         meldekortUtfylling,
@@ -32,7 +32,7 @@ export const Steg2_Lønn = ({ meldekort }: SSRProps) => {
     const [feil, setFeil] = useState<TekstId | null>(null);
     const varselRef = useRef<HTMLDivElement>(null);
 
-    useInitMeldekortSteg(meldekort, 'lønn');
+    useInitMeldekortSteg(brukersMeldekort, 'lønn');
 
     if (!meldekortUtfylling) return;
 
@@ -74,6 +74,7 @@ export const Steg2_Lønn = ({ meldekort }: SSRProps) => {
                         className={style.kalender}
                     />
                     <DagerUtfyltTeller
+                        brukersMeldekort={brukersMeldekort}
                         meldekortUtfylling={meldekortUtfylling}
                         className={style.teller}
                         ref={varselRef}
@@ -100,7 +101,7 @@ export const Steg2_Lønn = ({ meldekort }: SSRProps) => {
                     }}
                     onForrigeClick={() => {
                         setMeldekortSteg('fravær');
-                        navigate(getPath(siteRoutes.fravær));
+                        navigate(getPathForMeldekortSteg('fravær', meldekortUtfylling.id));
                     }}
                     onAvbrytClick={() => {
                         setMeldekortSteg('fravær');
@@ -112,7 +113,7 @@ export const Steg2_Lønn = ({ meldekort }: SSRProps) => {
     );
 };
 
-const fjernLønn = (meldekortUtfylling: MeldekortUtfylling) => ({
+const fjernLønn = (meldekortUtfylling: Meldekort) => ({
     ...meldekortUtfylling,
     dager: meldekortUtfylling.dager.map((dag) => ({
         ...dag,

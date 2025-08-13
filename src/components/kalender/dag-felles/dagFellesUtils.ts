@@ -1,9 +1,10 @@
 import React, { SVGProps } from 'react';
-import { MeldekortDagStatus, MeldekortSteg } from '@common/typer/meldekort-utfylling.ts';
+import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
 import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
     FirstAidFillIcon,
+    MinusCircleIcon,
     QuestionmarkDiamondIcon,
     SunFillIcon,
     XMarkOctagonFillIcon,
@@ -11,15 +12,18 @@ import {
 
 import style from './dagFellesStyle.module.css';
 import { TekstId } from '@tekster/typer.ts';
+import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
-    [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: style.deltatt,
-    [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: style.lønn,
+    [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: style.deltattUtenLønn,
+    [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: style.deltattMedLønn,
     [MeldekortDagStatus.FRAVÆR_SYK]: style.syk,
     [MeldekortDagStatus.FRAVÆR_SYKT_BARN]: style.syktBarn,
-    [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: style.annet,
-    [MeldekortDagStatus.FRAVÆR_ANNET]: style.ikkeDeltatt,
+    [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: style.fraværGodkjentAvNav,
+    [MeldekortDagStatus.FRAVÆR_ANNET]: style.fraværAnnet,
     [MeldekortDagStatus.IKKE_BESVART]: style.ikkeBesvart,
+    [MeldekortDagStatus.IKKE_TILTAKSDAG]: style.ikkeTiltaksdag,
+    [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: style.ikkeBesvart,
 };
 
 export const statusTilIkon: Record<
@@ -33,6 +37,8 @@ export const statusTilIkon: Record<
     [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: SunFillIcon,
     [MeldekortDagStatus.FRAVÆR_ANNET]: XMarkOctagonFillIcon,
     [MeldekortDagStatus.IKKE_BESVART]: QuestionmarkDiamondIcon,
+    [MeldekortDagStatus.IKKE_TILTAKSDAG]: MinusCircleIcon,
+    [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: QuestionmarkDiamondIcon,
 };
 
 export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
@@ -43,6 +49,8 @@ export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
     [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: 'statusGodkjentFravær',
     [MeldekortDagStatus.FRAVÆR_ANNET]: 'statusAnnetFravær',
     [MeldekortDagStatus.IKKE_BESVART]: 'statusIkkeBesvart',
+    [MeldekortDagStatus.IKKE_TILTAKSDAG]: 'statusIkkeTiltaksdag',
+    [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: 'statusIkkeRettTilTiltakspenger',
 };
 
 export const meldekortStegTilTekstId: Record<MeldekortSteg, TekstId> = {

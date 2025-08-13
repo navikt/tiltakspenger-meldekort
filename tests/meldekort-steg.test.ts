@@ -1,8 +1,8 @@
 import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 import { getTekst } from '../src/tekster/tekster';
 import test, { expect, Page } from '@playwright/test';
-import { MeldekortFraBrukerDTO } from '../commonSrc/typer/meldekort-dto';
-import { MeldekortDagStatus } from '../commonSrc/typer/meldekort-utfylling';
+import { MeldekortDagStatus } from '../commonSrc/typer/MeldekortBruker';
+import { BrukersMeldekortUtfylling } from '../commonSrc/typer/BrukersMeldekortUtfylling';
 
 // TODO: disse testene er avhengig av mock-dataene fra demo-modusen til appen
 // Burde ha mock-data som defineres i testene
@@ -180,7 +180,7 @@ const fyllUtFraværSteg = async (page: Page, antallDagerMedFravær: number) => {
     if (antallDagerMedFravær > 0) {
         for (let i = 0; i < antallDagerMedFravær; ++i) {
             await expect(velgFraværKnapper.nth(i)).toHaveText(
-                getTekst({ id: 'fraværPanelRegistrer' })
+                getTekst({ id: 'fraværPanelRegistrer' }),
             );
             await velgFraværKnapper.nth(i).click();
             await expect(fraværModal).toBeVisible();
@@ -240,7 +240,7 @@ const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
     await bekreftCheckbox.click();
     await expect(bekreftVarsel).not.toBeVisible();
 
-    const sendInnPromise: Promise<MeldekortFraBrukerDTO> = page
+    const sendInnPromise: Promise<BrukersMeldekortUtfylling> = page
         .waitForRequest((request) => request.url().endsWith('/api/send-inn'))
         .then((request) => request.postDataJSON());
 
@@ -251,16 +251,16 @@ const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
     const sendInnData = await sendInnPromise;
 
     const dagerDeltatt = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET
+        (dag) => dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     ).length;
     const dagerFraværSyk = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.FRAVÆR_SYK
+        (dag) => dag.status === MeldekortDagStatus.FRAVÆR_SYK,
     ).length;
     const dagerMedLønn = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET
+        (dag) => dag.status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
     ).length;
     const dagerIkkeBesvart = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.IKKE_BESVART
+        (dag) => dag.status === MeldekortDagStatus.IKKE_BESVART,
     ).length;
 
     expect(dagerDeltatt).toBe(antall.antallDagerMedDeltatt);

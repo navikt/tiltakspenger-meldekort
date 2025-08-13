@@ -1,5 +1,5 @@
 import './global.css';
-import React from 'react';
+
 import { Page, VStack } from '@navikt/ds-react';
 import { AppContext } from '@common/typer/appContext.ts';
 import { SiteRouter } from '@routing/SiteRouter.tsx';

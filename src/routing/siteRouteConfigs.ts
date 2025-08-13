@@ -1,12 +1,15 @@
 import React from 'react';
 import { SiteRouteName, SiteRoutePath } from '@common/siteRoutes.ts';
 import { Forside } from '@components/forside/Forside.tsx';
-import { AlleMeldekort } from '@components/alle/AlleMeldekort.tsx';
+import { InnsendteMeldekort } from '@components/innsendte/InnsendteMeldekort';
 import { Steg3_Deltakelse } from '@components/fyll-ut/steg-3-deltakelse/Steg3_Deltakelse.tsx';
 import { Steg1_Fravær } from '@components/fyll-ut/steg-1-fravær/Steg1_Fravær.tsx';
 import { Steg4_Oppsummering } from '@components/fyll-ut/steg-4-oppsummering/Steg4_Oppsummering.tsx';
 import { Steg5_Kvittering } from '@components/fyll-ut/steg-5-kvittering/Steg5_Kvittering.tsx';
 import { Steg2_Lønn } from '@components/fyll-ut/steg-2-lønn/Steg2_Lønn.tsx';
+import KorrigerMeldekort from '@components/korrigerMeldekort/KorrigerMeldekort';
+import KorrigerMeldekortOppsummering from '@components/korrigerMeldekort/KorrigerMeldekortOppsummering';
+import KorrigerMeldekortKvittering from '@components/korrigerMeldekort/KorrigerMeldekortKvittering';
 
 export type SiteRouteConfig<Props = any> = {
     path: SiteRoutePath;
@@ -18,9 +21,9 @@ export const siteRouteConfigs = {
         path: '/',
         Component: Forside,
     },
-    alle: {
-        path: '/alle',
-        Component: AlleMeldekort,
+    innsendte: {
+        path: '/innsendte',
+        Component: InnsendteMeldekort,
     },
     deltakelse: {
         path: '/:meldekortId/deltakelse',
@@ -41,5 +44,17 @@ export const siteRouteConfigs = {
     kvittering: {
         path: '/:meldekortId/kvittering',
         Component: Steg5_Kvittering,
+    },
+    korrigerMeldekort: {
+        path: '/:meldekortId/korrigering',
+        Component: KorrigerMeldekort,
+    },
+    korrigerMeldekortOppsummering: {
+        path: '/:meldekortId/korrigering/oppsummering',
+        Component: KorrigerMeldekortOppsummering,
+    },
+    korrigerMeldekortKvittering: {
+        path: '/:meldekortId/korrigering/kvittering',
+        Component: KorrigerMeldekortKvittering,
     },
 } as const satisfies Record<SiteRouteName, SiteRouteConfig>;

@@ -1,5 +1,7 @@
-import { tilMeldekortInnsending } from '@utils/transformMeldekort.ts';
-import { MeldekortUtfylling } from '@common/typer/meldekort-utfylling.ts';
+import { appConfig } from '@common/appConfig';
+import { Meldekort } from '@common/typer/MeldekortBruker';
+
+import useSWRMutation from 'swr/mutation';
 
 type Options = RequestInit & { params?: Record<string, unknown> };
 
@@ -9,17 +11,17 @@ const objectToQueryString = (params?: Record<string, unknown>) =>
               (acc, [k, v], i) =>
                   v !== undefined
                       ? `${acc}${i ? '&' : '?'}${k}=${encodeURIComponent(
-                            typeof v === 'object' ? JSON.stringify(v) : v.toString()
+                            typeof v === 'object' ? JSON.stringify(v) : v.toString(),
                         )}`
                       : acc,
-              ''
+              '',
           )
         : '';
 
 const fetchWithRetry = async (
     url: string,
     options: Options = {},
-    retries = 1
+    retries = 1,
 ): Promise<Response> => {
     const { params, ...init } = options;
 
@@ -45,7 +47,7 @@ const fetchWithRetry = async (
 
 export const fetchJson = async <ResponseType>(
     url: string,
-    options?: Options
+    options?: Options,
 ): Promise<ResponseType | null> =>
     fetchWithRetry(url, options)
         .then((res) => res.json() as ResponseType)
@@ -55,8 +57,8 @@ export const fetchJson = async <ResponseType>(
         });
 
 export const fetchSendInn = async (
-    meldekortUtfylling: MeldekortUtfylling,
-    baseUrl: string
+    meldekortUtfylling: Meldekort,
+    baseUrl: string,
 ): Promise<boolean> =>
     fetch(`${baseUrl}/api/send-inn`, {
         method: 'POST',
@@ -64,7 +66,7 @@ export const fetchSendInn = async (
         headers: {
             'content-type': 'application/json',
         },
-        body: JSON.stringify(tilMeldekortInnsending(meldekortUtfylling)),
+        body: JSON.stringify(meldekortUtfylling),
     })
         .then((res) => {
             if (res.ok) {
@@ -78,3 +80,67 @@ export const fetchSendInn = async (
             console.error(`Innsending feilet - ${e}`);
             return false;
         });
+
+type TriggerOptions<T> = {
+    onSuccess?: (data: T) => void;
+    onError?: (error: unknown) => void;
+    onSettled?: () => void;
+};
+
+type Trigger<Payload, Response> = Payload extends undefined
+    ? (options?: TriggerOptions<Response>) => Promise<Response>
+    : (payload: Payload, options?: TriggerOptions<Response>) => Promise<Response>;
+
+type ApiError = { melding: string; kode: string };
+
+/**
+ * Brukes sammen med [apiFetcher] som handler for å håndtere API-kall med SWR.
+ */
+export function useApi<Payload = undefined, Response = unknown>(args: {
+    path: string;
+    handler: (payload: Payload) => Promise<Response>;
+    onSuccess?: (data: Response) => void;
+    onError?: (error: ApiError) => void;
+}) {
+    const { trigger, isMutating, error, data } = useSWRMutation(
+        (payload: Payload) => [args.path, payload],
+        (_, { arg }) => {
+            return args.handler(arg);
+        },
+        {
+            onSuccess: args.onSuccess,
+            onError: args.onError,
+        },
+    );
+
+    return {
+        trigger: trigger as Trigger<Payload, Response>,
+        isLoading: isMutating,
+        error,
+        data,
+    };
+}
+
+export async function apiFetcher<RequestBody, ResponseBody>(params: {
+    url: string;
+    method: 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+    body: RequestBody;
+}): Promise<ResponseBody> {
+    const { url, method, body } = params;
+
+    const res = await fetch(
+        `${appConfig.baseUrl}/api/${url.startsWith('/') ? url.slice(1) : url}`,
+        {
+            method,
+            body: JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+        },
+    );
+
+    if (!res.ok) {
+        const message = await res.text();
+        throw new Error(`Request failed: ${res.status} - ${message}`);
+    }
+
+    return res.json();
+}

@@ -1,4 +1,3 @@
-import { MeldekortDag, MeldekortDagStatus } from '@common/typer/meldekort-utfylling.ts';
 import { Checkbox } from '@navikt/ds-react';
 import { classNames } from '@utils/classNames.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
@@ -6,8 +5,9 @@ import { formatterDato } from '@utils/datetime';
 import { Tekst } from '@components/tekst/Tekst';
 
 import style from './DeltattDagPanel.module.css';
-import { StatiskDagPanel } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
+import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 type Props = {
     dag: MeldekortDag;
@@ -23,7 +23,7 @@ export const DeltattDagPanel = ({ dag }: Props) => {
     const harHattFravær = dagStatusMedFravær.has(dag.status);
     const harMottattLønn = status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET;
 
-    if (harHattFravær || harMottattLønn) return <StatiskDagPanel dag={dag} />;
+    if (harHattFravær || harMottattLønn) return <MeldekortdagOppsummering dag={dag} />;
 
     return (
         <Checkbox
@@ -39,7 +39,7 @@ export const DeltattDagPanel = ({ dag }: Props) => {
             className={classNames(style.dag, erValgt && style.valgt)}
         >
             <Tekst id={'deltattDagPrefix'} />
-            {formatterDato({ dato: dag.dato, medUkeDag: true })}
+            {formatterDato({ dato: dag.dag, medUkeDag: true })}
         </Checkbox>
     );
 };
