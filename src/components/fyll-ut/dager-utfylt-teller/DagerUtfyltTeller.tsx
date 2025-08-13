@@ -25,6 +25,7 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                         id={'forFaDagerBesvart'}
                         resolverProps={{
                             antall: antallDagerBesvart,
+                            min: brukersMeldekort.minAntallDager,
                             maks: brukersMeldekort.maksAntallDager,
                         }}
                     />
@@ -38,6 +39,7 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                         id={'forMangeDagerBesvart'}
                         resolverProps={{
                             antall: antallDagerBesvart,
+                            min: brukersMeldekort.minAntallDager,
                             maks: brukersMeldekort.maksAntallDager,
                         }}
                     />

@@ -15,7 +15,7 @@ type Props = {
 export const SiteRouter = ({ appContext }: Props) => {
     const {
         forside,
-        alle,
+        innsendte,
         deltakelse,
         fravær,
         lønn,
@@ -31,8 +31,8 @@ export const SiteRouter = ({ appContext }: Props) => {
         <Switch>
             <MeldekortUtfyllingProvider navigate={navigate}>
                 <MeldeperiodeForPeriodeProvider>
-                    <Route path={alle.path} key={alle.path}>
-                        <RouteComponent route={alle} appContext={appContext} />
+                    <Route path={innsendte.path} key={innsendte.path}>
+                        <RouteComponent route={innsendte} appContext={appContext} />
                     </Route>
 
                     {/* Forsiden trenger å informere provideren om hvilket meldekort som det skal jobbes med i stegene */}

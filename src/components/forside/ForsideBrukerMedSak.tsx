@@ -44,7 +44,7 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
             ) : (
                 <IkkeKlarTilUtfylling meldekortBruker={meldekortBruker} />
             )}
-            <InternLenke path={getPath(siteRoutes.alle)} className={style.tidligere}>
+            <InternLenke path={getPath(siteRoutes.innsendte)} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />
             </InternLenke>
         </>

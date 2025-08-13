@@ -109,6 +109,7 @@ const nyUtfylltMeldekort = ({
     periode = { fraOgMed: '2023-01-01', tilOgMed: '2023-01-14' },
     uke1 = 1,
     uke2 = 2,
+    minAntallDager = 10,
     maksAntallDager = 14,
     innsendt = '2023-01-15T12:00:00Z',
     status = MeldekortStatus.INNSENDT,
@@ -178,6 +179,7 @@ const nyUtfylltMeldekort = ({
     periode?: { fraOgMed: string; tilOgMed: string };
     uke1?: number;
     uke2?: number;
+    minAntallDager?: number;
     maksAntallDager?: number;
     innsendt?: Nullable<string>;
     dager?: MeldekortDag[];
@@ -192,6 +194,7 @@ const nyUtfylltMeldekort = ({
     tilOgMed: periode.tilOgMed,
     uke1,
     uke2,
+    minAntallDager,
     maksAntallDager,
     innsendt,
     kanSendes: kanSendes,
@@ -202,7 +205,7 @@ const nyUtfylltMeldekort = ({
 const førsteMeldekort = nyUtfylltMeldekort({});
 
 test.beforeEach(async ({ page }) => {
-    await page.route('*/**/alle/data', async (route) => {
+    await page.route('*/**/innsendte/data', async (route) => {
         await route.fulfill({
             json: { meldekort: [førsteMeldekort], arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT' },
         });
@@ -236,7 +239,7 @@ test('kan korrigere meldekort', async ({ page }) => {
         });
     });
 
-    await page.goto(`${testsBaseUrl}/alle`);
+    await page.goto(`${testsBaseUrl}/innsendte`);
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
@@ -286,7 +289,7 @@ test('kan korrigere meldekort', async ({ page }) => {
 
 test.describe('kan avbryte korrigering av et meldekort', () => {
     test('fra korrigering', async ({ page }) => {
-        await page.goto(`${testsBaseUrl}/alle`);
+        await page.goto(`${testsBaseUrl}/innsendte`);
         await klikkCookieBanner(page);
         //Skal kunne navigere seg til korrigering
         await page.getByText('Meldekort uke 1 - 2').click();
@@ -298,7 +301,7 @@ test.describe('kan avbryte korrigering av et meldekort', () => {
         expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/');
     });
     test('fra oppsummering', async ({ page }) => {
-        await page.goto(`${testsBaseUrl}/alle`);
+        await page.goto(`${testsBaseUrl}/innsendte`);
         await klikkCookieBanner(page);
 
         await page.getByText('Meldekort uke 1 - 2').click();
@@ -317,7 +320,7 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
         await route.fulfill({ status: 200 });
     });
 
-    await page.goto(`${testsBaseUrl}/alle`);
+    await page.goto(`${testsBaseUrl}/innsendte`);
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
@@ -345,7 +348,7 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
 test('forrige steg på oppsummering tar deg tilbake til korrigering med den korrigerte dataen', async ({
     page,
 }) => {
-    await page.goto(`${testsBaseUrl}/alle`);
+    await page.goto(`${testsBaseUrl}/innsendte`);
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
@@ -468,7 +471,7 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
             }),
         ],
     });
-    await page.route('*/**/alle/data', async (route) => {
+    await page.route('*/**/innsendte/data', async (route) => {
         await route.fulfill({
             json: {
                 meldekort: [meldekortMedDagerUtenRett],
@@ -479,7 +482,7 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     await page.route('*/**/12345/korrigering/data', async (route) => {
         await route.fulfill({ json: { meldekort: meldekortMedDagerUtenRett } });
     });
-    await page.goto(`${testsBaseUrl}/alle`);
+    await page.goto(`${testsBaseUrl}/innsendte`);
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
@@ -492,12 +495,12 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
 });
 
 test.describe('feil ved henting av meldeperiode', () => {
-    test('fra alle-meldekort', async ({ page }) => {
+    test('fra innsendte-meldekort', async ({ page }) => {
         await page.route('*/**/api/meldeperiode', async (route) => {
             await route.fulfill({ status: 404 });
         });
 
-        await page.goto(`${testsBaseUrl}/alle`);
+        await page.goto(`${testsBaseUrl}/innsendte`);
         await klikkCookieBanner(page);
         //Skal kunne navigere seg til korrigering
         await page.getByText('Meldekort uke 1 - 2').click();

@@ -8,11 +8,14 @@ export const antallDagerValidering = (
     meldekortUtfylling: BrukersMeldekortUtfylling,
 ) => {
     const dager = meldekortUtfylling?.dager || [];
-    const { IKKE_BESVART, DELTATT_MED_LØNN_I_TILTAKET } = MeldekortDagStatus;
+    const { IKKE_RETT_TIL_TILTAKSPENGER, IKKE_BESVART, DELTATT_MED_LØNN_I_TILTAKET } =
+        MeldekortDagStatus;
 
-    const antallDagerBesvart = dager?.filter((dag) => dag.status !== IKKE_BESVART).length;
+    const antallDagerBesvart = dager?.filter(
+        (dag) => dag.status !== IKKE_BESVART && dag.status !== IKKE_RETT_TIL_TILTAKSPENGER,
+    ).length;
     const harForMangeDagerBesvart = antallDagerBesvart > brukersMeldekort?.maksAntallDager;
-    const harForFaDagerBesvart = antallDagerBesvart < brukersMeldekort?.maksAntallDager;
+    const harForFaDagerBesvart = antallDagerBesvart < brukersMeldekort?.minAntallDager;
     const harIngenDagerBesvart = antallDagerBesvart === 0;
     const harIngenDagerMedFravær =
         dager?.filter((dag) => dagStatusMedFravær.has(dag.status)).length === 0;

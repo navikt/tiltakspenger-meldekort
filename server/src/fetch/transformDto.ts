@@ -1,6 +1,6 @@
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { MeldekortBruker, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
-import { AlleMeldekortDTO, AlleMeldekortProps } from '@common/typer/alle-meldekort';
+import { InnsendteMeldekortDTO, InnsendteMeldekortProps } from '@common/typer/alle-meldekort';
 
 export const tilMeldekortUtfylling = (meldekortDto: Meldekort): Meldekort => {
     return meldekortDto;
@@ -25,7 +25,7 @@ export const tilMeldekortBruker = (dto: MeldekortBrukerDTO): MeldekortBruker => 
           };
 };
 
-export const tilAlleMeldekortProps = (dto: AlleMeldekortDTO): AlleMeldekortProps => {
+export const tilInnsendteMeldekortProps = (dto: InnsendteMeldekortDTO): InnsendteMeldekortProps => {
     return {
         meldekort: dto.meldekort.map(tilMeldekortUtfylling),
         arenaMeldekortStatus: dto.bruker.arenaMeldekortStatus,

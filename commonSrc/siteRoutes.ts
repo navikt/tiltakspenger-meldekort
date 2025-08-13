@@ -2,7 +2,7 @@ import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
 
 export const siteRoutes = {
     forside: '/',
-    alle: '/alle',
+    innsendte: '/innsendte',
     fravær: '/:meldekortId/fraver',
     lønn: '/:meldekortId/lonn',
     deltakelse: '/:meldekortId/deltakelse',

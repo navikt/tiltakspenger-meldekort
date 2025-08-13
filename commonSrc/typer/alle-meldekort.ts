@@ -1,12 +1,12 @@
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 
-export type AlleMeldekortDTO = {
+export type InnsendteMeldekortDTO = {
     meldekort: Meldekort[];
     bruker: MeldekortBrukerDTO;
 };
 
-export type AlleMeldekortProps = {
+export type InnsendteMeldekortProps = {
     meldekort: Meldekort[];
     arenaMeldekortStatus: ArenaMeldekortStatus;
 };

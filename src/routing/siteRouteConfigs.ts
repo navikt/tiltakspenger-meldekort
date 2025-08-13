@@ -1,7 +1,7 @@
 import React from 'react';
 import { SiteRouteName, SiteRoutePath } from '@common/siteRoutes.ts';
 import { Forside } from '@components/forside/Forside.tsx';
-import { AlleMeldekort } from '@components/alle/AlleMeldekort.tsx';
+import { InnsendteMeldekort } from '@components/innsendte/InnsendteMeldekort';
 import { Steg3_Deltakelse } from '@components/fyll-ut/steg-3-deltakelse/Steg3_Deltakelse.tsx';
 import { Steg1_Fravær } from '@components/fyll-ut/steg-1-fravær/Steg1_Fravær.tsx';
 import { Steg4_Oppsummering } from '@components/fyll-ut/steg-4-oppsummering/Steg4_Oppsummering.tsx';
@@ -21,9 +21,9 @@ export const siteRouteConfigs = {
         path: '/',
         Component: Forside,
     },
-    alle: {
-        path: '/alle',
-        Component: AlleMeldekort,
+    innsendte: {
+        path: '/innsendte',
+        Component: InnsendteMeldekort,
     },
     deltakelse: {
         path: '/:meldekortId/deltakelse',
