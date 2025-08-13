@@ -68,7 +68,7 @@ export const Steg3_Deltakelse = ({ brukersMeldekort }: SSRProps) => {
                     }}
                     onForrigeClick={() => {
                         setMeldekortSteg('lønn');
-                        navigate(getPath(siteRoutes.lønn));
+                        navigate(getPathForMeldekortSteg('lønn', meldekortUtfylling.id));
                     }}
                     onAvbrytClick={() => {
                         setMeldekortSteg('fravær');

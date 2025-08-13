@@ -101,7 +101,7 @@ export const Steg2_Lønn = ({ brukersMeldekort }: SSRProps) => {
                     }}
                     onForrigeClick={() => {
                         setMeldekortSteg('fravær');
-                        navigate(getPath(siteRoutes.fravær));
+                        navigate(getPathForMeldekortSteg('fravær', meldekortUtfylling.id));
                     }}
                     onAvbrytClick={() => {
                         setMeldekortSteg('fravær');
