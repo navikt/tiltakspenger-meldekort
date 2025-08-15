@@ -29,9 +29,9 @@ export const teksterNb = {
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerBesvart: ({ antall, min, maks }: { antall: number; min: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${min}-${maks} dager i perioden, men har registrert for ${antall} dager. Gå tilbake og sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
+        `Du har fått innvilget tiltakspenger for ${min === maks ? maks : `${min}-${maks}`} dager i perioden, men har registrert for ${antall} dager. Gå tilbake og sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
     forFaDagerBesvart: ({ antall, min, maks }: { antall: number; min: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${min}-${maks} dager i perioden, men har bare registrert for ${antall} dager. Gå tilbake og sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
+        `Du har fått innvilget tiltakspenger for ${min === maks ? maks : `${min}-${maks}`} dager i perioden, men har bare registrert for ${antall} dager. Gå tilbake og sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
