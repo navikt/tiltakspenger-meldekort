@@ -7,3 +7,7 @@
     grid-template-rows: repeat(7, auto);
     grid-auto-flow: column;
 }
+
+.valideringErrorListe {
+    margin: 0;
+}

@@ -1,4 +1,4 @@
-import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 export const korrigerMeldekortStatusTextMapper = (status: MeldekortDagStatus): string => {
     switch (status) {
@@ -22,3 +22,29 @@ export const korrigerMeldekortStatusTextMapper = (status: MeldekortDagStatus): s
             return 'Ikke rett';
     }
 };
+
+export const erKorrigerteDagerGyldig = (args: {
+    dager: MeldekortDag[];
+    minAntallDager: number;
+    maksAntallDager: number;
+    harMeldeperiodeForMeldekortDagerSomIkkeGirRett: boolean;
+}) => {
+    const antallGyldigeRegistrerteDager = hentGyldigeDagerFraMeldekortDager(args.dager).length;
+
+    if (args.harMeldeperiodeForMeldekortDagerSomIkkeGirRett) {
+        return antallGyldigeRegistrerteDager <= args.maksAntallDager;
+    } else {
+        return (
+            antallGyldigeRegistrerteDager >= args.minAntallDager &&
+            antallGyldigeRegistrerteDager <= args.maksAntallDager
+        );
+    }
+};
+
+export const hentGyldigeDagerFraMeldekortDager = (dager: MeldekortDag[]) =>
+    dager.filter(
+        (dag) =>
+            dag.status != MeldekortDagStatus.IKKE_BESVART &&
+            dag.status != MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER &&
+            dag.status != MeldekortDagStatus.IKKE_TILTAKSDAG,
+    );

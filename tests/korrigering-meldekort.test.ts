@@ -532,3 +532,144 @@ test.describe('feil ved henting av meldeperiode', () => {
         expect(page.url()).toBe(`${testsBaseUrl}/`);
     });
 });
+
+test.describe('validerer korrigering av meldekort', () => {
+    test('Validerer min og maks antall dager der alle dager gir rett til tiltakspenger', async ({
+        page,
+    }) => {
+        await page.goto(`${testsBaseUrl}/innsendte`);
+        await klikkCookieBanner(page);
+
+        await page.getByText('Meldekort uke 1 - 2').click();
+        await page.getByText('Endre meldekort').click();
+
+        await page.waitForURL('**/12345/korrigering');
+        expect(page.url()).toContain('/12345/korrigering');
+        await page.selectOption('#select-2023-01-01', 'Ikke besvart');
+        await page.getByText('Neste steg').click();
+
+        expect(page.getByText('Merk: Følgende dager blir ikke regnet med:')).toBeVisible();
+
+        await page.selectOption('#select-2023-01-01', 'Deltatt');
+        expect(page.getByText('Merk: Følgende dager blir ikke regnet med:')).toBeHidden();
+        await page.getByText('Neste steg').click();
+
+        await page.waitForURL('**/12345/korrigering/oppsummering');
+        expect(page.url()).toContain('/12345/korrigering/oppsummering');
+    });
+    test('Valider kun maks der minst en dag ikke gir rett til tiltakspenger.', async ({ page }) => {
+        //behov for at minst en dag ikke gir rett til tiltakspenger
+        const dager = [
+            nyMeldekortDag({
+                dag: '2025-01-06',
+                status: MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-07',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-08',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-09',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-10',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-11',
+                status: MeldekortDagStatus.IKKE_BESVART,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-12',
+                status: MeldekortDagStatus.IKKE_BESVART,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-13',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-14',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-15',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-16',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-17',
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-18',
+                status: MeldekortDagStatus.IKKE_BESVART,
+            }),
+            nyMeldekortDag({
+                dag: '2025-01-19',
+                status: MeldekortDagStatus.IKKE_BESVART,
+            }),
+        ];
+
+        const meldekort = nyUtfylltMeldekort({
+            dager: dager,
+            maksAntallDager: 9,
+            minAntallDager: 9,
+            periode: { fraOgMed: '2025-01-06', tilOgMed: '2025-01-19' },
+        });
+
+        await page.route('*/**/innsendte/data', async (route) => {
+            await route.fulfill({
+                json: {
+                    meldekort: [meldekort],
+                    arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
+                },
+            });
+        });
+
+        await page.route('*/**/api/meldeperiode', async (route) => {
+            await route.fulfill({
+                json: nyMeldeperiodeForPeriodeResponse({
+                    dager: dager,
+                    periode: { fraOgMed: '2025-01-06', tilOgMed: '2025-01-19' },
+                }),
+            });
+        });
+
+        await page.route('*/**/12345/korrigering/data', async (route) => {
+            await route.fulfill({ json: { meldekort: meldekort } });
+        });
+
+        await page.goto(`${testsBaseUrl}/innsendte`);
+        await klikkCookieBanner(page);
+        await page.getByText('Meldekort uke 1 - 2').click();
+        await page.getByText('Endre meldekort').click();
+
+        await page.waitForURL('**/12345/korrigering');
+        expect(page.url()).toContain('/12345/korrigering');
+
+        await page.selectOption('#select-2025-01-11', 'Deltatt');
+        await page.getByText('Neste steg').click();
+
+        expect(
+            page.getByText('Du har registrert for mange dager. Maks antall er 9 dager.'),
+        ).toBeVisible();
+
+        await page.selectOption('#select-2025-01-11', 'Ikke tiltaksdag');
+        expect(
+            page.getByText('Du har registrert for mange dager. Maks antall er 9 dager.'),
+        ).toBeHidden();
+        await page.selectOption('#select-2025-01-10', 'Ikke tiltaksdag');
+
+        await page.getByText('Neste steg').click();
+        await page.waitForURL('**/12345/korrigering/oppsummering');
+        expect(page.url()).toContain('/12345/korrigering/oppsummering');
+    });
+});

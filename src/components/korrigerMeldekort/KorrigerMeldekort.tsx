@@ -16,17 +16,22 @@ import {
 } from '@navikt/ds-react';
 import { useRouting } from '@routing/useRouting';
 import { formatterDato } from '@utils/datetime';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './KorrigerMeldekort.module.css';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from '../../context/korriger/KorrigerMeldekortContext';
-import { korrigerMeldekortStatusTextMapper } from './KorrigerMeldekortUtils';
+import {
+    erKorrigerteDagerGyldig,
+    hentGyldigeDagerFraMeldekortDager,
+    korrigerMeldekortStatusTextMapper,
+} from './KorrigerMeldekortUtils';
 import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
 import { apiFetcher, useApi } from '@utils/fetch';
 import { Periode } from '@common/typer/periode';
 import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
 import { Meldekort, MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 import { Link } from 'wouter';
+import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
 
 /**
  * TODO - skal vi ha noe form for validering her?
@@ -137,7 +142,12 @@ const KorrigeringAvMeldekort = (props: {
     sisteMeldeperiode: MeldeperiodeForPeriodeResponse;
 }) => {
     const { navigate } = useRouting();
+    const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
     const { dager, setDager, oppdaterDag } = useKorrigerMeldekortContext();
+
+    useEffect(() => {
+        setHarUgyldigUtfylling(false);
+    }, [dager]);
 
     useEffect(() => {
         if (dager.length === 0) {
@@ -179,15 +189,55 @@ const KorrigeringAvMeldekort = (props: {
                 onChange={(dag, nyStatus) => oppdaterDag(dag, nyStatus)}
             />
 
+            {harUgyldigUtfylling && (
+                <Alert variant="error">
+                    <VStack gap="4">
+                        {hentGyldigeDagerFraMeldekortDager(dager).length >
+                        props.meldekort.maksAntallDager ? (
+                            <BodyShort>
+                                Du har registrert for mange dager. Maks antall er{' '}
+                                {props.meldekort.maksAntallDager} dager.
+                            </BodyShort>
+                        ) : (
+                            <BodyShort>
+                                Kun {hentGyldigeDagerFraMeldekortDager(dager).length} av{' '}
+                                {props.meldekort.maksAntallDager} dager besvart
+                            </BodyShort>
+                        )}
+
+                        <VStack>
+                            <BodyShort>Merk: Følgende dager blir ikke regnet med:</BodyShort>
+                            <ul className={styles.valideringErrorListe}>
+                                <li>Ikke besvart</li>
+                                <li>Ikke tiltaksdag</li>
+                            </ul>
+                        </VStack>
+                    </VStack>
+                </Alert>
+            )}
+
             <VStack gap="2">
                 <Button
                     className={styles.button}
                     onClick={() => {
-                        navigate(
-                            getPath(siteRoutes.korrigerMeldekortOppsummering, {
-                                meldekortId: props.meldekort.id,
-                            }),
-                        );
+                        const erDagerFylltUtGyldig = erKorrigerteDagerGyldig({
+                            dager: dager,
+                            minAntallDager: props.meldekort.minAntallDager,
+                            maksAntallDager: props.meldekort.maksAntallDager,
+                            harMeldeperiodeForMeldekortDagerSomIkkeGirRett: harDagerSomIkkeGirRett(
+                                props.sisteMeldeperiode,
+                            ),
+                        });
+
+                        if (erDagerFylltUtGyldig) {
+                            navigate(
+                                getPath(siteRoutes.korrigerMeldekortOppsummering, {
+                                    meldekortId: props.meldekort.id,
+                                }),
+                            );
+                        } else {
+                            setHarUgyldigUtfylling(true);
+                        }
                     }}
                     iconPosition="right"
                     icon={<ArrowRightIcon title="pil-høyre" fontSize="1.5rem" />}
