@@ -5,7 +5,6 @@ import { Kalender } from '@components/kalender/Kalender.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
-import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { FraværHjelp } from '@components/fyll-ut/steg-1-fravær/hjelp/FraværHjelp.tsx';
 import { TekstId } from '@tekster/typer.ts';
 import { FraværModal } from '@components/fyll-ut/steg-1-fravær/fravær-modal/FraværModal.tsx';
@@ -36,7 +35,6 @@ export const Steg1_Fravær = ({ brukersMeldekort }: SSRProps) => {
     useInitMeldekortSteg(brukersMeldekort, 'fravær');
 
     if (!meldekortUtfylling) return;
-    const { harForMangeDagerBesvart } = antallDagerValidering(brukersMeldekort, meldekortUtfylling);
 
     return (
         <MeldekortStegWrapper>
@@ -60,7 +58,6 @@ export const Steg1_Fravær = ({ brukersMeldekort }: SSRProps) => {
                     <Tekst id={'fraværHarHattFraværSvarNei'} />
                 </Radio>
             </RadioGroup>
-
             {harHattFravær && (
                 <>
                     <FraværHjelp />
@@ -88,11 +85,6 @@ export const Steg1_Fravær = ({ brukersMeldekort }: SSRProps) => {
                     onNesteClick={() => {
                         if (harHattFravær === null) {
                             setFeil('fraværSpørsmålIkkeValgt');
-                            return false;
-                        }
-
-                        if (harForMangeDagerBesvart) {
-                            setFeil('forMangeDagerEnkel');
                             return false;
                         }
 
