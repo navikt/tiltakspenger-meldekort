@@ -14,8 +14,14 @@ export const antallDagerValidering = (
     const antallDagerBesvart = dager?.filter(
         (dag) => dag.status !== IKKE_BESVART && dag.status !== IKKE_RETT_TIL_TILTAKSPENGER,
     ).length;
+
+    const alleDagerGirRett =
+        dager.filter((dag) => dag.status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER)
+            .length < 1;
+
     const harForMangeDagerBesvart = antallDagerBesvart > brukersMeldekort?.maksAntallDager;
-    const harForFaDagerBesvart = antallDagerBesvart < brukersMeldekort?.minAntallDager;
+    const harForFaDagerBesvart =
+        antallDagerBesvart < brukersMeldekort?.maksAntallDager && alleDagerGirRett;
     const harIngenDagerBesvart = antallDagerBesvart === 0;
     const harIngenDagerMedFravær =
         dager?.filter((dag) => dagStatusMedFravær.has(dag.status)).length === 0;

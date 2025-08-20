@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './Steg3_Deltakelse.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Alert, BodyLong } from '@navikt/ds-react';
+import { Alert, BodyLong, BodyShort } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { Tekst } from '@components/tekst/Tekst';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
@@ -14,24 +14,48 @@ import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker';
+import { InternLenke } from '@components/lenke/InternLenke';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
 };
 
 export const Steg3_Deltakelse = ({ brukersMeldekort }: SSRProps) => {
-    const { navigate } = useRouting();
-    const { meldekortUtfylling, setMeldekortSteg } = useMeldekortUtfylling();
-    const [feil, setFeil] = useState<TekstId | null>(null);
+    const { meldekortUtfylling } = useMeldekortUtfylling();
 
     useInitMeldekortSteg(brukersMeldekort, 'deltatt');
 
-    if (!meldekortUtfylling) return;
+    if (!meldekortUtfylling) return <MeldekortEksistererIkke />;
 
-    const { harForMangeDagerBesvart, harIngenDagerBesvart } = antallDagerValidering(
-        brukersMeldekort,
-        meldekortUtfylling,
+    return (
+        <DeltagelsUtfylling
+            brukersMeldekort={brukersMeldekort}
+            meldekortUtfylling={meldekortUtfylling}
+        />
     );
+};
+
+const MeldekortEksistererIkke = () => {
+    return (
+        <div>
+            <Alert variant={'error'}>
+                <InternLenke path={getPath(siteRoutes.forside)}>
+                    En feil har skjedd. Tilbake til forsiden
+                </InternLenke>
+            </Alert>
+        </div>
+    );
+};
+
+const DeltagelsUtfylling = ({
+    brukersMeldekort,
+    meldekortUtfylling,
+}: SSRProps & { meldekortUtfylling: Meldekort }) => {
+    const { navigate } = useRouting();
+    const { setMeldekortSteg, setVisValideringsfeil } = useMeldekortUtfylling();
+
+    const { harForMangeDagerBesvart, harIngenDagerBesvart, harForFaDagerBesvart } =
+        antallDagerValidering(brukersMeldekort, meldekortUtfylling);
 
     return (
         <MeldekortStegWrapper>
@@ -46,22 +70,16 @@ export const Steg3_Deltakelse = ({ brukersMeldekort }: SSRProps) => {
             />
 
             <div className={style.knapperOgVarsel}>
-                {feil && (
-                    <Alert variant={'error'} className={style.varsel}>
-                        <Tekst id={feil} />
-                    </Alert>
-                )}
                 <MeldekortStegButtons
                     onNesteClick={() => {
-                        if (harForMangeDagerBesvart) {
-                            setFeil('forMangeDagerEnkel');
-                            return false;
+                        if (
+                            harForFaDagerBesvart ||
+                            harIngenDagerBesvart ||
+                            harForMangeDagerBesvart
+                        ) {
+                            setVisValideringsfeil(true);
                         }
-                        if (harIngenDagerBesvart) {
-                            setFeil('ingenDagerFyltUt');
-                            return false;
-                        }
-                        setFeil(null);
+
                         setMeldekortSteg('oppsummering');
                         navigate(getPathForMeldekortSteg('oppsummering', meldekortUtfylling.id));
                         return true;

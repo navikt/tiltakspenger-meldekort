@@ -87,24 +87,59 @@ export const Steg4_Oppsummering = ({ brukersMeldekort }: SSRProps) => {
         navigate(getPathForMeldekortSteg('lønn', meldekortUtfylling.id));
     };
 
+    const redirectTilDeltakelseSteg = () => {
+        setMeldekortSteg('deltatt');
+        navigate(getPathForMeldekortSteg('deltatt', meldekortUtfylling.id));
+    };
+
     const validerMeldekortUtfylling = () => {
         const currentValidationErrors: ErrorSummaryItem[] = [];
 
         if (harIngenDagerBesvart) {
             currentValidationErrors.push({
-                href: '#oppsummering',
+                onClick: () => {
+                    if (harHattFravær || harHattFravær === null) {
+                        redirectTilFraværSteg();
+                        return;
+                    }
+                    if (harMottattLønn || harMottattLønn === null) {
+                        redirectTilLønnSteg();
+                        return;
+                    }
+                    redirectTilDeltakelseSteg();
+                },
                 tekstId: 'ingenDagerFyltUt',
             });
         }
         if (harForMangeDagerBesvart) {
             currentValidationErrors.push({
-                onClick: redirectTilFraværSteg,
+                onClick: () => {
+                    if (harHattFravær || harHattFravær === null) {
+                        redirectTilFraværSteg();
+                        return;
+                    }
+                    if (harMottattLønn || harMottattLønn === null) {
+                        redirectTilLønnSteg();
+                        return;
+                    }
+                    redirectTilDeltakelseSteg();
+                },
                 tekstId: 'forMangeDagerEnkel',
             });
         }
         if (harForFaDagerBesvart) {
             currentValidationErrors.push({
-                onClick: redirectTilFraværSteg,
+                onClick: () => {
+                    if (harHattFravær || harHattFravær === null) {
+                        redirectTilFraværSteg();
+                        return;
+                    }
+                    if (harMottattLønn || harMottattLønn === null) {
+                        redirectTilLønnSteg();
+                        return;
+                    }
+                    redirectTilDeltakelseSteg();
+                },
                 tekstId: 'forFaDagerEnkel',
             });
         }

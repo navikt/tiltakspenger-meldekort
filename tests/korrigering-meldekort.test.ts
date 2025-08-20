@@ -109,7 +109,6 @@ const nyUtfylltMeldekort = ({
     periode = { fraOgMed: '2023-01-01', tilOgMed: '2023-01-14' },
     uke1 = 1,
     uke2 = 2,
-    minAntallDager = 10,
     maksAntallDager = 14,
     innsendt = '2023-01-15T12:00:00Z',
     status = MeldekortStatus.INNSENDT,
@@ -179,7 +178,6 @@ const nyUtfylltMeldekort = ({
     periode?: { fraOgMed: string; tilOgMed: string };
     uke1?: number;
     uke2?: number;
-    minAntallDager?: number;
     maksAntallDager?: number;
     innsendt?: Nullable<string>;
     dager?: MeldekortDag[];
@@ -194,7 +192,6 @@ const nyUtfylltMeldekort = ({
     tilOgMed: periode.tilOgMed,
     uke1,
     uke2,
-    minAntallDager,
     maksAntallDager,
     innsendt,
     kanSendes: kanSendes,
@@ -621,7 +618,6 @@ test.describe('validerer korrigering av meldekort', () => {
         const meldekort = nyUtfylltMeldekort({
             dager: dager,
             maksAntallDager: 9,
-            minAntallDager: 9,
             periode: { fraOgMed: '2025-01-06', tilOgMed: '2025-01-19' },
         });
 

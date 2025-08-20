@@ -18,6 +18,14 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
             antallDagerValidering(brukersMeldekort, meldekortUtfylling);
         const { visValideringsfeil } = useMeldekortUtfylling();
 
+        if (visValideringsfeil && antallDagerBesvart === 0) {
+            return (
+                <Alert className={className} variant={'warning'} ref={ref} tabIndex={-1}>
+                    <Tekst id={'ingenDagerFyltUt'} />
+                </Alert>
+            );
+        }
+
         if (visValideringsfeil && harForFaDagerBesvart) {
             return (
                 <Alert className={className} variant={'warning'} ref={ref} tabIndex={-1}>
@@ -25,7 +33,6 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                         id={'forFaDagerBesvart'}
                         resolverProps={{
                             antall: antallDagerBesvart,
-                            min: brukersMeldekort.minAntallDager,
                             maks: brukersMeldekort.maksAntallDager,
                         }}
                     />
@@ -39,7 +46,6 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                         id={'forMangeDagerBesvart'}
                         resolverProps={{
                             antall: antallDagerBesvart,
-                            min: brukersMeldekort.minAntallDager,
                             maks: brukersMeldekort.maksAntallDager,
                         }}
                     />

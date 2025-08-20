@@ -11,7 +11,6 @@ export type Meldekort = {
     uke2: number;
     status: MeldekortStatus;
     maksAntallDager: number;
-    minAntallDager: number;
     innsendt: Nullable<string>;
     dager: MeldekortDag[];
     kanSendes: Nullable<string>;

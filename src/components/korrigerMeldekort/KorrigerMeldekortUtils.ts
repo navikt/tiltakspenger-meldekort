@@ -25,19 +25,15 @@ export const korrigerMeldekortStatusTextMapper = (status: MeldekortDagStatus): s
 
 export const erKorrigerteDagerGyldig = (args: {
     dager: MeldekortDag[];
-    minAntallDager: number;
-    maksAntallDager: number;
+    antallDager: number;
     harMeldeperiodeForMeldekortDagerSomIkkeGirRett: boolean;
 }) => {
     const antallGyldigeRegistrerteDager = hentGyldigeDagerFraMeldekortDager(args.dager).length;
 
     if (args.harMeldeperiodeForMeldekortDagerSomIkkeGirRett) {
-        return antallGyldigeRegistrerteDager <= args.maksAntallDager;
+        return antallGyldigeRegistrerteDager <= args.antallDager;
     } else {
-        return (
-            antallGyldigeRegistrerteDager >= args.minAntallDager &&
-            antallGyldigeRegistrerteDager <= args.maksAntallDager
-        );
+        return antallGyldigeRegistrerteDager === args.antallDager;
     }
 };
 

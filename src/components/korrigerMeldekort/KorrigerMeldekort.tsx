@@ -222,8 +222,7 @@ const KorrigeringAvMeldekort = (props: {
                     onClick={() => {
                         const erDagerFylltUtGyldig = erKorrigerteDagerGyldig({
                             dager: dager,
-                            minAntallDager: props.meldekort.minAntallDager,
-                            maksAntallDager: props.meldekort.maksAntallDager,
+                            antallDager: props.meldekort.maksAntallDager,
                             harMeldeperiodeForMeldekortDagerSomIkkeGirRett: harDagerSomIkkeGirRett(
                                 props.sisteMeldeperiode,
                             ),

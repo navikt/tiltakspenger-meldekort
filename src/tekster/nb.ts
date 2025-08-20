@@ -28,10 +28,10 @@ export const teksterNb = {
     ingenDagerFyltUt: 'Du må fylle ut minst én dag med fravær, lønn eller deltagelse.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
-    forMangeDagerBesvart: ({ antall, min, maks }: { antall: number; min: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${min === maks ? maks : `${min}-${maks}`} dager i perioden, men har registrert for ${antall} dager. Gå tilbake og sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
-    forFaDagerBesvart: ({ antall, min, maks }: { antall: number; min: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${min === maks ? maks : `${min}-${maks}`} dager i perioden, men har bare registrert for ${antall} dager. Gå tilbake og sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
+    forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
+        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har registrert for ${antall} dager. Gå tilbake og sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
+    forFaDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
+        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har bare registrert for ${antall} dager. Gå tilbake og sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
@@ -147,7 +147,8 @@ export const teksterNb = {
     ],
     lønnHjelpLesMerTekstFørLenke: 'Hvis du er usikker på hva du skal fylle inn i meldekortet, ',
     lønnHjelpLesMerLenkeTekst: 'ta kontakt med Nav.',
-    lønnHarMottattLønnSpørsmål: 'Har du mottatt lønn for tiden i tiltaket i meldeperioden? (obligatorisk)',
+    lønnHarMottattLønnSpørsmål:
+        'Har du mottatt lønn for tiden i tiltaket i meldeperioden? (obligatorisk)',
     lønnHarMottattLønnSvarJa: 'Ja, jeg har hatt mottatt lønn for tiden i tiltaket',
     lønnHarMottattLønnSvarNei: 'Nei, jeg har ikke mottatt lønn for tiden i tiltaket',
     lønnSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
