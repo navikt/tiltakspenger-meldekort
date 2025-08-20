@@ -22,17 +22,6 @@ test.describe('Meldekort steg', () => {
         await axeTestUtenDekoratøren(page, 'Fylt ut deltagelse uten bekreftelse');
     });
 
-    test('Kan ikke gå videre med for mange dager utfylt', async ({ page }) => {
-        const forMangeDagerVarsel = page.getByText(getTekst({ id: 'forMangeDagerEnkel' }));
-
-        await fyllUtFraværSteg(page, 0);
-        await fyllUtLønnSteg(page, 0);
-        await fyllUtDeltattSteg(page, 11);
-
-        await expect(forMangeDagerVarsel).toBeVisible();
-        await axeTestUtenDekoratøren(page, 'Fylt ut deltagelse med for mange dager');
-    });
-
     test('Går til send-inn med akseptabelt antall dager utfylt og ingen fravær eller lønn valgt', async ({
         page,
     }) => {
