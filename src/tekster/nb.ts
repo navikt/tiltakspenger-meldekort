@@ -41,7 +41,7 @@ export const teksterNb = {
     forsideGuidePanelLenkeTekst: 'Se hvordan du kan ta kontakt med Nav.',
     forsideIngress: [
         'For å motta tiltakspenger må du delta på et tiltak hos Nav og sende meldekort hver 14. dag.',
-        'På meldekortet må du registrere om du har deltatt på tiltaket, om du har vært syk, om ditt barn eller barnepasser har vært syk, om du har hatt ferie/fravær eller mottatt lønn mens du har vært i tiltaket. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
+        'På meldekortet må du oppgi hvilke dager du har deltatt på tiltaket, om du har hatt fravær eller mottatt lønn for tid i tiltaket. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
         'Vi deler informasjon fra meldekortet med andre systemer i Nav fordi informasjonen har betydning for oppfølgingen du får av Nav.',
     ],
     forsideTakk: 'Takk for at du er ærlig!',
@@ -66,7 +66,7 @@ export const teksterNb = {
     deltattTittel: 'Deltakelse i tiltak',
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
-        'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt eller hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt. ',
+        'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt. Du kan også krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt. ',
     deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket.',
     deltattDagPrefix: 'Har deltatt: ',
     fraværHjelpLesMer:
@@ -141,13 +141,13 @@ export const teksterNb = {
     lønnTittel: 'Lønn for tid i tiltak',
     lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
     lønnHjelpLesMerAvsnitt: [
-        'Hvis du får lønn for arbeid som er en del av tiltaket ditt, skal du registrere det som lønn. Arbeid er en del av tiltaket når dette er en avtalt aktivet. Det gjelder uansett om du har arbeidet hele dagen eller bare noen timer.  Tiltakspenger fra Nav regnes ikke som lønn.',
-        'Du kan ikke få tiltakspenger for dager du får lønn.',
+        'Hvis du får lønn for arbeid som er en del av tiltaket ditt skal du svare ja på dette spørsmålet. Du kan ikke få tiltakspenger for dager du får lønn i tiden i tiltaket. Dette gjelder også om du har fått lønn for kun deler av dagen.',
+        'Hvis du har fått lønn som gjelder arbeid utenfor tiden i tiltaket, skal du svare nei på dette spørsmålet.',
         'Har du arbeidet i stedet for å delta på tiltaket, skal du føre “annet fravær” fra tiltaket i forrige steg.',
     ],
     lønnHjelpLesMerTekstFørLenke: 'Hvis du er usikker på hva du skal fylle inn i meldekortet, ',
     lønnHjelpLesMerLenkeTekst: 'ta kontakt med Nav.',
-    lønnHarMottattLønnSpørsmål: 'Har du mottatt lønn i tiden i tiltaket? (obligatorisk)',
+    lønnHarMottattLønnSpørsmål: 'Har du mottatt lønn for tiden i tiltaket i meldeperioden? (obligatorisk)',
     lønnHarMottattLønnSvarJa: 'Ja, jeg har hatt mottatt lønn for tiden i tiltaket',
     lønnHarMottattLønnSvarNei: 'Nei, jeg har ikke mottatt lønn for tiden i tiltaket',
     lønnSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
