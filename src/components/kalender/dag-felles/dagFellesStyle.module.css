@@ -16,7 +16,8 @@
     }
 }
 
-.deltattUtenLønn {
+.deltattUtenLønn,
+.fraværGodkjentAvNav {
     background: var(--a-surface-success-subtle);
     border-color: var(--a-border-success);
 
@@ -35,8 +36,7 @@
 }
 
 .syk,
-.syktBarn,
-.fraværGodkjentAvNav {
+.syktBarn {
     background: var(--a-surface-warning-subtle);
     border-color: var(--a-border-warning);
 
