@@ -16,6 +16,7 @@ export const SiteRouter = ({ appContext }: Props) => {
     const {
         forside,
         innsendte,
+        meldekortForKjede,
         deltakelse,
         fravær,
         lønn,
@@ -33,6 +34,9 @@ export const SiteRouter = ({ appContext }: Props) => {
                 <MeldeperiodeForPeriodeProvider>
                     <Route path={innsendte.path} key={innsendte.path}>
                         <RouteComponent route={innsendte} appContext={appContext} />
+                    </Route>
+                    <Route path={meldekortForKjede.path} key={meldekortForKjede.path}>
+                        <RouteComponent route={meldekortForKjede} appContext={appContext} />
                     </Route>
 
                     {/* Forsiden trenger å informere provideren om hvilket meldekort som det skal jobbes med i stegene */}
@@ -79,7 +83,7 @@ export const SiteRouter = ({ appContext }: Props) => {
             </MeldekortUtfyllingProvider>
 
             {/* 
-                Denne routen vil aldri matche fordi provideren vil alltid bli sett på som en match - Vi er derimot heldige fordi at appContext.status i App.tsx fie oss feilsiden. 
+                Denne routen vil aldri matche fordi provideren vil alltid bli sett på som en match - Vi er derimot heldige fordi at appContext.status i App.tsx gir oss feilsiden. 
                 Kan enten flytte den inn i provideren, eller finne en annen måte å håndtere dette på. 
                 */}
             <Route>

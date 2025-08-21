@@ -1,4 +1,6 @@
+import { Periode } from '@common/typer/periode';
 import { TekstResolver } from '@tekster/typer.ts';
+import { formatterDato } from '@utils/datetime';
 
 export const teksterNb = {
     neste: 'Neste steg',
@@ -173,6 +175,8 @@ export const teksterNb = {
     kvitteringTilbake: 'Tilbake til startsiden for meldekort',
     kvittering:
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
+
+    // Innsendte
     innsendteTittel: 'Innsendte meldekort',
     innsendteHeading: 'Her er alle innsendte meldekortene dine',
     ingenInnsendteMeldekort: 'Du har ingen innsendte meldekort',
@@ -190,6 +194,21 @@ export const teksterNb = {
         fraOgMed: string;
         tilOgMed: string;
     }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
+    endreMeldekort: 'Endre meldekort',
+    feilSisteMeldekortOpplysninger:
+        'Kunne ikke hente siste opplysninger om meldekortet. Prøv igjen senere. Hvis problemet vedvarer, kontakt Nav.',
+    tidligereMeldekortForPeriode:
+        'Se tidligere meldekort som har blitt sendt inn for samme perioden',
+
+    //InnsendteMeldekortForKjede
+    meldekortForKjedeHeaderUndertekst: (args: { periode: Periode }) =>
+        `Her ser du innsendte meldekort for perioden ${formatterDato({ dato: args.periode.fraOgMed })} - ${formatterDato({ dato: args.periode.tilOgMed })}.`,
+    ingenInnsendteMeldekortForPerioden: 'Ingen innsendte meldekort for denne perioden.',
+    sisteInnsendteMeldekortForPerioden: 'Siste innsendte meldekort for perioden',
+    tidligereInnsendteMeldekortForPerioden: 'Tidligere innsendte meldekort for perioden',
+    sideForInnsendteMeldekort: 'Tilbake til side for innsendte meldekort',
+
+    //Arena
     alleUkjentArenaMeldekort:
         'Dersom du fikk tiltakspenger i perioder før de som vises her, finner du meldekortene i den ',
     alleHarArenaMeldekort: 'Meldekort fra tidligere perioder finner du i den ',

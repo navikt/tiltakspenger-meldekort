@@ -12,6 +12,7 @@ import { MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { skalRedirecteTilArena } from '@utils/arenaRedirect';
 import { appConfig } from '@common/appConfig';
 import { InnsendteMeldekortDTO } from '@common/typer/alle-meldekort';
+import { MeldekortForKjedeResponse } from '@common/typer/MeldeperiodeKjede';
 
 // TODO: bedre feilhåndtering
 export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRenderer) => {
@@ -63,6 +64,18 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         }
 
         return { props };
+    });
+
+    routeBuilder.routes(siteRoutes.meldekortForKjede, async (req, fetchFraApi) => {
+        const { kjedeId } = req.params;
+
+        const meldekortForKjede = await fetchFraApi(req, `kjede/${kjedeId}`, 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<MeldekortForKjedeResponse>) : null,
+        );
+
+        return meldekortForKjede
+            ? { props: { meldekortForKjede: meldekortForKjede } }
+            : { props: {}, status: 404 };
     });
 
     routeBuilder.routes(siteRoutes.deltakelse, async (req, fetchFraApi) => {

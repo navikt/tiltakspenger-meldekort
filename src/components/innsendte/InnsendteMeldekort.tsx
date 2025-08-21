@@ -18,13 +18,13 @@ import { useEffect, useState } from 'react';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { appConfig } from '@common/appConfig.ts';
 import { ArenaMeldekortStatus } from '@common/typer/meldekort-bruker.ts';
-
 import style from './InnsendteMeldekort.module.css';
 import { useRouting } from '@routing/useRouting';
 import { Periode } from '@common/typer/periode';
 import { apiFetcher, useApi } from '@utils/fetch';
 import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
 import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
+import { Meldekort } from '@common/typer/MeldekortBruker';
 
 type Props = InnsendteMeldekortProps;
 
@@ -46,12 +46,29 @@ export const InnsendteMeldekort = ({ meldekort: meldekortListe, arenaMeldekortSt
         scrollTo(0, 0);
     }, []);
 
+    const meldekortGrupperPåKjede = Object.values(
+        Object.groupBy(meldekortListe, (meldekort) => meldekort.kjedeId),
+    ).map((meldekortArray) =>
+        //object.values har loose typing som gjør at den gir ut undefined som en del av typen
+        //dette er i realiteten ikke et problem fordi en tom liste gir {} i groupBy, og Object.values({}) gir da ut en tom liste
+        (meldekortArray as Meldekort[]).toSorted((a, b) => {
+            if (a.innsendt && b.innsendt) {
+                return b.innsendt.localeCompare(a.innsendt);
+            }
+            return 0;
+        }),
+    );
+
+    const sisteMeldekortIHverKjede = meldekortGrupperPåKjede.map(
+        (meldekortArray) => meldekortArray[0],
+    );
+
     return (
         <>
             <PageHeader tekstId={'innsendteTittel'} />
             <div className={style.header}>
                 <Heading size={'medium'} level={'2'}>
-                    {meldekortListe.length > 0 ? (
+                    {sisteMeldekortIHverKjede.length > 0 ? (
                         <Tekst id={'innsendteHeading'} />
                     ) : (
                         <Tekst id={'ingenInnsendteMeldekort'} />
@@ -61,7 +78,7 @@ export const InnsendteMeldekort = ({ meldekort: meldekortListe, arenaMeldekortSt
                     <Tekst id={'innsendteTilbake'} />
                 </InternLenke>
             </div>
-            {meldekortListe.map((meldekort) => (
+            {sisteMeldekortIHverKjede.map((meldekort) => (
                 <Accordion key={meldekort.id}>
                     <Accordion.Item>
                         <Accordion.Header>
@@ -79,8 +96,7 @@ export const InnsendteMeldekort = ({ meldekort: meldekortListe, arenaMeldekortSt
                             <VStack gap="4">
                                 {meldekortTilKorrigering === meldekort.id && error && (
                                     <Alert variant="error" size="small">
-                                        Kunne ikke hente siste opplysninger om meldekortet. Prøv
-                                        igjen senere. Hvis problemet vedvarer, kontakt Nav.
+                                        <Tekst id={'feilSisteMeldekortOpplysninger'} />
                                     </Alert>
                                 )}
                                 {meldekort.innsendt ? (
@@ -119,7 +135,7 @@ export const InnsendteMeldekort = ({ meldekort: meldekortListe, arenaMeldekortSt
                                                 );
                                             }}
                                         >
-                                            Endre meldekort
+                                            <Tekst id={'endreMeldekort'} />
                                         </Button>
                                     </HStack>
                                 ) : (
@@ -127,6 +143,18 @@ export const InnsendteMeldekort = ({ meldekort: meldekortListe, arenaMeldekortSt
                                 )}
                             </VStack>
                             <Kalender meldekort={meldekort} steg="kvittering" />
+                            {(meldekortGrupperPåKjede.find((g) =>
+                                g.some((m) => m.id === meldekort.id),
+                            )?.length ?? 0) > 1 && (
+                                <InternLenke
+                                    path={getPath(siteRoutes.meldekortForKjede, {
+                                        //slipper å ha / i url'en mellom periodene.
+                                        kjedeId: meldekort.kjedeId.replaceAll('/', '_'),
+                                    })}
+                                >
+                                    <Tekst id={'tidligereMeldekortForPeriode'} />
+                                </InternLenke>
+                            )}
                         </Accordion.Content>
                     </Accordion.Item>
                 </Accordion>

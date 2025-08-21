@@ -1,0 +1,18 @@
+.separator {
+    background: var(--a-border-divider);
+    height: 5px;
+    margin-inline: -150px;
+    margin-top: 1rem;
+}
+
+.tidligereInnsendteMeldekortContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--a-spacing-6);
+}
+
+.tidligereInnsendteMeldekortContainer > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

@@ -10,6 +10,7 @@ import { Steg2_Lønn } from '@components/fyll-ut/steg-2-lønn/Steg2_Lønn.tsx';
 import KorrigerMeldekort from '@components/korrigerMeldekort/KorrigerMeldekort';
 import KorrigerMeldekortOppsummering from '@components/korrigerMeldekort/KorrigerMeldekortOppsummering';
 import KorrigerMeldekortKvittering from '@components/korrigerMeldekort/KorrigerMeldekortKvittering';
+import InnsendteMeldekortForKjede from '@components/innsendteMeldekortForKjede/InnsendteMeldekortForKjede';
 
 export type SiteRouteConfig<Props = any> = {
     path: SiteRoutePath;
@@ -24,6 +25,10 @@ export const siteRouteConfigs = {
     innsendte: {
         path: '/innsendte',
         Component: InnsendteMeldekort,
+    },
+    meldekortForKjede: {
+        path: '/innsendte/kjede/:kjedeId',
+        Component: InnsendteMeldekortForKjede,
     },
     deltakelse: {
         path: '/:meldekortId/deltakelse',
