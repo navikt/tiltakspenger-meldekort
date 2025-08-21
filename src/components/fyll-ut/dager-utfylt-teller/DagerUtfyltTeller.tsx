@@ -9,11 +9,12 @@ import { Meldekort } from '@common/typer/MeldekortBruker';
 type Props = {
     brukersMeldekort: Meldekort;
     meldekortUtfylling: BrukersMeldekortUtfylling;
+    ikkeVisDagTeller?: boolean;
     className?: string;
 };
 
 export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
-    ({ brukersMeldekort, meldekortUtfylling, className }, ref) => {
+    ({ brukersMeldekort, meldekortUtfylling, className, ikkeVisDagTeller }, ref) => {
         const { harForMangeDagerBesvart, antallDagerBesvart, harForFaDagerBesvart } =
             antallDagerValidering(brukersMeldekort, meldekortUtfylling);
         const { visValideringsfeil } = useMeldekortUtfylling();
@@ -52,11 +53,19 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                 </Alert>
             );
         }
-        return (
-            <BodyLong className={className} weight={'semibold'}>
-                <Tekst id={'antallDagerBesvart'} resolverProps={{ antall: antallDagerBesvart }} />
-            </BodyLong>
-        );
+
+        if (!ikkeVisDagTeller) {
+            return (
+                <BodyLong className={className} weight={'semibold'}>
+                    <Tekst
+                        id={'antallDagerBesvart'}
+                        resolverProps={{ antall: antallDagerBesvart }}
+                    />
+                </BodyLong>
+            );
+        }
+
+        return null;
     },
 );
 

@@ -75,7 +75,7 @@ export const teksterNb = {
         'Har du vært syk eller hatt annet fravær fra tiltaket? (obligatorisk)',
     fraværHarHattFraværSvarJa: 'Ja, jeg har vært syk eller hatt annet fravær',
     fraværHarHattFraværSvarNei: 'Nei, jeg har ikke vært syk eller hatt annet fravær',
-    fraværSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
+    fraværSpørsmålIkkeValgt: 'Velg et fraværsalternativ for å fortsette.',
     fraværTittel: 'Fravær og sykdom',
     fraværHjelpTittel: 'Slik fyller du ut fravær',
     fraværHjelpIngress: [
@@ -151,7 +151,7 @@ export const teksterNb = {
         'Har du mottatt lønn for tiden i tiltaket i meldeperioden? (obligatorisk)',
     lønnHarMottattLønnSvarJa: 'Ja, jeg har hatt mottatt lønn for tiden i tiltaket',
     lønnHarMottattLønnSvarNei: 'Nei, jeg har ikke mottatt lønn for tiden i tiltaket',
-    lønnSpørsmålIkkeValgt: 'Du må velge et alternativ for å gå videre',
+    lønnSpørsmålIkkeValgt: 'Velg et lønnsalternativ for å fortsette.',
     lønnUkeHjelp: 'Kryss av for de dagene du mottok lønn',
     lønnDagPrefix: 'Mottok lønn: ',
     oppsummeringTittel: 'Oppsummering',

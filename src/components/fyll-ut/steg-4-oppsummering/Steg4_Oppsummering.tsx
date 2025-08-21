@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import style from './Steg4_Oppsummering.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Alert, ConfirmationPanel, ErrorSummary } from '@navikt/ds-react';
+import { Alert, ConfirmationPanel, ErrorSummary, VStack } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
@@ -17,6 +17,7 @@ import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.t
 import { OppsummeringError } from '@components/fyll-ut/steg-4-oppsummering/OppsummeringError.tsx';
 import { TekstId } from '@tekster/typer.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
+import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -178,19 +179,28 @@ export const Steg4_Oppsummering = ({ brukersMeldekort }: SSRProps) => {
                 <TekstSegmenter id={'oppsummeringIkkeSendtEnnå'} />
             </Alert>
             <Kalender meldekort={meldekortUtfylling} steg={'oppsummering'} />
-            <ConfirmationPanel
-                id={'bekreft'}
-                onChange={() => {
-                    setHarBekreftet(!harBekreftet);
-                }}
-                checked={harBekreftet}
-                value={harBekreftet}
-                label={<Tekst id={'oppsummeringBekrefter'} />}
-                error={
-                    !harBekreftet &&
-                    visValideringsfeil && <Tekst id={'oppsummeringBekrefterFeil'} />
-                }
-            />
+            <VStack gap="2">
+                <DagerUtfyltTeller
+                    brukersMeldekort={brukersMeldekort}
+                    meldekortUtfylling={meldekortUtfylling}
+                    className={style.teller}
+                    ref={varselRef}
+                    ikkeVisDagTeller={true}
+                />
+                <ConfirmationPanel
+                    id={'bekreft'}
+                    onChange={() => {
+                        setHarBekreftet(!harBekreftet);
+                    }}
+                    checked={harBekreftet}
+                    value={harBekreftet}
+                    label={<Tekst id={'oppsummeringBekrefter'} />}
+                    error={
+                        !harBekreftet &&
+                        visValideringsfeil && <Tekst id={'oppsummeringBekrefterFeil'} />
+                    }
+                />
+            </VStack>
             {innsendingFeilet && (
                 <Alert variant="error" className={style.varsel} ref={varselRef} tabIndex={-1}>
                     <TekstSegmenter id="oppsummeringInnsendingFeilet" />

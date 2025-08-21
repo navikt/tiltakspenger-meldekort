@@ -144,6 +144,7 @@ const KorrigeringAvMeldekort = (props: {
     const { navigate } = useRouting();
     const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
     const { dager, setDager, oppdaterDag } = useKorrigerMeldekortContext();
+    const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
 
     useEffect(() => {
         setHarUgyldigUtfylling(false);
@@ -246,7 +247,11 @@ const KorrigeringAvMeldekort = (props: {
                 <Button
                     variant="tertiary"
                     className={styles.button}
-                    onClick={() => navigate(getPath(siteRoutes.forside))}
+                    onClick={() => {
+                        setDager([]);
+                        setMeldeperiodeForPeriode(null);
+                        navigate(getPath(siteRoutes.forside));
+                    }}
                 >
                     Avbryt endring
                 </Button>

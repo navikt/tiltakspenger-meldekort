@@ -21,6 +21,7 @@ import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
 import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
+import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
 
 const useSendKorrigerteDager = (
     meldekortId: string,
@@ -78,6 +79,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
     const korrigerMeldekortContext = useKorrigerMeldekortContext();
+    const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
     const { status, response, callFn } = useSendKorrigerteDager(
         props.originaleMeldekort.id,
@@ -195,7 +197,11 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                         <Button
                             className={styles.avbrytEndringButton}
                             variant="tertiary"
-                            onClick={() => navigate(getPath(siteRoutes.forside))}
+                            onClick={() => {
+                                korrigerMeldekortContext.setDager([]);
+                                setMeldeperiodeForPeriode(null);
+                                navigate(getPath(siteRoutes.forside));
+                            }}
                         >
                             Avbryt endring
                         </Button>
