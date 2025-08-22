@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@navikt/oasis": "3.6.0",
-        "compression": "1.7.5",
+        "compression": "1.8.1",
         "csp-header": "6.0.0",
         "dotenv": "17.2.1",
         "express": "5.0.1",
@@ -22,7 +22,7 @@
     },
     "devDependencies": {
         "@types/express": "5.0.0",
-        "@types/compression": "1.7.5",
+        "@types/compression": "1.8.1",
         "nodemon": "3.1.9"
     },
     "nodemonConfig": {
