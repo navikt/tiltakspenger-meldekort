@@ -10,7 +10,7 @@ import {
     XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
 
-import style from './dagFellesStyle.module.css';
+import style from './dagFellesStyle.module.scss';
 import { TekstId } from '@tekster/typer.ts';
 import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 

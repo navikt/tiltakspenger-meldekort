@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import 'dayjs/locale/nb';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
+import 'dayjs/locale/nb.js';
+import weekOfYear from 'dayjs/plugin/weekOfYear.js';
+import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 
 dayjs.extend(weekOfYear);
 dayjs.extend(localizedFormat);
@@ -10,16 +10,16 @@ type FormatterDatoProps = {
     dato: string;
     medUkeDag?: boolean;
     medStorForbokstav?: boolean;
-    kort?: boolean
+    kort?: boolean;
 };
 
 export const formatterDato = ({
     dato,
     medUkeDag,
     medStorForbokstav = true,
-    kort = false
+    kort = false,
 }: FormatterDatoProps) => {
-    const ukeDag = medUkeDag ? kort ? "ddd " : "dddd " : ''
+    const ukeDag = medUkeDag ? (kort ? 'ddd ' : 'dddd ') : '';
 
     const formattert = dayjs(dato)
         .locale('nb')
@@ -31,7 +31,7 @@ export const formatterDato = ({
 };
 
 export const formatterDatoTid = (datoTid: string) => {
-    return dayjs(datoTid).locale('nb').format("D[.] MMMM YYYY [kl.] H:mm");
+    return dayjs(datoTid).locale('nb').format('D[.] MMMM YYYY [kl.] H:mm');
 };
 
 export const getUkenummer = (datoTid: string) => {

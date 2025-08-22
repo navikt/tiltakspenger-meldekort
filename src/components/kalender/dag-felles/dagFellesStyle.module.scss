@@ -1,0 +1,33 @@
+@use '../../../styles/MeldekortStatusStyles.module.scss' as status;
+
+.ikkeTiltaksdag {
+    @include status.ikkeTiltaksdag;
+}
+
+.ikkeBesvart {
+    @include status.ikkeBesvart;
+}
+
+.deltattUtenLønn {
+    @include status.deltattUtenLønn;
+}
+
+.fraværGodkjentAvNav {
+    @include status.fraværGodkjentAvNav;
+}
+
+.deltattMedLønn {
+    @include status.deltattMedLønn;
+}
+
+.syk {
+    @include status.syk;
+}
+
+.syktBarn {
+    @include status.syktBarn;
+}
+
+.fraværAnnet {
+    @include status.fraværAnnet;
+}

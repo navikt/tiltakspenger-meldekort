@@ -17,7 +17,7 @@ import {
 import { useRouting } from '@routing/useRouting';
 import { formatterDato } from '@utils/datetime';
 import { useEffect, useState } from 'react';
-import styles from './KorrigerMeldekort.module.css';
+import styles from './KorrigerMeldekort.module.scss';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from '../../context/korriger/KorrigerMeldekortContext';
 import {
@@ -260,6 +260,19 @@ const KorrigeringAvMeldekort = (props: {
     );
 };
 
+const statusClassMap: Record<MeldekortDagStatus, string> = {
+    IKKE_TILTAKSDAG: styles.ikkeTiltaksdag,
+    //Vi setter ikke en farge på ikke besvart fordi det blir vanskelig å skille den med ikke_rett
+    IKKE_BESVART: '',
+    DELTATT_UTEN_LØNN_I_TILTAKET: styles.deltattUtenLønn,
+    FRAVÆR_GODKJENT_AV_NAV: styles.fraværGodkjentAvNav,
+    DELTATT_MED_LØNN_I_TILTAKET: styles.deltattMedLønn,
+    FRAVÆR_SYK: styles.syk,
+    FRAVÆR_SYKT_BARN: styles.syktBarn,
+    FRAVÆR_ANNET: styles.fraværAnnet,
+    IKKE_RETT_TIL_TILTAKSPENGER: styles.ikkeTiltaksdag,
+};
+
 const MeldekortUkeBehandling = (props: {
     dager: MeldekortDag[];
     onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
@@ -269,6 +282,7 @@ const MeldekortUkeBehandling = (props: {
             <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
                 {props.dager.map((dag) => (
                     <Select
+                        className={statusClassMap[dag.status]}
                         id={`select-${dag.dag}`}
                         key={dag.dag}
                         label={formatterDato({ medUkeDag: true, dato: dag.dag })}

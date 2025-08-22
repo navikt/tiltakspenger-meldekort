@@ -1,4 +1,9 @@
-.ikkeTiltaksdag {
+/**
+* Mixin styles for Meldekort statuser
+* Disse er fargene vi har lyst til å benytte oss av rundt omkring
+*/
+
+@mixin ikkeTiltaksdag {
     background-color: var(--a-surface-action-subtle);
     border-color: var(--a-surface-action);
 
@@ -7,7 +12,7 @@
     }
 }
 
-.ikkeBesvart {
+@mixin ikkeBesvart {
     background: var(--a-surface-subtle);
     border-color: var(--a-border-default);
 
@@ -16,8 +21,8 @@
     }
 }
 
-.deltattUtenLønn,
-.fraværGodkjentAvNav {
+//----- Disse er samme
+@mixin deltattUtenLønn {
     background: var(--a-surface-success-subtle);
     border-color: var(--a-border-success);
 
@@ -26,7 +31,17 @@
     }
 }
 
-.deltattMedLønn {
+@mixin fraværGodkjentAvNav {
+    background: var(--a-surface-success-subtle);
+    border-color: var(--a-border-success);
+
+    & > svg {
+        color: var(--a-green-600);
+    }
+}
+//-----
+
+@mixin deltattMedLønn {
     background: var(--a-surface-danger-subtle);
     border-color: var(--a-border-danger);
 
@@ -35,8 +50,8 @@
     }
 }
 
-.syk,
-.syktBarn {
+//----- Disse er samme
+@mixin syk {
     background: var(--a-surface-warning-subtle);
     border-color: var(--a-border-warning);
 
@@ -45,7 +60,17 @@
     }
 }
 
-.fraværAnnet {
+@mixin syktBarn {
+    background: var(--a-surface-warning-subtle);
+    border-color: var(--a-border-warning);
+
+    & > svg {
+        color: var(--a-orange-600);
+    }
+}
+//-----
+
+@mixin fraværAnnet {
     background: var(--a-surface-danger-subtle);
     border-color: var(--a-border-danger);
 
