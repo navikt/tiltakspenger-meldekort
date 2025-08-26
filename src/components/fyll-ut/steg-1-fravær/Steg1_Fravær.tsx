@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import style from './Steg1_Fravær.module.css';
-import { Alert, Radio, RadioGroup } from '@navikt/ds-react';
+import { Alert, HStack, Radio, RadioGroup } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
@@ -38,26 +38,30 @@ export const Steg1_Fravær = ({ brukersMeldekort }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <RadioGroup
-                legend={<Tekst id={'fraværStegFraværSpørsmål'} />}
-                value={harHattFravær}
-                error={feil && <Tekst id={feil} />}
-                onChange={(harHattFraværSpørsmålSvar: boolean) => {
-                    setFeil(null);
-                    setHarHattFravær(harHattFraværSpørsmålSvar);
-                    if (!harHattFraværSpørsmålSvar) {
-                        setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
-                    }
-                }}
-                className={style.fraværValg}
-            >
-                <Radio value={true}>
-                    <Tekst id={'fraværHarHattFraværSvarJa'} />
-                </Radio>
-                <Radio value={false}>
-                    <Tekst id={'fraværHarHattFraværSvarNei'} />
-                </Radio>
-            </RadioGroup>
+            <HStack gap="4">
+                <Tekst id="fraværIngress" />
+                <RadioGroup
+                    legend={<Tekst id={'fraværStegFraværSpørsmål'} />}
+                    value={harHattFravær}
+                    error={feil && <Tekst id={feil} />}
+                    onChange={(harHattFraværSpørsmålSvar: boolean) => {
+                        setFeil(null);
+                        setHarHattFravær(harHattFraværSpørsmålSvar);
+                        if (!harHattFraværSpørsmålSvar) {
+                            setMeldekortUtfylling(fjernFravær(meldekortUtfylling));
+                        }
+                    }}
+                    className={style.fraværValg}
+                >
+                    <Radio value={true}>
+                        <Tekst id={'fraværHarHattFraværSvarJa'} />
+                    </Radio>
+                    <Radio value={false}>
+                        <Tekst id={'fraværHarHattFraværSvarNei'} />
+                    </Radio>
+                </RadioGroup>
+            </HStack>
+
             {harHattFravær && (
                 <>
                     <FraværHjelp />

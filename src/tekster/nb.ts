@@ -79,6 +79,8 @@ export const teksterNb = {
     fraværHarHattFraværSvarNei: 'Nei, jeg har ikke vært syk eller hatt annet fravær',
     fraværSpørsmålIkkeValgt: 'Velg et fraværsalternativ for å fortsette.',
     fraværTittel: 'Fravær og sykdom',
+    fraværIngress:
+        'Du skal svare ja på spørsmålet hvis du har hatt dager i meldeperioden som du ikke fikk deltatt hele eller deler av dagen.',
     fraværHjelpTittel: 'Slik fyller du ut fravær',
     fraværHjelpIngress: [
         'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen.',
@@ -142,21 +144,24 @@ export const teksterNb = {
         'Hvis du ikke deltok på hele eller deler av tiltaksdagen, og fraværet ikke var godkjent av Nav, har du ikke rett til tiltakspenger.',
     lønnTittel: 'Lønn',
     lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
-    lønnHjelpLesMerAvsnitt: [
-        'Lønn',
+    lønnInfoUndertittelLønn: 'Lønn',
+    lønnInfoUndertittelLønnTekster: [
         'er utbetalinger du mottar fra en arbeidsgiver eller tiltaksarrangør',
         'er ikke tiltakspenger fra Nav',
         'er ikke andre ytelser du får fra Nav',
-        'Svare ja',
+    ],
+    lønnInfoUnderTittelSvareJa: 'Svare ja',
+    lønnInfoUnderTittelSvareJaTekster: [
         'Du skal svare ja på spørsmålet hvis du mottar lønn, og lønnen gjelder arbeid du har gjort innenfor tiltakstiden som du har avtalt med Nav.',
-        'Svare nei',
+    ],
+    lønnInfoUnderTittelSvareNei: 'Svare nei',
+    lønnInfoUnderTittelSvareNeiTekster: [
         'Du skal svare nei på spørsmålet hvis du mottar lønn, men lønnen ikke gjelder arbeid du har gjort innenfor tiltakstiden som du har avtalt med Nav. Du kan for eksempel gå på tiltak på dagtid og motta lønn for arbeid på kveldstid.',
-        'Du skal svare nei på spørsmålet hvis du i, denne meldeperioden, ikke mottar utbetalinger fra en arbeidsgiver i det hele tatt.',
+        'Du skal svare nei på spørsmålet hvis du, i denne meldeperioden, ikke mottar utbetalinger fra en arbeidsgiver i det hele tatt.',
     ],
     lønnHjelpLesMerTekstFørLenke: 'Hvis du er usikker på hva du skal fylle inn i meldekortet, ',
     lønnHjelpLesMerLenkeTekst: 'ta kontakt med Nav.',
-    lønnHarMottattLønnSpørsmål:
-        'Mottar du lønn i denne meldeperioden? (obligatorisk)',
+    lønnHarMottattLønnSpørsmål: 'Mottar du lønn i denne meldeperioden? (obligatorisk)',
     lønnHarMottattLønnSvarJa: 'Ja, jeg mottar lønn',
     lønnHarMottattLønnSvarNei: 'Nei, jeg mottar ikke lønn',
     lønnSpørsmålIkkeValgt: 'Velg et lønnsalternativ for å fortsette.',

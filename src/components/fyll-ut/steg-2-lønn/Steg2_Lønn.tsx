@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import style from './Steg2_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { Alert, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import { Alert, Heading, HStack, Radio, RadioGroup } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstId } from '@tekster/typer.ts';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -11,10 +11,9 @@ import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes
 import { useRouting } from '@routing/useRouting';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
-import { getTekst } from '@tekster/tekster.ts';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
+import { getTekst, getTekster } from '@tekster/tekster.ts';
 import { Meldekort, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -38,34 +37,59 @@ export const Steg2_Lønn = ({ brukersMeldekort }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <ReadMore header={getTekst({ id: 'lønnHjelpLesMerTittel' })} className={style.lesMer}>
-                <TekstSegmenter id={'lønnHjelpLesMerAvsnitt'} />
-                <TekstMedLenke
-                    tekst="lønnHjelpLesMerTekstFørLenke"
-                    tekstLenke="lønnHjelpLesMerLenkeTekst"
-                    lenke="https://www.nav.no/kontaktoss"
-                />
-            </ReadMore>
-            <RadioGroup
-                legend={<Tekst id={'lønnHarMottattLønnSpørsmål'} />}
-                value={harMottattLønn}
-                error={feil && <Tekst id={feil} />}
-                onChange={(harMottattLønnSpørsmålSvar: boolean) => {
-                    setFeil(null);
-                    setHarMottattLønn(harMottattLønnSpørsmålSvar);
-                    if (harMottattLønnSpørsmålSvar === false) {
-                        setMeldekortUtfylling(fjernLønn(meldekortUtfylling));
-                    }
-                }}
-                className={style.lønnValg}
-            >
-                <Radio value={true}>
-                    <Tekst id={'lønnHarMottattLønnSvarJa'} />
-                </Radio>
-                <Radio value={false}>
-                    <Tekst id={'lønnHarMottattLønnSvarNei'} />
-                </Radio>
-            </RadioGroup>
+            <HStack gap="4">
+                <div>
+                    <ul>
+                        {getTekster({ id: 'lønnInfoUndertittelLønnTekster' }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
+                    </ul>
+
+                    <Heading level="3" size="small">
+                        {getTekst({ id: 'lønnInfoUnderTittelSvareJa' })}
+                    </Heading>
+                    <ul>
+                        {getTekster({ id: 'lønnInfoUnderTittelSvareJaTekster' }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
+                    </ul>
+
+                    <Heading level="3" size="small">
+                        {getTekst({ id: 'lønnInfoUnderTittelSvareNei' })}
+                    </Heading>
+                    <ul>
+                        {getTekster({ id: 'lønnInfoUnderTittelSvareNeiTekster' }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
+                    </ul>
+
+                    <TekstMedLenke
+                        tekst="lønnHjelpLesMerTekstFørLenke"
+                        tekstLenke="lønnHjelpLesMerLenkeTekst"
+                        lenke="https://www.nav.no/kontaktoss"
+                    />
+                </div>
+                <RadioGroup
+                    legend={<Tekst id={'lønnHarMottattLønnSpørsmål'} />}
+                    value={harMottattLønn}
+                    error={feil && <Tekst id={feil} />}
+                    onChange={(harMottattLønnSpørsmålSvar: boolean) => {
+                        setFeil(null);
+                        setHarMottattLønn(harMottattLønnSpørsmålSvar);
+                        if (harMottattLønnSpørsmålSvar === false) {
+                            setMeldekortUtfylling(fjernLønn(meldekortUtfylling));
+                        }
+                    }}
+                    className={style.lønnValg}
+                >
+                    <Radio value={true}>
+                        <Tekst id={'lønnHarMottattLønnSvarJa'} />
+                    </Radio>
+                    <Radio value={false}>
+                        <Tekst id={'lønnHarMottattLønnSvarNei'} />
+                    </Radio>
+                </RadioGroup>
+            </HStack>
             {harMottattLønn && (
                 <>
                     <Kalender
