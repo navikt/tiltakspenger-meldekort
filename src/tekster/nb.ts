@@ -151,11 +151,11 @@ export const teksterNb = {
     ],
     lønnInfoUnderTittelSvareJa: 'Du skal svare ja',
     lønnInfoUnderTittelSvareJaTekster: [
-        'hvis du får lønn for arbeid innenfor samme tid som tiltaket ditt.',
+        'hvis du får lønn for arbeid innenfor samme tid som tiltaket ditt',
     ],
     lønnInfoUnderTittelSvareNei: 'Du skal svare nei',
     lønnInfoUnderTittelSvareNeiTekster: [
-        'hvis du ikke mottar lønn fra en arbeidsgiver i denne meldeperioden.',
+        'hvis du ikke mottar lønn fra en arbeidsgiver eller tiltaksarrangør i denne meldeperioden',
         'hvis du mottar lønn, men lønnen ikke gjelder arbeid du har gjort innenfor tiltakstiden som du har avtalt med Nav. Du kan for eksempel gå på tiltak på dagtid og motta lønn for arbeid på kveldstid.',
     ],
     lønnHjelpLesMerTekstFørLenke: 'Hvis du er usikker på hva du skal fylle inn i meldekortet, ',
