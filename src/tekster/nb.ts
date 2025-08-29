@@ -31,9 +31,9 @@ export const teksterNb = {
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har registrert for ${antall} dager. Gå tilbake og sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
+        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har registrert for ${antall} dager. Sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
     forFaDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har bare registrert for ${antall} dager. Gå tilbake og sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
+        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har bare registrert for ${antall} dager. Sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
@@ -83,7 +83,6 @@ export const teksterNb = {
         'Du skal svare ja på spørsmålet hvis du har hatt dager i meldeperioden som du ikke fikk deltatt hele eller deler av dagen.',
     fraværHjelpTittel: 'Slik fyller du ut fravær',
     fraværHjelpIngress: [
-        'Legg inn fravær når du skulle vært på tiltak, men ikke fikk deltatt hele eller deler av dagen.',
         'Velg hva slags fravær du hadde. Noen typer fravær gir rett til utbetaling, mens andre gjør det ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere.',
     ],
     fraværHjelpLesMerSyk: 'Når skal du velge "syk"?',
