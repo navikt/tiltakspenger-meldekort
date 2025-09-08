@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import style from './Steg2_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { Alert, Heading, HStack, Radio, RadioGroup } from '@navikt/ds-react';
+import { Alert, HStack, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstId } from '@tekster/typer.ts';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -45,23 +45,25 @@ export const Steg2_Lønn = ({ brukersMeldekort }: SSRProps) => {
                         ))}
                     </ul>
 
-                    <Heading level="3" size="small">
-                        {getTekst({ id: 'lønnInfoUnderTittelSvareJa' })}
-                    </Heading>
-                    <ul>
-                        {getTekster({ id: 'lønnInfoUnderTittelSvareJaTekster' }).map((tekst) => (
-                            <li key={tekst}>{tekst}</li>
-                        ))}
-                    </ul>
+                    <ReadMore header={getTekst({ id: 'lønnInfoUnderTittelSvareJa' })}>
+                        <ul>
+                            {getTekster({ id: 'lønnInfoUnderTittelSvareJaTekster' }).map(
+                                (tekst) => (
+                                    <li key={tekst}>{tekst}</li>
+                                ),
+                            )}
+                        </ul>
+                    </ReadMore>
 
-                    <Heading level="3" size="small">
-                        {getTekst({ id: 'lønnInfoUnderTittelSvareNei' })}
-                    </Heading>
-                    <ul>
-                        {getTekster({ id: 'lønnInfoUnderTittelSvareNeiTekster' }).map((tekst) => (
-                            <li key={tekst}>{tekst}</li>
-                        ))}
-                    </ul>
+                    <ReadMore header={getTekst({ id: 'lønnInfoUnderTittelSvareNei' })}>
+                        <ul>
+                            {getTekster({ id: 'lønnInfoUnderTittelSvareNeiTekster' }).map(
+                                (tekst) => (
+                                    <li key={tekst}>{tekst}</li>
+                                ),
+                            )}
+                        </ul>
+                    </ReadMore>
 
                     <TekstMedLenke
                         tekst="lønnHjelpLesMerTekstFørLenke"
