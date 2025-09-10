@@ -150,7 +150,7 @@ export const teksterNb = {
     ],
     lønnInfoUnderTittelSvareJa: 'Når skal du svare ja?',
     lønnInfoUnderTittelSvareJaTekster: [
-        'Du skal svare ja hvis du får lønn for arbeid innenfor samme tid som tiltaket ditt.',
+        'Du skal svare ja hvis du får lønn for arbeid som er en del av tiltaket ditt.',
         'Når du mottar lønn for tiden du deltar i tiltaket, har du ikke rett på tiltakspenger.',
     ],
     lønnInfoUnderTittelSvareNei: 'Når skal du svare nei?',
