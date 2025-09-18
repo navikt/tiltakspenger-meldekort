@@ -43,6 +43,6 @@ spec:
       autoLogin: true
       autoLoginIgnorePaths:
         - /tiltakspenger/meldekort/demo/**
-      level: idporten-loa-high
+      level: idporten-loa-substantial
   tokenx:
     enabled: true
