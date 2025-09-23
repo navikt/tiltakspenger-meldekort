@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import style from './Steg5_Kvittering.module.css';
-import { Alert } from '@navikt/ds-react';
+import { Alert, VStack } from '@navikt/ds-react';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
@@ -8,12 +8,14 @@ import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekort
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { Meldekort, MeldekortStatus } from '@common/typer/MeldekortBruker';
+import useScript from '@components/fyll-ut/steg-5-kvittering/useScript.tsx';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
 };
 
 export const Steg5_Kvittering = ({ brukersMeldekort }: SSRProps) => {
+    useScript(true); // UX Signals script for brukertesting
     const { meldekortUtfylling, setMeldekortUtfylling, redirectHvisMeldekortErInnsendt } =
         useMeldekortUtfylling();
 
@@ -34,14 +36,20 @@ export const Steg5_Kvittering = ({ brukersMeldekort }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <div>
-                <Alert variant={'success'} className={style.kvittering}>
-                    <TekstSegmenter id={'kvittering'} />
-                </Alert>
-                <InternLenke path={getPath(siteRoutes.forside)}>
-                    <Tekst id={'kvitteringTilbake'} />
-                </InternLenke>
-            </div>
+            <VStack gap="8">
+                <div>
+                    <Alert variant={'success'} className={style.kvittering}>
+                        <TekstSegmenter id={'kvittering'} />
+                    </Alert>
+                    <InternLenke path={getPath(siteRoutes.forside)}>
+                        <Tekst id={'kvitteringTilbake'} />
+                    </InternLenke>
+                </div>
+                <div
+                    data-uxsignals-embed="panel-3cy829slo4"
+                    style={{ paddingTop: '1rem', maxWidth: '620px' }}
+                />
+            </VStack>
         </MeldekortStegWrapper>
     );
 };
