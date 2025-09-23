@@ -50,35 +50,35 @@ test('kan korrigere meldekort', async ({ page }) => {
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
     // Endrer på statuser for uke 1
-    await page.selectOption('#select-2023-01-01', 'Deltatt');
-    //dag 2 er allerede satt som deltatt
-    await page.selectOption('#select-2023-01-03', 'Deltatt');
+    await page.selectOption('#select-2023-01-02', 'Deltatt');
+    //tirsdag 3. er allerede satt som deltatt
     await page.selectOption('#select-2023-01-04', 'Deltatt');
     await page.selectOption('#select-2023-01-05', 'Deltatt');
+    // fredag 6. er allerede syk
     // Endrer på statuser for uke 2
-    await page.selectOption('#select-2023-01-08', 'Mottatt lønn');
-    await page.selectOption('#select-2023-01-09', 'Syk barn eller syk barnepasser');
-    await page.selectOption('#select-2023-01-10', 'Annet fravær');
-    await page.selectOption('#select-2023-01-11', 'Deltatt');
-    await page.selectOption('#select-2023-01-12', 'Fravær godkjent av Nav');
+    await page.selectOption('#select-2023-01-09', 'Mottatt lønn');
+    await page.selectOption('#select-2023-01-10', 'Syk barn eller syk barnepasser');
+    await page.selectOption('#select-2023-01-11', 'Annet fravær');
+    await page.selectOption('#select-2023-01-12', 'Deltatt');
+    await page.selectOption('#select-2023-01-13', 'Fravær godkjent av Nav');
 
     await page.getByText('Neste steg').click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
     // Verifiserer at oppsummeringen viser de endrede statusene
-    expect(page.getByText('Søndag 1. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Mandag 2. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Tirsdag 3. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Onsdag 4. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Torsdag 5. januar: Deltatt')).toBeVisible();
+    expect(page.getByText('Fredag 6. januar: Syk')).toBeVisible();
     expect(page.getByText('Lørdag 7. januar: Ikke besvart')).toBeVisible();
-    expect(page.getByText('Fredag 6. januar: Ikke besvart')).toBeVisible();
-    expect(page.getByText('Søndag 8. januar: Mottatt lønn')).toBeVisible();
-    expect(page.getByText('Mandag 9. januar: Syk barn eller syk barnepasser')).toBeVisible();
-    expect(page.getByText('Tirsdag 10. januar: Annet fravær')).toBeVisible();
-    expect(page.getByText('Onsdag 11. januar: Deltatt')).toBeVisible();
-    expect(page.getByText('Torsdag 12. januar: Fravær godkjent av Nav')).toBeVisible();
-    expect(page.getByText('Fredag 13. januar: Ikke besvart')).toBeVisible();
+    expect(page.getByText('Søndag 8. januar: Ikke besvart')).toBeVisible();
+    expect(page.getByText('Mandag 9. januar: Mottatt lønn')).toBeVisible();
+    expect(page.getByText('Tirsdag 10. januar: Syk barn eller syk barnepasser')).toBeVisible();
+    expect(page.getByText('Onsdag 11. januar: Annet fravær')).toBeVisible();
+    expect(page.getByText('Torsdag 12. januar: Deltatt')).toBeVisible();
+    expect(page.getByText('Fredag 13. januar: Fravær godkjent av Nav')).toBeVisible();
     expect(page.getByText('Lørdag 14. januar: Ikke besvart')).toBeVisible();
+    expect(page.getByText('Søndag 15. januar: Ikke besvart')).toBeVisible();
 
     await page.getByText('Jeg bekrefter at disse opplysningene stemmer').click();
     await page.getByText('Send meldekortet').click();
@@ -159,16 +159,16 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
     // Endrer på statuser for uke 1
-    await page.selectOption('#select-2023-01-01', 'Deltatt');
-    await page.selectOption('#select-2023-01-03', 'Deltatt');
+    await page.selectOption('#select-2023-01-02', 'Deltatt');
     await page.selectOption('#select-2023-01-04', 'Deltatt');
     await page.selectOption('#select-2023-01-05', 'Deltatt');
+    await page.selectOption('#select-2023-01-06', 'Deltatt');
     // Endrer på statuser for uke 2
-    await page.selectOption('#select-2023-01-08', 'Mottatt lønn');
-    await page.selectOption('#select-2023-01-09', 'Syk barn eller syk barnepasser');
-    await page.selectOption('#select-2023-01-10', 'Annet fravær');
-    await page.selectOption('#select-2023-01-11', 'Deltatt');
-    await page.selectOption('#select-2023-01-12', 'Fravær godkjent av Nav');
+    await page.selectOption('#select-2023-01-09', 'Mottatt lønn');
+    await page.selectOption('#select-2023-01-10', 'Syk barn eller syk barnepasser');
+    await page.selectOption('#select-2023-01-11', 'Annet fravær');
+    await page.selectOption('#select-2023-01-12', 'Deltatt');
+    await page.selectOption('#select-2023-01-13', 'Fravær godkjent av Nav');
 
     await page.getByText('Neste steg').click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
@@ -178,10 +178,7 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/12345/korrigering');
 
     // Verifiserer at de endrede statusene er der
-    expect(page.locator('#select-2023-01-01')).toHaveValue(
-        MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-    );
-    expect(page.locator('#select-2023-01-03')).toHaveValue(
+    expect(page.locator('#select-2023-01-02')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
     expect(page.locator('#select-2023-01-04')).toHaveValue(
@@ -190,58 +187,77 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     expect(page.locator('#select-2023-01-05')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
-    expect(page.locator('#select-2023-01-06')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
-    expect(page.locator('#select-2023-01-07')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
-
-    expect(page.locator('#select-2023-01-08')).toHaveValue(
-        MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
-    );
-    expect(page.locator('#select-2023-01-09')).toHaveValue(MeldekortDagStatus.FRAVÆR_SYKT_BARN);
-    expect(page.locator('#select-2023-01-10')).toHaveValue(MeldekortDagStatus.FRAVÆR_ANNET);
-    expect(page.locator('#select-2023-01-11')).toHaveValue(
+    expect(page.locator('#select-2023-01-06')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
+    expect(page.locator('#select-2023-01-07')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
+    expect(page.locator('#select-2023-01-08')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
+
+    expect(page.locator('#select-2023-01-09')).toHaveValue(
+        MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
+    );
+    expect(page.locator('#select-2023-01-10')).toHaveValue(MeldekortDagStatus.FRAVÆR_SYKT_BARN);
+    expect(page.locator('#select-2023-01-11')).toHaveValue(MeldekortDagStatus.FRAVÆR_ANNET);
     expect(page.locator('#select-2023-01-12')).toHaveValue(
+        MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+    );
+    expect(page.locator('#select-2023-01-13')).toHaveValue(
         MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
     );
-    expect(page.locator('#select-2023-01-13')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
     expect(page.locator('#select-2023-01-14')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
+    expect(page.locator('#select-2023-01-15')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
 });
 
 test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     const meldekortMedDagerUtenRett = nyUtfylltMeldekort({
         dager: [
             nyMeldekortDag({
-                dag: '2023-01-06',
-                status: MeldekortDagStatus.IKKE_BESVART,
-            }),
-            nyMeldekortDag({
-                dag: '2023-01-07',
+                dag: '2023-01-02',
                 status: MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER,
             }),
             nyMeldekortDag({
-                dag: '2023-01-08',
+                dag: '2023-01-03',
+                status: MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER,
+            }),
+            nyMeldekortDag({
+                dag: '2023-01-04',
                 status: MeldekortDagStatus.FRAVÆR_SYKT_BARN,
             }),
             nyMeldekortDag({
-                dag: '2023-01-09',
+                dag: '2023-01-05',
                 status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
             }),
             nyMeldekortDag({
-                dag: '2023-01-10',
+                dag: '2023-01-06',
                 status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+            }),
+            nyMeldekortDag({
+                dag: '2023-01-07',
+                status: MeldekortDagStatus.IKKE_BESVART,
+            }),
+            nyMeldekortDag({
+                dag: '2023-01-08',
+                status: MeldekortDagStatus.IKKE_BESVART,
+            }),
+            nyMeldekortDag({
+                dag: '2023-01-09',
+                status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+            }),
+            nyMeldekortDag({
+                dag: '2023-01-10',
+                status: MeldekortDagStatus.IKKE_BESVART,
             }),
             nyMeldekortDag({
                 dag: '2023-01-11',
-                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+                status: MeldekortDagStatus.IKKE_BESVART,
             }),
             nyMeldekortDag({
                 dag: '2023-01-12',
-                status: MeldekortDagStatus.FRAVÆR_ANNET,
+                status: MeldekortDagStatus.IKKE_BESVART,
             }),
             nyMeldekortDag({
                 dag: '2023-01-13',
-                status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+                status: MeldekortDagStatus.IKKE_BESVART,
             }),
             nyMeldekortDag({
                 dag: '2023-01-14',
@@ -253,22 +269,6 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
             }),
             nyMeldekortDag({
                 dag: '2023-01-16',
-                status: MeldekortDagStatus.IKKE_BESVART,
-            }),
-            nyMeldekortDag({
-                dag: '2023-01-17',
-                status: MeldekortDagStatus.IKKE_BESVART,
-            }),
-            nyMeldekortDag({
-                dag: '2023-01-18',
-                status: MeldekortDagStatus.IKKE_BESVART,
-            }),
-            nyMeldekortDag({
-                dag: '2023-01-19',
-                status: MeldekortDagStatus.IKKE_BESVART,
-            }),
-            nyMeldekortDag({
-                dag: '2023-01-20',
                 status: MeldekortDagStatus.IKKE_BESVART,
             }),
         ],
@@ -293,7 +293,7 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
     // Verifiserer at dager uten rett ikke kan endres - vi har ikke en god måte å faktisk teste dette, så vi bare sjekker at de har en readonly class
-    const formField = page.locator(`label[for="select-2023-01-07"]`).locator('..');
+    const formField = page.locator(`label[for="select-2023-01-02"]`).locator('..');
     await expect(formField).toHaveClass(/navds-form-field--readonly/);
 });
 
@@ -347,12 +347,12 @@ test.describe('validerer korrigering av meldekort', () => {
 
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
-        await page.selectOption('#select-2023-01-01', 'Ikke besvart');
+        await page.selectOption('#select-2023-01-02', 'Ikke besvart');
         await page.getByText('Neste steg').click();
 
         expect(page.getByText('Merk: Følgende dager blir ikke regnet med:')).toBeVisible();
 
-        await page.selectOption('#select-2023-01-01', 'Deltatt');
+        await page.selectOption('#select-2023-01-02', 'Deltatt');
         expect(page.getByText('Merk: Følgende dager blir ikke regnet med:')).toBeHidden();
         await page.getByText('Neste steg').click();
 

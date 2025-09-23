@@ -11,8 +11,8 @@ type Props = {
 };
 
 export const Kalender = ({ steg, meldekort, className }: Props) => {
-    const forsteUke = meldekort.dager.slice(0, 7);
-    const andreUke = meldekort.dager.slice(7, 14);
+    const forsteUke = meldekort.dager.slice(0, 5);
+    const andreUke = meldekort.dager.slice(7, 12);
 
     return (
         <div className={classNames(style.kalender, className)}>

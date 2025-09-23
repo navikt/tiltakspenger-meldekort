@@ -7,10 +7,10 @@ import {
 import { Nullable } from '../../commonSrc/typer/Nullable';
 
 export const nyMeldekortDag = ({
-    dag = '2023-01-01',
+    dag = '2023-01-02',
     status = MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
 }: {
-    dag?: string;
+    dag: string;
     status?: MeldekortDagStatus;
 }): MeldekortDag => ({
     dag,
@@ -18,8 +18,8 @@ export const nyMeldekortDag = ({
 });
 
 export const nyMeldekortDagerForPeriode = ({
-    fraOgMed = '2023-01-01',
-    tilOgMed = '2023-01-14',
+    fraOgMed = '2023-01-02',
+    tilOgMed = '2023-01-15',
 }: {
     fraOgMed?: string;
     tilOgMed?: string;
@@ -50,7 +50,7 @@ export const nyUtfylltMeldekort = ({
     kjedeId = '67890',
     versjon = 1,
     kanSendes = null,
-    periode = { fraOgMed: '2023-01-01', tilOgMed: '2023-01-14' },
+    periode = { fraOgMed: '2023-01-02', tilOgMed: '2023-01-15' },
     uke1 = 1,
     uke2 = 2,
     maksAntallDager = 10,
@@ -58,28 +58,24 @@ export const nyUtfylltMeldekort = ({
     status = MeldekortStatus.INNSENDT,
     dager = [
         nyMeldekortDag({
-            dag: '2023-01-01',
+            dag: '2023-01-02',
             status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
         }),
         nyMeldekortDag({
-            dag: '2023-01-02',
+            dag: '2023-01-03',
             status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
         }),
         nyMeldekortDag({
-            dag: '2023-01-03',
+            dag: '2023-01-04',
             status: MeldekortDagStatus.FRAVÆR_ANNET,
         }),
         nyMeldekortDag({
-            dag: '2023-01-04',
+            dag: '2023-01-05',
             status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
         }),
         nyMeldekortDag({
-            dag: '2023-01-05',
-            status: MeldekortDagStatus.FRAVÆR_SYK,
-        }),
-        nyMeldekortDag({
             dag: '2023-01-06',
-            status: MeldekortDagStatus.IKKE_BESVART,
+            status: MeldekortDagStatus.FRAVÆR_SYK,
         }),
         nyMeldekortDag({
             dag: '2023-01-07',
@@ -87,30 +83,34 @@ export const nyUtfylltMeldekort = ({
         }),
         nyMeldekortDag({
             dag: '2023-01-08',
-            status: MeldekortDagStatus.FRAVÆR_SYKT_BARN,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-09',
-            status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-10',
-            status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-11',
-            status: MeldekortDagStatus.FRAVÆR_ANNET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-12',
-            status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-13',
             status: MeldekortDagStatus.IKKE_BESVART,
         }),
         nyMeldekortDag({
+            dag: '2023-01-09',
+            status: MeldekortDagStatus.FRAVÆR_SYKT_BARN,
+        }),
+        nyMeldekortDag({
+            dag: '2023-01-10',
+            status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
+        }),
+        nyMeldekortDag({
+            dag: '2023-01-11',
+            status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+        }),
+        nyMeldekortDag({
+            dag: '2023-01-12',
+            status: MeldekortDagStatus.FRAVÆR_ANNET,
+        }),
+        nyMeldekortDag({
+            dag: '2023-01-13',
+            status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+        }),
+        nyMeldekortDag({
             dag: '2023-01-14',
+            status: MeldekortDagStatus.IKKE_BESVART,
+        }),
+        nyMeldekortDag({
+            dag: '2023-01-15',
             status: MeldekortDagStatus.IKKE_BESVART,
         }),
     ],
