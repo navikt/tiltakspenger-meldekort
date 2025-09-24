@@ -215,9 +215,11 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
 export default KorrigerMeldekortOppsummering;
 
 const OppsummeringAvKorrigertMeldekortDager = (props: { dager: MeldekortDag[] }) => {
+    const manTilFreUke1 = props.dager.slice(0, 5);
+    const manTilFreUke2 = props.dager.slice(7, 12);
     return (
         <ul className={styles.dagOppsummeringContainer}>
-            {props.dager.map((dag) => (
+            {[...manTilFreUke1, ...manTilFreUke2].map((dag) => (
                 <li key={`${dag.dag}`}>
                     <MeldekortdagOppsummering dag={dag} />
                 </li>

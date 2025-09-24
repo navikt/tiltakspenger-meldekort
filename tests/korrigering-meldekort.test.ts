@@ -70,15 +70,12 @@ test('kan korrigere meldekort', async ({ page }) => {
     expect(page.getByText('Onsdag 4. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Torsdag 5. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Fredag 6. januar: Syk')).toBeVisible();
-    expect(page.getByText('Lørdag 7. januar: Ikke besvart')).toBeVisible();
-    expect(page.getByText('Søndag 8. januar: Ikke besvart')).toBeVisible();
+
     expect(page.getByText('Mandag 9. januar: Mottatt lønn')).toBeVisible();
     expect(page.getByText('Tirsdag 10. januar: Syk barn eller syk barnepasser')).toBeVisible();
     expect(page.getByText('Onsdag 11. januar: Annet fravær')).toBeVisible();
     expect(page.getByText('Torsdag 12. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Fredag 13. januar: Fravær godkjent av Nav')).toBeVisible();
-    expect(page.getByText('Lørdag 14. januar: Ikke besvart')).toBeVisible();
-    expect(page.getByText('Søndag 15. januar: Ikke besvart')).toBeVisible();
 
     await page.getByText('Jeg bekrefter at disse opplysningene stemmer').click();
     await page.getByText('Send meldekortet').click();
@@ -190,8 +187,6 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     expect(page.locator('#select-2023-01-06')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
-    expect(page.locator('#select-2023-01-07')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
-    expect(page.locator('#select-2023-01-08')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
 
     expect(page.locator('#select-2023-01-09')).toHaveValue(
         MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
@@ -204,8 +199,6 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     expect(page.locator('#select-2023-01-13')).toHaveValue(
         MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
     );
-    expect(page.locator('#select-2023-01-14')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
-    expect(page.locator('#select-2023-01-15')).toHaveValue(MeldekortDagStatus.IKKE_BESVART);
 });
 
 test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
@@ -364,7 +357,7 @@ test.describe('validerer korrigering av meldekort', () => {
         const dager = [
             nyMeldekortDag({
                 dag: '2025-01-06',
-                status: MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER,
+                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
             }),
             nyMeldekortDag({
                 dag: '2025-01-07',
@@ -380,7 +373,7 @@ test.describe('validerer korrigering av meldekort', () => {
             }),
             nyMeldekortDag({
                 dag: '2025-01-10',
-                status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
+                status: MeldekortDagStatus.IKKE_BESVART,
             }),
             nyMeldekortDag({
                 dag: '2025-01-11',
@@ -456,18 +449,17 @@ test.describe('validerer korrigering av meldekort', () => {
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
 
-        await page.selectOption('#select-2025-01-11', 'Deltatt');
+        await page.selectOption('#select-2025-01-10', 'Deltatt');
         await page.getByText('Neste steg').click();
 
         expect(
             page.getByText('Du har registrert for mange dager. Maks antall er 9 dager.'),
         ).toBeVisible();
 
-        await page.selectOption('#select-2025-01-11', 'Ikke tiltaksdag');
+        await page.selectOption('#select-2025-01-10', 'Ikke tiltaksdag');
         expect(
             page.getByText('Du har registrert for mange dager. Maks antall er 9 dager.'),
         ).toBeHidden();
-        await page.selectOption('#select-2025-01-10', 'Ikke tiltaksdag');
 
         await page.getByText('Neste steg').click();
         await page.waitForURL('**/12345/korrigering/oppsummering');

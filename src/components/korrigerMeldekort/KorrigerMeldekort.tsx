@@ -277,40 +277,40 @@ const MeldekortUkeBehandling = (props: {
     dager: MeldekortDag[];
     onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
 }) => {
+    const manTilFreUke1 = props.dager.slice(0, 5);
+    const manTilFreUke2 = props.dager.slice(7, 12);
     return (
-        <VStack>
-            <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
-                {props.dager.map((dag) => (
-                    <Select
-                        className={statusClassMap[dag.status]}
-                        id={`select-${dag.dag}`}
-                        key={dag.dag}
-                        label={formatterDato({ medUkeDag: true, dato: dag.dag })}
-                        value={dag.status}
-                        onChange={(e) => {
-                            props.onChange(dag.dag, e.target.value as MeldekortDagStatus);
-                        }}
-                        readOnly={dag.status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER}
-                    >
-                        {dag.status !== MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER ? (
-                            Object.values(MeldekortDagStatus).map((status) => (
-                                <option
-                                    hidden={
-                                        status === MeldekortDagStatus.IKKE_BESVART ||
-                                        status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER
-                                    }
-                                    key={status}
-                                    value={status}
-                                >
-                                    {korrigerMeldekortStatusTextMapper(status)}
-                                </option>
-                            ))
-                        ) : (
-                            <option>Ikke rett på tiltakspenger</option>
-                        )}
-                    </Select>
-                ))}
-            </VStack>
+        <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
+            {[...manTilFreUke1, ...manTilFreUke2].map((dag) => (
+                <Select
+                    className={statusClassMap[dag.status]}
+                    id={`select-${dag.dag}`}
+                    key={dag.dag}
+                    label={formatterDato({ medUkeDag: true, dato: dag.dag })}
+                    value={dag.status}
+                    onChange={(e) => {
+                        props.onChange(dag.dag, e.target.value as MeldekortDagStatus);
+                    }}
+                    readOnly={dag.status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER}
+                >
+                    {dag.status !== MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER ? (
+                        Object.values(MeldekortDagStatus).map((status) => (
+                            <option
+                                hidden={
+                                    status === MeldekortDagStatus.IKKE_BESVART ||
+                                    status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER
+                                }
+                                key={status}
+                                value={status}
+                            >
+                                {korrigerMeldekortStatusTextMapper(status)}
+                            </option>
+                        ))
+                    ) : (
+                        <option>Ikke rett på tiltakspenger</option>
+                    )}
+                </Select>
+            ))}
         </VStack>
     );
 };
