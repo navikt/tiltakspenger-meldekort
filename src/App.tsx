@@ -6,6 +6,7 @@ import { SiteRouter } from '@routing/SiteRouter.tsx';
 import { Feilside } from '@Feilside.tsx';
 
 import style from './App.module.css';
+import { FeilsideServerfeil } from '@FeilsideServerfeil.tsx';
 
 export const App = (appContext: AppContext) => {
     return (
@@ -19,7 +20,7 @@ export const App = (appContext: AppContext) => {
             >
                 <VStack className={style.text}>
                     {appContext.status >= 400 ? (
-                        <Feilside />
+                        getFeilside(appContext.status)
                     ) : (
                         <SiteRouter appContext={appContext} />
                     )}
@@ -27,4 +28,12 @@ export const App = (appContext: AppContext) => {
             </Page.Block>
         </Page>
     );
+};
+
+const getFeilside = (statuskode: number) => {
+    if (statuskode < 500) {
+        return <Feilside />;
+    } else {
+        return <FeilsideServerfeil />;
+    }
 };
