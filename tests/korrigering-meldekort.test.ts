@@ -64,6 +64,7 @@ test('kan korrigere meldekort', async ({ page }) => {
 
     await page.getByText('Neste steg').click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
+    await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen - å bruke waitForURL her fungerer heller ikke så bra
     // Verifiserer at oppsummeringen viser de endrede statusene
     expect(page.getByText('Mandag 2. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Tirsdag 3. januar: Deltatt')).toBeVisible();

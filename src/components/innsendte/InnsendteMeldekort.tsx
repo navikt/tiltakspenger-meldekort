@@ -30,15 +30,16 @@ type Props = InnsendteMeldekortProps;
 
 export const InnsendteMeldekort = ({ meldekort: meldekortListe, arenaMeldekortStatus }: Props) => {
     const { navigate } = useRouting();
+
     const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
     const [meldekortTilKorrigering, setMeldekortTilKorrigering] = useState<string | null>(null);
     const { trigger, isLoading, error } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
-        path: '/meldeperiode',
-        handler: (payload) =>
+        key: `/meldeperiode/${crypto.randomUUID()}`,
+        handler: (body) =>
             apiFetcher({
                 url: 'meldeperiode',
                 method: 'POST',
-                body: payload,
+                body: body,
             }),
     });
 

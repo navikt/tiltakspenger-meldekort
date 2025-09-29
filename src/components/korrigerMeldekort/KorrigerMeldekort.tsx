@@ -42,7 +42,7 @@ const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
 
     //TODO - kan sikkert flytte denne hentingen til server-side
     const { trigger, error, isLoading } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
-        path: '/meldeperiode',
+        key: '/meldeperiode',
         handler: (payload) =>
             apiFetcher({
                 url: 'meldeperiode',

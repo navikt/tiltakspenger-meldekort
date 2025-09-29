@@ -28,7 +28,7 @@ const InnsendteMeldekortForKjede = (props: { meldekortForKjede: MeldekortForKjed
     const rest = sorterteMeldekort.slice(1);
 
     const { trigger, isLoading, error } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
-        path: '/meldeperiode',
+        key: '/meldeperiode',
         handler: (payload) =>
             apiFetcher({
                 url: 'meldeperiode',

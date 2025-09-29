@@ -41,15 +41,12 @@ const meldeperiodeForPeriodeRoute =
 
 export const setupApiRoutes = (router: Router) => {
     router.post('/api/send-inn', sendInnRoute(fetchFraApi));
-
-    if (!isProd() || brukerTesterPågår()) {
-        router.post('/demo/api/send-inn', sendInnRoute(fetchFraApiMock));
-    }
-
     router.patch('/api/korriger', korrigerteDagerRoute(fetchFraApi));
     router.post('/api/meldeperiode', meldeperiodeForPeriodeRoute(fetchFraApi));
 
     if (!isProd() || brukerTesterPågår()) {
+        router.post('/demo/api/send-inn', sendInnRoute(fetchFraApiMock));
         router.patch('/demo/api/korriger', korrigerteDagerRoute(fetchFraApiMock));
+        router.post('/demo/api/meldeperiode', meldeperiodeForPeriodeRoute(fetchFraApiMock));
     }
 };

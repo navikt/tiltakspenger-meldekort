@@ -96,14 +96,14 @@ type ApiError = { melding: string; kode: string };
 /**
  * Brukes sammen med [apiFetcher] som handler for å håndtere API-kall med SWR.
  */
-export function useApi<Payload = undefined, Response = unknown>(args: {
-    path: string;
-    handler: (payload: Payload) => Promise<Response>;
+export function useApi<RequestBody = undefined, Response = unknown>(args: {
+    key: string;
+    handler: (body: RequestBody) => Promise<Response>;
     onSuccess?: (data: Response) => void;
     onError?: (error: ApiError) => void;
 }) {
     const { trigger, isMutating, error, data } = useSWRMutation(
-        (payload: Payload) => [args.path, payload],
+        (body: RequestBody) => [args.key, body],
         (_, { arg }) => {
             return args.handler(arg);
         },
@@ -114,7 +114,7 @@ export function useApi<Payload = undefined, Response = unknown>(args: {
     );
 
     return {
-        trigger: trigger as Trigger<Payload, Response>,
+        trigger: trigger as Trigger<RequestBody, Response>,
         isLoading: isMutating,
         error,
         data,
@@ -128,8 +128,10 @@ export async function apiFetcher<RequestBody, ResponseBody>(params: {
 }): Promise<ResponseBody> {
     const { url, method, body } = params;
 
+    const isDemoMode = window.location.pathname.includes('/demo');
+
     const res = await fetch(
-        `${appConfig.baseUrl}/api/${url.startsWith('/') ? url.slice(1) : url}`,
+        `${appConfig.baseUrl}/${isDemoMode ? 'demo/' : ''}api/${url.startsWith('/') ? url.slice(1) : url}`,
         {
             method,
             body: JSON.stringify(body),

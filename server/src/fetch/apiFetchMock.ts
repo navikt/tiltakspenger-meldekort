@@ -4,6 +4,7 @@ import { Meldekort, MeldekortDagStatus, MeldekortStatus } from '@common/typer/Me
 import dayjs from 'dayjs';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { brukerTesterPågår } from '@utils/env';
+import { Periode } from '@common/typer/periode';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
     if (path === 'bruker') {
@@ -48,7 +49,19 @@ export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
         return mockResponse(200, null);
     }
 
-    return mockResponse(404, null);
+    if (path === 'meldeperiode') {
+        const periode = JSON.parse(body as string) as Periode;
+
+        return mockResponse(200, {
+            meldeperiodeId: 'periode_1',
+            kjedeId: 'kjede_1',
+            dager: forrigeMeldekort.dager,
+            periode: periode,
+            mottattTidspunktSisteMeldekort: forrigeMeldekort.innsendt,
+        });
+    }
+
+    return mockResponse(404, 'Mocket response ikke funnet');
 };
 
 const mockResponse = (status: number, body: any) =>
