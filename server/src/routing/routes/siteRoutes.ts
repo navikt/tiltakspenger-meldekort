@@ -59,7 +59,7 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
         if (skalRedirecteTilArena(innsendteMeldekortDto.bruker)) {
             return {
                 props,
-                redirectUrl: appConfig.arenaUrl,
+                redirectUrl: appConfig.arenaTidligereMeldekortUrl,
             };
         }
 

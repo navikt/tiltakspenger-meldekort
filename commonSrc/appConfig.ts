@@ -6,6 +6,9 @@ const isDev =
 export const appConfig = {
     baseUrl: '/tiltakspenger/meldekort',
     arenaUrl: isDev
-        ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/meldekort'
+        ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/meldekort/send-meldekort'
         : 'https://www.nav.no/meldekort/send-meldekort',
+    arenaTidligereMeldekortUrl: isDev
+        ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/meldekort/tidligere-meldekort'
+        : 'https://www.nav.no/meldekort/tidligere-meldekort',
 } as const;
