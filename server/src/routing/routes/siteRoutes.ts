@@ -84,8 +84,26 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
+        const meldekortBrukerDto = await fetchFraApi(req, 'bruker', 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<MeldekortBrukerDTO>) : null,
+        );
+
+        if (!meldekortBrukerDto) {
+            return {
+                props: {},
+                status: 404,
+            };
+        }
+
         return meldekortDto
-            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? {
+                  props: {
+                      brukersMeldekort: tilMeldekortUtfylling(meldekortDto),
+                      kanFylleUtHelg: meldekortBrukerDto.harSak
+                          ? meldekortBrukerDto.kanSendeInnHelgForMeldekort
+                          : false,
+                  },
+              }
             : {
                   props: {},
                   status: 404,
@@ -98,8 +116,26 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
+        const meldekortBrukerDto = await fetchFraApi(req, 'bruker', 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<MeldekortBrukerDTO>) : null,
+        );
+
+        if (!meldekortBrukerDto) {
+            return {
+                props: {},
+                status: 404,
+            };
+        }
+
         return meldekortDto
-            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? {
+                  props: {
+                      brukersMeldekort: tilMeldekortUtfylling(meldekortDto),
+                      kanFylleUtHelg: meldekortBrukerDto.harSak
+                          ? meldekortBrukerDto.kanSendeInnHelgForMeldekort
+                          : false,
+                  },
+              }
             : {
                   props: {},
                   status: 404,
@@ -112,12 +148,27 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
+        const meldekortBrukerDto = await fetchFraApi(req, 'bruker', 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<MeldekortBrukerDTO>) : null,
+        );
+
+        if (!meldekortBrukerDto) {
+            return {
+                props: {},
+                status: 404,
+            };
+        }
+
         return meldekortDto
-            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
-            : {
-                  props: {},
-                  status: 404,
-              };
+            ? {
+                  props: {
+                      brukersMeldekort: tilMeldekortUtfylling(meldekortDto),
+                      kanFylleUtHelg: meldekortBrukerDto.harSak
+                          ? meldekortBrukerDto.kanSendeInnHelgForMeldekort
+                          : false,
+                  },
+              }
+            : { props: {}, status: 404 };
     });
 
     routeBuilder.routes(siteRoutes.sendInn, async (req, fetchFraApi) => {
@@ -126,8 +177,26 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
         );
 
+        const meldekortBrukerDto = await fetchFraApi(req, 'bruker', 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<MeldekortBrukerDTO>) : null,
+        );
+
+        if (!meldekortBrukerDto) {
+            return {
+                props: {},
+                status: 404,
+            };
+        }
+
         return meldekortDto
-            ? { props: { brukersMeldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? {
+                  props: {
+                      brukersMeldekort: tilMeldekortUtfylling(meldekortDto),
+                      kanFylleUtHelg: meldekortBrukerDto.harSak
+                          ? meldekortBrukerDto.kanSendeInnHelgForMeldekort
+                          : false,
+                  },
+              }
             : {
                   props: {},
                   status: 404,

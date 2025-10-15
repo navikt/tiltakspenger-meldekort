@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
 import style from './Steg3_Deltakelse.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Alert, BodyLong, BodyShort } from '@navikt/ds-react';
+import { Alert, BodyLong } from '@navikt/ds-react';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { Tekst } from '@components/tekst/Tekst';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
 
-import { TekstId } from '@tekster/typer.ts';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
@@ -18,9 +16,10 @@ import { InternLenke } from '@components/lenke/InternLenke';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
+    kanFylleUtHelg: boolean;
 };
 
-export const Steg3_Deltakelse = ({ brukersMeldekort }: SSRProps) => {
+export const Steg3_Deltakelse = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
     const { meldekortUtfylling } = useMeldekortUtfylling();
 
     useInitMeldekortSteg(brukersMeldekort, 'deltatt');
@@ -31,6 +30,7 @@ export const Steg3_Deltakelse = ({ brukersMeldekort }: SSRProps) => {
         <DeltagelsUtfylling
             brukersMeldekort={brukersMeldekort}
             meldekortUtfylling={meldekortUtfylling}
+            kanFylleUtHelg={kanFylleUtHelg}
         />
     );
 };
@@ -50,6 +50,7 @@ const MeldekortEksistererIkke = () => {
 const DeltagelsUtfylling = ({
     brukersMeldekort,
     meldekortUtfylling,
+    kanFylleUtHelg,
 }: SSRProps & { meldekortUtfylling: Meldekort }) => {
     const { navigate } = useRouting();
     const { setMeldekortSteg, setVisValideringsfeil } = useMeldekortUtfylling();
@@ -62,7 +63,11 @@ const DeltagelsUtfylling = ({
             <BodyLong>
                 <Tekst id={'deltattHjelpIngress'} />
             </BodyLong>
-            <Kalender meldekort={meldekortUtfylling} steg={'deltatt'} />
+            <Kalender
+                meldekort={meldekortUtfylling}
+                steg={'deltatt'}
+                kanFylleUtHelg={kanFylleUtHelg}
+            />
             <DagerUtfyltTeller
                 brukersMeldekort={brukersMeldekort}
                 meldekortUtfylling={meldekortUtfylling}

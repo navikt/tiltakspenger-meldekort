@@ -17,9 +17,10 @@ import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
+    kanFylleUtHelg: boolean;
 };
 
-export const Steg2_Lønn = ({ brukersMeldekort }: SSRProps) => {
+export const Steg2_Lønn = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
     const { navigate } = useRouting();
     const {
         meldekortUtfylling,
@@ -98,6 +99,7 @@ export const Steg2_Lønn = ({ brukersMeldekort }: SSRProps) => {
                         meldekort={meldekortUtfylling}
                         steg={'lønn'}
                         className={style.kalender}
+                        kanFylleUtHelg={kanFylleUtHelg}
                     />
                     <DagerUtfyltTeller
                         brukersMeldekort={brukersMeldekort}
