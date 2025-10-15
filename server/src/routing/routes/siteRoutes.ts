@@ -73,8 +73,26 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRend
             res?.ok ? (res.json() as Promise<MeldekortForKjedeResponse>) : null,
         );
 
+        const meldekortBrukerDto = await fetchFraApi(req, 'bruker', 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<MeldekortBrukerDTO>) : null,
+        );
+
+        if (!meldekortBrukerDto) {
+            return {
+                props: {},
+                status: 404,
+            };
+        }
+
         return meldekortForKjede
-            ? { props: { meldekortForKjede: meldekortForKjede } }
+            ? {
+                  props: {
+                      meldekortForKjede: meldekortForKjede,
+                      kanSendeInnHelgForMeldekort: meldekortBrukerDto.harSak
+                          ? meldekortBrukerDto.kanSendeInnHelgForMeldekort
+                          : false,
+                  },
+              }
             : { props: {}, status: 404 };
     });
 
