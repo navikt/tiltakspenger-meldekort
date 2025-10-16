@@ -21,6 +21,7 @@ import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
+    kanFylleUtHelg: boolean;
 };
 
 type ErrorSummaryItem = {
@@ -29,7 +30,7 @@ type ErrorSummaryItem = {
     href?: string;
 };
 
-export const Steg4_Oppsummering = ({ brukersMeldekort }: SSRProps) => {
+export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
     const { base, navigate } = useRouting();
     const {
         meldekortUtfylling,
@@ -178,7 +179,11 @@ export const Steg4_Oppsummering = ({ brukersMeldekort }: SSRProps) => {
             <Alert variant="info" className={style.varsel}>
                 <TekstSegmenter id={'oppsummeringIkkeSendtEnnå'} />
             </Alert>
-            <Kalender meldekort={meldekortUtfylling} steg={'oppsummering'} />
+            <Kalender
+                meldekort={meldekortUtfylling}
+                steg={'oppsummering'}
+                kanFylleUtHelg={kanFylleUtHelg}
+            />
             <VStack gap="2">
                 <DagerUtfyltTeller
                     brukersMeldekort={brukersMeldekort}

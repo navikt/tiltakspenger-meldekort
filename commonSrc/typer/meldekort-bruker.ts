@@ -6,18 +6,7 @@ export enum ArenaMeldekortStatus {
     UKJENT = 'UKJENT',
 }
 
-export type MeldekortBrukerDTO =
-    | {
-          harSak: true;
-          arenaMeldekortStatus: ArenaMeldekortStatus;
-          nesteMeldekort: Meldekort | null;
-          forrigeMeldekort: Meldekort | null;
-          harSoknadUnderBehandling: boolean;
-      }
-    | {
-          harSak: false;
-          arenaMeldekortStatus: ArenaMeldekortStatus;
-      };
+export type MeldekortBrukerDTO = MeldekortBrukerMedSak | MeldekortBrukerUtenSak;
 
 export type MeldekortBrukerMedSak = {
     harSak: true;
@@ -25,6 +14,7 @@ export type MeldekortBrukerMedSak = {
     nesteMeldekort?: Meldekort;
     forrigeMeldekort?: Meldekort;
     harSoknadUnderBehandling: boolean;
+    kanSendeInnHelgForMeldekort: boolean;
 };
 
 export type MeldekortBrukerUtenSak = {

@@ -167,4 +167,5 @@ const mockMeldekortBruker = (): MeldekortBrukerDTO => ({
     nesteMeldekort: lagNesteMeldekort(),
     forrigeMeldekort,
     harSoknadUnderBehandling: false,
+    kanSendeInnHelgForMeldekort: false,
 });

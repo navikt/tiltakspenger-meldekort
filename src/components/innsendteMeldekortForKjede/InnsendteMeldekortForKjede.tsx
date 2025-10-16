@@ -13,7 +13,10 @@ import { formatterDatoTid } from '@utils/datetime';
 import { apiFetcher, useApi } from '@utils/fetch';
 import styles from './InnsendteMeldekortForKjede.module.css';
 
-const InnsendteMeldekortForKjede = (props: { meldekortForKjede: MeldekortForKjedeResponse }) => {
+const InnsendteMeldekortForKjede = (props: {
+    meldekortForKjede: MeldekortForKjedeResponse;
+    kanSendeInnHelgForMeldekort: boolean;
+}) => {
     const { navigate } = useRouting();
     const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
 
@@ -120,7 +123,11 @@ const InnsendteMeldekortForKjede = (props: { meldekortForKjede: MeldekortForKjed
                             ) : (
                                 <Tekst id={'ikkeInnsendt'} />
                             )}
-                            <Kalender meldekort={sisteInnsendteMeldekort} steg="kvittering" />
+                            <Kalender
+                                meldekort={sisteInnsendteMeldekort}
+                                steg="kvittering"
+                                kanFylleUtHelg={props.kanSendeInnHelgForMeldekort}
+                            />
                         </VStack>
 
                         <div className={styles.separator}></div>
@@ -143,7 +150,11 @@ const InnsendteMeldekortForKjede = (props: { meldekortForKjede: MeldekortForKjed
                                                 />
                                             </Label>
                                         )}
-                                        <Kalender meldekort={meldekort} steg="kvittering" />
+                                        <Kalender
+                                            meldekort={meldekort}
+                                            steg="kvittering"
+                                            kanFylleUtHelg={props.kanSendeInnHelgForMeldekort}
+                                        />
                                     </li>
                                 ))}
                             </ul>

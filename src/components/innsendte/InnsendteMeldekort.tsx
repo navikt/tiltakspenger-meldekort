@@ -28,7 +28,11 @@ import { Meldekort } from '@common/typer/MeldekortBruker';
 
 type Props = InnsendteMeldekortProps;
 
-export const InnsendteMeldekort = ({ meldekort: meldekortListe, arenaMeldekortStatus }: Props) => {
+export const InnsendteMeldekort = ({
+    meldekort: meldekortListe,
+    arenaMeldekortStatus,
+    kanSendeInnHelgForMeldekort,
+}: Props) => {
     const { navigate } = useRouting();
 
     const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
@@ -143,7 +147,11 @@ export const InnsendteMeldekort = ({ meldekort: meldekortListe, arenaMeldekortSt
                                     <Tekst id={'ikkeInnsendt'} />
                                 )}
                             </VStack>
-                            <Kalender meldekort={meldekort} steg="kvittering" />
+                            <Kalender
+                                meldekort={meldekort}
+                                steg="kvittering"
+                                kanFylleUtHelg={kanSendeInnHelgForMeldekort}
+                            />
                             {(meldekortGrupperPåKjede.find((g) =>
                                 g.some((m) => m.id === meldekort.id),
                             )?.length ?? 0) > 1 && (

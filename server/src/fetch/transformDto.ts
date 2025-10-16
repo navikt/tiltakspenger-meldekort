@@ -18,6 +18,7 @@ export const tilMeldekortBruker = (dto: MeldekortBrukerDTO): MeldekortBruker => 
                   ? tilMeldekortUtfylling(dto.forrigeMeldekort)
                   : undefined,
               harSoknadUnderBehandling: dto.harSoknadUnderBehandling,
+              kanSendeInnHelgForMeldekort: dto.kanSendeInnHelgForMeldekort,
           }
         : {
               harSak: false,
@@ -29,5 +30,8 @@ export const tilInnsendteMeldekortProps = (dto: InnsendteMeldekortDTO): Innsendt
     return {
         meldekort: dto.meldekort.map(tilMeldekortUtfylling),
         arenaMeldekortStatus: dto.bruker.arenaMeldekortStatus,
+        kanSendeInnHelgForMeldekort: dto.bruker.harSak
+            ? dto.bruker.kanSendeInnHelgForMeldekort
+            : false,
     };
 };

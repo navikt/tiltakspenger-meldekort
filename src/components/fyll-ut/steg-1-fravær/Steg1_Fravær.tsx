@@ -18,9 +18,10 @@ import { Meldekort, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
+    kanFylleUtHelg: boolean;
 };
 
-export const Steg1_Fravær = ({ brukersMeldekort }: SSRProps) => {
+export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
     const { navigate } = useRouting();
     const {
         meldekortUtfylling,
@@ -69,6 +70,7 @@ export const Steg1_Fravær = ({ brukersMeldekort }: SSRProps) => {
                         meldekort={meldekortUtfylling}
                         steg={'fravær'}
                         className={style.kalender}
+                        kanFylleUtHelg={kanFylleUtHelg}
                     />
                     <DagerUtfyltTeller
                         brukersMeldekort={brukersMeldekort}

@@ -9,4 +9,5 @@ export type InnsendteMeldekortDTO = {
 export type InnsendteMeldekortProps = {
     meldekort: Meldekort[];
     arenaMeldekortStatus: ArenaMeldekortStatus;
+    kanSendeInnHelgForMeldekort: boolean;
 };

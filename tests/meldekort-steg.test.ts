@@ -1,17 +1,22 @@
 import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 import { getTekst } from '../src/tekster/tekster';
 import test, { expect, Page } from '@playwright/test';
-import { MeldekortDagStatus } from '../commonSrc/typer/MeldekortBruker';
+import { MeldekortDagStatus, MeldekortStatus } from '../commonSrc/typer/MeldekortBruker';
 import { BrukersMeldekortUtfylling } from '../commonSrc/typer/BrukersMeldekortUtfylling';
-
-// TODO: disse testene er avhengig av mock-dataene fra demo-modusen til appen
-// Burde ha mock-data som defineres i testene
-test.beforeEach(async ({ page }) => {
-    await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
-    await klikkCookieBanner(page);
-});
+import {
+    nyMeldekortDagerForPeriode,
+    nyUtfylltMeldekort,
+} from './test-data-generators/MeldekortTestData';
 
 test.describe('Meldekort steg', () => {
+    // TODO: disse testene er avhengig av mock-dataene fra demo-modusen til appen
+    // Burde ha mock-data som defineres i testene
+    test.beforeEach(async ({ page }) => {
+        console.log('GÅR TIL STEG DESCRIBE');
+        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
+        await klikkCookieBanner(page);
+    });
+
     test('Kan ikke gå videre uten å velge fravær/ikke fravær', async ({ page }) => {
         const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }) });
         const ikkeValgtVarsel = page.getByText(getTekst({ id: 'fraværSpørsmålIkkeValgt' }));
@@ -123,6 +128,208 @@ test.describe('Meldekort steg', () => {
             antallDagerMedLønn: 0,
             antallDagerMedIkkeBesvart: 4,
         });
+    });
+});
+
+test.describe('kontroll av helg av meldekortet', () => {
+    test('kan ikke fylle ut helgedager dersom saken ikke tillater det', async ({ page }) => {
+        await page.route(
+            '*/**/meldekort_2/fraver/data',
+            async (route) =>
+                await route.fulfill({
+                    json: {
+                        brukersMeldekort: nyUtfylltMeldekort({
+                            id: 'meldekort_2',
+                            dager: nyMeldekortDagerForPeriode({}),
+                            status: MeldekortStatus.KAN_UTFYLLES,
+                        }),
+                        kanFylleUtHelg: false,
+                    },
+                }),
+        );
+
+        await page.route(
+            '*/**/meldekort_2/lonn/data',
+            async (route) =>
+                await route.fulfill({
+                    json: {
+                        brukersMeldekort: nyUtfylltMeldekort({
+                            id: 'meldekort_2',
+                            dager: nyMeldekortDagerForPeriode({}),
+                            status: MeldekortStatus.KAN_UTFYLLES,
+                        }),
+                        kanFylleUtHelg: false,
+                    },
+                }),
+        );
+
+        await page.route(
+            '*/**/meldekort_2/deltakelse/data',
+            async (route) =>
+                await route.fulfill({
+                    json: {
+                        brukersMeldekort: nyUtfylltMeldekort({
+                            id: 'meldekort_2',
+                            dager: nyMeldekortDagerForPeriode({}),
+                            status: MeldekortStatus.KAN_UTFYLLES,
+                        }),
+                        kanFylleUtHelg: false,
+                    },
+                }),
+        );
+
+        await page.route(
+            '*/**/meldekort_2/send-inn/data',
+            async (route) =>
+                await route.fulfill({
+                    json: {
+                        brukersMeldekort: nyUtfylltMeldekort({
+                            id: 'meldekort_2',
+                            dager: nyMeldekortDagerForPeriode({}),
+                            status: MeldekortStatus.KAN_UTFYLLES,
+                        }),
+                        kanFylleUtHelg: false,
+                    },
+                }),
+        );
+
+        //Fravær steg
+        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
+        await klikkCookieBanner(page);
+        await page.waitForURL(/fraver$/);
+        await page.getByText('Ja, jeg har vært syk').click();
+        expect(page.getByText('Lørdag 7. januar')).toBeHidden();
+        expect(page.getByText('Søndag 8. januar')).toBeHidden();
+        expect(page.getByText('Lørdag 14. januar')).toBeHidden();
+        expect(page.getByText('Søndag 15. januar')).toBeHidden();
+
+        await page.getByText('Nei, jeg har ikke vært syk').click();
+        await page.getByText('Neste steg').click();
+
+        //Lønn steg
+        await page.waitForURL(/lonn$/);
+        await page.getByText('Ja, jeg mottar lønn for tiden i tiltaket').click();
+        expect(page.getByText('Lørdag 7. januar')).toBeHidden();
+        expect(page.getByText('Søndag 8. januar')).toBeHidden();
+        expect(page.getByText('Lørdag 14. januar')).toBeHidden();
+        expect(page.getByText('Søndag 15. januar')).toBeHidden();
+        await page.getByText('Nei, jeg mottar ikke lønn for tid i tiltaket').click();
+        await page.getByText('Neste steg').click();
+
+        //Deltatt steg
+        await page.waitForURL(/deltakelse$/);
+        expect(page.getByText('Lørdag 7. januar')).toBeHidden();
+        expect(page.getByText('Søndag 8. januar')).toBeHidden();
+        expect(page.getByText('Lørdag 14. januar')).toBeHidden();
+        expect(page.getByText('Søndag 15. januar')).toBeHidden();
+        await page.getByText('Neste steg').click();
+
+        //Send inn steg
+        await page.waitForURL(/send-inn$/);
+        expect(page.getByText('Lørdag 7. januar')).toBeHidden();
+        expect(page.getByText('Søndag 8. januar')).toBeHidden();
+        expect(page.getByText('Lørdag 14. januar')).toBeHidden();
+        expect(page.getByText('Søndag 15. januar')).toBeHidden();
+    });
+    test('kan fylle ut helgedager dersom saken tillater det', async ({ page }) => {
+        await page.route(
+            '*/**/meldekort_2/fraver/data',
+            async (route) =>
+                await route.fulfill({
+                    json: {
+                        brukersMeldekort: nyUtfylltMeldekort({
+                            id: 'meldekort_2',
+                            dager: nyMeldekortDagerForPeriode({}),
+                            status: MeldekortStatus.KAN_UTFYLLES,
+                        }),
+                        kanFylleUtHelg: true,
+                    },
+                }),
+        );
+
+        await page.route(
+            '*/**/meldekort_2/lonn/data',
+            async (route) =>
+                await route.fulfill({
+                    json: {
+                        brukersMeldekort: nyUtfylltMeldekort({
+                            id: 'meldekort_2',
+                            dager: nyMeldekortDagerForPeriode({}),
+                            status: MeldekortStatus.KAN_UTFYLLES,
+                        }),
+                        kanFylleUtHelg: true,
+                    },
+                }),
+        );
+
+        await page.route(
+            '*/**/meldekort_2/deltakelse/data',
+            async (route) =>
+                await route.fulfill({
+                    json: {
+                        brukersMeldekort: nyUtfylltMeldekort({
+                            id: 'meldekort_2',
+                            dager: nyMeldekortDagerForPeriode({}),
+                            status: MeldekortStatus.KAN_UTFYLLES,
+                        }),
+                        kanFylleUtHelg: true,
+                    },
+                }),
+        );
+
+        await page.route(
+            '*/**/meldekort_2/send-inn/data',
+            async (route) =>
+                await route.fulfill({
+                    json: {
+                        brukersMeldekort: nyUtfylltMeldekort({
+                            id: 'meldekort_2',
+                            dager: nyMeldekortDagerForPeriode({}),
+                            status: MeldekortStatus.KAN_UTFYLLES,
+                        }),
+                        kanFylleUtHelg: true,
+                    },
+                }),
+        );
+
+        //Fravær steg
+        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
+        await klikkCookieBanner(page);
+        await page.waitForURL(/fraver$/);
+        await page.getByText('Ja, jeg har vært syk').click();
+        expect(page.getByText('Lørdag 7. januar')).toBeVisible();
+        expect(page.getByText('Søndag 8. januar')).toBeVisible();
+        expect(page.getByText('Lørdag 14. januar')).toBeVisible();
+        expect(page.getByText('Søndag 15. januar')).toBeVisible();
+
+        await page.getByText('Nei, jeg har ikke vært syk').click();
+        await page.getByText('Neste steg').click();
+
+        //Lønn steg
+        await page.waitForURL(/lonn$/);
+        await page.getByText('Ja, jeg mottar lønn for tiden i tiltaket').click();
+        expect(page.getByText('Lørdag 7. januar')).toBeVisible();
+        expect(page.getByText('Søndag 8. januar')).toBeVisible();
+        expect(page.getByText('Lørdag 14. januar')).toBeVisible();
+        expect(page.getByText('Søndag 15. januar')).toBeVisible();
+        await page.getByText('Nei, jeg mottar ikke lønn for tid i tiltaket').click();
+        await page.getByText('Neste steg').click();
+
+        //Deltatt steg
+        await page.waitForURL(/deltakelse$/);
+        expect(page.getByText('Fredag 6. januar')).toBeVisible();
+        expect(page.getByText('Lørdag 7. januar')).toBeVisible();
+        expect(page.getByText('Søndag 8. januar')).toBeVisible();
+        expect(page.getByText('Lørdag 14. januar')).toBeVisible();
+        expect(page.getByText('Søndag 15. januar')).toBeVisible();
+        await page.getByText('Neste steg').click();
+
+        //Send inn steg
+        await page.waitForURL(/send-inn$/);
+        expect(page.getByText('Lørdag 7. januar')).toBeVisible();
+        expect(page.getByText('Søndag 8. januar')).toBeVisible();
+        expect(page.getByText('Lørdag 14. januar')).toBeVisible();
+        expect(page.getByText('Søndag 15. januar')).toBeVisible();
     });
 });
 
