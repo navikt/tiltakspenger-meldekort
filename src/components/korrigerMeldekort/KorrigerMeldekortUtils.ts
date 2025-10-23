@@ -9,7 +9,7 @@ export const korrigerMeldekortStatusTextMapper = (status: MeldekortDagStatus): s
         case MeldekortDagStatus.FRAVÆR_SYK:
             return 'Syk';
         case MeldekortDagStatus.FRAVÆR_SYKT_BARN:
-            return 'Syk barn eller syk barnepasser';
+            return 'Sykt barn eller syk barnepasser';
         case MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV:
             return 'Fravær godkjent av Nav';
         case MeldekortDagStatus.FRAVÆR_ANNET:
