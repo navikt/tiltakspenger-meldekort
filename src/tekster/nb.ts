@@ -141,12 +141,11 @@ export const teksterNb = {
     lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
     lønnInfoUndertittelLønn: 'Lønn',
     lønnIngress:
-        'Hvis du bare har mottatt pengestøtte fra Nav, og ikke fått vanlig lønn fra en arbeidsgiver i perioden, svarer du «nei». Hvis du har mottatt vanlig lønn fra en arbeidsgiver i tillegg til pengestøtten fra Nav, svarer du «ja». Deretter oppgir du hvilke dager det gjelder.',
-    lønnHarMottattLønnSpørsmål:
-        'Har du mottatt lønn i tillegg til pengestøtten fra Nav i denne perioden?',
+        'Hvis du bare skal motta tiltakspenger fra Nav, svarer du “nei”. Hvis du går på tiltak og skal eller har mottatt lønn (ikke tiltakspenger) som en del av tiltaket ditt, svarer du “ja”. ',
+    lønnHarMottattLønnSpørsmål: 'Skal eller har du mottatt lønn (ikke tiltakspenger) fra tiltaket?',
     lønnHarMottattLønnSvarJa:
-        'Ja, jeg har mottatt lønn fra en arbeidsgiver i tillegg til pengestøtten fra Nav i denne perioden',
-    lønnHarMottattLønnSvarNei: 'Nei, jeg har bare mottatt pengestøtte fra Nav i denne perioden',
+        'Ja, jeg skal eller har mottatt lønn som en del av tiltaket (for eksempel lærlinglønn)',
+    lønnHarMottattLønnSvarNei: 'Nei, jeg skal bare motta tiltakspenger',
     lønnSpørsmålIkkeValgt: 'Velg et lønnsalternativ for å fortsette.',
     lønnUkeHjelp: 'Kryss av for de dagene du mottok lønn',
     lønnDagPrefix: 'Mottok lønn: ',
