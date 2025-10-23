@@ -10,8 +10,9 @@ import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './Forside.module.css';
 import { GuidePanel } from '@navikt/ds-react';
-import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
 import { MeldekortStatus } from '@common/typer/MeldekortBruker';
+import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
+import { getTekst } from '@tekster/tekster.ts';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;
@@ -32,12 +33,11 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
     return (
         <>
             <GuidePanel className={style.guide}>
-                <TekstMedLenke
-                    tekst="forsideGuidePanelTekst"
-                    tekstLenke="forsideGuidePanelLenkeTekst"
-                    lenke="https://www.nav.no/kontaktoss"
-                />
+                <EksternLenke path={'https://www.nav.no/kontaktoss'}>
+                    {getTekst({ id: 'forsideGuidePanelLenkeTekst' })}
+                </EksternLenke>
             </GuidePanel>
+
             <TekstSegmenter id={'forsideIngress'} spacing={true} />
             {nesteMeldekort?.status === MeldekortStatus.KAN_UTFYLLES ? (
                 <TilUtfylling nesteMeldekort={nesteMeldekort} />

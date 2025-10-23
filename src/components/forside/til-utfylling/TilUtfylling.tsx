@@ -23,10 +23,6 @@ export const TilUtfylling = ({ nesteMeldekort }: Props) => {
 
     return (
         <>
-            <BodyLong weight={'semibold'} size={'large'}>
-                <Tekst id={'forsideTakk'} />
-            </BodyLong>
-            <TekstSegmenter id={'forsideOpplysninger'} spacing={true} />
             <ConfirmationPanel
                 onChange={() => {
                     setVisFeil(false);

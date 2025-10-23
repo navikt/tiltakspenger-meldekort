@@ -38,19 +38,15 @@ export const teksterNb = {
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
     sideTittel: 'Meldekort for tiltakspenger',
-    forsideGuidePanelTekst:
-        'Ta kontakt med Nav hvis du er usikker på hva du skal føre på meldekortet. ',
-    forsideGuidePanelLenkeTekst: 'Se hvordan du kan ta kontakt med Nav.',
+    forsideGuidePanelLenkeTekst:
+        'Ta kontakt med Nav hvis du er usikker på hvordan du skal fylle inn meldekortet.',
     forsideIngress: [
-        'For å motta tiltakspenger må du delta på et tiltak hos Nav og sende meldekort hver 14. dag.',
-        'På meldekortet må du oppgi hvilke dager du har deltatt på tiltaket, om du har hatt fravær eller mottatt lønn. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.',
+        'For å få utbetalt tiltakspenger må du som deltar på et tiltak hos Nav, sende inn dette meldekortet hver 14. dag. Vi bruker informasjonen til å regne ut hvor mye du skal ha utbetalt i tiltakspenger.',
         'Vi deler informasjon fra meldekortet med andre systemer i Nav fordi informasjonen har betydning for oppfølgingen du får av Nav.',
     ],
-    forsideTakk: 'Takk for at du er ærlig!',
-    forsideOpplysninger: 'Det er viktig at du gir oss riktige opplysninger.',
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
     forsideBekrefterFeil: 'Du må bekrefte for å gå videre',
-    forsideSeOgEndre: 'Se tidligere innsendte meldekort',
+    forsideSeOgEndre: 'Se meldekort du har sendt inn tidligere.',
     forsideIngenMeldekortSoknadUnderBehandling:
         'Du har ikke fått noen meldekort enda fordi Nav ikke er ferdig med å behandle søknaden din. ',
     forsideIngenMeldekort: 'Du har ingen meldekort klare til innsending. ',
@@ -65,25 +61,25 @@ export const teksterNb = {
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Uke ${uke1} og ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} til ${tilOgMed}`,
-    deltattTittel: 'Deltakelse i tiltak',
+    deltattTittel: 'Oppmøte',
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
-        'Du skal krysse av for deltakelse hvis du har deltatt på tiltaket som avtalt. Du kan også krysse av for deltakelse hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt. ',
+        'Kryss av for de dagene du har deltatt på tiltaket som avtalt. Kryss også av for «deltok» hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.',
     deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket.',
-    deltattDagPrefix: 'Har deltatt: ',
+    deltattDagPrefix: 'Deltok: ',
     fraværHjelpLesMer:
         'Du må informere oss dersom du har vært syk eller hatt annet fravær i perioden du var satt opp på tiltak.',
     fraværStegFraværSpørsmål:
-        'Har du vært syk eller hatt annet fravær fra tiltaket? (obligatorisk)',
+        'Har du vært syk eller hatt annet fravær noen av dagene du skulle vært på tiltaket?',
     fraværHarHattFraværSvarJa: 'Ja, jeg har vært syk eller hatt annet fravær',
     fraværHarHattFraværSvarNei: 'Nei, jeg har ikke vært syk eller hatt annet fravær',
     fraværSpørsmålIkkeValgt: 'Velg et fraværsalternativ for å fortsette.',
-    fraværTittel: 'Fravær og sykdom',
+    fraværTittel: 'Fravær',
     fraværIngress:
-        'Du skal svare ja på spørsmålet hvis du har hatt dager i meldeperioden som du ikke fikk deltatt hele eller deler av dagen.',
+        'Hvis du ikke har vært syk eller hatt annet fravær fra tiltaket i denne perioden, svarer du «nei». Hvis du har vært syk eller hatt annet fravær hele eller deler av dager, svarer du «ja». Deretter oppgir du hvilke dager det gjelder, og hvilken type fravær du har hatt.',
     fraværHjelpTittel: 'Slik fyller du ut fravær',
     fraværHjelpIngress: [
-        'Velg hva slags fravær du hadde. Noen typer fravær gir rett til utbetaling, mens andre gjør det ikke. De dagene du ikke skulle vært på tiltaket trenger du ikke registrere.',
+        'Noen typer fravær gir til rett til tiltakspenger selv om du ikke har deltatt på tiltaket. Kryss av for hvilke dager det gjelder, og hvilken type fravær du har hatt.',
     ],
     fraværHjelpLesMerSyk: 'Når skal du velge "syk"?',
     fraværHjelpLesMerSykListe: [
@@ -120,7 +116,7 @@ export const teksterNb = {
         'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.',
     ],
 
-    fraværUkeHjelp: 'Velg hva slags fravær du hadde',
+    fraværUkeHjelp: 'Velg hva slags fravær du har hatt',
 
     fraværPanelRegistrer: 'Velg',
     fraværPanelRegistrerSR: ({ datoTekst }: { datoTekst: string }) =>
@@ -134,41 +130,29 @@ export const teksterNb = {
     }) => `${datoTekst} - du har valgt "${valgtStatusTekst}", trykk for å endre.`,
     fraværModalHeader: 'Årsaken til fraværet',
     fraværModalBeskrivelse: 'Du kan ha rett til tiltakspenger selv om du ikke har deltatt',
-    fraværModalSykIngress: 'Hvis du var for syk til å delta på tiltaksdagen.',
+    fraværModalSykIngress: 'Du var for syk til å delta på tiltaksdagen.',
     fraværModalSyktBarnIngress:
-        'Hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnepasser var syk.',
+        'Du kunne ikke delta på tiltaksdagen fordi barnet ditt eller barnepasseren var syk.',
     fraværModalAnnetGodkjentIngress:
-        'Hvis du har hatt fravær fra tiltaket og Nav har godkjent dette fraværet.',
+        'Du har hatt fravær fra tiltaket, og Nav har godkjent dette fraværet.',
     fraværModalIkkeGodkjentIngress:
-        'Hvis du ikke deltok på hele eller deler av tiltaksdagen, og fraværet ikke var godkjent av Nav, har du ikke rett til tiltakspenger.',
+        'Du har vært borte hele eller deler av tiltaksdagen, og fraværet er ikke godkjent av Nav. Dette gir ikke rett til tiltakspenger.',
     lønnTittel: 'Lønn',
     lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
     lønnInfoUndertittelLønn: 'Lønn',
-    lønnInfoUndertittelLønnTekster: [
-        'Lønn er ikke penger du mottar fra Nav',
-        'Lønn er utbetalinger du mottar fra en arbeidsgiver eller tiltaksarrangør',
-    ],
-    lønnInfoUnderTittelSvareJa: 'Når skal du svare ja?',
-    lønnInfoUnderTittelSvareJaTekster: [
-        'Du skal svare ja hvis du får lønn for arbeid som er en del av tiltaket ditt.',
-        'Når du mottar lønn for tiden du deltar i tiltaket, har du ikke rett på tiltakspenger.',
-    ],
-    lønnInfoUnderTittelSvareNei: 'Når skal du svare nei?',
-    lønnInfoUnderTittelSvareNeiTekster: [
-        'Du skal svare nei hvis du ikke mottar lønn i denne meldeperioden.',
-        'Du skal svare nei hvis du mottar lønn som ikke gjelder arbeid du har gjort innenfor tiltakstiden. Du kan for eksempel gå på tiltak på dagtid og motta lønn for arbeid på kveldstid.',
-    ],
-    lønnHjelpLesMerTekstFørLenke: 'Hvis du er usikker på hva du skal fylle inn i meldekortet, ',
-    lønnHjelpLesMerLenkeTekst: 'ta kontakt med Nav.',
-    lønnHarMottattLønnSpørsmål: 'Mottar du lønn i denne meldeperioden? (obligatorisk)',
-    lønnHarMottattLønnSvarJa: 'Ja, jeg mottar lønn for tiden i tiltaket',
-    lønnHarMottattLønnSvarNei: 'Nei, jeg mottar ikke lønn for tid i tiltaket',
+    lønnIngress:
+        'Hvis du bare har mottatt pengestøtte fra Nav, og ikke fått vanlig lønn fra en arbeidsgiver i perioden, svarer du «nei». Hvis du har mottatt vanlig lønn fra en arbeidsgiver i tillegg til pengestøtten fra Nav, svarer du «ja». Deretter oppgir du hvilke dager det gjelder.',
+    lønnHarMottattLønnSpørsmål:
+        'Har du mottatt lønn i tillegg til pengestøtten fra Nav i denne perioden?',
+    lønnHarMottattLønnSvarJa:
+        'Ja, jeg har mottatt lønn fra en arbeidsgiver i tillegg til pengestøtten fra Nav i denne perioden',
+    lønnHarMottattLønnSvarNei: 'Nei, jeg har bare mottatt pengestøtte fra Nav i denne perioden',
     lønnSpørsmålIkkeValgt: 'Velg et lønnsalternativ for å fortsette.',
-    lønnUkeHjelp: 'Kryss av for de dagene du mottar lønn',
-    lønnDagPrefix: 'Mottar lønn: ',
+    lønnUkeHjelp: 'Kryss av for de dagene du mottok lønn',
+    lønnDagPrefix: 'Mottok lønn: ',
     oppsummeringTittel: 'Oppsummering',
     oppsummeringIngress:
-        'Sjekk at dagene du har registrert er riktige før du sender inn. Du kan gå tilbake og rette opp hvis noe ikke stemmer.',
+        'Her er en oppsummering av det du har fylt ut i meldekortet for denne perioden. Sjekk at det er korrekt før du sender inn. Du kan gå tilbake og rette opp hvis noe er feil.',
     oppsummeringBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
     oppsummeringBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
     oppsummeringIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',

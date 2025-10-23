@@ -44,6 +44,8 @@ validateEnv()
     .then((app) => {
         const server = app.listen(PORT, () => {
             console.log(`Server starting on port ${PORT}`);
+            console.log(`localhost \t\thttp://localhost:${PORT}${baseUrl}`);
+            console.log(`localhost (DEMO)\thttp://localhost:${PORT}${baseUrl}/demo`);
         });
 
         const httpTerminator = createHttpTerminator({ server });
