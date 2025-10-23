@@ -57,7 +57,7 @@ test('kan korrigere meldekort', async ({ page }) => {
     // fredag 6. er allerede syk
     // Endrer på statuser for uke 2
     await page.selectOption('#select-2023-01-09', 'Mottatt lønn');
-    await page.selectOption('#select-2023-01-10', 'Syk barn eller syk barnepasser');
+    await page.selectOption('#select-2023-01-10', 'Sykt barn eller syk barnepasser');
     await page.selectOption('#select-2023-01-11', 'Annet fravær');
     await page.selectOption('#select-2023-01-12', 'Deltatt');
     await page.selectOption('#select-2023-01-13', 'Fravær godkjent av Nav');
@@ -73,7 +73,7 @@ test('kan korrigere meldekort', async ({ page }) => {
     expect(page.getByText('Fredag 6. januar: Syk')).toBeVisible();
 
     expect(page.getByText('Mandag 9. januar: Mottatt lønn')).toBeVisible();
-    expect(page.getByText('Tirsdag 10. januar: Syk barn eller syk barnepasser')).toBeVisible();
+    expect(page.getByText('Tirsdag 10. januar: Sykt barn eller syk barnepasser')).toBeVisible();
     expect(page.getByText('Onsdag 11. januar: Annet fravær')).toBeVisible();
     expect(page.getByText('Torsdag 12. januar: Deltatt')).toBeVisible();
     expect(page.getByText('Fredag 13. januar: Fravær godkjent av Nav')).toBeVisible();
@@ -163,7 +163,7 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     await page.selectOption('#select-2023-01-06', 'Deltatt');
     // Endrer på statuser for uke 2
     await page.selectOption('#select-2023-01-09', 'Mottatt lønn');
-    await page.selectOption('#select-2023-01-10', 'Syk barn eller syk barnepasser');
+    await page.selectOption('#select-2023-01-10', 'Sykt barn eller syk barnepasser');
     await page.selectOption('#select-2023-01-11', 'Annet fravær');
     await page.selectOption('#select-2023-01-12', 'Deltatt');
     await page.selectOption('#select-2023-01-13', 'Fravær godkjent av Nav');
