@@ -14,7 +14,7 @@ export const teksterNb = {
     sendInn: 'Send inn',
 
     statusIkkeBesvart: 'Ikke besvart',
-    statusDeltatt: 'Deltatt',
+    statusDeltatt: 'Deltok',
     statusDeltattMedLønn: 'Mottatt lønn',
     statusSyk: 'Syk',
     statusSyktBarn: 'Sykt barn eller syk barnepasser',
@@ -31,9 +31,9 @@ export const teksterNb = {
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har registrert for ${antall} dager. Sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
+        `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
     forFaDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
-        `Du har fått innvilget tiltakspenger for ${maks} dager i perioden, men har bare registrert for ${antall} dager. Sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
+        `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
@@ -41,7 +41,7 @@ export const teksterNb = {
     forsideGuidePanelLenkeTekst:
         'Ta kontakt med Nav hvis du er usikker på hvordan du skal fylle inn meldekortet.',
     forsideIngress: [
-        'For å få utbetalt tiltakspenger må du som deltar på et tiltak hos Nav, sende inn dette meldekortet hver 14. dag. Vi bruker informasjonen til å regne ut hvor mye du skal ha utbetalt i tiltakspenger.',
+        'For å få utbetalt tiltakspenger må du som deltar på tiltak hos Nav, sende meldekort hver 14. dag. Vi bruker informasjonen til å regne ut hvor mye du skal ha utbetalt i tiltakspenger.',
         'Vi deler informasjon fra meldekortet med andre systemer i Nav fordi informasjonen har betydning for oppfølgingen du får av Nav.',
     ],
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
@@ -129,7 +129,6 @@ export const teksterNb = {
         valgtStatusTekst: string;
     }) => `${datoTekst} - du har valgt "${valgtStatusTekst}", trykk for å endre.`,
     fraværModalHeader: 'Årsaken til fraværet',
-    fraværModalBeskrivelse: 'Du kan ha rett til tiltakspenger selv om du ikke har deltatt',
     fraværModalSykIngress: 'Du var for syk til å delta på tiltaksdagen.',
     fraværModalSyktBarnIngress:
         'Du kunne ikke delta på tiltaksdagen fordi barnet ditt eller barnepasseren var syk.',
@@ -141,14 +140,14 @@ export const teksterNb = {
     lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
     lønnInfoUndertittelLønn: 'Lønn',
     lønnIngress:
-        'Hvis du bare skal motta tiltakspenger fra Nav, svarer du “nei”. Hvis du går på tiltak og skal eller har mottatt lønn (ikke tiltakspenger) som en del av tiltaket ditt, svarer du “ja”. ',
-    lønnHarMottattLønnSpørsmål: 'Skal eller har du mottatt lønn (ikke tiltakspenger) fra tiltaket?',
+        'Hvis du får lønn (ikke tiltakspenger) som en del av tiltaket ditt, svarer du “ja”. Deretter oppgir du hvilke dager det gjelder.',
+    lønnHarMottattLønnSpørsmål: 'Mottar du lønn (ikke tiltakspenger) som en del av tiltaket?',
     lønnHarMottattLønnSvarJa:
-        'Ja, jeg skal eller har mottatt lønn som en del av tiltaket (for eksempel lærlinglønn)',
+        'Ja, jeg mottar lønn som en del av tiltaket (for eksempel lærlinglønn)',
     lønnHarMottattLønnSvarNei: 'Nei, jeg skal bare motta tiltakspenger',
     lønnSpørsmålIkkeValgt: 'Velg et lønnsalternativ for å fortsette.',
-    lønnUkeHjelp: 'Kryss av for de dagene du mottok lønn',
-    lønnDagPrefix: 'Mottok lønn: ',
+    lønnUkeHjelp: 'Kryss av for de dagene du mottar lønn',
+    lønnDagPrefix: 'Mottar lønn: ',
     oppsummeringTittel: 'Oppsummering',
     oppsummeringIngress:
         'Her er en oppsummering av det du har fylt ut i meldekortet for denne perioden. Sjekk at det er korrekt før du sender inn. Du kan gå tilbake og rette opp hvis noe er feil.',

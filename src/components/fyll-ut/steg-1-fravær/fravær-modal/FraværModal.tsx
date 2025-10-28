@@ -50,7 +50,6 @@ export const FraværModal = () => {
                 <RadioGroup
                     value={valgtStatus}
                     legend={<Tekst id={'fraværModalHeader'} />}
-                    description={<Tekst id={'fraværModalBeskrivelse'} />}
                     onChange={(value: MeldekortDagStatus) => {
                         setValgtStatus(value);
                     }}
