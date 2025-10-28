@@ -142,8 +142,7 @@ export const teksterNb = {
     lønnIngress:
         'Hvis du får lønn (ikke tiltakspenger) som en del av tiltaket ditt, svarer du “ja”. Deretter oppgir du hvilke dager det gjelder.',
     lønnHarMottattLønnSpørsmål: 'Mottar du lønn (ikke tiltakspenger) som en del av tiltaket?',
-    lønnHarMottattLønnSvarJa:
-        'Ja, jeg mottar lønn som en del av tiltaket (for eksempel lærlinglønn)',
+    lønnHarMottattLønnSvarJa: 'Ja, jeg mottar lønn som en del av tiltaket',
     lønnHarMottattLønnSvarNei: 'Nei, jeg skal bare motta tiltakspenger',
     lønnSpørsmålIkkeValgt: 'Velg et lønnsalternativ for å fortsette.',
     lønnUkeHjelp: 'Kryss av for de dagene du mottar lønn',
