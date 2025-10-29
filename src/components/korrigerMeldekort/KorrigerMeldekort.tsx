@@ -19,7 +19,7 @@ import { formatterDato } from '@utils/datetime';
 import { useEffect, useState } from 'react';
 import styles from './KorrigerMeldekort.module.scss';
 import { getPath, siteRoutes } from '@common/siteRoutes';
-import { useKorrigerMeldekortContext } from '../../context/korriger/KorrigerMeldekortContext';
+import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import {
     erKorrigerteDagerGyldig,
     hentGyldigeDagerFraMeldekortDager,
@@ -32,6 +32,7 @@ import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
 import { Meldekort, MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 import { Link } from 'wouter';
 import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
+import { getTekst, getTekster } from '@tekster/tekster.ts';
 
 /**
  * TODO - skal vi ha noe form for validering her?
@@ -92,7 +93,7 @@ const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
             />
             <VStack gap="8">
                 <Heading size="large" level="3">
-                    Endre meldekort
+                    {getTekst({ id: 'korrigeringTittel' })}
                 </Heading>
 
                 <InformasjonOmKorrigeringAvMeldekort />
@@ -107,10 +108,7 @@ const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
 
                 {error && (
                     <Alert variant="error">
-                        <BodyShort>
-                            Vi får ikke innhentet siste opplysninger om meldekortet ditt. Prøv igjen
-                            senere. Hvis problemet vedvarer, kontakt Nav.
-                        </BodyShort>
+                        <BodyShort>{getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })}</BodyShort>
                         <Link href={`/`}>Tilbake til forsiden</Link>
                     </Alert>
                 )}
@@ -118,9 +116,7 @@ const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
                 {meldeperiodeForPeriode &&
                     meldeperiodeForPeriode.meldeperiodeId !== props.meldekort.meldeperiodeId && (
                         <Alert variant="info">
-                            Meldekortet ditt har blitt oppdatert - Meldekortet inneholder nå de
-                            seneste opplysningene registrert. Verifiser at disse er korrekt, eller
-                            endre valgene på de dagene som er feilregistrert.
+                            {getTekst({ id: 'korrigeringOppdatertAlert' })}
                         </Alert>
                     )}
 
@@ -170,20 +166,13 @@ const KorrigeringAvMeldekort = (props: {
     return (
         <VStack gap="8">
             {props.sisteMeldeperiode.meldeperiodeId !== props.meldekort.meldeperiodeId && (
-                <Alert variant="info">
-                    Meldekortet ditt har blitt oppdatert - Meldekortet inneholder nå den seneste
-                    dataen registrert.
-                </Alert>
+                <Alert variant="info">{getTekst({ id: 'korrigeringOppdatertAlert' })}</Alert>
             )}
 
             <Heading size="medium" level="4">
-                Slik endrer du meldekortet
+                {getTekst({ id: 'korrigeringBeskrivelseIngress' })}
             </Heading>
-            <BodyLong>
-                Nedenfor ser du hva du har tidligere registrert i meldekortet. Endre valgene på de
-                dagene som er feilregistrert. Etter du har sendt inn endringen vil endringen
-                saksbehandles før det eventuelt blir endringer i utbetalingen din.
-            </BodyLong>
+            <BodyLong>{getTekst({ id: 'korrigeringBeskrivelse' })}</BodyLong>
 
             <MeldekortUkeBehandling
                 dager={dager}
@@ -242,7 +231,7 @@ const KorrigeringAvMeldekort = (props: {
                     iconPosition="right"
                     icon={<ArrowRightIcon title="pil-høyre" fontSize="1.5rem" />}
                 >
-                    Neste steg
+                    {getTekst({ id: 'neste' })}
                 </Button>
                 <Button
                     variant="tertiary"
@@ -253,7 +242,7 @@ const KorrigeringAvMeldekort = (props: {
                         navigate(getPath(siteRoutes.forside));
                     }}
                 >
-                    Avbryt endring
+                    {getTekst({ id: 'avbrytEndring' })}
                 </Button>
             </VStack>
         </VStack>
@@ -319,113 +308,53 @@ const InformasjonOmKorrigeringAvMeldekort = () => {
     return (
         <Accordion>
             <Accordion.Item>
-                <Accordion.Header>Når skal jeg velge mottatt lønn?</Accordion.Header>
+                <Accordion.Header>{getTekst({ id: 'korrigeringLønnHeader' })}</Accordion.Header>
                 <Accordion.Content>
-                    <Label>Når skal du velge “Lønn”?</Label>
+                    {getTekst({ id: 'korrigeringLønnBeskrivelse' })}
+                </Accordion.Content>
+            </Accordion.Item>
+            <Accordion.Item>
+                <Accordion.Header>{getTekst({ id: 'korrigeringSykdomHeader' })}</Accordion.Header>
+                <Accordion.Content>
+                    <Label>{getTekst({ id: 'statusSyk' })}</Label>
                     <ul>
-                        <li>
-                            Hvis du får lønn for arbeid som er en del av tiltaket ditt, skal du
-                            registrere det som lønn. Arbeid er en del av tiltaket når dette er en
-                            avtalt aktivet. Det gjelder uansett om du har arbeidet hele dagen eller
-                            bare noen timer. Tiltakspenger fra Nav regnes ikke som lønn.
-                        </li>
-                        <li>Du kan ikke få tiltakspenger for dager du får lønn.</li>
-                        <li>
-                            Har du arbeidet i stedet for å delta på tiltaket, skal du føre “annet
-                            fravær” fra tiltaket i forrige steg.
-                        </li>
-                        <li>
-                            Hvis du er usikker på hva du skal fylle inn i meldekortet, ta kontakt
-                            med Nav.
-                        </li>
+                        {getTekster({ id: 'fraværHjelpLesMerSykListe' }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
+                    </ul>
+                    <Label>{getTekst({ id: 'statusSyktBarn' })}</Label>
+                    <ul>
+                        {getTekster({ id: 'fraværHjelpLesMerSyktBarnListe' }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
                     </ul>
                 </Accordion.Content>
             </Accordion.Item>
             <Accordion.Item>
-                <Accordion.Header>Når skal jeg velge sykdom?</Accordion.Header>
+                <Accordion.Header>{getTekst({ id: 'korrigeringFraværHeader' })}</Accordion.Header>
                 <Accordion.Content>
-                    <Label>Når skal du velge “syk”?</Label>
+                    <Label>{getTekst({ id: 'statusGodkjentFravær' })}</Label>
                     <ul>
-                        <li>
-                            Du skal velge «syk» hvis du har vært for syk til å kunne delta på
-                            tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er
-                            derfor viktig at du melder om dette.
-                        </li>
-                        <li>
-                            Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer
-                            enn 3 dager, får du utbetalt 75 % av full stønad resten av
-                            arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16
-                            virkedager.
-                        </li>
-                        <li>
-                            Du må ha sykmelding fra lege for å ha rett på tiltakspenger i mer enn 3
-                            dager.
-                        </li>
+                        {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeStart' }).map(
+                            (tekst) => (
+                                <li key={tekst}>{tekst}</li>
+                            ),
+                        )}
+                        <ul>
+                            {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker' }).map(
+                                (tekst) => (
+                                    <li key={tekst}>{tekst}</li>
+                                ),
+                            )}
+                        </ul>
+                        <li>{getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeSlutt' })}</li>
                     </ul>
 
-                    <Label>Når skal du velge “Sykt barn” eller “Syk barnepasser”?</Label>
+                    <Label>{getTekst({ id: 'statusAnnetFravær' })}</Label>
                     <ul>
-                        <li>
-                            Du skal velge «sykt barn eller syk barnepasser» hvis du ikke kunne delta
-                            på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk.
-                        </li>
-                        <li>
-                            Det er de samme reglene som gjelder for sykt barn/barnepasser som ved
-                            egen sykdom. Det vil si at du har rett til full utbetaling de tre første
-                            dagene og 75 % resten av arbeidsgiverperioden.
-                        </li>
-                        <li>
-                            Du må sende legeerklæring for barnet ditt eller bekreftelse fra
-                            barnepasseren fra dag 4 for å ha rett på tiltakspenger i mer enn 3
-                            dager.
-                        </li>
-                    </ul>
-                </Accordion.Content>
-            </Accordion.Item>
-            <Accordion.Item>
-                <Accordion.Header>Når skal jeg velge fravær?</Accordion.Header>
-                <Accordion.Content>
-                    <Label>Når skal du velge “Fravær godkjent av Nav”?</Label>
-                    <ul>
-                        <li>
-                            Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det gjelder
-                            hvis fraværet skyldes aktiviteter som du har avtalt med veilederen din.
-                        </li>
-                        <li>
-                            Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for
-                            eksempel:
-                            <ul>
-                                <li>jobbintervju</li>
-                                <li>timeavtale i det offentlige hjelpeapparatet</li>
-                                <li>alvorlig sykdom/begravelse i nærmeste familie</li>
-                            </ul>
-                        </li>
-                        <li>
-                            Ta kontakt med veilederen din for å dokumentere årsaken til fraværet og
-                            få det godkjent.
-                        </li>
-                    </ul>
-
-                    <Label>Når skal du velge “Annet fravær”?</Label>
-                    <ul>
-                        <li>
-                            Du skal velge «annet fravær» hvis du har vært fraværende hele eller
-                            deler av den aktuelle tiltaksdagen.
-                        </li>
-                        <li>
-                            Du skal velge «annet fravær» hvis du har arbeidet i stedet for å delta
-                            på tiltaket. For eksempel: Du har avtalt tiltakstid 09-15 og arbeidet
-                            fra 09-10 i stedet for å delta hele den avtalte tiden på tiltaket.
-                        </li>
-                        <li>
-                            Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt
-                            ferieperiode for tiltaket.
-                        </li>
-                        <li>
-                            Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du
-                            kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen
-                            din.
-                        </li>
+                        {getTekster({ id: 'fraværHjelpLesMerFraværAnnetListe' }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
                     </ul>
                 </Accordion.Content>
             </Accordion.Item>

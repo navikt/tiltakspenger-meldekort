@@ -3,6 +3,7 @@ import { klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 import { MeldekortDagStatus } from '../commonSrc/typer/MeldekortBruker';
 import { nyMeldekortDag, nyUtfylltMeldekort } from './test-data-generators/MeldekortTestData';
 import { nyMeldeperiodeForPeriodeResponse } from './test-data-generators/MeldeperiodeTestData';
+import { getTekst } from '../src/tekster/tekster';
 
 const førsteMeldekort = nyUtfylltMeldekort({});
 
@@ -45,38 +46,57 @@ test('kan korrigere meldekort', async ({ page }) => {
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText('Endre meldekort').click();
+    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
 
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
     // Endrer på statuser for uke 1
-    await page.selectOption('#select-2023-01-02', 'Deltatt');
+    await page.selectOption('#select-2023-01-02', getTekst({ id: 'statusDeltatt' }));
     //tirsdag 3. er allerede satt som deltatt
-    await page.selectOption('#select-2023-01-04', 'Deltatt');
-    await page.selectOption('#select-2023-01-05', 'Deltatt');
+    await page.selectOption('#select-2023-01-04', getTekst({ id: 'statusDeltatt' }));
+    await page.selectOption('#select-2023-01-05', getTekst({ id: 'statusDeltatt' }));
     // fredag 6. er allerede syk
     // Endrer på statuser for uke 2
-    await page.selectOption('#select-2023-01-09', 'Mottatt lønn');
-    await page.selectOption('#select-2023-01-10', 'Sykt barn eller syk barnepasser');
-    await page.selectOption('#select-2023-01-11', 'Annet fravær');
-    await page.selectOption('#select-2023-01-12', 'Deltatt');
-    await page.selectOption('#select-2023-01-13', 'Fravær godkjent av Nav');
+    await page.selectOption('#select-2023-01-09', getTekst({ id: 'statusDeltattMedLønn' }));
+    await page.selectOption('#select-2023-01-10', getTekst({ id: 'statusSyktBarn' }));
+    await page.selectOption('#select-2023-01-11', getTekst({ id: 'statusAnnetFravær' }));
+    await page.selectOption('#select-2023-01-12', getTekst({ id: 'statusDeltatt' }));
+    await page.selectOption('#select-2023-01-13', getTekst({ id: 'statusGodkjentFravær' }));
 
-    await page.getByText('Neste steg').click();
+    await page.getByText(getTekst({ id: 'neste' })).click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
     await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen - å bruke waitForURL her fungerer heller ikke så bra
     // Verifiserer at oppsummeringen viser de endrede statusene
-    expect(page.getByText('Mandag 2. januar: Deltatt')).toBeVisible();
-    expect(page.getByText('Tirsdag 3. januar: Deltatt')).toBeVisible();
-    expect(page.getByText('Onsdag 4. januar: Deltatt')).toBeVisible();
-    expect(page.getByText('Torsdag 5. januar: Deltatt')).toBeVisible();
-    expect(page.getByText('Fredag 6. januar: Syk')).toBeVisible();
-
-    expect(page.getByText('Mandag 9. januar: Mottatt lønn')).toBeVisible();
-    expect(page.getByText('Tirsdag 10. januar: Sykt barn eller syk barnepasser')).toBeVisible();
-    expect(page.getByText('Onsdag 11. januar: Annet fravær')).toBeVisible();
-    expect(page.getByText('Torsdag 12. januar: Deltatt')).toBeVisible();
-    expect(page.getByText('Fredag 13. januar: Fravær godkjent av Nav')).toBeVisible();
+    await expect(
+        page.getByText(`Mandag 2. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Tirsdag 3. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Onsdag 4. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Torsdag 5. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Fredag 6. januar: ${getTekst({ id: 'statusSyk' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Mandag 9. januar: ${getTekst({ id: 'statusDeltattMedLønn' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Tirsdag 10. januar: ${getTekst({ id: 'statusSyktBarn' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Onsdag 11. januar: ${getTekst({ id: 'statusAnnetFravær' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Torsdag 12. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+    ).toBeVisible();
+    await expect(
+        page.getByText(`Fredag 13. januar: ${getTekst({ id: 'statusGodkjentFravær' })}`),
+    ).toBeVisible();
 
     await page.getByText('Jeg bekrefter at disse opplysningene stemmer').click();
     await page.getByText('Send meldekortet').click();
@@ -93,11 +113,11 @@ test.describe('kan avbryte korrigering av et meldekort', () => {
         await klikkCookieBanner(page);
         //Skal kunne navigere seg til korrigering
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText('Endre meldekort').click();
+        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
 
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
-        await page.getByText('Avbryt endring').click();
+        await page.getByText(getTekst({ id: 'avbrytEndring' })).click();
         expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/');
     });
     test('fra oppsummering', async ({ page }) => {
@@ -105,12 +125,12 @@ test.describe('kan avbryte korrigering av et meldekort', () => {
         await klikkCookieBanner(page);
 
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText('Endre meldekort').click();
+        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
-        await page.getByText('Neste steg').click();
+        await page.getByText(getTekst({ id: 'neste' })).click();
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
-        await page.getByText('Avbryt endring').click();
+        await page.getByText(getTekst({ id: 'avbrytEndring' })).click();
         expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/');
     });
 });
@@ -124,25 +144,25 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText('Endre meldekort').click();
+    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
 
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
-    await page.getByText('Neste steg').click();
+    await page.getByText(getTekst({ id: 'neste' })).click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
     // Prøver å sende inn uten å bekrefte
-    await page.getByText('Send meldekortet').click();
-    expect(page.getByText('Du må bekrefte for å gå videre')).toBeVisible();
+    await page.getByText(getTekst({ id: 'korrigeringSendMeldekortet' })).click();
+    await expect(page.getByText('Du må bekrefte for å gå videre')).toBeVisible();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
-    await page.getByText('Jeg bekrefter at disse opplysningene stemmer').click();
+    await page.getByText(getTekst({ id: 'oppsummeringBekrefter' })).click();
     await page.getByText('Send meldekortet').click();
 
     // Verifiserer at vi kommer til bekreftelse
     await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen.
     expect(page.url()).toContain('/12345/korrigering/kvittering');
-    expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
+    await expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
 });
 
 test('forrige steg på oppsummering tar deg tilbake til korrigering med den korrigerte dataen', async ({
@@ -152,52 +172,54 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText('Endre meldekort').click();
+    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
 
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
     // Endrer på statuser for uke 1
-    await page.selectOption('#select-2023-01-02', 'Deltatt');
-    await page.selectOption('#select-2023-01-04', 'Deltatt');
-    await page.selectOption('#select-2023-01-05', 'Deltatt');
-    await page.selectOption('#select-2023-01-06', 'Deltatt');
+    await page.selectOption('#select-2023-01-02', getTekst({ id: 'statusDeltatt' }));
+    await page.selectOption('#select-2023-01-04', getTekst({ id: 'statusDeltatt' }));
+    await page.selectOption('#select-2023-01-05', getTekst({ id: 'statusDeltatt' }));
+    await page.selectOption('#select-2023-01-06', getTekst({ id: 'statusDeltatt' }));
     // Endrer på statuser for uke 2
-    await page.selectOption('#select-2023-01-09', 'Mottatt lønn');
-    await page.selectOption('#select-2023-01-10', 'Sykt barn eller syk barnepasser');
-    await page.selectOption('#select-2023-01-11', 'Annet fravær');
-    await page.selectOption('#select-2023-01-12', 'Deltatt');
-    await page.selectOption('#select-2023-01-13', 'Fravær godkjent av Nav');
+    await page.selectOption('#select-2023-01-09', getTekst({ id: 'statusDeltattMedLønn' }));
+    await page.selectOption('#select-2023-01-10', getTekst({ id: 'statusSyktBarn' }));
+    await page.selectOption('#select-2023-01-11', getTekst({ id: 'statusAnnetFravær' }));
+    await page.selectOption('#select-2023-01-12', getTekst({ id: 'statusDeltatt' }));
+    await page.selectOption('#select-2023-01-13', getTekst({ id: 'statusGodkjentFravær' }));
 
-    await page.getByText('Neste steg').click();
+    await page.getByText(getTekst({ id: 'neste' })).click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
     // Går tilbake til korrigering
-    await page.getByText('Forrige steg').click();
+    await page.getByText(getTekst({ id: 'forrige' })).click();
     expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/12345/korrigering');
 
     // Verifiserer at de endrede statusene er der
-    expect(page.locator('#select-2023-01-02')).toHaveValue(
+    await expect(page.locator('#select-2023-01-02')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
-    expect(page.locator('#select-2023-01-04')).toHaveValue(
+    await expect(page.locator('#select-2023-01-04')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
-    expect(page.locator('#select-2023-01-05')).toHaveValue(
+    await expect(page.locator('#select-2023-01-05')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
-    expect(page.locator('#select-2023-01-06')).toHaveValue(
+    await expect(page.locator('#select-2023-01-06')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
 
-    expect(page.locator('#select-2023-01-09')).toHaveValue(
+    await expect(page.locator('#select-2023-01-09')).toHaveValue(
         MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
     );
-    expect(page.locator('#select-2023-01-10')).toHaveValue(MeldekortDagStatus.FRAVÆR_SYKT_BARN);
-    expect(page.locator('#select-2023-01-11')).toHaveValue(MeldekortDagStatus.FRAVÆR_ANNET);
-    expect(page.locator('#select-2023-01-12')).toHaveValue(
+    await expect(page.locator('#select-2023-01-10')).toHaveValue(
+        MeldekortDagStatus.FRAVÆR_SYKT_BARN,
+    );
+    await expect(page.locator('#select-2023-01-11')).toHaveValue(MeldekortDagStatus.FRAVÆR_ANNET);
+    await expect(page.locator('#select-2023-01-12')).toHaveValue(
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
-    expect(page.locator('#select-2023-01-13')).toHaveValue(
+    await expect(page.locator('#select-2023-01-13')).toHaveValue(
         MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
     );
 });
@@ -282,7 +304,7 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText('Endre meldekort').click();
+    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
 
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
@@ -301,13 +323,10 @@ test.describe('feil ved henting av meldeperiode', () => {
         await klikkCookieBanner(page);
         //Skal kunne navigere seg til korrigering
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText('Endre meldekort').click();
+        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
 
-        await page
-            .getByText(
-                'Kunne ikke hente siste opplysninger om meldekortet. Prøv igjen senere. Hvis problemet vedvarer, kontakt Nav.',
-            )
-            .isVisible();
+        await page;
+        await page.getByText(getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })).isVisible();
     });
 
     test('fra korrigering', async ({ page }) => {
@@ -318,11 +337,7 @@ test.describe('feil ved henting av meldeperiode', () => {
         await page.goto(`${testsBaseUrl}/${førsteMeldekort.id}/korrigering`);
         await klikkCookieBanner(page);
 
-        await page
-            .getByText(
-                'Vi får ikke innhentet siste opplysninger om meldekortet ditt. Prøv igjen senere. Hvis problemet vedvarer, kontakt Nav.',
-            )
-            .isVisible();
+        await page.getByText(getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })).isVisible();
 
         await page.getByText('Tilbake til forsiden').click();
         expect(page.url()).toBe(`${testsBaseUrl}/`);
@@ -337,18 +352,18 @@ test.describe('validerer korrigering av meldekort', () => {
         await klikkCookieBanner(page);
 
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText('Endre meldekort').click();
+        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
 
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
         await page.selectOption('#select-2023-01-02', 'Ikke besvart');
-        await page.getByText('Neste steg').click();
+        await page.getByText(getTekst({ id: 'neste' })).click();
 
         expect(page.getByText('Merk: Følgende dager blir ikke regnet med:')).toBeVisible();
 
-        await page.selectOption('#select-2023-01-02', 'Deltatt');
+        await page.selectOption('#select-2023-01-02', 'Deltok');
         expect(page.getByText('Merk: Følgende dager blir ikke regnet med:')).toBeHidden();
-        await page.getByText('Neste steg').click();
+        await page.getByText(getTekst({ id: 'neste' })).click();
 
         await page.waitForURL('**/12345/korrigering/oppsummering');
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
@@ -445,24 +460,24 @@ test.describe('validerer korrigering av meldekort', () => {
         await page.goto(`${testsBaseUrl}/innsendte`);
         await klikkCookieBanner(page);
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText('Endre meldekort').click();
+        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
 
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
 
-        await page.selectOption('#select-2025-01-10', 'Deltatt');
-        await page.getByText('Neste steg').click();
+        await page.selectOption('#select-2025-01-10', getTekst({ id: 'statusDeltatt' }));
+        await page.getByText(getTekst({ id: 'neste' })).click();
 
-        expect(
+        await expect(
             page.getByText('Du har registrert for mange dager. Maks antall er 9 dager.'),
         ).toBeVisible();
 
         await page.selectOption('#select-2025-01-10', 'Ikke tiltaksdag');
-        expect(
+        await expect(
             page.getByText('Du har registrert for mange dager. Maks antall er 9 dager.'),
         ).toBeHidden();
 
-        await page.getByText('Neste steg').click();
+        await page.getByText(getTekst({ id: 'neste' })).click();
         await page.waitForURL('**/12345/korrigering/oppsummering');
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
     });

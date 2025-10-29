@@ -22,6 +22,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
 import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
 import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
+import { getTekst } from '@tekster/tekster.ts';
 
 const useSendKorrigerteDager = (
     meldekortId: string,
@@ -133,7 +134,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                             dager={korrigerMeldekortContext.dager}
                         />
                         <ConfirmationPanel
-                            label={'Jeg bekrefter at disse opplysningene stemmer'}
+                            label={getTekst({ id: 'oppsummeringBekrefter' })}
                             checked={harBekreftet}
                             onChange={() => {
                                 setVisFeil(false);

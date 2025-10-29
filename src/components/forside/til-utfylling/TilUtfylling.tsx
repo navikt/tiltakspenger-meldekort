@@ -1,7 +1,6 @@
-import { BodyLong, ConfirmationPanel } from '@navikt/ds-react';
+import { ConfirmationPanel } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import { useState } from 'react';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';

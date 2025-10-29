@@ -10,6 +10,7 @@ export const teksterNb = {
     slett: 'Slett',
     nullstill: 'Nullstill',
     avbryt: 'Avbryt',
+    avbrytEndring: 'Avbryt endring',
     avbrytUtfylling: 'Avbryt utfylling',
     sendInn: 'Send inn',
 
@@ -204,6 +205,20 @@ export const teksterNb = {
         'Dersom du fikk tiltakspenger i perioder før de som vises her, finner du meldekortene i den ',
     alleHarArenaMeldekort: 'Meldekort fra tidligere perioder finner du i den ',
     alleArenaLenke: 'gamle løsningen for meldekort',
+    korrigeringLønnHeader: 'Når skal jeg velge mottatt lønn?',
+    korrigeringLønnBeskrivelse:
+        'Hvis du får lønn (ikke tiltakspenger) som en del av tiltaket ditt velger du "Lønn".',
+    korrigeringSykdomHeader: 'Når skal jeg velge sykdom?',
+    korrigeringFraværHeader: 'Når skal jeg velge fravær?',
+    korrigeringTittel: 'Endre meldekort',
+    korrigeringBeskrivelseIngress: 'Slik endrer du meldekortet',
+    korrigeringBeskrivelse:
+        'Nedenfor ser du hva du har tidligere registrert i meldekortet. Endre valgene på de dagene som er feilregistrert. Etter du har sendt inn endringen vil endringen saksbehandles før det eventuelt blir endringer i utbetalingen din.',
+    korrigeringErrorPrøvIgjenSenere:
+        'Vi får ikke innhentet siste opplysninger om meldekortet ditt. Prøv igjen senere. Hvis problemet vedvarer, kontakt Nav.',
+    korrigeringOppdatertAlert:
+        'Meldekortet ditt har blitt oppdatert - Meldekortet inneholder nå de seneste opplysningene registrert. Verifiser at disse er korrekt, eller endre valgene på de dagene som er feilregistrert.',
+    korrigeringSendMeldekortet: 'Send meldekortet',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

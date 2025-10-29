@@ -1,25 +1,26 @@
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+import { getTekst } from '@tekster/tekster.ts';
 
 export const korrigerMeldekortStatusTextMapper = (status: MeldekortDagStatus): string => {
     switch (status) {
         case MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET:
-            return 'Mottatt lønn';
+            return getTekst({ id: 'statusDeltattMedLønn' });
         case MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET:
-            return 'Deltatt';
+            return getTekst({ id: 'statusDeltatt' });
         case MeldekortDagStatus.FRAVÆR_SYK:
-            return 'Syk';
+            return getTekst({ id: 'statusSyk' });
         case MeldekortDagStatus.FRAVÆR_SYKT_BARN:
-            return 'Sykt barn eller syk barnepasser';
+            return getTekst({ id: 'statusSyktBarn' });
         case MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV:
-            return 'Fravær godkjent av Nav';
+            return getTekst({ id: 'statusGodkjentFravær' });
         case MeldekortDagStatus.FRAVÆR_ANNET:
-            return 'Annet fravær';
+            return getTekst({ id: 'statusAnnetFravær' });
         case MeldekortDagStatus.IKKE_BESVART:
-            return 'Ikke besvart';
+            return getTekst({ id: 'statusIkkeBesvart' });
         case MeldekortDagStatus.IKKE_TILTAKSDAG:
-            return 'Ikke tiltaksdag';
+            return getTekst({ id: 'statusIkkeTiltaksdag' });
         case MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER:
-            return 'Ikke rett';
+            return getTekst({ id: 'ikkeRett' });
     }
 };
 
