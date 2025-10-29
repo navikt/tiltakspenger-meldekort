@@ -54,11 +54,11 @@ export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) =>
                     }}
                     className={style.fraværValg}
                 >
-                    <Radio value={true}>
-                        <Tekst id={'fraværHarHattFraværSvarJa'} />
-                    </Radio>
                     <Radio value={false}>
                         <Tekst id={'fraværHarHattFraværSvarNei'} />
+                    </Radio>
+                    <Radio value={true}>
+                        <Tekst id={'fraværHarHattFraværSvarJa'} />
                     </Radio>
                 </RadioGroup>
             </HStack>

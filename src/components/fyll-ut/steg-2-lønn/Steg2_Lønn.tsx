@@ -40,37 +40,7 @@ export const Steg2_Lønn = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
         <MeldekortStegWrapper>
             <HStack gap="4">
                 <div>
-                    <ul>
-                        {getTekster({ id: 'lønnInfoUndertittelLønnTekster' }).map((tekst) => (
-                            <li key={tekst}>{tekst}</li>
-                        ))}
-                    </ul>
-
-                    <ReadMore header={getTekst({ id: 'lønnInfoUnderTittelSvareJa' })}>
-                        <ul>
-                            {getTekster({ id: 'lønnInfoUnderTittelSvareJaTekster' }).map(
-                                (tekst) => (
-                                    <li key={tekst}>{tekst}</li>
-                                ),
-                            )}
-                        </ul>
-                    </ReadMore>
-
-                    <ReadMore header={getTekst({ id: 'lønnInfoUnderTittelSvareNei' })}>
-                        <ul>
-                            {getTekster({ id: 'lønnInfoUnderTittelSvareNeiTekster' }).map(
-                                (tekst) => (
-                                    <li key={tekst}>{tekst}</li>
-                                ),
-                            )}
-                        </ul>
-                    </ReadMore>
-
-                    <TekstMedLenke
-                        tekst="lønnHjelpLesMerTekstFørLenke"
-                        tekstLenke="lønnHjelpLesMerLenkeTekst"
-                        lenke="https://www.nav.no/kontaktoss"
-                    />
+                    <Tekst id={'lønnIngress'} />
                 </div>
                 <RadioGroup
                     legend={<Tekst id={'lønnHarMottattLønnSpørsmål'} />}
@@ -85,11 +55,11 @@ export const Steg2_Lønn = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
                     }}
                     className={style.lønnValg}
                 >
-                    <Radio value={true}>
-                        <Tekst id={'lønnHarMottattLønnSvarJa'} />
-                    </Radio>
                     <Radio value={false}>
                         <Tekst id={'lønnHarMottattLønnSvarNei'} />
+                    </Radio>
+                    <Radio value={true}>
+                        <Tekst id={'lønnHarMottattLønnSvarJa'} />
                     </Radio>
                 </RadioGroup>
             </HStack>
