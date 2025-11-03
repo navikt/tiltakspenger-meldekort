@@ -1,4 +1,3 @@
-import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { Request, Router } from 'express';
 import { appConfig } from '@common/appConfig';
 import path from 'path';
@@ -6,10 +5,11 @@ import { fetchFraApi, FetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
 import { SiteRouteComponentProps } from '@common/typer/appContext';
 import { brukerTesterPågår, isProd } from '@utils/env';
+import { HtmlRenderFunc } from '@ssr/htmlRenderUtils';
 
 type ConstructorProps = {
     router: Router;
-    renderer: SiteHtmlRenderer;
+    renderer: HtmlRenderFunc;
 };
 
 type DataFetcherReturn = {
@@ -22,7 +22,7 @@ type DataFetcher = (req: Request, apiFetcher: FetchFraApi) => Promise<DataFetche
 
 export class SiteRoutesBuilder {
     private readonly router: Router;
-    private readonly renderer: SiteHtmlRenderer;
+    private readonly renderer: HtmlRenderFunc;
     private readonly apiFetchFunc: FetchFraApi;
     private readonly mockFetchFunc: FetchFraApi;
 

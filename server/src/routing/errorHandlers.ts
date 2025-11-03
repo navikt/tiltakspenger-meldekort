@@ -1,8 +1,8 @@
 import { ErrorRequestHandler, Router } from 'express';
-import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { appConfig } from '@common/appConfig';
+import { HtmlRenderFunc } from '@ssr/htmlRenderUtils';
 
-export const setupErrorHandler = (router: Router, htmlRenderer: SiteHtmlRenderer) => {
+export const setupErrorHandler = (router: Router, htmlRenderer: HtmlRenderFunc) => {
     const getErrorHtml = async (url: string, status: number) => {
         return htmlRenderer(url, {
             baseUrl: appConfig.baseUrl,

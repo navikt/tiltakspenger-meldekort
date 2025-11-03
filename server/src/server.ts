@@ -8,11 +8,14 @@ import { cspMiddleware } from '@routing/cspMiddleware';
 import { setupInternalRoutes } from '@routing/routes/internalRoutes';
 import { setupSiteRoutes } from '@routing/routes/siteRoutes';
 import { setupApiRoutes } from '@routing/routes/apiRoutes';
-import { initHtmlRenderer } from '@ssr/initHtmlRenderer';
+import { initDevRenderer } from '@ssr/devHtmlRenderer';
+import { initProdRenderer } from '@ssr/prodHtmlRenderer';
 
 const { baseUrl } = appConfig;
 
 const PORT = 3050;
+
+const isDevMode = process.env.NODE_ENV === 'development';
 
 validateEnv()
     .then(async () => {
@@ -27,7 +30,9 @@ validateEnv()
             return res.redirect(baseUrl);
         });
 
-        const htmlRenderer = await initHtmlRenderer(siteRouter);
+        const htmlRenderer = await (isDevMode
+            ? initDevRenderer(siteRouter)
+            : initProdRenderer(siteRouter));
 
         await setupSiteRoutes(siteRouter, htmlRenderer);
 

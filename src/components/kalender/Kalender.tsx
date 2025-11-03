@@ -12,8 +12,6 @@ type Props = {
 };
 
 export const Kalender = ({ steg, meldekort, kanFylleUtHelg, className }: Props) => {
-    console.log('Kalender render', kanFylleUtHelg);
-
     const forsteUke = kanFylleUtHelg ? meldekort.dager.slice(0, 7) : meldekort.dager.slice(0, 5);
     const andreUke = kanFylleUtHelg ? meldekort.dager.slice(7, 14) : meldekort.dager.slice(7, 12);
 

@@ -6,16 +6,16 @@ import {
     tilMeldekortUtfylling,
 } from '@fetch/transformDto';
 import { Meldekort } from '@common/typer/MeldekortBruker';
-import { SiteHtmlRenderer } from '@ssr/siteHtmlRenderer';
 import { siteRoutes } from '@common/siteRoutes';
 import { MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { skalRedirecteTilArena } from '@utils/arenaRedirect';
 import { appConfig } from '@common/appConfig';
 import { InnsendteMeldekortDTO } from '@common/typer/alle-meldekort';
 import { MeldekortForKjedeResponse } from '@common/typer/MeldeperiodeKjede';
+import { HtmlRenderFunc } from '@ssr/htmlRenderUtils';
 
 // TODO: bedre feilhåndtering
-export const setupSiteRoutes = async (router: Router, htmlRenderer: SiteHtmlRenderer) => {
+export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFunc) => {
     const routeBuilder = new SiteRoutesBuilder({ router, renderer: htmlRenderer });
 
     routeBuilder.routes(siteRoutes.forside, async (req, fetchFraApi) => {

@@ -23,8 +23,6 @@ npm login --registry=https://npm.pkg.github.com --auth-type=legacy
 - Sett `NODE_ENV: production` i `.env`
 - Kjør `npm run build` + `npm run start`
 
-Obs: Første gang man starter appen lokalt må man starte i prodmodus.
-
 Appen serveres med mock-data på http://localhost:3050/tiltakspenger/meldekort/demo
 
 Dersom du har satt opp hele verdikjeden (se under), benytt http://localhost:2223/tiltakspenger/meldekort
