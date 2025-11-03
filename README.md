@@ -23,11 +23,16 @@ npm login --registry=https://npm.pkg.github.com --auth-type=legacy
 - Sett `NODE_ENV: production` i `.env`
 - Kjør `npm run build` + `npm run start`
 
-Appen serveres med mock-data på http://localhost:3050/tiltakspenger/meldekort/demo
+#### Med kun mock-data uten backend-kall:
+Appen serveres i demo-modus på http://localhost:3050/tiltakspenger/meldekort/demo uten avhengigheter til andre tjenester.
 
-Dersom du har satt opp hele verdikjeden (se under), benytt http://localhost:2223/tiltakspenger/meldekort
+#### Med integrasjon mot tiltakspenger-meldekort-api kjørende lokalt:
+Dersom du setter `BRUK_LOKAL_FAKE_AUTH: true` benyttes fake auth mot meldekort-api. Sett `LOKAL_FNR: <fnr i din lokale mk-api db>` for å autentisere som bruker med valgt fnr.
 
-## Lokalt oppsett for hele verdikjeden
+Appen kan da nåes på http://localhost:3050/tiltakspenger/meldekort
+
+### Lokalt oppsett for hele verdikjeden
+Dersom du setter `BRUK_LOKAL_FAKE_AUTH: false` må hele verdikjeden med autentisering kjøres opp lokalt. Benytt da http://localhost:2223/tiltakspenger/meldekort for å nå appen via Wonderwall.
 
 Hele verdikjeden kan kjøres opp lokalt, med noen komponenter mocket ut. Dette er satt opp med docker-compose
 i [tiltakspenger-meta-repo](https://github.com/navikt/tiltakspenger).

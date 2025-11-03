@@ -1,7 +1,13 @@
-import { getToken, parseIdportenToken, requestOboToken, validateToken } from '@navikt/oasis';
+import { getToken, requestOboToken, validateToken } from '@navikt/oasis';
 import { Request } from 'express';
 
-export const getOboToken = async (req: Request) => {
+const brukFakeAuth =
+    process.env.BRUK_LOKAL_FAKE_AUTH === 'true' && process.env.NAIS_CLUSTER_NAME === undefined;
+
+// Ved bruk av fake auth i backend forventes et "token" som også er et fnr
+const fakeToken = process.env.LOKAL_FNR ?? '12345678911';
+
+const getOboTokenEkte = async (req: Request) => {
     const token = getToken(req);
     if (!token) {
         console.error('Kunne ikke hente token fra request');
@@ -23,13 +29,6 @@ export const getOboToken = async (req: Request) => {
     return oboToken.token;
 };
 
-export const getFnr = (req: Request) => {
-    const token = getToken(req);
-    if (!token) {
-        return null;
-    }
+const getOboTokenFake = async () => fakeToken;
 
-    const pid = parseIdportenToken(token);
-
-    return pid.ok ? pid.pid : null;
-};
+export const getOboToken = brukFakeAuth ? getOboTokenFake : getOboTokenEkte;

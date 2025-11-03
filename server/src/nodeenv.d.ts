@@ -3,7 +3,7 @@ declare global {
         interface ProcessEnv {
             MELDEKORT_API_URL: string;
             MELDEKORT_API_SCOPE: string;
-            NAIS_CLUSTER_NAME: 'dev-gcp' | 'prod-gcp' | 'local';
+            NAIS_CLUSTER_NAME?: 'dev-gcp' | 'prod-gcp';
             BASE_URL: string;
         }
     }
