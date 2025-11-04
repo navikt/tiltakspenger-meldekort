@@ -3,12 +3,11 @@ import { Link } from '@navikt/ds-react';
 
 type Props = {
     children: React.ReactNode;
-    path: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
-export const EksternLenke = ({ children, path }: Props) => {
+export const EksternLenke = ({ children, ...rest }: Props) => {
     return (
-        <Link href={path} target="_blank" rel="noopener noreferrer">
+        <Link rel="noopener noreferrer" {...rest}>
             {children}
         </Link>
     );

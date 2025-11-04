@@ -33,7 +33,7 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
     return (
         <>
             <GuidePanel className={style.guide}>
-                <EksternLenke path={'https://www.nav.no/kontaktoss'}>
+                <EksternLenke href={'https://www.nav.no/kontaktoss'}>
                     {getTekst({ id: 'forsideGuidePanelLenkeTekst' })}
                 </EksternLenke>
             </GuidePanel>

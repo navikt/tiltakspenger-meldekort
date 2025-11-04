@@ -5,7 +5,7 @@ import { Link } from '@navikt/ds-react';
 type Props = {
     children: React.ReactNode;
     path: string;
-} & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
 
 export const InternLenke = ({ children, path, ...rest }: Props) => {
     return (

@@ -20,7 +20,7 @@ export const TekstMedLenke = ({ tekst, tekstLenke, lenke, lenkeType }: Props) =>
             {lenkeType === 'intern' ? (
                 <InternLenke path={lenke}>{getTekst({ id: tekstLenke })}</InternLenke>
             ) : (
-                <EksternLenke path={lenke}>{getTekst({ id: tekstLenke })}</EksternLenke>
+                <EksternLenke href={lenke}>{getTekst({ id: tekstLenke })}</EksternLenke>
             )}
         </div>
     );
