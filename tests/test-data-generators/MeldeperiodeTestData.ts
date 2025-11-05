@@ -65,12 +65,14 @@ export const nyMeldeperiodeForPeriodeResponse = ({
     ],
     periode = { fraOgMed: '2023-01-02', tilOgMed: '2023-01-15' },
     mottattTidspunktSisteMeldekort = '2023-01-15T12:00:00Z',
+    maksAntallDagerForPeriode = 10,
 }: {
     meldeperiodeId?: string;
     kjedeId?: string;
     dager?: MeldekortDag[];
     periode?: { fraOgMed: string; tilOgMed: string };
     mottattTidspunktSisteMeldekort?: string;
+    maksAntallDagerForPeriode?: number;
 }): MeldeperiodeForPeriodeResponse => ({
     meldeperiodeId,
     kjedeId,
@@ -80,4 +82,5 @@ export const nyMeldeperiodeForPeriodeResponse = ({
         tilOgMed: periode.tilOgMed,
     },
     mottattTidspunktSisteMeldekort,
+    maksAntallDagerForPeriode,
 });

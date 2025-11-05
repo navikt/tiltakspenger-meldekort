@@ -449,6 +449,7 @@ test.describe('validerer korrigering av meldekort', () => {
                 json: nyMeldeperiodeForPeriodeResponse({
                     dager: dager,
                     periode: { fraOgMed: '2025-01-06', tilOgMed: '2025-01-19' },
+                    maksAntallDagerForPeriode: meldekort.maksAntallDager,
                 }),
             });
         });
