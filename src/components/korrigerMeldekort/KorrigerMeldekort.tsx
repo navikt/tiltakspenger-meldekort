@@ -113,13 +113,6 @@ const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
                     </Alert>
                 )}
 
-                {meldeperiodeForPeriode &&
-                    meldeperiodeForPeriode.meldeperiodeId !== props.meldekort.meldeperiodeId && (
-                        <Alert variant="info">
-                            {getTekst({ id: 'korrigeringOppdatertAlert' })}
-                        </Alert>
-                    )}
-
                 {meldeperiodeForPeriode && (
                     <KorrigeringAvMeldekort
                         meldekort={props.meldekort}
