@@ -176,15 +176,15 @@ const KorrigeringAvMeldekort = (props: {
                 <Alert variant="error">
                     <VStack gap="4">
                         {hentGyldigeDagerFraMeldekortDager(dager).length >
-                        props.meldekort.maksAntallDager ? (
+                        props.sisteMeldeperiode.maksAntallDagerForPeriode ? (
                             <BodyShort>
                                 Du har registrert for mange dager. Maks antall er{' '}
-                                {props.meldekort.maksAntallDager} dager.
+                                {props.sisteMeldeperiode.maksAntallDagerForPeriode} dager.
                             </BodyShort>
                         ) : (
                             <BodyShort>
                                 Kun {hentGyldigeDagerFraMeldekortDager(dager).length} av{' '}
-                                {props.meldekort.maksAntallDager} dager besvart
+                                {props.sisteMeldeperiode.maksAntallDagerForPeriode} dager besvart
                             </BodyShort>
                         )}
 
@@ -205,7 +205,7 @@ const KorrigeringAvMeldekort = (props: {
                     onClick={() => {
                         const erDagerFylltUtGyldig = erKorrigerteDagerGyldig({
                             dager: dager,
-                            antallDager: props.meldekort.maksAntallDager,
+                            antallDager: props.sisteMeldeperiode.maksAntallDagerForPeriode,
                             harMeldeperiodeForMeldekortDagerSomIkkeGirRett: harDagerSomIkkeGirRett(
                                 props.sisteMeldeperiode,
                             ),

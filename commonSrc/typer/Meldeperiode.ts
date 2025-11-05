@@ -7,4 +7,5 @@ export interface MeldeperiodeForPeriodeResponse {
     dager: MeldekortDag[];
     periode: Periode;
     mottattTidspunktSisteMeldekort: string;
+    maksAntallDagerForPeriode: number;
 }
