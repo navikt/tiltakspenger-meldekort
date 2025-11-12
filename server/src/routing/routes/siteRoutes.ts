@@ -239,15 +239,15 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFu
     routeBuilder.routes(siteRoutes.korrigerMeldekort, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
 
-        const meldekortDto = await fetchFraApi(req, `korrigering/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<KorrigerMeldekortResponse>) : null),
+        const response = await fetchFraApi(req, `korrigering/${meldekortId}`, 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<KorrigerMeldekortResponse>) : null,
         );
 
-        return meldekortDto
+        return response
             ? {
                   props: {
-                      forrigeMeldekort: tilMeldekortUtfylling(meldekortDto.forrigeMeldekort),
-                      tilUtfylling: meldekortDto.tilUtfylling,
+                      forrigeMeldekort: tilMeldekortUtfylling(response.forrigeMeldekort),
+                      tilUtfylling: response.tilUtfylling,
                   },
               }
             : {
