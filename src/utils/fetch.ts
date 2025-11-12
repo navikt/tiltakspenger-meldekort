@@ -1,7 +1,4 @@
-import { appConfig } from '@common/appConfig';
 import { Meldekort } from '@common/typer/MeldekortBruker';
-
-import useSWRMutation from 'swr/mutation';
 
 type Options = RequestInit & { params?: Record<string, unknown> };
 
@@ -80,69 +77,3 @@ export const fetchSendInn = async (
             console.error(`Innsending feilet - ${e}`);
             return false;
         });
-
-type TriggerOptions<T> = {
-    onSuccess?: (data: T) => void;
-    onError?: (error: unknown) => void;
-    onSettled?: () => void;
-};
-
-type Trigger<Payload, Response> = Payload extends undefined
-    ? (options?: TriggerOptions<Response>) => Promise<Response>
-    : (payload: Payload, options?: TriggerOptions<Response>) => Promise<Response>;
-
-type ApiError = { melding: string; kode: string };
-
-/**
- * Brukes sammen med [apiFetcher] som handler for å håndtere API-kall med SWR.
- */
-export function useApi<RequestBody = undefined, Response = unknown>(args: {
-    key: string;
-    handler: (body: RequestBody) => Promise<Response>;
-    onSuccess?: (data: Response) => void;
-    onError?: (error: ApiError) => void;
-}) {
-    const { trigger, isMutating, error, data } = useSWRMutation(
-        (body: RequestBody) => [args.key, body],
-        (_, { arg }) => {
-            return args.handler(arg);
-        },
-        {
-            onSuccess: args.onSuccess,
-            onError: args.onError,
-        },
-    );
-
-    return {
-        trigger: trigger as Trigger<RequestBody, Response>,
-        isLoading: isMutating,
-        error,
-        data,
-    };
-}
-
-export async function apiFetcher<RequestBody, ResponseBody>(params: {
-    url: string;
-    method: 'POST' | 'PATCH' | 'PUT' | 'DELETE';
-    body: RequestBody;
-}): Promise<ResponseBody> {
-    const { url, method, body } = params;
-
-    const isDemoMode = window.location.pathname.includes('/demo');
-
-    const res = await fetch(
-        `${appConfig.baseUrl}/${isDemoMode ? 'demo/' : ''}api/${url.startsWith('/') ? url.slice(1) : url}`,
-        {
-            method,
-            body: JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' },
-        },
-    );
-
-    if (!res.ok) {
-        const message = await res.text();
-        throw new Error(`Request failed: ${res.status} - ${message}`);
-    }
-
-    return res.json();
-}

@@ -5,7 +5,8 @@ import dayjs from 'dayjs';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { brukerTesterPågår } from '@utils/env';
 import { Periode } from '@common/typer/periode';
-import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
+
+import { MeldekortTilKorrigeringUtfylling } from '@common/typer/KorrigerMeldekort';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
     if (path === 'bruker') {
@@ -60,7 +61,7 @@ export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
             periode: periode,
             mottattTidspunktSisteMeldekort: forrigeMeldekort.innsendt!,
             maksAntallDagerForPeriode: forrigeMeldekort.maksAntallDager,
-        } satisfies MeldeperiodeForPeriodeResponse);
+        } satisfies MeldekortTilKorrigeringUtfylling);
     }
 
     return mockResponse(404, 'Mocket response ikke funnet');

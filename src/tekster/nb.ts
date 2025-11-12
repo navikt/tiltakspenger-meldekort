@@ -187,8 +187,6 @@ export const teksterNb = {
         tilOgMed: string;
     }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
     endreMeldekort: 'Endre meldekort',
-    feilSisteMeldekortOpplysninger:
-        'Kunne ikke hente siste opplysninger om meldekortet. Prøv igjen senere. Hvis problemet vedvarer, kontakt Nav.',
     tidligereMeldekortForPeriode:
         'Se tidligere meldekort som har blitt sendt inn for samme perioden',
 
@@ -199,6 +197,7 @@ export const teksterNb = {
     sisteInnsendteMeldekortForPerioden: 'Siste innsendte meldekort for perioden',
     tidligereInnsendteMeldekortForPerioden: 'Tidligere innsendte meldekort for perioden',
     sideForInnsendteMeldekort: 'Tilbake til side for innsendte meldekort',
+    tilbakeTilInnsendte: 'Tilbake til innsendte meldekort',
 
     //Arena
     alleUkjentArenaMeldekort:

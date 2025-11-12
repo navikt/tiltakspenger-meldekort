@@ -1,10 +1,10 @@
-import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
 import { Nullable } from '@common/typer/Nullable';
 import { createContext, useContext } from 'react';
+import { MeldekortTilKorrigeringUtfylling } from '@common/typer/KorrigerMeldekort.ts';
 
 export interface MeldeperiodeForPeriodeContextState {
-    meldeperiodeForPeriode: Nullable<MeldeperiodeForPeriodeResponse>;
-    setMeldeperiodeForPeriode: (meldeperiode: Nullable<MeldeperiodeForPeriodeResponse>) => void;
+    meldeperiodeForPeriode: Nullable<MeldekortTilKorrigeringUtfylling>;
+    setMeldeperiodeForPeriode: (meldeperiode: Nullable<MeldekortTilKorrigeringUtfylling>) => void;
 }
 
 export const MeldeperiodeForPeriodeContext = createContext<MeldeperiodeForPeriodeContextState>(

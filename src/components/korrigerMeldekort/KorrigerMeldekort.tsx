@@ -26,54 +26,21 @@ import {
     korrigerMeldekortStatusTextMapper,
 } from './KorrigerMeldekortUtils';
 import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
-import { apiFetcher, useApi } from '@utils/fetch';
-import { Periode } from '@common/typer/periode';
-import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
 import { Meldekort, MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
-import { Link } from 'wouter';
 import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
 import { getTekst, getTekster } from '@tekster/tekster.ts';
+import { MeldekortTilKorrigeringUtfylling } from '@common/typer/KorrigerMeldekort.ts';
 
 /**
  * TODO - skal vi ha noe form for validering her?
  */
-const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
-    const { meldeperiodeForPeriode, setMeldeperiodeForPeriode } =
-        useMeldeperiodeForPeriodeContext();
-
-    //TODO - kan sikkert flytte denne hentingen til server-side
-    const { trigger, error, isLoading } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
-        key: '/meldeperiode',
-        handler: (payload) =>
-            apiFetcher({
-                url: 'meldeperiode',
-                method: 'POST',
-                body: payload,
-            }),
-    });
-
+const KorrigerMeldekort = (props: {
+    forrigeMeldekort: Meldekort;
+    tilUtfylling: MeldekortTilKorrigeringUtfylling;
+}) => {
     useEffect(() => {
         scrollTo(0, 0);
     }, []);
-
-    useEffect(() => {
-        if (!meldeperiodeForPeriode) {
-            trigger(
-                { fraOgMed: props.meldekort.fraOgMed, tilOgMed: props.meldekort.tilOgMed },
-                {
-                    onSuccess: (response) => {
-                        setMeldeperiodeForPeriode(response);
-                    },
-                },
-            );
-        }
-    }, [
-        props.meldekort.fraOgMed,
-        props.meldekort.tilOgMed,
-        trigger,
-        meldeperiodeForPeriode,
-        setMeldeperiodeForPeriode,
-    ]);
 
     return (
         <div>
@@ -82,11 +49,11 @@ const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
                 underTekst={
                     <HStack gap="4">
                         <Undertekst
-                            tekst={`Uke ${props.meldekort.uke1} og ${props.meldekort.uke2}`}
+                            tekst={`Uke ${props.forrigeMeldekort.uke1} og ${props.forrigeMeldekort.uke2}`}
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.meldekort.fraOgMed })} til ${formatterDato({ dato: props.meldekort.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: props.forrigeMeldekort.fraOgMed })} til ${formatterDato({ dato: props.forrigeMeldekort.tilOgMed })})`}
                         />
                     </HStack>
                 }
@@ -98,27 +65,10 @@ const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
 
                 <InformasjonOmKorrigeringAvMeldekort />
 
-                {isLoading && (
-                    <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
-                        {Array.from({ length: props.meldekort.dager.length }).map((_, index) => (
-                            <Skeleton height="80px" width="300px" key={`skeleton-${index}`} />
-                        ))}
-                    </VStack>
-                )}
-
-                {error && (
-                    <Alert variant="error">
-                        <BodyShort>{getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })}</BodyShort>
-                        <Link href={`/`}>Tilbake til forsiden</Link>
-                    </Alert>
-                )}
-
-                {meldeperiodeForPeriode && (
-                    <KorrigeringAvMeldekort
-                        meldekort={props.meldekort}
-                        sisteMeldeperiode={meldeperiodeForPeriode}
-                    />
-                )}
+                <KorrigeringAvMeldekort
+                    meldekort={props.forrigeMeldekort}
+                    sisteMeldeperiode={props.tilUtfylling}
+                />
             </VStack>
         </div>
     );
@@ -128,7 +78,7 @@ export default KorrigerMeldekort;
 
 const KorrigeringAvMeldekort = (props: {
     meldekort: Meldekort;
-    sisteMeldeperiode: MeldeperiodeForPeriodeResponse;
+    sisteMeldeperiode: MeldekortTilKorrigeringUtfylling;
 }) => {
     const { navigate } = useRouting();
     const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
@@ -140,21 +90,8 @@ const KorrigeringAvMeldekort = (props: {
     }, [dager]);
 
     useEffect(() => {
-        if (dager.length === 0) {
-            if (props.sisteMeldeperiode.meldeperiodeId !== props.meldekort.meldeperiodeId) {
-                setDager(props.sisteMeldeperiode.dager);
-            } else {
-                setDager(props.meldekort.dager);
-            }
-        }
-    }, [
-        props.sisteMeldeperiode.meldeperiodeId,
-        props.sisteMeldeperiode,
-        props.meldekort.meldeperiodeId,
-        props.meldekort.dager,
-        setDager,
-        dager,
-    ]);
+        setDager(props.sisteMeldeperiode.dager);
+    }, [props.sisteMeldeperiode]);
 
     return (
         <VStack gap="8">

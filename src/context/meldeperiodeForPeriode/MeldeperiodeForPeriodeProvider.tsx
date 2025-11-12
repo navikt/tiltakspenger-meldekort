@@ -1,11 +1,11 @@
-import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
 import { Nullable } from '@common/typer/Nullable';
 import { useState } from 'react';
 import { MeldeperiodeForPeriodeContext } from './MeldeperiodeForPeriodeContext';
+import { MeldekortTilKorrigeringUtfylling } from '@common/typer/KorrigerMeldekort.ts';
 
 export const MeldeperiodeForPeriodeProvider = (props: { children: React.ReactNode }) => {
     const [meldeperiodeForPeriode, setMeldeperiodeForPeriode] =
-        useState<Nullable<MeldeperiodeForPeriodeResponse>>(null);
+        useState<Nullable<MeldekortTilKorrigeringUtfylling>>(null);
 
     return (
         <MeldeperiodeForPeriodeContext.Provider

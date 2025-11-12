@@ -82,7 +82,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
     const korrigerMeldekortContext = useKorrigerMeldekortContext();
     const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
-    const { status, response, callFn } = useSendKorrigerteDager(
+    const { status, callFn } = useSendKorrigerteDager(
         props.originaleMeldekort.id,
         korrigerMeldekortContext.dager,
         base,

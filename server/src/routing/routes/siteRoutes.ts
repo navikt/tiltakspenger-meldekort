@@ -13,6 +13,7 @@ import { appConfig } from '@common/appConfig';
 import { InnsendteMeldekortDTO } from '@common/typer/alle-meldekort';
 import { MeldekortForKjedeResponse } from '@common/typer/MeldeperiodeKjede';
 import { HtmlRenderFunc } from '@ssr/htmlRenderUtils';
+import { KorrigerMeldekortResponse } from '@common/typer/KorrigerMeldekort';
 
 // TODO: bedre feilhåndtering
 export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFunc) => {
@@ -238,11 +239,17 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFu
     routeBuilder.routes(siteRoutes.korrigerMeldekort, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
 
-        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
+        const meldekortDto = await fetchFraApi(req, `korrigering/${meldekortId}`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<KorrigerMeldekortResponse>) : null),
         );
+
         return meldekortDto
-            ? { props: { meldekort: tilMeldekortUtfylling(meldekortDto) } }
+            ? {
+                  props: {
+                      forrigeMeldekort: tilMeldekortUtfylling(meldekortDto.forrigeMeldekort),
+                      tilUtfylling: meldekortDto.tilUtfylling,
+                  },
+              }
             : {
                   props: {},
                   status: 404,
@@ -251,23 +258,28 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFu
 
     routeBuilder.routes(siteRoutes.korrigerMeldekortOppsummering, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
-        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
+
+        const response = await fetchFraApi(req, `korrigering/${meldekortId}`, 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<KorrigerMeldekortResponse>) : null,
         );
-        return meldekortDto
-            ? { props: { originaleMeldekort: tilMeldekortUtfylling(meldekortDto) } }
+
+        return response
+            ? { props: { originaleMeldekort: tilMeldekortUtfylling(response.forrigeMeldekort) } }
             : {
                   props: {},
                   status: 404,
               };
     });
+
     routeBuilder.routes(siteRoutes.korrigerMeldekortKvittering, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
-        const meldekortDto = await fetchFraApi(req, `meldekort/${meldekortId}`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<Meldekort>) : null),
+
+        const response = await fetchFraApi(req, `korrigering/${meldekortId}`, 'GET').then((res) =>
+            res?.ok ? (res.json() as Promise<KorrigerMeldekortResponse>) : null,
         );
-        return meldekortDto
-            ? { props: { originaleMeldekort: tilMeldekortUtfylling(meldekortDto) } }
+
+        return response
+            ? { props: { originaleMeldekort: tilMeldekortUtfylling(response.forrigeMeldekort) } }
             : {
                   props: {},
                   status: 404,
