@@ -1,7 +1,6 @@
-import { Accordion, BodyLong, Button, Heading, HStack, Link, VStack } from '@navikt/ds-react';
+import { Accordion, BodyLong, Heading, Link } from '@navikt/ds-react';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
-import { formatterDato, formatterDatoTid } from '@utils/datetime';
-import { Kalender } from '@components/kalender/Kalender.tsx';
+import { formatterDato } from '@utils/datetime';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { InnsendteMeldekortProps } from '@common/typer/alle-meldekort.ts';
@@ -10,6 +9,7 @@ import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { appConfig } from '@common/appConfig.ts';
 import { ArenaMeldekortStatus } from '@common/typer/meldekort-bruker.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
+import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
 
 import style from './InnsendteMeldekort.module.css';
 
@@ -72,34 +72,9 @@ export const InnsendteMeldekort = ({
                                 />
                             </Accordion.Header>
                             <Accordion.Content>
-                                <VStack gap="4">
-                                    {sisteMeldekort.innsendt ? (
-                                        <HStack justify="space-between">
-                                            <Tekst
-                                                id={'alleInnsendt'}
-                                                resolverProps={{
-                                                    dato: formatterDatoTid(sisteMeldekort.innsendt),
-                                                }}
-                                            />
-                                            <Button
-                                                type={'button'}
-                                                variant={'secondary'}
-                                                as={InternLenke}
-                                                path={getPath(siteRoutes.korrigerMeldekort, {
-                                                    meldekortId: sisteMeldekort.id,
-                                                })}
-                                            >
-                                                <Tekst id={'endreMeldekort'} />
-                                            </Button>
-                                        </HStack>
-                                    ) : (
-                                        <Tekst id={'ikkeInnsendt'} />
-                                    )}
-                                </VStack>
-                                <Kalender
+                                <SisteInnsendteMeldekort
                                     meldekort={sisteMeldekort}
-                                    steg="kvittering"
-                                    kanFylleUtHelg={kanSendeInnHelgForMeldekort}
+                                    visHelg={kanSendeInnHelgForMeldekort}
                                 />
                                 {meldekortPåKjede.length > 1 && (
                                     <InternLenke
