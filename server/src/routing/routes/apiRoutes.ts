@@ -31,22 +31,12 @@ const korrigerteDagerRoute =
         res.status(response?.status ?? 500).send(response?.statusText ?? 'Ukjent feil!');
     };
 
-const meldeperiodeForPeriodeRoute =
-    (fetcher: FetchFraApi): RequestHandler =>
-    async (req, res) => {
-        const response = await fetcher(req, `meldeperiode`, 'POST', JSON.stringify(req.body));
-
-        res.status(response?.status ?? 500).send((await response?.json()) ?? 'Ukjent feil!');
-    };
-
 export const setupApiRoutes = (router: Router) => {
     router.post('/api/send-inn', sendInnRoute(fetchFraApi));
     router.patch('/api/korriger', korrigerteDagerRoute(fetchFraApi));
-    router.post('/api/meldeperiode', meldeperiodeForPeriodeRoute(fetchFraApi));
 
     if (!isProd() || brukerTesterPågår()) {
         router.post('/demo/api/send-inn', sendInnRoute(fetchFraApiMock));
         router.patch('/demo/api/korriger', korrigerteDagerRoute(fetchFraApiMock));
-        router.post('/demo/api/meldeperiode', meldeperiodeForPeriodeRoute(fetchFraApiMock));
     }
 };

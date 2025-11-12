@@ -26,7 +26,7 @@ import {
 import { Meldekort, MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
 import { getTekst, getTekster } from '@tekster/tekster.ts';
-import { MeldekortTilKorrigeringUtfylling } from '@common/typer/KorrigerMeldekort.ts';
+import { MeldekortKorrigeringTilUtfylling } from '@common/typer/KorrigerMeldekort.ts';
 
 import styles from './KorrigerMeldekort.module.scss';
 
@@ -35,7 +35,7 @@ import styles from './KorrigerMeldekort.module.scss';
  */
 const KorrigerMeldekort = (props: {
     forrigeMeldekort: Meldekort;
-    tilUtfylling: MeldekortTilKorrigeringUtfylling;
+    tilUtfylling: MeldekortKorrigeringTilUtfylling;
 }) => {
     useEffect(() => {
         scrollTo(0, 0);
@@ -77,19 +77,21 @@ export default KorrigerMeldekort;
 
 const KorrigeringAvMeldekort = (props: {
     meldekort: Meldekort;
-    tilUtfylling: MeldekortTilKorrigeringUtfylling;
+    tilUtfylling: MeldekortKorrigeringTilUtfylling;
 }) => {
     const { navigate } = useRouting();
     const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
-    const { dager, setDager, oppdaterDag } = useKorrigerMeldekortContext();
+    const { dager, setUtfylling, oppdaterDag, meldeperiodeId } = useKorrigerMeldekortContext();
 
     useEffect(() => {
         setHarUgyldigUtfylling(false);
     }, [dager]);
 
     useEffect(() => {
-        setDager(props.tilUtfylling.dager);
-    }, [props.tilUtfylling, setDager]);
+        if (meldeperiodeId !== props.tilUtfylling.meldeperiodeId) {
+            setUtfylling(props.tilUtfylling);
+        }
+    }, [props.tilUtfylling, setUtfylling, meldeperiodeId]);
 
     return (
         <VStack gap="8">
@@ -165,7 +167,6 @@ const KorrigeringAvMeldekort = (props: {
                     variant="tertiary"
                     className={styles.button}
                     onClick={() => {
-                        setDager([]);
                         navigate(getPath(siteRoutes.forside));
                     }}
                 >

@@ -197,7 +197,6 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                             className={styles.avbrytEndringButton}
                             variant="tertiary"
                             onClick={() => {
-                                korrigerMeldekortContext.setDager([]);
                                 navigate(getPath(siteRoutes.forside));
                             }}
                         >

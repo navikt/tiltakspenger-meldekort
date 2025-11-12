@@ -6,7 +6,7 @@ export interface KorrigerMeldekortRequest {
     korrigerteDager: MeldekortDag[];
 }
 
-export type MeldekortTilKorrigeringUtfylling = {
+export type MeldekortKorrigeringTilUtfylling = {
     meldeperiodeId: string;
     kjedeId: string;
     dager: MeldekortDag[];
@@ -17,5 +17,5 @@ export type MeldekortTilKorrigeringUtfylling = {
 
 export type KorrigerMeldekortResponse = {
     forrigeMeldekort: Meldekort;
-    tilUtfylling: MeldekortTilKorrigeringUtfylling;
+    tilUtfylling: MeldekortKorrigeringTilUtfylling;
 };

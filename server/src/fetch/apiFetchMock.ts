@@ -1,12 +1,9 @@
 import { FetchFraApi } from '@fetch/apiFetch';
-
 import { Meldekort, MeldekortDagStatus, MeldekortStatus } from '@common/typer/MeldekortBruker';
 import dayjs from 'dayjs';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { brukerTesterPågår } from '@utils/env';
-import { Periode } from '@common/typer/periode';
-
-import { MeldekortTilKorrigeringUtfylling } from '@common/typer/KorrigerMeldekort';
+import { KorrigerMeldekortResponse } from '@common/typer/KorrigerMeldekort';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
     if (path === 'bruker') {
@@ -51,18 +48,30 @@ export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
         return mockResponse(200, null);
     }
 
-    if (path === 'meldeperiode') {
-        const periode = JSON.parse(body as string) as Periode;
+    if (path.startsWith('korrigering/')) {
+        const meldekortId = path.split('/').at(1);
+        const meldekort = mockAlleMeldekort.find((mk) => mk.id === meldekortId);
+        if (!meldekort) {
+            return mockResponse(404, 'Fant ikke meldekortet');
+        }
 
         return mockResponse(200, {
-            meldeperiodeId: 'periode_1',
-            kjedeId: 'kjede_1',
-            dager: forrigeMeldekort.dager,
-            periode: periode,
-            mottattTidspunktSisteMeldekort: forrigeMeldekort.innsendt!,
-            maksAntallDagerForPeriode: forrigeMeldekort.maksAntallDager,
-        } satisfies MeldekortTilKorrigeringUtfylling);
+            forrigeMeldekort: meldekort,
+            tilUtfylling: {
+                meldeperiodeId: 'periode_1',
+                kjedeId: 'kjede_1',
+                dager: forrigeMeldekort.dager,
+                periode: {
+                    fraOgMed: forrigeMeldekort.fraOgMed,
+                    tilOgMed: forrigeMeldekort.tilOgMed,
+                },
+                mottattTidspunktSisteMeldekort: forrigeMeldekort.innsendt!,
+                maksAntallDagerForPeriode: forrigeMeldekort.maksAntallDager,
+            },
+        } satisfies KorrigerMeldekortResponse);
     }
+
+    console.log(`path uten response: ${path}`);
 
     return mockResponse(404, 'Mocket response ikke funnet');
 };

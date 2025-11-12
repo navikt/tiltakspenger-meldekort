@@ -2,8 +2,9 @@ import test, { expect } from '@playwright/test';
 import { klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 import { MeldekortDagStatus } from '../commonSrc/typer/MeldekortBruker';
 import { nyMeldekortDag, nyUtfylltMeldekort } from './test-data-generators/MeldekortTestData';
-import { nyMeldeperiodeForPeriodeResponse } from './test-data-generators/MeldeperiodeTestData';
+import { nyMeldekortKorrigeringTilUtfylling } from './test-data-generators/MeldekortKorrigeringTestData';
 import { getTekst } from '../src/tekster/tekster';
+import { KorrigerMeldekortResponse } from '../commonSrc/typer/KorrigerMeldekort';
 
 const førsteMeldekort = nyUtfylltMeldekort({});
 
@@ -14,18 +15,19 @@ test.beforeEach(async ({ page }) => {
         });
     });
 
-    await page.route('*/**/api/meldeperiode', async (route) => {
+    await page.route('*/**/12345/korrigering/data', async (route) => {
         await route.fulfill({
-            json: nyMeldeperiodeForPeriodeResponse({}),
+            json: {
+                forrigeMeldekort: førsteMeldekort,
+                tilUtfylling: nyMeldekortKorrigeringTilUtfylling({}),
+            } satisfies KorrigerMeldekortResponse,
         });
     });
 
-    await page.route('*/**/12345/korrigering/data', async (route) => {
-        await route.fulfill({ json: { meldekort: førsteMeldekort } });
-    });
     await page.route('*/**/12345/korrigering/oppsummering/data', async (route) => {
         await route.fulfill({ json: { originaleMeldekort: førsteMeldekort } });
     });
+
     await page.route('*/**/12345/korrigering/kvittering/data', async (route) => {
         await route.fulfill({ json: { originaleMeldekort: førsteMeldekort } });
     });
@@ -34,12 +36,6 @@ test.beforeEach(async ({ page }) => {
 test('kan korrigere meldekort', async ({ page }) => {
     await page.route(`*/**/api/korriger`, async (route) => {
         await route.fulfill({ status: 200 });
-    });
-
-    await page.route('*/**/api/meldeperiode', async (route) => {
-        await route.fulfill({
-            json: nyMeldeperiodeForPeriodeResponse({}),
-        });
     });
 
     await page.goto(`${testsBaseUrl}/innsendte`);
@@ -298,7 +294,14 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
         });
     });
     await page.route('*/**/12345/korrigering/data', async (route) => {
-        await route.fulfill({ json: { meldekort: meldekortMedDagerUtenRett } });
+        await route.fulfill({
+            json: {
+                forrigeMeldekort: meldekortMedDagerUtenRett,
+                tilUtfylling: nyMeldekortKorrigeringTilUtfylling({
+                    dager: meldekortMedDagerUtenRett.dager,
+                }),
+            } satisfies KorrigerMeldekortResponse,
+        });
     });
     await page.goto(`${testsBaseUrl}/innsendte`);
     await klikkCookieBanner(page);
@@ -311,37 +314,6 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     // Verifiserer at dager uten rett ikke kan endres - vi har ikke en god måte å faktisk teste dette, så vi bare sjekker at de har en readonly class
     const formField = page.locator(`label[for="select-2023-01-02"]`).locator('..');
     await expect(formField).toHaveClass(/navds-form-field--readonly/);
-});
-
-test.describe('feil ved henting av meldeperiode', () => {
-    test('fra innsendte-meldekort', async ({ page }) => {
-        await page.route('*/**/api/meldeperiode', async (route) => {
-            await route.fulfill({ status: 404 });
-        });
-
-        await page.goto(`${testsBaseUrl}/innsendte`);
-        await klikkCookieBanner(page);
-        //Skal kunne navigere seg til korrigering
-        await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
-
-        await page;
-        await page.getByText(getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })).isVisible();
-    });
-
-    test('fra korrigering', async ({ page }) => {
-        await page.route('*/**/api/meldeperiode', async (route) => {
-            await route.fulfill({ status: 404 });
-        });
-
-        await page.goto(`${testsBaseUrl}/${førsteMeldekort.id}/korrigering`);
-        await klikkCookieBanner(page);
-
-        await page.getByText(getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })).isVisible();
-
-        await page.getByText('Tilbake til forsiden').click();
-        expect(page.url()).toBe(`${testsBaseUrl}/`);
-    });
 });
 
 test.describe('validerer korrigering av meldekort', () => {
@@ -368,6 +340,7 @@ test.describe('validerer korrigering av meldekort', () => {
         await page.waitForURL('**/12345/korrigering/oppsummering');
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
     });
+
     test('Valider kun maks der minst en dag ikke gir rett til tiltakspenger.', async ({ page }) => {
         //behov for at minst en dag ikke gir rett til tiltakspenger
         const dager = [
@@ -444,18 +417,17 @@ test.describe('validerer korrigering av meldekort', () => {
             });
         });
 
-        await page.route('*/**/api/meldeperiode', async (route) => {
-            await route.fulfill({
-                json: nyMeldeperiodeForPeriodeResponse({
-                    dager: dager,
-                    periode: { fraOgMed: '2025-01-06', tilOgMed: '2025-01-19' },
-                    maksAntallDagerForPeriode: meldekort.maksAntallDager,
-                }),
-            });
-        });
-
         await page.route('*/**/12345/korrigering/data', async (route) => {
-            await route.fulfill({ json: { meldekort: meldekort } });
+            await route.fulfill({
+                json: {
+                    forrigeMeldekort: meldekort,
+                    tilUtfylling: nyMeldekortKorrigeringTilUtfylling({
+                        dager: dager,
+                        periode: { fraOgMed: '2025-01-06', tilOgMed: '2025-01-19' },
+                        maksAntallDagerForPeriode: meldekort.maksAntallDager,
+                    }),
+                } satisfies KorrigerMeldekortResponse,
+            });
         });
 
         await page.goto(`${testsBaseUrl}/innsendte`);
