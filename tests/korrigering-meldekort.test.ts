@@ -60,8 +60,9 @@ test('kan korrigere meldekort', async ({ page }) => {
     await page.selectOption('#select-2023-01-13', getTekst({ id: 'statusGodkjentFravær' }));
 
     await page.getByText(getTekst({ id: 'neste' })).click();
+    await page.waitForURL('**/12345/korrigering/oppsummering');
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
-    await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen - å bruke waitForURL her fungerer heller ikke så bra
+
     // Verifiserer at oppsummeringen viser de endrede statusene
     await expect(
         page.getByText(`Mandag 2. januar: ${getTekst({ id: 'statusDeltatt' })}`),

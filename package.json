@@ -9,7 +9,7 @@
         "start": "npm run start --workspace server",
         "build": "npm-run-all build:*",
         "build:client": "vite build --outDir server/dist/client",
-        "build:ssr": "vite build --ssr src/main-server.tsx --outDir server/src/_ssr-dist",
+        "build:ssr": "vite build --ssr src/main-server.tsx --outDir server/src/_ssr-dist --emptyOutDir false",
         "build:server": "npm run build --workspace server",
         "lint": "npm-run-all --parallel lint:*",
         "lint:tsc": "tsc --noEmit",
