@@ -78,13 +78,11 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
 
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
-    const korrigerMeldekortContext = useKorrigerMeldekortContext();
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
-    const { status, callFn } = useSendKorrigerteDager(
-        props.originaleMeldekort.id,
-        korrigerMeldekortContext.dager,
-        base,
-    );
+
+    const { dager = [] } = useKorrigerMeldekortContext();
+
+    const { status, callFn } = useSendKorrigerteDager(props.originaleMeldekort.id, dager, base);
 
     useEffect(() => {
         if (status === 'loading') {
@@ -113,7 +111,9 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                 <Heading size="large" level="3">
                     Oppsummering av endret meldekort
                 </Heading>
-                {korrigerMeldekortContext.dager.length === 0 ? (
+                {/* Denne vil kun slå ut hvis brukeren går direkte til oppsummeringen uten å laste korrigeringssiden først for å populere dagene */}
+                {/* TODO: burde validere om det faktisk er endringer på dagene */}
+                {dager.length === 0 ? (
                     <Alert variant="info">
                         <BodyShort>
                             Du har ikke gjort noen endringer på dette meldekortet.
@@ -128,9 +128,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                     </Alert>
                 ) : (
                     <>
-                        <OppsummeringAvKorrigertMeldekortDager
-                            dager={korrigerMeldekortContext.dager}
-                        />
+                        <OppsummeringAvKorrigertMeldekortDager dager={dager} />
                         <ConfirmationPanel
                             label={getTekst({ id: 'oppsummeringBekrefter' })}
                             checked={harBekreftet}

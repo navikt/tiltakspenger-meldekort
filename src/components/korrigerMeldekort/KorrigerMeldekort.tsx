@@ -80,7 +80,9 @@ const KorrigeringAvMeldekort = ({ forrigeMeldekort, tilUtfylling }: Props) => {
     const { navigate } = useRouting();
     const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
     const {
-        dager = tilUtfylling.dager, // Default for SSR/first render
+        // Default dager for SSR/first render
+        // Litt skittent, burde sette dette som en default via provideren, men litt tricky å få til på tvers av routes
+        dager = tilUtfylling.dager,
         setUtfylling,
         oppdaterDag,
         meldeperiodeId,
