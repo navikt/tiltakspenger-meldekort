@@ -5,6 +5,7 @@ const isDev =
 
 export const appConfig = {
     baseUrl: '/tiltakspenger/meldekort',
+    demoRoutePrefix: '/demo',
     arenaUrl: isDev
         ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/meldekort/send-meldekort'
         : 'https://www.nav.no/meldekort/send-meldekort',

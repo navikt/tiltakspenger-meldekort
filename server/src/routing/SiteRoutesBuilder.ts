@@ -47,7 +47,7 @@ export class SiteRoutesBuilder {
 
             const html = await this.renderer(fullPath, {
                 initialProps: props,
-                initialPath: routePath,
+                initialPath: req.path,
                 baseUrl: appConfig.baseUrl,
                 status,
             });
@@ -66,7 +66,7 @@ export class SiteRoutesBuilder {
     }
 
     private demoRoutes(routePath: string, dataFetcher: DataFetcher) {
-        const demoRoutePath = this.joinPaths('/demo', routePath);
+        const demoRoutePath = this.joinPaths(appConfig.demoRoutePrefix, routePath);
         const demoFullPath = this.joinPaths(appConfig.baseUrl, demoRoutePath);
         const demoDataPath = this.joinPaths(demoRoutePath, 'data');
 
@@ -75,8 +75,8 @@ export class SiteRoutesBuilder {
 
             const html = await this.renderer(demoFullPath, {
                 initialProps: props,
-                initialPath: routePath,
-                baseUrl: `${appConfig.baseUrl}/demo`,
+                initialPath: req.path.replace(appConfig.demoRoutePrefix, ''),
+                baseUrl: `${appConfig.baseUrl}${appConfig.demoRoutePrefix}`,
                 status,
             });
             res.status(status).send(html);

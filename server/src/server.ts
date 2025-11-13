@@ -11,7 +11,7 @@ import { setupApiRoutes } from '@routing/routes/apiRoutes';
 import { initDevRenderer } from '@ssr/devHtmlRenderer';
 import { initProdRenderer } from '@ssr/prodHtmlRenderer';
 
-const { baseUrl } = appConfig;
+const { baseUrl, demoRoutePrefix } = appConfig;
 
 const PORT = 3050;
 
@@ -50,7 +50,7 @@ validateEnv()
         const server = app.listen(PORT, () => {
             console.log(`Server starting on port ${PORT}`);
             console.log(`localhost \t\thttp://localhost:${PORT}${baseUrl}`);
-            console.log(`localhost (DEMO)\thttp://localhost:${PORT}${baseUrl}/demo`);
+            console.log(`localhost (DEMO)\thttp://localhost:${PORT}${baseUrl}${demoRoutePrefix}`);
         });
 
         const httpTerminator = createHttpTerminator({ server });

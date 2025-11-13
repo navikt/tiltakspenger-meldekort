@@ -9,7 +9,7 @@ export const DemoVarsel = () => {
     const [isDemoMode, setIsDemoMode] = useState(false);
 
     useEffect(() => {
-        setIsDemoMode(window.location.pathname.includes('/demo'));
+        setIsDemoMode(window.location.pathname.includes(appConfig.demoRoutePrefix));
     }, []);
 
     return (

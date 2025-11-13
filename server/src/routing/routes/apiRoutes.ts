@@ -1,10 +1,10 @@
 import { RequestHandler, Router } from 'express';
-
 import { FetchFraApi, fetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
 import { brukerTesterPågår, isProd } from '@utils/env';
 import { KorrigerMeldekortRequest } from '@common/typer/KorrigerMeldekort';
 import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling';
+import { appConfig } from '@common/appConfig';
 
 const sendInnRoute =
     (fetcher: FetchFraApi): RequestHandler =>
@@ -36,7 +36,10 @@ export const setupApiRoutes = (router: Router) => {
     router.patch('/api/korriger', korrigerteDagerRoute(fetchFraApi));
 
     if (!isProd() || brukerTesterPågår()) {
-        router.post('/demo/api/send-inn', sendInnRoute(fetchFraApiMock));
-        router.patch('/demo/api/korriger', korrigerteDagerRoute(fetchFraApiMock));
+        router.post(`${appConfig.demoRoutePrefix}/api/send-inn`, sendInnRoute(fetchFraApiMock));
+        router.patch(
+            `${appConfig.demoRoutePrefix}/api/korriger`,
+            korrigerteDagerRoute(fetchFraApiMock),
+        );
     }
 };
