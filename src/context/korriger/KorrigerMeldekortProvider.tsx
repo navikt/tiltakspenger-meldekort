@@ -5,12 +5,16 @@ import { MeldekortKorrigeringTilUtfylling } from '@common/typer/KorrigerMeldekor
 
 export const KorrigerMeldekortProvider = (props: { children: React.ReactNode }) => {
     const [utfylling, setUtfylling] = useState<MeldekortKorrigeringTilUtfylling>();
-    const [dager, setDager] = useState<MeldekortDag[]>([]);
+    const [dager, setDager] = useState<MeldekortDag[]>();
 
     const oppdaterDag = (dato: string, status: MeldekortDagStatus) => {
-        setDager((prevDager) =>
-            prevDager.map((dag) => (dag.dag === dato ? { ...dag, status } : dag)),
-        );
+        setDager((prevDager) => {
+            if (!prevDager) {
+                throw Error('Dager for korrigering er ikke satt');
+            }
+
+            return prevDager.map((dag) => (dag.dag === dato ? { ...dag, status } : dag));
+        });
     };
 
     useEffect(() => {

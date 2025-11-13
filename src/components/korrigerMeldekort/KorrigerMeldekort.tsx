@@ -30,13 +30,17 @@ import { MeldekortKorrigeringTilUtfylling } from '@common/typer/KorrigerMeldekor
 
 import styles from './KorrigerMeldekort.module.scss';
 
+type Props = {
+    forrigeMeldekort: Meldekort;
+    tilUtfylling: MeldekortKorrigeringTilUtfylling;
+};
+
 /**
  * TODO - skal vi ha noe form for validering her?
  */
-const KorrigerMeldekort = (props: {
-    forrigeMeldekort: Meldekort;
-    tilUtfylling: MeldekortKorrigeringTilUtfylling;
-}) => {
+const KorrigerMeldekort = (props: Props) => {
+    const { forrigeMeldekort } = props;
+
     useEffect(() => {
         scrollTo(0, 0);
     }, []);
@@ -48,11 +52,11 @@ const KorrigerMeldekort = (props: {
                 underTekst={
                     <HStack gap="4">
                         <Undertekst
-                            tekst={`Uke ${props.forrigeMeldekort.uke1} og ${props.forrigeMeldekort.uke2}`}
+                            tekst={`Uke ${forrigeMeldekort.uke1} og ${forrigeMeldekort.uke2}`}
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.forrigeMeldekort.fraOgMed })} til ${formatterDato({ dato: props.forrigeMeldekort.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: forrigeMeldekort.fraOgMed })} til ${formatterDato({ dato: forrigeMeldekort.tilOgMed })})`}
                         />
                     </HStack>
                 }
@@ -64,10 +68,7 @@ const KorrigerMeldekort = (props: {
 
                 <InformasjonOmKorrigeringAvMeldekort />
 
-                <KorrigeringAvMeldekort
-                    meldekort={props.forrigeMeldekort}
-                    tilUtfylling={props.tilUtfylling}
-                />
+                <KorrigeringAvMeldekort {...props} />
             </VStack>
         </>
     );
@@ -75,27 +76,29 @@ const KorrigerMeldekort = (props: {
 
 export default KorrigerMeldekort;
 
-const KorrigeringAvMeldekort = (props: {
-    meldekort: Meldekort;
-    tilUtfylling: MeldekortKorrigeringTilUtfylling;
-}) => {
+const KorrigeringAvMeldekort = ({ forrigeMeldekort, tilUtfylling }: Props) => {
     const { navigate } = useRouting();
     const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
-    const { dager, setUtfylling, oppdaterDag, meldeperiodeId } = useKorrigerMeldekortContext();
+    const {
+        dager = tilUtfylling.dager, // Default for SSR/first render
+        setUtfylling,
+        oppdaterDag,
+        meldeperiodeId,
+    } = useKorrigerMeldekortContext();
 
     useEffect(() => {
         setHarUgyldigUtfylling(false);
     }, [dager]);
 
     useEffect(() => {
-        if (meldeperiodeId !== props.tilUtfylling.meldeperiodeId) {
-            setUtfylling(props.tilUtfylling);
+        if (meldeperiodeId !== tilUtfylling.meldeperiodeId) {
+            setUtfylling(tilUtfylling);
         }
-    }, [props.tilUtfylling, setUtfylling, meldeperiodeId]);
+    }, [tilUtfylling, setUtfylling, meldeperiodeId]);
 
     return (
         <VStack gap="8">
-            {props.tilUtfylling.meldeperiodeId !== props.meldekort.meldeperiodeId && (
+            {tilUtfylling.meldeperiodeId !== forrigeMeldekort.meldeperiodeId && (
                 <Alert variant="info">{getTekst({ id: 'korrigeringOppdatertAlert' })}</Alert>
             )}
 
@@ -113,15 +116,15 @@ const KorrigeringAvMeldekort = (props: {
                 <Alert variant="error">
                     <VStack gap="4">
                         {hentGyldigeDagerFraMeldekortDager(dager).length >
-                        props.tilUtfylling.maksAntallDagerForPeriode ? (
+                        tilUtfylling.maksAntallDagerForPeriode ? (
                             <BodyShort>
                                 Du har registrert for mange dager. Maks antall er{' '}
-                                {props.tilUtfylling.maksAntallDagerForPeriode} dager.
+                                {tilUtfylling.maksAntallDagerForPeriode} dager.
                             </BodyShort>
                         ) : (
                             <BodyShort>
                                 Kun {hentGyldigeDagerFraMeldekortDager(dager).length} av{' '}
-                                {props.tilUtfylling.maksAntallDagerForPeriode} dager besvart
+                                {tilUtfylling.maksAntallDagerForPeriode} dager besvart
                             </BodyShort>
                         )}
 
@@ -142,16 +145,15 @@ const KorrigeringAvMeldekort = (props: {
                     onClick={() => {
                         const erDagerFylltUtGyldig = erKorrigerteDagerGyldig({
                             dager: dager,
-                            antallDager: props.tilUtfylling.maksAntallDagerForPeriode,
-                            harMeldeperiodeForMeldekortDagerSomIkkeGirRett: harDagerSomIkkeGirRett(
-                                props.tilUtfylling,
-                            ),
+                            antallDager: tilUtfylling.maksAntallDagerForPeriode,
+                            harMeldeperiodeForMeldekortDagerSomIkkeGirRett:
+                                harDagerSomIkkeGirRett(tilUtfylling),
                         });
 
                         if (erDagerFylltUtGyldig) {
                             navigate(
                                 getPath(siteRoutes.korrigerMeldekortOppsummering, {
-                                    meldekortId: props.meldekort.id,
+                                    meldekortId: forrigeMeldekort.id,
                                 }),
                             );
                         } else {
