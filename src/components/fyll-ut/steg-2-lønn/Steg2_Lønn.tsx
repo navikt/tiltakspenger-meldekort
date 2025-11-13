@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import style from './Steg2_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { Alert, HStack, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import { Alert, HStack, Radio, RadioGroup } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstId } from '@tekster/typer.ts';
 import { Kalender } from '@components/kalender/Kalender.tsx';
@@ -11,9 +11,7 @@ import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes
 import { useRouting } from '@routing/useRouting';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
-import { getTekst, getTekster } from '@tekster/tekster.ts';
 import { Meldekort, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
-import { TekstMedLenke } from '@components/lenke/TekstMedLenke.tsx';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;

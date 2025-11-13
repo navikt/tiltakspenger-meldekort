@@ -11,13 +11,11 @@ import {
     HStack,
     Label,
     Select,
-    Skeleton,
     VStack,
 } from '@navikt/ds-react';
 import { useRouting } from '@routing/useRouting';
 import { formatterDato } from '@utils/datetime';
 import { useEffect, useState } from 'react';
-import styles from './KorrigerMeldekort.module.scss';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import {
@@ -25,68 +23,40 @@ import {
     hentGyldigeDagerFraMeldekortDager,
     korrigerMeldekortStatusTextMapper,
 } from './KorrigerMeldekortUtils';
-import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
-import { apiFetcher, useApi } from '@utils/fetch';
-import { Periode } from '@common/typer/periode';
-import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
 import { Meldekort, MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
-import { Link } from 'wouter';
 import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
 import { getTekst, getTekster } from '@tekster/tekster.ts';
+import { MeldekortKorrigeringTilUtfylling } from '@common/typer/KorrigerMeldekort.ts';
+
+import styles from './KorrigerMeldekort.module.scss';
+
+type Props = {
+    forrigeMeldekort: Meldekort;
+    tilUtfylling: MeldekortKorrigeringTilUtfylling;
+};
 
 /**
  * TODO - skal vi ha noe form for validering her?
  */
-const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
-    const { meldeperiodeForPeriode, setMeldeperiodeForPeriode } =
-        useMeldeperiodeForPeriodeContext();
-
-    //TODO - kan sikkert flytte denne hentingen til server-side
-    const { trigger, error, isLoading } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
-        key: '/meldeperiode',
-        handler: (payload) =>
-            apiFetcher({
-                url: 'meldeperiode',
-                method: 'POST',
-                body: payload,
-            }),
-    });
+const KorrigerMeldekort = (props: Props) => {
+    const { forrigeMeldekort } = props;
 
     useEffect(() => {
         scrollTo(0, 0);
     }, []);
 
-    useEffect(() => {
-        if (!meldeperiodeForPeriode) {
-            trigger(
-                { fraOgMed: props.meldekort.fraOgMed, tilOgMed: props.meldekort.tilOgMed },
-                {
-                    onSuccess: (response) => {
-                        setMeldeperiodeForPeriode(response);
-                    },
-                },
-            );
-        }
-    }, [
-        props.meldekort.fraOgMed,
-        props.meldekort.tilOgMed,
-        trigger,
-        meldeperiodeForPeriode,
-        setMeldeperiodeForPeriode,
-    ]);
-
     return (
-        <div>
+        <>
             <PageHeader
                 tekstId={'sideTittel'}
                 underTekst={
                     <HStack gap="4">
                         <Undertekst
-                            tekst={`Uke ${props.meldekort.uke1} og ${props.meldekort.uke2}`}
+                            tekst={`Uke ${forrigeMeldekort.uke1} og ${forrigeMeldekort.uke2}`}
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.meldekort.fraOgMed })} til ${formatterDato({ dato: props.meldekort.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: forrigeMeldekort.fraOgMed })} til ${formatterDato({ dato: forrigeMeldekort.tilOgMed })})`}
                         />
                     </HStack>
                 }
@@ -98,67 +68,39 @@ const KorrigerMeldekort = (props: { meldekort: Meldekort }) => {
 
                 <InformasjonOmKorrigeringAvMeldekort />
 
-                {isLoading && (
-                    <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
-                        {Array.from({ length: props.meldekort.dager.length }).map((_, index) => (
-                            <Skeleton height="80px" width="300px" key={`skeleton-${index}`} />
-                        ))}
-                    </VStack>
-                )}
-
-                {error && (
-                    <Alert variant="error">
-                        <BodyShort>{getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })}</BodyShort>
-                        <Link href={`/`}>Tilbake til forsiden</Link>
-                    </Alert>
-                )}
-
-                {meldeperiodeForPeriode && (
-                    <KorrigeringAvMeldekort
-                        meldekort={props.meldekort}
-                        sisteMeldeperiode={meldeperiodeForPeriode}
-                    />
-                )}
+                <KorrigeringAvMeldekort {...props} />
             </VStack>
-        </div>
+        </>
     );
 };
 
 export default KorrigerMeldekort;
 
-const KorrigeringAvMeldekort = (props: {
-    meldekort: Meldekort;
-    sisteMeldeperiode: MeldeperiodeForPeriodeResponse;
-}) => {
+const KorrigeringAvMeldekort = ({ forrigeMeldekort, tilUtfylling }: Props) => {
     const { navigate } = useRouting();
     const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
-    const { dager, setDager, oppdaterDag } = useKorrigerMeldekortContext();
-    const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
+    const {
+        // Default dager for SSR/first render
+        // Litt skittent, burde sette dette som en default via provideren, men litt tricky å få til på tvers av routes
+        dager = tilUtfylling.dager,
+        setUtfylling,
+        oppdaterDag,
+        meldeperiodeId,
+    } = useKorrigerMeldekortContext();
 
     useEffect(() => {
         setHarUgyldigUtfylling(false);
     }, [dager]);
 
     useEffect(() => {
-        if (dager.length === 0) {
-            if (props.sisteMeldeperiode.meldeperiodeId !== props.meldekort.meldeperiodeId) {
-                setDager(props.sisteMeldeperiode.dager);
-            } else {
-                setDager(props.meldekort.dager);
-            }
+        if (meldeperiodeId !== tilUtfylling.meldeperiodeId) {
+            setUtfylling(tilUtfylling);
         }
-    }, [
-        props.sisteMeldeperiode.meldeperiodeId,
-        props.sisteMeldeperiode,
-        props.meldekort.meldeperiodeId,
-        props.meldekort.dager,
-        setDager,
-        dager,
-    ]);
+    }, [tilUtfylling, setUtfylling, meldeperiodeId]);
 
     return (
         <VStack gap="8">
-            {props.sisteMeldeperiode.meldeperiodeId !== props.meldekort.meldeperiodeId && (
+            {tilUtfylling.meldeperiodeId !== forrigeMeldekort.meldeperiodeId && (
                 <Alert variant="info">{getTekst({ id: 'korrigeringOppdatertAlert' })}</Alert>
             )}
 
@@ -176,15 +118,15 @@ const KorrigeringAvMeldekort = (props: {
                 <Alert variant="error">
                     <VStack gap="4">
                         {hentGyldigeDagerFraMeldekortDager(dager).length >
-                        props.sisteMeldeperiode.maksAntallDagerForPeriode ? (
+                        tilUtfylling.maksAntallDagerForPeriode ? (
                             <BodyShort>
                                 Du har registrert for mange dager. Maks antall er{' '}
-                                {props.sisteMeldeperiode.maksAntallDagerForPeriode} dager.
+                                {tilUtfylling.maksAntallDagerForPeriode} dager.
                             </BodyShort>
                         ) : (
                             <BodyShort>
                                 Kun {hentGyldigeDagerFraMeldekortDager(dager).length} av{' '}
-                                {props.sisteMeldeperiode.maksAntallDagerForPeriode} dager besvart
+                                {tilUtfylling.maksAntallDagerForPeriode} dager besvart
                             </BodyShort>
                         )}
 
@@ -205,16 +147,15 @@ const KorrigeringAvMeldekort = (props: {
                     onClick={() => {
                         const erDagerFylltUtGyldig = erKorrigerteDagerGyldig({
                             dager: dager,
-                            antallDager: props.sisteMeldeperiode.maksAntallDagerForPeriode,
-                            harMeldeperiodeForMeldekortDagerSomIkkeGirRett: harDagerSomIkkeGirRett(
-                                props.sisteMeldeperiode,
-                            ),
+                            antallDager: tilUtfylling.maksAntallDagerForPeriode,
+                            harMeldeperiodeForMeldekortDagerSomIkkeGirRett:
+                                harDagerSomIkkeGirRett(tilUtfylling),
                         });
 
                         if (erDagerFylltUtGyldig) {
                             navigate(
                                 getPath(siteRoutes.korrigerMeldekortOppsummering, {
-                                    meldekortId: props.meldekort.id,
+                                    meldekortId: forrigeMeldekort.id,
                                 }),
                             );
                         } else {
@@ -230,8 +171,6 @@ const KorrigeringAvMeldekort = (props: {
                     variant="tertiary"
                     className={styles.button}
                     onClick={() => {
-                        setDager([]);
-                        setMeldeperiodeForPeriode(null);
                         navigate(getPath(siteRoutes.forside));
                     }}
                 >

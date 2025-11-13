@@ -166,10 +166,19 @@ test.describe('kontroll av helg av meldekortet', () => {
         await klikkCookieBanner(page);
         await page.waitForURL(/fraver$/);
         await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarJa' })).click();
-        await expect(page.getByText('Lørdag 7. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 8. januar')).toBeHidden();
-        await expect(page.getByText('Lørdag 14. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 15. januar')).toBeHidden();
+        // OBS: datoene for disse testene stemmer ikke med hva vi faktisk setter i mock-responsen over
+        // Denne mock-responsen påvirker kun client-side data-fetching, men meldekort-stegene oppdaterer ikke
+        // dagene etter den initielle render'en
+        //
+        // Tidligere hadde vi en bug som hindret at data fra den initielle server-responsen ble benyttet i dynamiske routes
+        // Dette ble fikset i commit 4c1b865b - men etter dette er vi avhengig av at serveren faktisk returnerer korrekte data :D
+        //
+        // TODO: mock server-responsen når denne issuen er fikset:
+        // https://trello.com/c/72ig6Pm1/1743-mulighet-for-%C3%A5-tilpasse-server-side-api-mocks-for-tester
+        await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
+        await expect(page.getByText('Søndag 12. januar')).toBeHidden();
+        await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
+        await expect(page.getByText('Søndag 19. januar')).toBeHidden();
 
         await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarNei' })).click();
         await page.getByText('Neste steg').click();
@@ -177,27 +186,27 @@ test.describe('kontroll av helg av meldekortet', () => {
         //Lønn steg
         await page.waitForURL(/lonn$/);
         await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarJa' })).click();
-        await expect(page.getByText('Lørdag 7. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 8. januar')).toBeHidden();
-        await expect(page.getByText('Lørdag 14. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 15. januar')).toBeHidden();
+        await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
+        await expect(page.getByText('Søndag 12. januar')).toBeHidden();
+        await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
+        await expect(page.getByText('Søndag 19. januar')).toBeHidden();
         await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarNei' })).click();
         await page.getByText('Neste steg').click();
 
         //Deltatt steg
         await page.waitForURL(/deltakelse$/);
-        await expect(page.getByText('Lørdag 7. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 8. januar')).toBeHidden();
-        await expect(page.getByText('Lørdag 14. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 15. januar')).toBeHidden();
+        await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
+        await expect(page.getByText('Søndag 12. januar')).toBeHidden();
+        await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
+        await expect(page.getByText('Søndag 19. januar')).toBeHidden();
         await page.getByText('Neste steg').click();
 
         //Send inn steg
         await page.waitForURL(/send-inn$/);
-        await expect(page.getByText('Lørdag 7. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 8. januar')).toBeHidden();
-        await expect(page.getByText('Lørdag 14. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 15. januar')).toBeHidden();
+        await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
+        await expect(page.getByText('Søndag 12. januar')).toBeHidden();
+        await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
+        await expect(page.getByText('Søndag 19. januar')).toBeHidden();
     });
 
     test('kan fylle ut helgedager dersom saken tillater det', async ({ page }) => {
@@ -235,10 +244,10 @@ test.describe('kontroll av helg av meldekortet', () => {
         await klikkCookieBanner(page);
         await page.waitForURL(/fraver$/);
         await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarJa' })).click();
-        await expect(page.getByText('Lørdag 7. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 8. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 14. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 15. januar')).toBeVisible();
+        await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
+        await expect(page.getByText('Søndag 12. januar')).toBeVisible();
+        await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
+        await expect(page.getByText('Søndag 19. januar')).toBeVisible();
 
         await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarNei' })).click();
         await page.getByText(getTekst({ id: 'neste' })).click();
@@ -246,28 +255,30 @@ test.describe('kontroll av helg av meldekortet', () => {
         //Lønn steg
         await page.waitForURL(/lonn$/);
         await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarJa' })).click();
-        await expect(page.getByText('Lørdag 7. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 8. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 14. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 15. januar')).toBeVisible();
+        await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
+        await expect(page.getByText('Søndag 12. januar')).toBeVisible();
+        await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
+        await expect(page.getByText('Søndag 19. januar')).toBeVisible();
+
         await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarNei' })).click();
         await page.getByText(getTekst({ id: 'neste' })).click();
 
         //Deltatt steg
         await page.waitForURL(/deltakelse$/);
-        await expect(page.getByText('Fredag 6. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 7. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 8. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 14. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 15. januar')).toBeVisible();
+        await expect(page.getByText('Fredag 10. januar')).toBeVisible();
+        await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
+        await expect(page.getByText('Søndag 12. januar')).toBeVisible();
+        await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
+        await expect(page.getByText('Søndag 19. januar')).toBeVisible();
+
         await page.getByText(getTekst({ id: 'neste' })).click();
 
         //Send inn steg
         await page.waitForURL(/send-inn$/);
-        await expect(page.getByText('Lørdag 7. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 8. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 14. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 15. januar')).toBeVisible();
+        await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
+        await expect(page.getByText('Søndag 12. januar')).toBeVisible();
+        await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
+        await expect(page.getByText('Søndag 19. januar')).toBeVisible();
     });
 });
 

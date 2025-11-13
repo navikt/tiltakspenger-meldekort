@@ -2,8 +2,9 @@ import test, { expect } from '@playwright/test';
 import { klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 import { MeldekortDagStatus } from '../commonSrc/typer/MeldekortBruker';
 import { nyMeldekortDag, nyUtfylltMeldekort } from './test-data-generators/MeldekortTestData';
-import { nyMeldeperiodeForPeriodeResponse } from './test-data-generators/MeldeperiodeTestData';
+import { nyMeldekortKorrigeringTilUtfylling } from './test-data-generators/MeldekortKorrigeringTestData';
 import { getTekst } from '../src/tekster/tekster';
+import { KorrigerMeldekortResponse } from '../commonSrc/typer/KorrigerMeldekort';
 
 const førsteMeldekort = nyUtfylltMeldekort({});
 
@@ -14,18 +15,19 @@ test.beforeEach(async ({ page }) => {
         });
     });
 
-    await page.route('*/**/api/meldeperiode', async (route) => {
+    await page.route('*/**/12345/korrigering/data', async (route) => {
         await route.fulfill({
-            json: nyMeldeperiodeForPeriodeResponse({}),
+            json: {
+                forrigeMeldekort: førsteMeldekort,
+                tilUtfylling: nyMeldekortKorrigeringTilUtfylling({}),
+            } satisfies KorrigerMeldekortResponse,
         });
     });
 
-    await page.route('*/**/12345/korrigering/data', async (route) => {
-        await route.fulfill({ json: { meldekort: førsteMeldekort } });
-    });
     await page.route('*/**/12345/korrigering/oppsummering/data', async (route) => {
         await route.fulfill({ json: { originaleMeldekort: førsteMeldekort } });
     });
+
     await page.route('*/**/12345/korrigering/kvittering/data', async (route) => {
         await route.fulfill({ json: { originaleMeldekort: førsteMeldekort } });
     });
@@ -36,12 +38,6 @@ test('kan korrigere meldekort', async ({ page }) => {
         await route.fulfill({ status: 200 });
     });
 
-    await page.route('*/**/api/meldeperiode', async (route) => {
-        await route.fulfill({
-            json: nyMeldeperiodeForPeriodeResponse({}),
-        });
-    });
-
     await page.goto(`${testsBaseUrl}/innsendte`);
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
@@ -50,6 +46,10 @@ test('kan korrigere meldekort', async ({ page }) => {
 
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
+
+    // Venter på at state skal stabilisere seg. Safari kan være litt treg her
+    await page.waitForTimeout(1000);
+
     // Endrer på statuser for uke 1
     await page.selectOption('#select-2023-01-02', getTekst({ id: 'statusDeltatt' }));
     //tirsdag 3. er allerede satt som deltatt
@@ -64,8 +64,9 @@ test('kan korrigere meldekort', async ({ page }) => {
     await page.selectOption('#select-2023-01-13', getTekst({ id: 'statusGodkjentFravær' }));
 
     await page.getByText(getTekst({ id: 'neste' })).click();
+    await page.waitForURL('**/12345/korrigering/oppsummering');
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
-    await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen - å bruke waitForURL her fungerer heller ikke så bra
+
     // Verifiserer at oppsummeringen viser de endrede statusene
     await expect(
         page.getByText(`Mandag 2. januar: ${getTekst({ id: 'statusDeltatt' })}`),
@@ -176,6 +177,10 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
 
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
+
+    // Venter på at state skal stabilisere seg. Safari kan være litt treg her
+    await page.waitForTimeout(1000);
+
     // Endrer på statuser for uke 1
     await page.selectOption('#select-2023-01-02', getTekst({ id: 'statusDeltatt' }));
     await page.selectOption('#select-2023-01-04', getTekst({ id: 'statusDeltatt' }));
@@ -298,7 +303,14 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
         });
     });
     await page.route('*/**/12345/korrigering/data', async (route) => {
-        await route.fulfill({ json: { meldekort: meldekortMedDagerUtenRett } });
+        await route.fulfill({
+            json: {
+                forrigeMeldekort: meldekortMedDagerUtenRett,
+                tilUtfylling: nyMeldekortKorrigeringTilUtfylling({
+                    dager: meldekortMedDagerUtenRett.dager,
+                }),
+            } satisfies KorrigerMeldekortResponse,
+        });
     });
     await page.goto(`${testsBaseUrl}/innsendte`);
     await klikkCookieBanner(page);
@@ -313,37 +325,6 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     await expect(formField).toHaveClass(/navds-form-field--readonly/);
 });
 
-test.describe('feil ved henting av meldeperiode', () => {
-    test('fra innsendte-meldekort', async ({ page }) => {
-        await page.route('*/**/api/meldeperiode', async (route) => {
-            await route.fulfill({ status: 404 });
-        });
-
-        await page.goto(`${testsBaseUrl}/innsendte`);
-        await klikkCookieBanner(page);
-        //Skal kunne navigere seg til korrigering
-        await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
-
-        await page;
-        await page.getByText(getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })).isVisible();
-    });
-
-    test('fra korrigering', async ({ page }) => {
-        await page.route('*/**/api/meldeperiode', async (route) => {
-            await route.fulfill({ status: 404 });
-        });
-
-        await page.goto(`${testsBaseUrl}/${førsteMeldekort.id}/korrigering`);
-        await klikkCookieBanner(page);
-
-        await page.getByText(getTekst({ id: 'korrigeringErrorPrøvIgjenSenere' })).isVisible();
-
-        await page.getByText('Tilbake til forsiden').click();
-        expect(page.url()).toBe(`${testsBaseUrl}/`);
-    });
-});
-
 test.describe('validerer korrigering av meldekort', () => {
     test('Validerer min og maks antall dager der alle dager gir rett til tiltakspenger', async ({
         page,
@@ -356,6 +337,10 @@ test.describe('validerer korrigering av meldekort', () => {
 
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
+
+        // Venter på at state skal stabilisere seg. Safari kan være litt treg her
+        await page.waitForTimeout(1000);
+
         await page.selectOption('#select-2023-01-02', 'Ikke besvart');
         await page.getByText(getTekst({ id: 'neste' })).click();
 
@@ -368,6 +353,7 @@ test.describe('validerer korrigering av meldekort', () => {
         await page.waitForURL('**/12345/korrigering/oppsummering');
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
     });
+
     test('Valider kun maks der minst en dag ikke gir rett til tiltakspenger.', async ({ page }) => {
         //behov for at minst en dag ikke gir rett til tiltakspenger
         const dager = [
@@ -444,18 +430,17 @@ test.describe('validerer korrigering av meldekort', () => {
             });
         });
 
-        await page.route('*/**/api/meldeperiode', async (route) => {
-            await route.fulfill({
-                json: nyMeldeperiodeForPeriodeResponse({
-                    dager: dager,
-                    periode: { fraOgMed: '2025-01-06', tilOgMed: '2025-01-19' },
-                    maksAntallDagerForPeriode: meldekort.maksAntallDager,
-                }),
-            });
-        });
-
         await page.route('*/**/12345/korrigering/data', async (route) => {
-            await route.fulfill({ json: { meldekort: meldekort } });
+            await route.fulfill({
+                json: {
+                    forrigeMeldekort: meldekort,
+                    tilUtfylling: nyMeldekortKorrigeringTilUtfylling({
+                        dager: dager,
+                        periode: { fraOgMed: '2025-01-06', tilOgMed: '2025-01-19' },
+                        maksAntallDagerForPeriode: meldekort.maksAntallDager,
+                    }),
+                } satisfies KorrigerMeldekortResponse,
+            });
         });
 
         await page.goto(`${testsBaseUrl}/innsendte`);
@@ -465,6 +450,9 @@ test.describe('validerer korrigering av meldekort', () => {
 
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
+
+        // Venter på at state skal stabilisere seg. Safari kan være litt treg her
+        await page.waitForTimeout(1000);
 
         await page.selectOption('#select-2025-01-10', getTekst({ id: 'statusDeltatt' }));
         await page.getByText(getTekst({ id: 'neste' })).click();

@@ -187,8 +187,6 @@ export const teksterNb = {
         tilOgMed: string;
     }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
     endreMeldekort: 'Endre meldekort',
-    feilSisteMeldekortOpplysninger:
-        'Kunne ikke hente siste opplysninger om meldekortet. Prøv igjen senere. Hvis problemet vedvarer, kontakt Nav.',
     tidligereMeldekortForPeriode:
         'Se tidligere meldekort som har blitt sendt inn for samme perioden',
 
@@ -199,6 +197,7 @@ export const teksterNb = {
     sisteInnsendteMeldekortForPerioden: 'Siste innsendte meldekort for perioden',
     tidligereInnsendteMeldekortForPerioden: 'Tidligere innsendte meldekort for perioden',
     sideForInnsendteMeldekort: 'Tilbake til side for innsendte meldekort',
+    tilbakeTilInnsendte: 'Tilbake til innsendte meldekort',
 
     //Arena
     alleUkjentArenaMeldekort:
@@ -214,8 +213,6 @@ export const teksterNb = {
     korrigeringBeskrivelseIngress: 'Slik endrer du meldekortet',
     korrigeringBeskrivelse:
         'Nedenfor ser du hva du har tidligere registrert i meldekortet. Endre valgene på de dagene som er feilregistrert. Etter du har sendt inn endringen vil endringen saksbehandles før det eventuelt blir endringer i utbetalingen din.',
-    korrigeringErrorPrøvIgjenSenere:
-        'Vi får ikke innhentet siste opplysninger om meldekortet ditt. Prøv igjen senere. Hvis problemet vedvarer, kontakt Nav.',
     korrigeringOppdatertAlert:
         'Meldekortet ditt har blitt oppdatert - Meldekortet inneholder nå de seneste opplysningene registrert. Verifiser at disse er korrekt, eller endre valgene på de dagene som er feilregistrert.',
     korrigeringSendMeldekortet: 'Send meldekortet',

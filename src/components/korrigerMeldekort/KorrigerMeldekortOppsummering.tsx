@@ -14,14 +14,13 @@ import styles from './KorrigerMeldekortOppsummering.module.css';
 import { ArrowLeftIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutes } from '@common/siteRoutes';
-import { useKorrigerMeldekortContext } from '../../context/korriger/KorrigerMeldekortContext';
+import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import { Link } from 'wouter';
 import { useCallback, useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
 import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
-import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
 import { getTekst } from '@tekster/tekster.ts';
 
 const useSendKorrigerteDager = (
@@ -79,14 +78,11 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
 
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
-    const korrigerMeldekortContext = useKorrigerMeldekortContext();
-    const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
     const [innsendingFeilet, setInnsendingFeilet] = useState(false);
-    const { status, response, callFn } = useSendKorrigerteDager(
-        props.originaleMeldekort.id,
-        korrigerMeldekortContext.dager,
-        base,
-    );
+
+    const { dager = [] } = useKorrigerMeldekortContext();
+
+    const { status, callFn } = useSendKorrigerteDager(props.originaleMeldekort.id, dager, base);
 
     useEffect(() => {
         if (status === 'loading') {
@@ -115,7 +111,9 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                 <Heading size="large" level="3">
                     Oppsummering av endret meldekort
                 </Heading>
-                {korrigerMeldekortContext.dager.length === 0 ? (
+                {/* Denne vil kun slå ut hvis brukeren går direkte til oppsummeringen uten å laste korrigeringssiden først for å populere dagene */}
+                {/* TODO: burde validere om det faktisk er endringer på dagene */}
+                {dager.length === 0 ? (
                     <Alert variant="info">
                         <BodyShort>
                             Du har ikke gjort noen endringer på dette meldekortet.
@@ -130,9 +128,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                     </Alert>
                 ) : (
                     <>
-                        <OppsummeringAvKorrigertMeldekortDager
-                            dager={korrigerMeldekortContext.dager}
-                        />
+                        <OppsummeringAvKorrigertMeldekortDager dager={dager} />
                         <ConfirmationPanel
                             label={getTekst({ id: 'oppsummeringBekrefter' })}
                             checked={harBekreftet}
@@ -199,8 +195,6 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                             className={styles.avbrytEndringButton}
                             variant="tertiary"
                             onClick={() => {
-                                korrigerMeldekortContext.setDager([]);
-                                setMeldeperiodeForPeriode(null);
                                 navigate(getPath(siteRoutes.forside));
                             }}
                         >

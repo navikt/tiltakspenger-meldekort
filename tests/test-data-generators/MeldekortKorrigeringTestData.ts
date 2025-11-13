@@ -1,8 +1,8 @@
 import { MeldekortDag, MeldekortDagStatus } from '../../commonSrc/typer/MeldekortBruker';
-import { MeldeperiodeForPeriodeResponse } from '../../commonSrc/typer/Meldeperiode';
 import { nyMeldekortDag } from './MeldekortTestData';
+import { MeldekortKorrigeringTilUtfylling } from '../../commonSrc/typer/KorrigerMeldekort';
 
-export const nyMeldeperiodeForPeriodeResponse = ({
+export const nyMeldekortKorrigeringTilUtfylling = ({
     meldeperiodeId = '12345',
     kjedeId = '67890',
     dager = [
@@ -73,7 +73,7 @@ export const nyMeldeperiodeForPeriodeResponse = ({
     periode?: { fraOgMed: string; tilOgMed: string };
     mottattTidspunktSisteMeldekort?: string;
     maksAntallDagerForPeriode?: number;
-}): MeldeperiodeForPeriodeResponse => ({
+}): MeldekortKorrigeringTilUtfylling => ({
     meldeperiodeId,
     kjedeId,
     dager: dager,

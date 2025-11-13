@@ -14,12 +14,12 @@ export const RouteComponent = ({ route, appContext }: Props) => {
     const { initialPath, initialProps } = appContext;
     const { Component } = route;
 
-    const { path, base } = useRouting();
+    const { path, base, isSSR } = useRouting();
 
     const { data, error } = useFetchPageData(
         path,
         base,
-        path === initialPath ? initialProps : undefined,
+        isSSR || path === initialPath ? initialProps : undefined,
     );
 
     if (error) {

@@ -1,25 +1,19 @@
 import { getPath, siteRoutes } from '@common/siteRoutes';
-import { MeldeperiodeForPeriodeResponse } from '@common/typer/Meldeperiode';
 import { MeldekortForKjedeResponse } from '@common/typer/MeldeperiodeKjede';
-import { Periode } from '@common/typer/periode';
 import { Kalender } from '@components/kalender/Kalender';
 import { InternLenke } from '@components/lenke/InternLenke';
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Tekst } from '@components/tekst/Tekst';
-import { useMeldeperiodeForPeriodeContext } from '@context/meldeperiodeForPeriode/MeldeperiodeForPeriodeContext';
-import { Alert, Button, Heading, HStack, Label, VStack } from '@navikt/ds-react';
-import { useRouting } from '@routing/useRouting';
+import { Heading, VStack } from '@navikt/ds-react';
 import { formatterDatoTid } from '@utils/datetime';
-import { apiFetcher, useApi } from '@utils/fetch';
+import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
+
 import styles from './InnsendteMeldekortForKjede.module.css';
 
 const InnsendteMeldekortForKjede = (props: {
     meldekortForKjede: MeldekortForKjedeResponse;
     kanSendeInnHelgForMeldekort: boolean;
 }) => {
-    const { navigate } = useRouting();
-    const { setMeldeperiodeForPeriode } = useMeldeperiodeForPeriodeContext();
-
     const sorterteMeldekort = props.meldekortForKjede.meldekort.toSorted((a, b) => {
         if (a.innsendt && b.innsendt) {
             return b.innsendt.localeCompare(a.innsendt);
@@ -27,18 +21,7 @@ const InnsendteMeldekortForKjede = (props: {
         return -1;
     });
 
-    const sisteInnsendteMeldekort = sorterteMeldekort[0];
-    const rest = sorterteMeldekort.slice(1);
-
-    const { trigger, isLoading, error } = useApi<Periode, MeldeperiodeForPeriodeResponse>({
-        key: '/meldeperiode',
-        handler: (payload) =>
-            apiFetcher({
-                url: 'meldeperiode',
-                method: 'POST',
-                body: payload,
-            }),
-    });
+    const [sisteInnsendteMeldekort, ...tidligereMeldekort] = sorterteMeldekort;
 
     return (
         <div>
@@ -46,12 +29,12 @@ const InnsendteMeldekortForKjede = (props: {
                 tekstId={'innsendteTittel'}
                 underTekst={
                     <VStack>
-                        {props.meldekortForKjede.periode ? (
+                        {props.meldekortForKjede.periode && (
                             <Tekst
                                 id={'meldekortForKjedeHeaderUndertekst'}
                                 resolverProps={{ periode: props.meldekortForKjede.periode }}
                             />
-                        ) : null}
+                        )}
 
                         <InternLenke path={getPath(siteRoutes.innsendte)}>
                             <Tekst id={'sideForInnsendteMeldekort'} />
@@ -65,70 +48,15 @@ const InnsendteMeldekortForKjede = (props: {
                     <VStack gap="2">
                         <Tekst id={'ingenInnsendteMeldekortForPerioden'} />
                         <InternLenke path={getPath(siteRoutes.innsendte)}>
-                            Tilbake til innsendte meldekort.
+                            <Tekst id={'tilbakeTilInnsendte'} />
                         </InternLenke>
                     </VStack>
                 ) : (
                     <VStack gap="6">
-                        <VStack>
-                            <Heading size="medium" level="3">
-                                <Tekst id={'sisteInnsendteMeldekortForPerioden'} />
-                            </Heading>
-
-                            {error && (
-                                <Alert variant="error" size="small">
-                                    <Tekst id={'feilSisteMeldekortOpplysninger'} />
-                                </Alert>
-                            )}
-
-                            {sisteInnsendteMeldekort.innsendt ? (
-                                <HStack justify="space-between">
-                                    <Label>
-                                        <Tekst
-                                            id={'alleInnsendt'}
-                                            resolverProps={{
-                                                dato: formatterDatoTid(
-                                                    sisteInnsendteMeldekort.innsendt,
-                                                ),
-                                            }}
-                                        />
-                                    </Label>
-                                    <Button
-                                        type="button"
-                                        variant="secondary"
-                                        loading={isLoading}
-                                        onClick={() => {
-                                            trigger(
-                                                {
-                                                    fraOgMed: sisteInnsendteMeldekort.fraOgMed,
-                                                    tilOgMed: sisteInnsendteMeldekort.tilOgMed,
-                                                },
-                                                {
-                                                    onSuccess: (response) => {
-                                                        setMeldeperiodeForPeriode(response);
-                                                        navigate(
-                                                            getPath(siteRoutes.korrigerMeldekort, {
-                                                                meldekortId:
-                                                                    sisteInnsendteMeldekort.id,
-                                                            }),
-                                                        );
-                                                    },
-                                                },
-                                            );
-                                        }}
-                                    >
-                                        <Tekst id={'endreMeldekort'} />
-                                    </Button>
-                                </HStack>
-                            ) : (
-                                <Tekst id={'ikkeInnsendt'} />
-                            )}
-                            <Kalender
-                                meldekort={sisteInnsendteMeldekort}
-                                steg="kvittering"
-                                kanFylleUtHelg={props.kanSendeInnHelgForMeldekort}
-                            />
-                        </VStack>
+                        <SisteInnsendteMeldekort
+                            meldekort={sisteInnsendteMeldekort}
+                            visHelg={props.kanSendeInnHelgForMeldekort}
+                        />
 
                         <div className={styles.separator}></div>
 
@@ -138,21 +66,19 @@ const InnsendteMeldekortForKjede = (props: {
                             </Heading>
 
                             <ul className={styles.tidligereInnsendteMeldekortContainer}>
-                                {rest.map((meldekort) => (
+                                {tidligereMeldekort.map((meldekort) => (
                                     <li key={meldekort.id}>
                                         {meldekort.innsendt && (
-                                            <Label>
-                                                <Tekst
-                                                    id={'alleInnsendt'}
-                                                    resolverProps={{
-                                                        dato: formatterDatoTid(meldekort.innsendt),
-                                                    }}
-                                                />
-                                            </Label>
+                                            <Tekst
+                                                id={'alleInnsendt'}
+                                                resolverProps={{
+                                                    dato: formatterDatoTid(meldekort.innsendt),
+                                                }}
+                                            />
                                         )}
                                         <Kalender
                                             meldekort={meldekort}
-                                            steg="kvittering"
+                                            steg={'kvittering'}
                                             kanFylleUtHelg={props.kanSendeInnHelgForMeldekort}
                                         />
                                     </li>
