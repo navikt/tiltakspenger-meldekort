@@ -46,6 +46,10 @@ test('kan korrigere meldekort', async ({ page }) => {
 
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
+
+    // Venter på at state skal stabilisere seg. Safari kan være litt treg her
+    await page.waitForTimeout(1000);
+
     // Endrer på statuser for uke 1
     await page.selectOption('#select-2023-01-02', getTekst({ id: 'statusDeltatt' }));
     //tirsdag 3. er allerede satt som deltatt
@@ -173,6 +177,10 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
 
     await page.waitForURL('**/12345/korrigering');
     expect(page.url()).toContain('/12345/korrigering');
+
+    // Venter på at state skal stabilisere seg. Safari kan være litt treg her
+    await page.waitForTimeout(1000);
+
     // Endrer på statuser for uke 1
     await page.selectOption('#select-2023-01-02', getTekst({ id: 'statusDeltatt' }));
     await page.selectOption('#select-2023-01-04', getTekst({ id: 'statusDeltatt' }));
@@ -329,6 +337,10 @@ test.describe('validerer korrigering av meldekort', () => {
 
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
+
+        // Venter på at state skal stabilisere seg. Safari kan være litt treg her
+        await page.waitForTimeout(1000);
+
         await page.selectOption('#select-2023-01-02', 'Ikke besvart');
         await page.getByText(getTekst({ id: 'neste' })).click();
 
@@ -438,6 +450,9 @@ test.describe('validerer korrigering av meldekort', () => {
 
         await page.waitForURL('**/12345/korrigering');
         expect(page.url()).toContain('/12345/korrigering');
+
+        // Venter på at state skal stabilisere seg. Safari kan være litt treg her
+        await page.waitForTimeout(1000);
 
         await page.selectOption('#select-2025-01-10', getTekst({ id: 'statusDeltatt' }));
         await page.getByText(getTekst({ id: 'neste' })).click();
