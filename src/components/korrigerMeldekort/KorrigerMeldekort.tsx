@@ -228,7 +228,7 @@ const MeldekortUkeBehandling = (props: {
                             </option>
                         ))
                     ) : (
-                        <option>Ikke rett på tiltakspenger</option>
+                        <option value={dag.status}>Ikke rett på tiltakspenger</option>
                     )}
                 </Select>
             ))}
