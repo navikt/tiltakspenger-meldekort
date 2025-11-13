@@ -172,6 +172,9 @@ test.describe('kontroll av helg av meldekortet', () => {
         //
         // Tidligere hadde vi en bug som hindret at data fra den initielle server-responsen ble benyttet i dynamiske routes
         // Dette ble fikset i commit 4c1b865b - men etter dette er vi avhengig av at serveren faktisk returnerer korrekte data :D
+        //
+        // TODO: mock server-responsen når denne issuen er fikset:
+        // https://trello.com/c/72ig6Pm1/1743-mulighet-for-%C3%A5-tilpasse-server-side-api-mocks-for-tester
         await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
         await expect(page.getByText('Søndag 12. januar')).toBeHidden();
         await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
