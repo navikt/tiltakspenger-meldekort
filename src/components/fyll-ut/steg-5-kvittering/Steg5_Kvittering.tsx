@@ -39,7 +39,7 @@ export const Steg5_Kvittering = ({ brukersMeldekort }: SSRProps) => {
             <VStack gap="8">
                 <div>
                     <Alert variant={'success'} className={style.kvittering}>
-                        <TekstSegmenter id={'kvittering'} />
+                        <TekstSegmenter id={'kvittering'} spacing={true} />
                     </Alert>
                     <InternLenke path={getPath(siteRoutes.forside)}>
                         <Tekst id={'kvitteringTilbake'} />
