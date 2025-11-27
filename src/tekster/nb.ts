@@ -165,8 +165,11 @@ export const teksterNb = {
 
     kvitteringTittel: 'Oppsummering',
     kvitteringTilbake: 'Tilbake til startsiden for meldekort',
-    kvittering:
+    kvittering: [
         'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
+        'Du får pengene innen tre virkedager hvis vi har fått all informasjonen vi trenger for å beregne og betale ut tiltakspenger. ' +
+            'Hvis du har gitt svar som gjør at vi trenger dokumentasjon, kan det ta litt lengre tid før du får pengene.',
+    ],
 
     // Innsendte
     innsendteTittel: 'Innsendte meldekort',
