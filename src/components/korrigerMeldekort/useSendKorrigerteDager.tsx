@@ -8,14 +8,27 @@ export const useSendKorrigerteDager = (
 ): {
     status: 'success' | 'error' | 'loading' | 'initial';
     response: unknown;
-    callFn: (args: { onSuccess?: () => void; onError?: () => void }) => void;
+    callFn: (args: {
+        onLoading?: () => void;
+        onSuccess?: () => void;
+        onError?: () => void;
+    }) => void;
 } => {
     const [response, setResponse] = useState<unknown>(null);
     const [status, setStatus] = useState<'success' | 'error' | 'loading' | 'initial'>('initial');
 
     const callFn = useCallback(
-        ({ onSuccess, onError }: { onSuccess?: () => void; onError?: () => void }) => {
+        ({
+            onLoading,
+            onSuccess,
+            onError,
+        }: {
+            onLoading?: () => void;
+            onSuccess?: () => void;
+            onError?: () => void;
+        }) => {
             setStatus('loading');
+            onLoading?.();
             fetch(`${baseUrl}/api/korriger`, {
                 method: 'PATCH',
                 credentials: 'include',

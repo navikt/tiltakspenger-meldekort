@@ -16,7 +16,7 @@ import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import { Link } from 'wouter';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
@@ -34,13 +34,6 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
     const { dager = [] } = useKorrigerMeldekortContext();
 
     const { status, callFn } = useSendKorrigerteDager(props.originaleMeldekort.id, dager, base);
-
-    useEffect(() => {
-        if (status === 'loading') {
-            // eslint-disable-next-line
-            setInnsendingFeilet(false);
-        }
-    }, [status]);
 
     return (
         <div>
@@ -123,6 +116,9 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                                     }
 
                                     callFn({
+                                        onLoading: () => {
+                                            setInnsendingFeilet(false);
+                                        },
                                         onSuccess: () => {
                                             navigate(
                                                 getPath(siteRoutes.korrigerMeldekortKvittering, {
