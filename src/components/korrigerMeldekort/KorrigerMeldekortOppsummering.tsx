@@ -16,62 +16,13 @@ import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import { Link } from 'wouter';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
 import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
 import { getTekst } from '@tekster/tekster.ts';
-
-const useSendKorrigerteDager = (
-    meldekortId: string,
-    korrigerteDager: MeldekortDag[],
-    baseUrl: string,
-): {
-    status: 'success' | 'error' | 'loading' | 'initial';
-    response: unknown;
-    callFn: (args: { onSuccess?: () => void; onError?: () => void }) => void;
-} => {
-    const [response, setResponse] = useState<unknown>(null);
-    const [status, setStatus] = useState<'success' | 'error' | 'loading' | 'initial'>('initial');
-
-    const callFn = useCallback(
-        ({ onSuccess, onError }: { onSuccess?: () => void; onError?: () => void }) => {
-            setStatus('loading');
-            fetch(`${baseUrl}/api/korriger`, {
-                method: 'PATCH',
-                credentials: 'include',
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify({
-                    meldekortId: meldekortId,
-                    korrigerteDager: korrigerteDager.map((dag) => ({
-                        dato: dag.dag,
-                        status: dag.status,
-                    })),
-                }),
-            })
-                .then((res) => {
-                    if (res.ok) {
-                        setStatus('success');
-                        setResponse(res);
-                        onSuccess?.();
-                    } else {
-                        console.error(`Feil-response ved innsending - ${res.status}`);
-                        setStatus('error');
-                        setResponse(res);
-                        onError?.();
-                    }
-                })
-                .catch((e) => {
-                    console.error(`Innsending feilet - ${e}`);
-                    setStatus('error');
-                });
-        },
-        [meldekortId, korrigerteDager, baseUrl],
-    );
-
-    return { status, response, callFn };
-};
+import { useSendKorrigerteDager } from '@components/korrigerMeldekort/useSendKorrigerteDager.tsx';
 
 const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort }) => {
     const { navigate, base } = useRouting();
@@ -86,6 +37,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
 
     useEffect(() => {
         if (status === 'loading') {
+            // eslint-disable-next-line
             setInnsendingFeilet(false);
         }
     }, [status]);
