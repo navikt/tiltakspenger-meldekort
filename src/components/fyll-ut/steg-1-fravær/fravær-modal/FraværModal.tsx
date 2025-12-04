@@ -31,8 +31,12 @@ export const FraværModal = () => {
     };
 
     useEffect(() => {
-        setValgtStatus(initiellStatus);
-    }, [valgtMeldekortDag, initiellStatus]);
+        if (!valgtMeldekortDag) return;
+
+        // Det er trygt å oppdatere state her fordi effekten kun trigges når valgtMeldekortDag endres, ikke for hver render
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setValgtStatus(valgtMeldekortDag.status || MeldekortDagStatus.IKKE_BESVART);
+    }, [valgtMeldekortDag]);
 
     return (
         <Modal
