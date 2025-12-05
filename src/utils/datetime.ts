@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/nb.js';
 import weekOfYear from 'dayjs/plugin/weekOfYear.js';
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
@@ -21,9 +21,7 @@ export const formatterDato = ({
 }: FormatterDatoProps) => {
     const ukeDag = medUkeDag ? (kort ? 'ddd ' : 'dddd ') : '';
 
-    const formattert = dayjs(dato)
-        .locale('nb')
-        .format(`${ukeDag}D. ${kort ? 'MMM' : 'MMMM'}`);
+    const formattert = lokalTid(dato).format(`${ukeDag}D. ${kort ? 'MMM' : 'MMMM'}`);
 
     return medStorForbokstav
         ? formattert.replace(/^./, (match) => match.toUpperCase())
@@ -31,9 +29,13 @@ export const formatterDato = ({
 };
 
 export const formatterDatoTid = (datoTid: string) => {
-    return dayjs(datoTid).locale('nb').format('D[.] MMMM YYYY [kl.] H:mm');
+    return lokalTid(datoTid).format('D[.] MMMM YYYY [kl.] H:mm');
 };
 
 export const getUkenummer = (datoTid: string) => {
-    return dayjs(datoTid).locale('nb').week();
+    return lokalTid(datoTid).week();
+};
+
+export const lokalTid = (date: string): Dayjs => {
+    return dayjs(date).locale('nb');
 };
