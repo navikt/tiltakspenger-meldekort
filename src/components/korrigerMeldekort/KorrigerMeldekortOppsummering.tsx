@@ -22,18 +22,16 @@ import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
 import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
 import { getTekst } from '@tekster/tekster.ts';
-import { useSendKorrigerteDager } from '@components/korrigerMeldekort/useSendKorrigerteDager.tsx';
+import { ErrorCodes, useApiClient } from '@utils/apiClient';
 
 const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort }) => {
     const { navigate, base } = useRouting();
-
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
-    const [innsendingFeilet, setInnsendingFeilet] = useState(false);
 
     const { dager = [] } = useKorrigerMeldekortContext();
 
-    const { status, callFn } = useSendKorrigerteDager(props.originaleMeldekort.id, dager, base);
+    const apiClient = useApiClient<Meldekort>({ url: `${base}/api/korriger`, method: 'PATCH' });
 
     return (
         <div>
@@ -88,9 +86,18 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                             Meldekortet er ikke sendt inn.
                         </Alert>
 
-                        {innsendingFeilet && (
+                        {apiClient.response?.status === 'error' && (
                             <Alert variant="error">
-                                Innsending av meldekortet feilet. Prøv igjen
+                                <BodyShort>
+                                    {apiClient.response.error.statusCode}
+                                    {apiClient.response.error.errorBody.melding}
+                                </BodyShort>
+                                {apiClient.response.error.errorBody.kode ===
+                                    ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig && (
+                                    <Link to={getPath(siteRoutes.forside)}>
+                                        {getTekst({ id: 'tilbakeTilOversiktForNyKorrigering' })}
+                                    </Link>
+                                )}
                             </Alert>
                         )}
                         <HStack gap="2">
@@ -105,19 +112,23 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                                     )
                                 }
                             >
-                                Forrige steg
+                                {getTekst({ id: 'forrige' })}
                             </Button>
                             <FlashingButton
-                                loading={status === 'loading'}
+                                loading={apiClient.apiStatus === 'loading'}
                                 onClick={() => {
                                     if (!harBekreftet) {
                                         setVisFeil(true);
                                         return false;
                                     }
 
-                                    callFn({
-                                        onLoading: () => {
-                                            setInnsendingFeilet(false);
+                                    apiClient.callApi({
+                                        body: {
+                                            meldekortId: props.originaleMeldekort.id,
+                                            korrigerteDager: dager.map((dag) => ({
+                                                dato: dag.dag,
+                                                status: dag.status,
+                                            })),
                                         },
                                         onSuccess: () => {
                                             navigate(
@@ -125,9 +136,6 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                                                     meldekortId: props.originaleMeldekort.id,
                                                 }),
                                             );
-                                        },
-                                        onError: () => {
-                                            setInnsendingFeilet(true);
                                         },
                                     });
 

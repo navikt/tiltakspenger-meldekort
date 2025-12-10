@@ -5,6 +5,7 @@ import { nyMeldekortDag, nyUtfylltMeldekort } from './test-data-generators/Melde
 import { nyMeldekortKorrigeringTilUtfylling } from './test-data-generators/MeldekortKorrigeringTestData';
 import { getTekst } from '../src/tekster/tekster';
 import { KorrigerMeldekortResponse } from '../commonSrc/typer/KorrigerMeldekort';
+import { ErrorCodes } from '../src/utils/apiClient';
 
 const førsteMeldekort = nyUtfylltMeldekort({});
 
@@ -35,7 +36,7 @@ test.beforeEach(async ({ page }) => {
 
 test('kan korrigere meldekort', async ({ page }) => {
     await page.route(`*/**/api/korriger`, async (route) => {
-        await route.fulfill({ status: 200 });
+        await route.fulfill({ status: 200, body: '{}' });
     });
 
     await page.goto(`${testsBaseUrl}/innsendte`);
@@ -138,7 +139,7 @@ test.describe('kan avbryte korrigering av et meldekort', () => {
 
 test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
     await page.route(`*/**/api/korriger`, async (route) => {
-        await route.fulfill({ status: 200 });
+        await route.fulfill({ status: 200, body: '{}' });
     });
 
     await page.goto(`${testsBaseUrl}/innsendte`);
@@ -470,4 +471,47 @@ test.describe('validerer korrigering av meldekort', () => {
         await page.waitForURL('**/12345/korrigering/oppsummering');
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
     });
+});
+
+test('får melding om at meldekortet er allerede korrigert - og en lenke til oversikten', async ({
+    page,
+}) => {
+    await page.route(`*/**/api/korriger`, async (route) => {
+        await route.fulfill({
+            status: 400,
+            body: JSON.stringify({
+                kode: ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig,
+                melding:
+                    'Dette meldekortet er allerede korrigert, og er ikke lenger gyldig. Et nyere meldekort finnes.',
+            }),
+        });
+    });
+
+    await page.goto(`${testsBaseUrl}/innsendte`);
+    await klikkCookieBanner(page);
+    //Skal kunne navigere seg til korrigering
+    await page.getByText('Meldekort uke 1 - 2').click();
+    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+
+    await page.waitForURL('**/12345/korrigering');
+    expect(page.url()).toContain('/12345/korrigering');
+    await page.getByText(getTekst({ id: 'neste' })).click();
+    expect(page.url()).toContain('/12345/korrigering/oppsummering');
+
+    await page.getByText(getTekst({ id: 'oppsummeringBekrefter' })).click();
+    await page.getByText('Send meldekortet').click();
+
+    // Verifiserer at vi får riktig feilmelding
+    await expect(
+        page.getByText(
+            'Dette meldekortet er allerede korrigert, og er ikke lenger gyldig. Et nyere meldekort finnes.',
+        ),
+    ).toBeVisible();
+    const tilbakeLenke = page.getByRole('link', {
+        name: getTekst({ id: 'tilbakeTilOversiktForNyKorrigering' }),
+    });
+    await expect(tilbakeLenke).toBeVisible();
+
+    await tilbakeLenke.click();
+    expect(page.url()).toBe(`${testsBaseUrl}/`);
 });

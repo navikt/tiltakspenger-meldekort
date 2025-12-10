@@ -1,5 +1,3 @@
-import { Meldekort } from '@common/typer/MeldekortBruker';
-
 type Options = RequestInit & { params?: Record<string, unknown> };
 
 const objectToQueryString = (params?: Record<string, unknown>) =>
@@ -51,29 +49,4 @@ export const fetchJson = async <ResponseType>(
         .catch((e) => {
             console.error(`Failed to fetch json from ${url} - ${e}`);
             return null;
-        });
-
-export const fetchSendInn = async (
-    meldekortUtfylling: Meldekort,
-    baseUrl: string,
-): Promise<boolean> =>
-    fetch(`${baseUrl}/api/send-inn`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'content-type': 'application/json',
-        },
-        body: JSON.stringify(meldekortUtfylling),
-    })
-        .then((res) => {
-            if (res.ok) {
-                return true;
-            } else {
-                console.error(`Feil-response ved innsending - ${res.status}`);
-                return false;
-            }
-        })
-        .catch((e) => {
-            console.error(`Innsending feilet - ${e}`);
-            return false;
         });

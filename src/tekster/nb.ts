@@ -31,9 +31,9 @@ export const teksterNb = {
     ingenDagerFyltUt: 'Du må fylle ut minst én dag med fravær, lønn eller deltagelse.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
-    forMangeDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
+    forMangeDagerBesvart: ({ maks }: { maks: number }) =>
         `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
-    forFaDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
+    forFaDagerBesvart: ({ maks }: { maks: number }) =>
         `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
@@ -170,6 +170,8 @@ export const teksterNb = {
         'Du får pengene innen tre virkedager hvis vi har fått all informasjonen vi trenger for å beregne og betale ut tiltakspenger. ' +
             'Hvis du har gitt svar som gjør at vi trenger dokumentasjon, kan det ta litt lengre tid før du får pengene.',
     ],
+
+    tilbakeTilOversiktForNyKorrigering: 'Gå tilbake til oversikten for å starte en ny korrigering',
 
     // Innsendte
     innsendteTittel: 'Innsendte meldekort',

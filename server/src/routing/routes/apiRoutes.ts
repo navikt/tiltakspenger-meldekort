@@ -13,7 +13,9 @@ const sendInnRoute =
 
         const response = await fetcher(req, 'send-inn', 'POST', JSON.stringify(body));
 
-        res.status(response?.status ?? 500).send(response?.statusText ?? 'Ukjent feil!');
+        const responseText = response?.text ? await response.text() : null;
+
+        res.status(response?.status ?? 500).send(responseText);
     };
 
 const korrigerteDagerRoute =
@@ -28,7 +30,9 @@ const korrigerteDagerRoute =
             JSON.stringify(request.korrigerteDager),
         );
 
-        res.status(response?.status ?? 500).send(response?.statusText ?? 'Ukjent feil!');
+        const responseText = response?.text ? await response.text() : null;
+
+        res.status(response?.status ?? 500).send(responseText);
     };
 
 export const setupApiRoutes = (router: Router) => {

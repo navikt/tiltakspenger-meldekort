@@ -5,7 +5,7 @@ import { Alert, ConfirmationPanel, ErrorSummary, VStack } from '@navikt/ds-react
 import { Tekst } from '@components/tekst/Tekst';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { fetchSendInn } from '@utils/fetch.ts';
+
 import { useRouting } from '@routing/useRouting.ts';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 
@@ -18,6 +18,7 @@ import { OppsummeringError } from '@components/fyll-ut/steg-4-oppsummering/Oppsu
 import { TekstId } from '@tekster/typer.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
+import { useApiClient } from '@utils/apiClient';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -44,11 +45,13 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
     } = useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
-    const [innsendingFeilet, setInnsendingFeilet] = useState(false);
+
     const errorRef = React.useRef<HTMLDivElement>(null);
     const [errors, setErrors] = useState<ErrorSummaryItem[]>([]);
 
     useInitMeldekortSteg(brukersMeldekort, 'oppsummering');
+
+    const apiClient = useApiClient({ url: `${base}/api/send-inn`, method: 'POST' });
 
     if (!meldekortUtfylling) return;
     const {
@@ -64,18 +67,19 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
 
     const sendInn = () => {
         setMeldekortSteg('kvittering');
-        fetchSendInn(meldekortUtfylling, base).then((bleSendt) => {
-            if (bleSendt) {
+        apiClient.callApi({
+            body: meldekortUtfylling,
+            onSuccess: () => {
                 setVisValideringsfeil(null);
                 setHarHattFravær(null);
                 setHarMottattLønn(null);
 
-                navigate(getPathForMeldekortSteg('kvittering', meldekortUtfylling.id));
-            } else {
-                setInnsendingFeilet(true);
+                navigate(getPathForMeldekortSteg('kvittering', meldekortUtfylling!.id));
+            },
+            onError: () => {
                 setMeldekortSteg('oppsummering');
                 varselRef.current?.focus();
-            }
+            },
         });
     };
 
@@ -206,7 +210,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                     }
                 />
             </VStack>
-            {innsendingFeilet && (
+            {apiClient.apiStatus === 'error' && (
                 <Alert variant="error" className={style.varsel} ref={varselRef} tabIndex={-1}>
                     <TekstSegmenter id="oppsummeringInnsendingFeilet" />
                 </Alert>
