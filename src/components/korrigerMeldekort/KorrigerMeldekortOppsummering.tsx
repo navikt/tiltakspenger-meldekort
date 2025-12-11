@@ -88,10 +88,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
 
                         {apiClient.response?.status === 'error' && (
                             <Alert variant="error">
-                                <BodyShort>
-                                    {apiClient.response.error.statusCode}
-                                    {apiClient.response.error.errorBody.melding}
-                                </BodyShort>
+                                <BodyShort>{apiClient.response.error.errorBody.melding}</BodyShort>
                                 {apiClient.response.error.errorBody.kode ===
                                     ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig && (
                                     <Link to={getPath(siteRoutes.forside)}>
