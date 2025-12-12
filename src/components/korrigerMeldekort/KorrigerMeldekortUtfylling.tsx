@@ -38,7 +38,7 @@ type Props = {
 /**
  * TODO - skal vi ha noe form for validering her?
  */
-const KorrigerMeldekort = (props: Props) => {
+const KorrigerMeldekortUtfylling = (props: Props) => {
     const { forrigeMeldekort } = props;
 
     useEffect(() => {
@@ -74,7 +74,7 @@ const KorrigerMeldekort = (props: Props) => {
     );
 };
 
-export default KorrigerMeldekort;
+export default KorrigerMeldekortUtfylling;
 
 const KorrigeringAvMeldekort = ({ forrigeMeldekort, tilUtfylling }: Props) => {
     const { navigate } = useRouting();

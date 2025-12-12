@@ -31,7 +31,7 @@ export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
                         type={'button'}
                         variant={'secondary'}
                         as={InternLenke}
-                        path={getPath(siteRoutes.korrigerMeldekort, {
+                        path={getPath(siteRoutes.korrigerMeldekortUtfylling, {
                             meldekortId: meldekort.id,
                         })}
                         className={style.knapp}

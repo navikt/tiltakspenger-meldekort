@@ -14,7 +14,7 @@ export enum ErrorCodes {
     meldekort_allerede_korrigert_og_ikke_lenger_gyldig = 'meldekort_allerede_korrigert_og_ikke_lenger_gyldig',
 }
 
-type Method = 'POST' | 'PATCH';
+type Method = 'POST' | 'PATCH' | 'GET';
 
 export type ApiClientResult<TSuccess> = ApiClientSuccessResult<TSuccess> | ApiClientFailureResult;
 export type ApiClientSuccessResult<TSuccess> = { status: 'ok'; data: TSuccess; statusCode: number };
@@ -84,6 +84,7 @@ export const useApiClient = <TSuccess = unknown>(args: {
         onError?: (error: ApiError) => void;
     }) => void;
     response: ApiClientResult<TSuccess> | null;
+    resetToInitial: () => void;
 } => {
     const [apiStatus, setApiStatus] = useState<'initial' | 'loading' | 'success' | 'error'>(
         'initial',
@@ -118,5 +119,10 @@ export const useApiClient = <TSuccess = unknown>(args: {
         [args],
     );
 
-    return { apiStatus, callApi, response };
+    const resetToInitial = useCallback(() => {
+        setApiStatus('initial');
+        setResponse(null);
+    }, []);
+
+    return { apiStatus, callApi, response, resetToInitial };
 };

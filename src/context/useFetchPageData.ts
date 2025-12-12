@@ -5,7 +5,7 @@ import { stripTrailingSlash } from '@utils/urls.ts';
 const isSsr = import.meta.env.SSR;
 
 const fetchPageData = (baseUrl: string) => async (pagePath: string) => {
-    return fetchJson<any>(`${baseUrl}${stripTrailingSlash(pagePath)}/data`);
+    return fetchJson(`${baseUrl}${stripTrailingSlash(pagePath)}/data`);
 };
 
 export const useFetchPageData = (path: string, baseUrl: string, fallbackData?: any) => {

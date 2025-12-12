@@ -62,7 +62,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                             Du har ikke gjort noen endringer på dette meldekortet.
                         </BodyShort>
                         <Link
-                            to={getPath(siteRoutes.korrigerMeldekort, {
+                            to={getPath(siteRoutes.korrigerMeldekortUtfylling, {
                                 meldekortId: props.originaleMeldekort.id,
                             })}
                         >
@@ -103,7 +103,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                                 icon={<ArrowLeftIcon title="pil-venstre" fontSize="1.5rem" />}
                                 onClick={() =>
                                     navigate(
-                                        getPath(siteRoutes.korrigerMeldekort, {
+                                        getPath(siteRoutes.korrigerMeldekortUtfylling, {
                                             meldekortId: props.originaleMeldekort.id,
                                         }),
                                     )

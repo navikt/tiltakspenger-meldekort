@@ -236,7 +236,26 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFu
               };
     });
 
-    routeBuilder.routes(siteRoutes.korrigerMeldekort, async (req, fetchFraApi) => {
+    routeBuilder.routes(siteRoutes.korrigeringMeldekort, async (req, fetchFraApi) => {
+        const { meldekortId } = req.params;
+
+        const response = await fetchFraApi(req, `${meldekortId}/kan-korrigeres`, 'GET').then(
+            (res) => (res?.ok ? (res.json() as Promise<{ kanKorrigeres: boolean }>) : null),
+        );
+
+        return response
+            ? {
+                  props: {
+                      resultat: response,
+                  },
+              }
+            : {
+                  props: {},
+                  status: 404,
+              };
+    });
+
+    routeBuilder.routes(siteRoutes.korrigerMeldekortUtfylling, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
 
         const response = await fetchFraApi(req, `korrigering/${meldekortId}`, 'GET').then((res) =>

@@ -9,7 +9,8 @@ export const siteRoutes = {
     deltakelse: '/:meldekortId/deltakelse',
     sendInn: '/:meldekortId/send-inn',
     kvittering: '/:meldekortId/kvittering',
-    korrigerMeldekort: '/:meldekortId/korrigering',
+    korrigeringMeldekort: '/:meldekortId/korrigering',
+    korrigerMeldekortUtfylling: '/:meldekortId/korrigering/utfylling',
     korrigerMeldekortOppsummering: '/:meldekortId/korrigering/oppsummering',
     korrigerMeldekortKvittering: '/:meldekortId/korrigering/kvittering',
 } as const satisfies Record<string, string>;
