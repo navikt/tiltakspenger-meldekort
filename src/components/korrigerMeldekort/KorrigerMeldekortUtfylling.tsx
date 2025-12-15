@@ -21,13 +21,13 @@ import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekort
 import {
     erKorrigerteDagerGyldig,
     hentGyldigeDagerFraMeldekortDager,
-    korrigerMeldekortStatusTextMapper,
 } from './KorrigerMeldekortUtils';
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
 import { getTekst, getTekster } from '@tekster/tekster.ts';
 import { KorrigeringMeldekortUtfyllingProps } from '@common/typer/KorrigerMeldekort.ts';
 import { classNames } from '@utils/classNames.ts';
+import { statusTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 
 import styles from './KorrigerMeldekort.module.scss';
 
@@ -220,39 +220,44 @@ const MeldekortUkeBehandling = ({
             width={'85%'}
             className={classNames(styles.dagSelectContainer, kanSendeInnHelg && styles.medHelg)}
         >
-            {dagerMedEllerUtenHelg.map((dag) => (
-                <Select
-                    className={statusClassMap[dag.status]}
-                    id={`select-${dag.dag}`}
-                    key={dag.dag}
-                    label={formatterDato({ medUkeDag: true, dato: dag.dag })}
-                    value={dag.status}
-                    onChange={(e) => {
-                        onChange(dag.dag, e.target.value as MeldekortDagStatus);
-                    }}
-                    readOnly={dag.status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER}
-                >
-                    {dag.status !== MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER ? (
-                        Object.values(MeldekortDagStatus).map((status) => (
-                            <option
-                                hidden={
-                                    status === MeldekortDagStatus.IKKE_BESVART ||
-                                    status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER
-                                }
-                                key={status}
-                                value={status}
-                            >
-                                {korrigerMeldekortStatusTextMapper(status)}
+            {dagerMedEllerUtenHelg.map((meldekortDag) => {
+                const { status, dag } = meldekortDag;
+
+                const ikkeRett = status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER;
+
+                return (
+                    <Select
+                        className={statusClassMap[status]}
+                        id={`select-${dag}`}
+                        key={dag}
+                        label={formatterDato({ medUkeDag: true, dato: dag })}
+                        value={status}
+                        onChange={(e) => {
+                            onChange(dag, e.target.value as MeldekortDagStatus);
+                        }}
+                        readOnly={ikkeRett}
+                    >
+                        {ikkeRett ? (
+                            <option key={status} value={status}>
+                                {getTekst({ id: statusTilTekstId[status] })}
                             </option>
-                        ))
-                    ) : (
-                        <option value={dag.status}>Ikke rett på tiltakspenger</option>
-                    )}
-                </Select>
-            ))}
+                        ) : (
+                            gyldigeStatusValg.map((status) => (
+                                <option key={status} value={status}>
+                                    {getTekst({ id: statusTilTekstId[status] })}
+                                </option>
+                            ))
+                        )}
+                    </Select>
+                );
+            })}
         </VStack>
     );
 };
+
+const gyldigeStatusValg = Object.values(MeldekortDagStatus).filter(
+    (status) => status !== MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER,
+);
 
 const InformasjonOmKorrigeringAvMeldekort = () => {
     return (
