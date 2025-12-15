@@ -5,7 +5,7 @@ import { Feilside } from '@Feilside.tsx';
 import { AppContext } from '@common/typer/appContext.ts';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider.tsx';
 import { useRouting } from '@routing/useRouting.ts';
-import { KorrigerMeldekortProvider } from '@context/korriger/KorrigerMeldekortProvider';
+import KorrigeringAvMeldekortRouteWrapper from '@components/korrigerMeldekort/KorrigeringAvMeldekortRouteWrapper';
 
 type Props = {
     appContext: AppContext;
@@ -21,9 +21,7 @@ export const SiteRouter = ({ appContext }: Props) => {
         lønn,
         sendInn,
         kvittering,
-        korrigerMeldekort,
-        korrigerMeldekortOppsummering,
-        korrigerMeldekortKvittering,
+        korrigeringMeldekort,
     } = siteRouteConfigs;
     const { navigate } = useRouting();
 
@@ -60,23 +58,9 @@ export const SiteRouter = ({ appContext }: Props) => {
 
                 {/*pga match av provideren over, må alle routes være innenfor denne - Eventuelt hvis det er en fully-standalone route - over provideren. Litt dumt at base
                     pathen må wrappes i en provider*/}
-                <KorrigerMeldekortProvider>
-                    <Route path={korrigerMeldekort.path}>
-                        <RouteComponent route={korrigerMeldekort} appContext={appContext} />
-                    </Route>
-                    <Route path={korrigerMeldekortOppsummering.path}>
-                        <RouteComponent
-                            route={korrigerMeldekortOppsummering}
-                            appContext={appContext}
-                        />
-                    </Route>
-                    <Route path={korrigerMeldekortKvittering.path}>
-                        <RouteComponent
-                            route={korrigerMeldekortKvittering}
-                            appContext={appContext}
-                        />
-                    </Route>
-                </KorrigerMeldekortProvider>
+                <Route path={korrigeringMeldekort.path}>
+                    <KorrigeringAvMeldekortRouteWrapper appContext={appContext} />
+                </Route>
             </MeldekortUtfyllingProvider>
 
             {/* 

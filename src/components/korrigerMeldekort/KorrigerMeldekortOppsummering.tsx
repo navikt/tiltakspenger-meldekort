@@ -16,15 +16,16 @@ import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import { Link } from 'wouter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
 import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
 import { getTekst } from '@tekster/tekster.ts';
 import { ErrorCodes, useApiClient } from '@utils/apiClient';
+import { KorrigerMeldekortOppsummeringProps } from '@common/typer/KorrigerMeldekort';
 
-const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort }) => {
+const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps) => {
     const { navigate, base } = useRouting();
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
@@ -32,6 +33,12 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
     const { dager = [] } = useKorrigerMeldekortContext();
 
     const apiClient = useApiClient<Meldekort>({ url: `${base}/api/korriger`, method: 'PATCH' });
+
+    useEffect(() => {
+        if (!props.kanKorrigeres) {
+            navigate(getPath(siteRoutes.forside));
+        }
+    }, [props.kanKorrigeres, navigate]);
 
     return (
         <div>
@@ -62,7 +69,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                             Du har ikke gjort noen endringer på dette meldekortet.
                         </BodyShort>
                         <Link
-                            to={getPath(siteRoutes.korrigerMeldekort, {
+                            to={getPath(siteRoutes.korrigerMeldekortUtfylling, {
                                 meldekortId: props.originaleMeldekort.id,
                             })}
                         >
@@ -103,7 +110,7 @@ const KorrigerMeldekortOppsummering = (props: { originaleMeldekort: Meldekort })
                                 icon={<ArrowLeftIcon title="pil-venstre" fontSize="1.5rem" />}
                                 onClick={() =>
                                     navigate(
-                                        getPath(siteRoutes.korrigerMeldekort, {
+                                        getPath(siteRoutes.korrigerMeldekortUtfylling, {
                                             meldekortId: props.originaleMeldekort.id,
                                         }),
                                     )
