@@ -37,16 +37,20 @@ export const FraværHjelp = () => {
                     {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeStart' }).map(
                         (tekst) => (
                             <li key={tekst}>{tekst}</li>
-                        )
+                        ),
                     )}
                     <ul>
                         {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker' }).map(
                             (tekst) => (
                                 <li key={tekst}>{tekst}</li>
-                            )
+                            ),
                         )}
                     </ul>
-                    <li>{getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeSlutt' })}</li>
+                    {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeSlutt' }).map(
+                        (tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ),
+                    )}
                 </ul>
             </ReadMore>
             <ReadMore
