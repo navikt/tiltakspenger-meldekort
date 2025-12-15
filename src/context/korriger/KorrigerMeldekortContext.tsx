@@ -5,6 +5,7 @@ import { MeldekortKorrigeringTilUtfylling } from '@common/typer/KorrigerMeldekor
 export interface KorrigerMeldekortContextState {
     dager?: MeldekortDag[];
     meldeperiodeId?: string;
+    kanSendeInnHelg: boolean;
     setUtfylling: (utfylling: MeldekortKorrigeringTilUtfylling) => void;
     oppdaterDag: (dato: string, status: MeldekortDagStatus) => void;
 }

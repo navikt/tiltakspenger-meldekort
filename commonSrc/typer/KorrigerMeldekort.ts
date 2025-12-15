@@ -13,6 +13,7 @@ export type MeldekortKorrigeringTilUtfylling = {
     periode: Periode;
     mottattTidspunktSisteMeldekort: string;
     maksAntallDagerForPeriode: number;
+    kanSendeInnHelg: boolean;
 };
 
 export type KorrigerMeldekortResponse = {

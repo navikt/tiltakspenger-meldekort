@@ -8,6 +8,10 @@
     li {
         list-style: none;
     }
+
+    &.medHelg {
+        grid-template-rows: repeat(7, auto);
+    }
 }
 
 .oppsummeringUkeContainer > :not(:last-child) {

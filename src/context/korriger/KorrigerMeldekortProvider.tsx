@@ -22,7 +22,13 @@ export const KorrigerMeldekortProvider = (props: { children: React.ReactNode }) 
 
     return (
         <KorrigerMeldekortContext.Provider
-            value={{ dager, meldeperiodeId: utfylling?.meldeperiodeId, setUtfylling, oppdaterDag }}
+            value={{
+                dager,
+                meldeperiodeId: utfylling?.meldeperiodeId,
+                setUtfylling,
+                oppdaterDag,
+                kanSendeInnHelg: utfylling?.kanSendeInnHelg ?? false,
+            }}
         >
             {props.children}
         </KorrigerMeldekortContext.Provider>

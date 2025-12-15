@@ -67,6 +67,7 @@ export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
                 },
                 mottattTidspunktSisteMeldekort: forrigeMeldekort.innsendt!,
                 maksAntallDagerForPeriode: forrigeMeldekort.maksAntallDager,
+                kanSendeInnHelg: false,
             },
         } satisfies KorrigerMeldekortResponse);
     }

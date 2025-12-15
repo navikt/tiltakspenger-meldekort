@@ -24,13 +24,14 @@ import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
 import { getTekst } from '@tekster/tekster.ts';
 import { ErrorCodes, useApiClient } from '@utils/apiClient';
 import { KorrigerMeldekortOppsummeringProps } from '@common/typer/KorrigerMeldekort';
+import { classNames } from '@utils/classNames.ts';
 
 const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps) => {
     const { navigate, base } = useRouting();
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
 
-    const { dager = [] } = useKorrigerMeldekortContext();
+    const { dager = [], kanSendeInnHelg } = useKorrigerMeldekortContext();
 
     const apiClient = useApiClient<Meldekort>({ url: `${base}/api/korriger`, method: 'PATCH' });
 
@@ -78,7 +79,10 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
                     </Alert>
                 ) : (
                     <>
-                        <OppsummeringAvKorrigertMeldekortDager dager={dager} />
+                        <OppsummeringAvKorrigertMeldekortDager
+                            dager={dager}
+                            kanSendeInnHelg={kanSendeInnHelg}
+                        />
                         <ConfirmationPanel
                             label={getTekst({ id: 'oppsummeringBekrefter' })}
                             checked={harBekreftet}
@@ -169,12 +173,25 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
 
 export default KorrigerMeldekortOppsummering;
 
-const OppsummeringAvKorrigertMeldekortDager = (props: { dager: MeldekortDag[] }) => {
-    const manTilFreUke1 = props.dager.slice(0, 5);
-    const manTilFreUke2 = props.dager.slice(7, 12);
+const OppsummeringAvKorrigertMeldekortDager = ({
+    dager,
+    kanSendeInnHelg,
+}: {
+    dager: MeldekortDag[];
+    kanSendeInnHelg: boolean;
+}) => {
+    const dagerMedEllerUtenHelg = kanSendeInnHelg
+        ? dager
+        : [...dager.slice(0, 5), ...dager.slice(7, 12)];
+
     return (
-        <ul className={styles.dagOppsummeringContainer}>
-            {[...manTilFreUke1, ...manTilFreUke2].map((dag) => (
+        <ul
+            className={classNames(
+                styles.dagOppsummeringContainer,
+                kanSendeInnHelg && styles.medHelg,
+            )}
+        >
+            {dagerMedEllerUtenHelg.map((dag) => (
                 <li key={`${dag.dag}`}>
                     <MeldekortdagOppsummering dag={dag} />
                 </li>

@@ -27,6 +27,7 @@ import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker'
 import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
 import { getTekst, getTekster } from '@tekster/tekster.ts';
 import { KorrigeringMeldekortUtfyllingProps } from '@common/typer/KorrigerMeldekort.ts';
+import { classNames } from '@utils/classNames.ts';
 
 import styles from './KorrigerMeldekort.module.scss';
 
@@ -116,6 +117,7 @@ const KorrigeringAvMeldekort = ({
 
             <MeldekortUkeBehandling
                 dager={dager}
+                kanSendeInnHelg={tilUtfylling.kanSendeInnHelg}
                 onChange={(dag, nyStatus) => oppdaterDag(dag, nyStatus)}
             />
 
@@ -199,15 +201,26 @@ const statusClassMap: Record<MeldekortDagStatus, string> = {
     IKKE_RETT_TIL_TILTAKSPENGER: styles.ikkeTiltaksdag,
 };
 
-const MeldekortUkeBehandling = (props: {
+const MeldekortUkeBehandling = ({
+    dager,
+    kanSendeInnHelg,
+    onChange,
+}: {
     dager: MeldekortDag[];
+    kanSendeInnHelg: boolean;
     onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
 }) => {
-    const manTilFreUke1 = props.dager.slice(0, 5);
-    const manTilFreUke2 = props.dager.slice(7, 12);
+    const dagerMedEllerUtenHelg = kanSendeInnHelg
+        ? dager
+        : [...dager.slice(0, 5), ...dager.slice(7, 12)];
+
     return (
-        <VStack gap="4" width={'85%'} className={styles.dagSelectContainer}>
-            {[...manTilFreUke1, ...manTilFreUke2].map((dag) => (
+        <VStack
+            gap="4"
+            width={'85%'}
+            className={classNames(styles.dagSelectContainer, kanSendeInnHelg && styles.medHelg)}
+        >
+            {dagerMedEllerUtenHelg.map((dag) => (
                 <Select
                     className={statusClassMap[dag.status]}
                     id={`select-${dag.dag}`}
@@ -215,7 +228,7 @@ const MeldekortUkeBehandling = (props: {
                     label={formatterDato({ medUkeDag: true, dato: dag.dag })}
                     value={dag.status}
                     onChange={(e) => {
-                        props.onChange(dag.dag, e.target.value as MeldekortDagStatus);
+                        onChange(dag.dag, e.target.value as MeldekortDagStatus);
                     }}
                     readOnly={dag.status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER}
                 >
