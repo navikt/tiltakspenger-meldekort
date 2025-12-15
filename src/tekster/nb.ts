@@ -85,14 +85,14 @@ export const teksterNb = {
     fraværHjelpLesMerSyk: 'Når skal du velge "syk"?',
     fraværHjelpLesMerSykListe: [
         'Du skal velge «syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.',
-        'Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 % av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.',
-        'Du må ha sykmelding fra lege for å ha rett til tiltakspenger i mer enn 3 dager.',
+        'Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 prosent av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.',
+        'Du må ha sykmelding for å ha rett til tiltakspenger i mer enn 3 dager.',
     ],
 
     fraværHjelpLesMerSyktBarn: 'Når skal du velge "sykt barn eller barnepasser"?',
     fraværHjelpLesMerSyktBarnListe: [
         'Du skal velge «sykt barn eller syk barnepasser» hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk.',
-        'Det er de samme reglene som gjelder for sykt barn/barnepasser som ved egen sykdom. Det vil si at du har rett til full utbetaling de tre første dagene og 75 % resten av arbeidsgiverperioden.',
+        'Det er de samme reglene som gjelder for sykt barn/barnepasser som ved egen sykdom. Det vil si at du har rett til full utbetaling de tre første dagene og 75 prosent resten av arbeidsgiverperioden.',
         'Du må sende legeerklæring for barnet ditt eller bekreftelse fra barnepasseren fra dag 4 for å ha rett til tiltakspenger i mer enn 3 dager.',
     ],
 
@@ -104,11 +104,12 @@ export const teksterNb = {
     fraværHjelpLesMerFraværGodkjentListeÅrsaker: [
         'jobbintervju',
         'timeavtale i det offentlige hjelpeapparatet',
-        'alvorlig sykdom/begravelse i nærmeste familie',
+        'alvorlig sykdom/begravelse/bisettelse i nærmeste familie',
     ],
-    fraværHjelpLesMerFraværGodkjentListeSlutt:
-        'Du skal bare velge denne hvis fraværet faktisk er godkjent av Nav-veilederen din. Ta kontakt med Nav-veilederen din hvis du er i tvil.',
-
+    fraværHjelpLesMerFraværGodkjentListeSlutt: [
+        'Det er kun Nav-veilederen din som kan godkjenne fraværet, ikke tiltaksarrangøren.',
+        'Ta kontakt med Nav-veilederen din hvis du er i tvil om fraværet ditt er godkjent.',
+    ],
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',

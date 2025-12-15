@@ -279,7 +279,11 @@ const InformasjonOmKorrigeringAvMeldekort = () => {
                                 ),
                             )}
                         </ul>
-                        <li>{getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeSlutt' })}</li>
+                        {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeSlutt' }).map(
+                            (tekst) => (
+                                <li key={tekst}>{tekst}</li>
+                            ),
+                        )}
                     </ul>
 
                     <Label>{getTekst({ id: 'statusAnnetFravær' })}</Label>
