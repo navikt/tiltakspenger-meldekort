@@ -9,7 +9,7 @@ export const siteRoutes = {
     deltakelse: '/:meldekortId/deltakelse',
     sendInn: '/:meldekortId/send-inn',
     kvittering: '/:meldekortId/kvittering',
-    korrigeringMeldekort: '/:meldekortId/korrigering',
+    korrigeringMeldekort: '/:meldekortId/korrigering/:rest*',
     korrigerMeldekortUtfylling: '/:meldekortId/korrigering/utfylling',
     korrigerMeldekortOppsummering: '/:meldekortId/korrigering/oppsummering',
     korrigerMeldekortKvittering: '/:meldekortId/korrigering/kvittering',

@@ -23,27 +23,29 @@ import {
     hentGyldigeDagerFraMeldekortDager,
     korrigerMeldekortStatusTextMapper,
 } from './KorrigerMeldekortUtils';
-import { Meldekort, MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
 import { getTekst, getTekster } from '@tekster/tekster.ts';
-import { MeldekortKorrigeringTilUtfylling } from '@common/typer/KorrigerMeldekort.ts';
+import { KorrigeringMeldekortUtfyllingProps } from '@common/typer/KorrigerMeldekort.ts';
 
 import styles from './KorrigerMeldekort.module.scss';
-
-type Props = {
-    forrigeMeldekort: Meldekort;
-    tilUtfylling: MeldekortKorrigeringTilUtfylling;
-};
 
 /**
  * TODO - skal vi ha noe form for validering her?
  */
-const KorrigerMeldekortUtfylling = (props: Props) => {
+const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) => {
     const { forrigeMeldekort } = props;
+    const { navigate } = useRouting();
 
     useEffect(() => {
         scrollTo(0, 0);
     }, []);
+
+    useEffect(() => {
+        if (!props.kanKorrigeres) {
+            navigate(getPath(siteRoutes.forside));
+        }
+    }, [props.kanKorrigeres, navigate]);
 
     return (
         <>
@@ -76,7 +78,10 @@ const KorrigerMeldekortUtfylling = (props: Props) => {
 
 export default KorrigerMeldekortUtfylling;
 
-const KorrigeringAvMeldekort = ({ forrigeMeldekort, tilUtfylling }: Props) => {
+const KorrigeringAvMeldekort = ({
+    forrigeMeldekort,
+    tilUtfylling,
+}: KorrigeringMeldekortUtfyllingProps) => {
     const { navigate } = useRouting();
     const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
     const {

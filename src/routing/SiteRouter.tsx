@@ -58,7 +58,7 @@ export const SiteRouter = ({ appContext }: Props) => {
 
                 {/*pga match av provideren over, må alle routes være innenfor denne - Eventuelt hvis det er en fully-standalone route - over provideren. Litt dumt at base
                     pathen må wrappes i en provider*/}
-                <Route path={`${korrigeringMeldekort.path}/:rest*`}>
+                <Route path={korrigeringMeldekort.path}>
                     <KorrigeringAvMeldekortRouteWrapper appContext={appContext} />
                 </Route>
             </MeldekortUtfyllingProvider>

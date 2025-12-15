@@ -19,3 +19,14 @@ export type KorrigerMeldekortResponse = {
     forrigeMeldekort: Meldekort;
     tilUtfylling: MeldekortKorrigeringTilUtfylling;
 };
+
+export type KorrigeringMeldekortUtfyllingProps = {
+    forrigeMeldekort: Meldekort;
+    tilUtfylling: MeldekortKorrigeringTilUtfylling;
+    kanKorrigeres: boolean;
+};
+
+export interface KorrigerMeldekortOppsummeringProps {
+    originaleMeldekort: Meldekort;
+    kanKorrigeres: boolean;
+}

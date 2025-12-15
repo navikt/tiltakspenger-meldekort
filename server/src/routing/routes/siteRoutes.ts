@@ -13,7 +13,11 @@ import { appConfig } from '@common/appConfig';
 import { InnsendteMeldekortDTO } from '@common/typer/alle-meldekort';
 import { MeldekortForKjedeResponse } from '@common/typer/MeldeperiodeKjede';
 import { HtmlRenderFunc } from '@ssr/htmlRenderUtils';
-import { KorrigerMeldekortResponse } from '@common/typer/KorrigerMeldekort';
+import {
+    KorrigeringMeldekortUtfyllingProps,
+    KorrigerMeldekortOppsummeringProps,
+    KorrigerMeldekortResponse,
+} from '@common/typer/KorrigerMeldekort';
 
 // TODO: bedre feilhåndtering
 export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFunc) => {
@@ -236,25 +240,6 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFu
               };
     });
 
-    routeBuilder.routes(siteRoutes.korrigeringMeldekort, async (req, fetchFraApi) => {
-        const { meldekortId } = req.params;
-
-        const response = await fetchFraApi(req, `${meldekortId}/kan-korrigeres`, 'GET').then(
-            (res) => (res?.ok ? (res.json() as Promise<{ kanKorrigeres: boolean }>) : null),
-        );
-
-        return response
-            ? {
-                  props: {
-                      resultat: response,
-                  },
-              }
-            : {
-                  props: {},
-                  status: 404,
-              };
-    });
-
     routeBuilder.routes(siteRoutes.korrigerMeldekortUtfylling, async (req, fetchFraApi) => {
         const { meldekortId } = req.params;
 
@@ -262,12 +247,19 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFu
             res?.ok ? (res.json() as Promise<KorrigerMeldekortResponse>) : null,
         );
 
+        const kanKorrigeresResponse = await fetchFraApi(
+            req,
+            `${meldekortId}/kan-korrigeres`,
+            'GET',
+        ).then((res) => (res?.ok ? (res.json() as Promise<{ kanKorrigeres: boolean }>) : null));
+
         return response
             ? {
                   props: {
                       forrigeMeldekort: tilMeldekortUtfylling(response.forrigeMeldekort),
                       tilUtfylling: response.tilUtfylling,
-                  },
+                      kanKorrigeres: kanKorrigeresResponse?.kanKorrigeres ?? true,
+                  } satisfies KorrigeringMeldekortUtfyllingProps,
               }
             : {
                   props: {},
@@ -282,8 +274,19 @@ export const setupSiteRoutes = async (router: Router, htmlRenderer: HtmlRenderFu
             res?.ok ? (res.json() as Promise<KorrigerMeldekortResponse>) : null,
         );
 
+        const kanKorrigeresResponse = await fetchFraApi(
+            req,
+            `${meldekortId}/kan-korrigeres`,
+            'GET',
+        ).then((res) => (res?.ok ? (res.json() as Promise<{ kanKorrigeres: boolean }>) : null));
+
         return response
-            ? { props: { originaleMeldekort: tilMeldekortUtfylling(response.forrigeMeldekort) } }
+            ? {
+                  props: {
+                      originaleMeldekort: tilMeldekortUtfylling(response.forrigeMeldekort),
+                      kanKorrigeres: kanKorrigeresResponse?.kanKorrigeres ?? true,
+                  } satisfies KorrigerMeldekortOppsummeringProps,
+              }
             : {
                   props: {},
                   status: 404,

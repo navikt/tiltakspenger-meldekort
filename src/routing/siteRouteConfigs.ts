@@ -52,7 +52,7 @@ export const siteRouteConfigs = {
         Component: Steg5_Kvittering,
     },
     korrigeringMeldekort: {
-        path: '/:meldekortId/korrigering',
+        path: '/:meldekortId/korrigering/:rest*',
         Component: KorrigeringAvMeldekortRouteWrapper,
     },
     korrigerMeldekortUtfylling: {
