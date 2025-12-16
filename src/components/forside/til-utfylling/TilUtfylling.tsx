@@ -21,9 +21,7 @@ export const TilUtfylling = ({ nesteMeldekort }: Props) => {
     const { navigate } = useRouting();
 
     useEffect(() => {
-        if (nesteMeldekort) {
-            setMeldekortUtfylling(nesteMeldekort);
-        }
+        setMeldekortUtfylling(nesteMeldekort);
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [nesteMeldekort]);
 
