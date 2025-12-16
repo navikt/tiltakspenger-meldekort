@@ -1,24 +1,31 @@
 import { ConfirmationPanel } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
+import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
 import style from './TilUtfylling.module.css';
-import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
-import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling';
 
 type Props = {
-    nesteMeldekort: BrukersMeldekortUtfylling;
+    nesteMeldekort: Meldekort;
 };
 
 export const TilUtfylling = ({ nesteMeldekort }: Props) => {
     const [harBekreftet, setHarBekreftet] = useState(false);
     const [visFeil, setVisFeil] = useState(false);
-    const { setMeldekortSteg } = useMeldekortUtfylling();
+    const { setMeldekortSteg, setMeldekortUtfylling } = useMeldekortUtfylling();
 
     const { navigate } = useRouting();
+
+    useEffect(() => {
+        if (nesteMeldekort) {
+            setMeldekortUtfylling(nesteMeldekort);
+        }
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [nesteMeldekort]);
 
     return (
         <>
