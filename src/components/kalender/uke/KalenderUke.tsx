@@ -31,7 +31,7 @@ export const KalenderUke = ({ dager, steg }: Props) => {
 
     return (
         <div className={style.wrapper}>
-            <Heading size={'medium'} level={'2'}>
+            <Heading size={'medium'} level={'3'}>
                 {ukenummerTekst}
             </Heading>
             {steg == 'deltatt' && <Tekst id={'deltattUkeHjelp'} />}
