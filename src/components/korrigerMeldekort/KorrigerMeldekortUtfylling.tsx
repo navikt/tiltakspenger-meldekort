@@ -5,7 +5,6 @@ import {
     Accordion,
     Alert,
     BodyLong,
-    BodyShort,
     Button,
     Heading,
     HStack,
@@ -19,21 +18,19 @@ import { useEffect, useState } from 'react';
 import { getPath, siteRoutes } from '@common/siteRoutes';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import {
-    erKorrigerteDagerGyldig,
-    hentGyldigeDagerFraMeldekortDager,
-} from './KorrigerMeldekortUtils';
+    validerMeldekortKorrigering,
+    KorrigerMeldekortValideringResultat,
+} from './validering/korrigerMeldekortValideringUtils.ts';
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
-import { harDagerSomIkkeGirRett } from '@utils/MeldeperiodeUtils';
 import { getTekst, getTekster } from '@tekster/tekster.ts';
 import { KorrigeringMeldekortUtfyllingProps } from '@common/typer/KorrigerMeldekort.ts';
 import { classNames } from '@utils/classNames.ts';
 import { statusTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils.ts';
+import { KorrigerMeldekortValideringFeil } from '@components/korrigerMeldekort/validering/KorrigerMeldekortValideringFeil.tsx';
+import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils.ts';
 
 import styles from './KorrigerMeldekort.module.scss';
 
-/**
- * TODO - skal vi ha noe form for validering her?
- */
 const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) => {
     const { forrigeMeldekort } = props;
     const { navigate } = useRouting();
@@ -84,7 +81,9 @@ const KorrigeringAvMeldekort = ({
     tilUtfylling,
 }: KorrigeringMeldekortUtfyllingProps) => {
     const { navigate } = useRouting();
-    const [harUgyldigUtfylling, setHarUgyldigUtfylling] = useState(false);
+    const [valideringResultat, setValideringResultat] =
+        useState<KorrigerMeldekortValideringResultat | null>(null);
+
     const {
         // Default dager for SSR/first render
         // Litt skittent, burde sette dette som en default via provideren, men litt tricky å få til på tvers av routes
@@ -95,7 +94,7 @@ const KorrigeringAvMeldekort = ({
     } = useKorrigerMeldekortContext();
 
     useEffect(() => {
-        setHarUgyldigUtfylling(false);
+        setValideringResultat(null);
     }, [dager]);
 
     useEffect(() => {
@@ -117,56 +116,27 @@ const KorrigeringAvMeldekort = ({
 
             <MeldekortUkeBehandling
                 dager={dager}
+                forrigeDager={tilUtfylling.dager}
                 kanSendeInnHelg={tilUtfylling.kanSendeInnHelg}
                 onChange={(dag, nyStatus) => oppdaterDag(dag, nyStatus)}
             />
 
-            {harUgyldigUtfylling && (
-                <Alert variant="error">
-                    <VStack gap="4">
-                        {hentGyldigeDagerFraMeldekortDager(dager).length >
-                        tilUtfylling.maksAntallDagerForPeriode ? (
-                            <BodyShort>
-                                Du har registrert for mange dager. Maks antall er{' '}
-                                {tilUtfylling.maksAntallDagerForPeriode} dager.
-                            </BodyShort>
-                        ) : (
-                            <BodyShort>
-                                Kun {hentGyldigeDagerFraMeldekortDager(dager).length} av{' '}
-                                {tilUtfylling.maksAntallDagerForPeriode} dager besvart
-                            </BodyShort>
-                        )}
-
-                        <VStack>
-                            <BodyShort>Merk: Følgende dager blir ikke regnet med:</BodyShort>
-                            <ul className={styles.valideringErrorListe}>
-                                <li>Ikke besvart</li>
-                                <li>Ikke tiltaksdag</li>
-                            </ul>
-                        </VStack>
-                    </VStack>
-                </Alert>
-            )}
+            <KorrigerMeldekortValideringFeil resultat={valideringResultat} />
 
             <VStack gap="2">
                 <Button
                     className={styles.button}
                     onClick={() => {
-                        const erDagerFylltUtGyldig = erKorrigerteDagerGyldig({
-                            dager: dager,
-                            antallDager: tilUtfylling.maksAntallDagerForPeriode,
-                            harMeldeperiodeForMeldekortDagerSomIkkeGirRett:
-                                harDagerSomIkkeGirRett(tilUtfylling),
-                        });
+                        const valideringResultat = validerMeldekortKorrigering(dager, tilUtfylling);
 
-                        if (erDagerFylltUtGyldig) {
+                        setValideringResultat(valideringResultat);
+
+                        if (valideringResultat.feil.size === 0) {
                             navigate(
                                 getPath(siteRoutes.korrigerMeldekortOppsummering, {
                                     meldekortId: forrigeMeldekort.id,
                                 }),
                             );
-                        } else {
-                            setHarUgyldigUtfylling(true);
                         }
                     }}
                     iconPosition="right"
@@ -203,16 +173,17 @@ const statusClassMap: Record<MeldekortDagStatus, string> = {
 
 const MeldekortUkeBehandling = ({
     dager,
+    forrigeDager,
     kanSendeInnHelg,
     onChange,
 }: {
     dager: MeldekortDag[];
+    forrigeDager: MeldekortDag[];
     kanSendeInnHelg: boolean;
     onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
 }) => {
-    const dagerMedEllerUtenHelg = kanSendeInnHelg
-        ? dager
-        : [...dager.slice(0, 5), ...dager.slice(7, 12)];
+    const dagerForUtfylling = hentAktuelleDager(dager, kanSendeInnHelg);
+    const dagerFraForrigeMeldekort = hentAktuelleDager(forrigeDager, kanSendeInnHelg);
 
     return (
         <VStack
@@ -220,7 +191,8 @@ const MeldekortUkeBehandling = ({
             width={'85%'}
             className={classNames(styles.dagSelectContainer, kanSendeInnHelg && styles.medHelg)}
         >
-            {dagerMedEllerUtenHelg.map((meldekortDag) => {
+            {dagerForUtfylling.map((meldekortDag, index) => {
+                const forrigeStatus = dagerFraForrigeMeldekort[index].status;
                 const { status, dag } = meldekortDag;
 
                 const ikkeRett = status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER;
@@ -238,15 +210,23 @@ const MeldekortUkeBehandling = ({
                         readOnly={ikkeRett}
                     >
                         {ikkeRett ? (
-                            <option key={status} value={status}>
+                            <option value={status}>
                                 {getTekst({ id: statusTilTekstId[status] })}
                             </option>
                         ) : (
-                            gyldigeStatusValg.map((status) => (
-                                <option key={status} value={status}>
-                                    {getTekst({ id: statusTilTekstId[status] })}
-                                </option>
-                            ))
+                            gyldigeStatusValg.map((statusValg) => {
+                                const erUendret = forrigeStatus === statusValg;
+                                const statusTekst = getTekst({ id: statusTilTekstId[statusValg] });
+                                const uendretTekst = erUendret
+                                    ? ` (${getTekst({ id: 'korrigeringDagIngenEndring' })})`
+                                    : '';
+
+                                return (
+                                    <option key={statusValg} value={statusValg}>
+                                        {`${statusTekst}${uendretTekst}`}
+                                    </option>
+                                );
+                            })
                         )}
                     </Select>
                 );

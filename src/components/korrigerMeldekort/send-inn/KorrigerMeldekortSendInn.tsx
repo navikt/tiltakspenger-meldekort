@@ -1,5 +1,5 @@
-import { PageHeader } from '@components/page-header/PageHeader';
-import { Undertekst } from '@components/page-header/Undertekst';
+import { PageHeader } from '@components/page-header/PageHeader.tsx';
+import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import {
     Alert,
     BodyShort,
@@ -9,24 +9,26 @@ import {
     HStack,
     VStack,
 } from '@navikt/ds-react';
-import { formatterDato } from '@utils/datetime';
-import styles from './KorrigerMeldekortOppsummering.module.css';
+import { formatterDato } from '@utils/datetime.ts';
+import styles from './KorrigerMeldekortSendInn.module.css';
 import { ArrowLeftIcon, PaperplaneIcon } from '@navikt/aksel-icons';
-import { useRouting } from '@routing/useRouting';
-import { getPath, siteRoutes } from '@common/siteRoutes';
+import { useRouting } from '@routing/useRouting.ts';
+import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import { Link } from 'wouter';
 import { useEffect, useState } from 'react';
-import { FlashingButton } from '@components/flashing-button/FlashingButton';
-import { Tekst } from '@components/tekst/Tekst';
-import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
-import { Meldekort, MeldekortDag } from '@common/typer/MeldekortBruker';
+import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
+import { Tekst } from '@components/tekst/Tekst.tsx';
+import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 import { getTekst } from '@tekster/tekster.ts';
-import { ErrorCodes, useApiClient } from '@utils/apiClient';
-import { KorrigerMeldekortOppsummeringProps } from '@common/typer/KorrigerMeldekort';
-import { classNames } from '@utils/classNames.ts';
+import { ErrorCodes, useApiClient } from '@utils/apiClient.ts';
+import { KorrigerMeldekortOppsummeringProps } from '@common/typer/KorrigerMeldekort.ts';
+import { KorrigerMeldekortOppsummering } from '@components/korrigerMeldekort/send-inn/oppsummering/KorrigerMeldekortOppsummering.tsx';
 
-const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps) => {
+export const KorrigerMeldekortSendInn = ({
+    originaleMeldekort,
+    kanKorrigeres,
+}: KorrigerMeldekortOppsummeringProps) => {
     const { navigate, base } = useRouting();
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
@@ -36,10 +38,10 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
     const apiClient = useApiClient<Meldekort>({ url: `${base}/api/korriger`, method: 'PATCH' });
 
     useEffect(() => {
-        if (!props.kanKorrigeres) {
+        if (!kanKorrigeres) {
             navigate(getPath(siteRoutes.forside));
         }
-    }, [props.kanKorrigeres, navigate]);
+    }, [kanKorrigeres, navigate]);
 
     return (
         <div>
@@ -48,11 +50,11 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
                 underTekst={
                     <HStack gap="4">
                         <Undertekst
-                            tekst={`Uke ${props.originaleMeldekort.uke1} og ${props.originaleMeldekort.uke2}`}
+                            tekst={`Uke ${originaleMeldekort.uke1} og ${originaleMeldekort.uke2}`}
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.originaleMeldekort.fraOgMed })} til ${formatterDato({ dato: props.originaleMeldekort.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: originaleMeldekort.fraOgMed })} til ${formatterDato({ dato: originaleMeldekort.tilOgMed })})`}
                         />
                     </HStack>
                 }
@@ -63,7 +65,6 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
                     Oppsummering av endret meldekort
                 </Heading>
                 {/* Denne vil kun slå ut hvis brukeren går direkte til oppsummeringen uten å laste korrigeringssiden først for å populere dagene */}
-                {/* TODO: burde validere om det faktisk er endringer på dagene */}
                 {dager.length === 0 ? (
                     <Alert variant="info">
                         <BodyShort>
@@ -71,7 +72,7 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
                         </BodyShort>
                         <Link
                             to={getPath(siteRoutes.korrigerMeldekortUtfylling, {
-                                meldekortId: props.originaleMeldekort.id,
+                                meldekortId: originaleMeldekort.id,
                             })}
                         >
                             Gå tilbake til korrigering av meldekortet
@@ -79,8 +80,9 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
                     </Alert>
                 ) : (
                     <>
-                        <OppsummeringAvKorrigertMeldekortDager
+                        <KorrigerMeldekortOppsummering
                             dager={dager}
+                            forrigeDager={originaleMeldekort.dager}
                             kanSendeInnHelg={kanSendeInnHelg}
                         />
                         <ConfirmationPanel
@@ -115,7 +117,7 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
                                 onClick={() =>
                                     navigate(
                                         getPath(siteRoutes.korrigerMeldekortUtfylling, {
-                                            meldekortId: props.originaleMeldekort.id,
+                                            meldekortId: originaleMeldekort.id,
                                         }),
                                     )
                                 }
@@ -132,7 +134,7 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
 
                                     apiClient.callApi({
                                         body: {
-                                            meldekortId: props.originaleMeldekort.id,
+                                            meldekortId: originaleMeldekort.id,
                                             korrigerteDager: dager.map((dag) => ({
                                                 dato: dag.dag,
                                                 status: dag.status,
@@ -141,7 +143,7 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
                                         onSuccess: () => {
                                             navigate(
                                                 getPath(siteRoutes.korrigerMeldekortKvittering, {
-                                                    meldekortId: props.originaleMeldekort.id,
+                                                    meldekortId: originaleMeldekort.id,
                                                 }),
                                             );
                                         },
@@ -168,34 +170,5 @@ const KorrigerMeldekortOppsummering = (props: KorrigerMeldekortOppsummeringProps
                 )}
             </VStack>
         </div>
-    );
-};
-
-export default KorrigerMeldekortOppsummering;
-
-const OppsummeringAvKorrigertMeldekortDager = ({
-    dager,
-    kanSendeInnHelg,
-}: {
-    dager: MeldekortDag[];
-    kanSendeInnHelg: boolean;
-}) => {
-    const dagerMedEllerUtenHelg = kanSendeInnHelg
-        ? dager
-        : [...dager.slice(0, 5), ...dager.slice(7, 12)];
-
-    return (
-        <ul
-            className={classNames(
-                styles.dagOppsummeringContainer,
-                kanSendeInnHelg && styles.medHelg,
-            )}
-        >
-            {dagerMedEllerUtenHelg.map((dag) => (
-                <li key={`${dag.dag}`}>
-                    <MeldekortdagOppsummering dag={dag} />
-                </li>
-            ))}
-        </ul>
     );
 };

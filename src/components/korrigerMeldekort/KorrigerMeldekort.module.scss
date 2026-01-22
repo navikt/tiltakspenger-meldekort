@@ -14,10 +14,6 @@
     }
 }
 
-.valideringErrorListe {
-    margin: 0;
-}
-
 .ikkeTiltaksdag {
     select {
         @include status.ikkeTiltaksdag;

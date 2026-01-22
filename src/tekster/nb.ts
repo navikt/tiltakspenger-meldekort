@@ -222,6 +222,16 @@ export const teksterNb = {
     korrigeringOppdatertAlert:
         'Meldekortet ditt har blitt oppdatert - Meldekortet inneholder nå de seneste opplysningene registrert. Verifiser at disse er korrekt, eller endre valgene på de dagene som er feilregistrert.',
     korrigeringSendMeldekortet: 'Send meldekortet',
+    korrigeringDagIngenEndring: 'ingen endring',
+    korrigeringDagIkkeEndret: 'Ikke endret',
+    korrigeringDagEndretFra: 'Endret fra',
+
+    korrigeringUtfyllingFeilStatusMerknad: 'Merk: Følgende dager blir ikke regnet med:',
+    korrigeringUtfyllingFeilForMange: ({ utfylt, maks }: { utfylt: number; maks: number }) =>
+        `Du har registrert for mange dager (${utfylt}). Maks antall er ${maks} dager.`,
+    korrigeringUtfyllingFeilForFå: ({ utfylt, maks }: { utfylt: number; maks: number }) =>
+        `Du har registrert for få dager. Kun ${utfylt} av ${maks} dager besvart`,
+    korrigeringUtfyllingFeilIngenEndring: 'Ingen endringer er registrert.',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;
