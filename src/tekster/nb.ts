@@ -1,6 +1,6 @@
 import { Periode } from '@common/typer/periode';
 import { TekstResolver } from '@tekster/typer.ts';
-import { formatterDato } from '@utils/datetime';
+import { formatterDato, getUkenummer } from '@utils/datetime';
 
 export const teksterNb = {
     neste: 'Neste steg',
@@ -59,9 +59,12 @@ export const teksterNb = {
         'Fant ingen meldekort for tiltakspenger. Dersom du tidligere har mottatt tiltakspenger, finner du meldekortene dine i ',
     forsideHarArenaMeldekort: 'Du kan finne meldekortene dine for tiltakspenger i ',
     forsideArenaLenke: 'den gamle løsningen for meldekort.',
+
+    ukeMedNummer: ({ dato }: { dato: string }) => `Uke ${getUkenummer(dato)}`,
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Uke ${uke1} og ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} til ${tilOgMed}`,
+
     deltattTittel: 'Oppmøte',
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:

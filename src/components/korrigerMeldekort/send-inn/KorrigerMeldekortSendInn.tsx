@@ -60,7 +60,7 @@ export const KorrigerMeldekortSendInn = ({
                 }
             />
 
-            <VStack gap="8" style={{}}>
+            <VStack gap="5">
                 <Heading size="large" level="3">
                     Oppsummering av endret meldekort
                 </Heading>

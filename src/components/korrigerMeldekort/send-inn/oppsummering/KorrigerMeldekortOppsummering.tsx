@@ -7,7 +7,7 @@ import {
     statusTilIkon,
     statusTilTekstId,
 } from '@components/kalender/dag-felles/dagFellesUtils.ts';
-import { BodyLong, HStack, VStack } from '@navikt/ds-react';
+import { BodyLong, BodyShort, HStack, VStack } from '@navikt/ds-react';
 import { formatterDato } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
@@ -26,12 +26,21 @@ export const KorrigerMeldekortOppsummering = ({ dager, forrigeDager, kanSendeInn
     return (
         <ul className={classNames(style.dager, kanSendeInnHelg && style.medHelg)}>
             {korrigerteDager.map((dag, index) => {
+                const erUkeStart = index % (korrigerteDager.length / 2) === 0;
+
                 return (
-                    <OppsummertDag
-                        dag={dag}
-                        forrigeStatus={dagerFraForrigeMeldekort[index].status}
-                        key={dag.dag}
-                    />
+                    <>
+                        {erUkeStart && (
+                            <BodyShort weight={'semibold'} className={classNames(style.ukenr)}>
+                                <Tekst id={'ukeMedNummer'} resolverProps={{ dato: dag.dag }} />
+                            </BodyShort>
+                        )}
+                        <OppsummertDag
+                            dag={dag}
+                            forrigeStatus={dagerFraForrigeMeldekort[index].status}
+                            key={dag.dag}
+                        />
+                    </>
                 );
             })}
         </ul>

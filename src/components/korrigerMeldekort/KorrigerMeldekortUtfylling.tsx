@@ -5,6 +5,7 @@ import {
     Accordion,
     Alert,
     BodyLong,
+    BodyShort,
     Button,
     Heading,
     HStack,
@@ -28,6 +29,7 @@ import { classNames } from '@utils/classNames.ts';
 import { statusTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { KorrigerMeldekortValideringFeil } from '@components/korrigerMeldekort/validering/KorrigerMeldekortValideringFeil.tsx';
 import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils.ts';
+import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import styles from './KorrigerMeldekort.module.scss';
 
@@ -114,7 +116,7 @@ const KorrigeringAvMeldekort = ({
             </Heading>
             <BodyLong>{getTekst({ id: 'korrigeringBeskrivelse' })}</BodyLong>
 
-            <MeldekortUkeBehandling
+            <KorrigeringDager
                 dager={dager}
                 forrigeDager={tilUtfylling.dager}
                 kanSendeInnHelg={tilUtfylling.kanSendeInnHelg}
@@ -171,7 +173,7 @@ const statusClassMap: Record<MeldekortDagStatus, string> = {
     IKKE_RETT_TIL_TILTAKSPENGER: styles.ikkeTiltaksdag,
 };
 
-const MeldekortUkeBehandling = ({
+const KorrigeringDager = ({
     dager,
     forrigeDager,
     kanSendeInnHelg,
@@ -187,48 +189,57 @@ const MeldekortUkeBehandling = ({
 
     return (
         <VStack
-            gap="4"
-            width={'85%'}
+            gap={'4'}
             className={classNames(styles.dagSelectContainer, kanSendeInnHelg && styles.medHelg)}
         >
             {dagerForUtfylling.map((meldekortDag, index) => {
+                const erUkeStart = index % (dagerForUtfylling.length / 2) === 0;
                 const forrigeStatus = dagerFraForrigeMeldekort[index].status;
                 const { status, dag } = meldekortDag;
 
                 const ikkeRett = status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER;
 
                 return (
-                    <Select
-                        className={statusClassMap[status]}
-                        id={`select-${dag}`}
-                        key={dag}
-                        label={formatterDato({ medUkeDag: true, dato: dag })}
-                        value={status}
-                        onChange={(e) => {
-                            onChange(dag, e.target.value as MeldekortDagStatus);
-                        }}
-                        readOnly={ikkeRett}
-                    >
-                        {ikkeRett ? (
-                            <option value={status}>
-                                {getTekst({ id: statusTilTekstId[status] })}
-                            </option>
-                        ) : (
-                            gyldigeStatusValg.map((statusValg) => {
-                                const erUendret = forrigeStatus === statusValg;
-                                const statusTekst = getTekst({ id: statusTilTekstId[statusValg] });
-                                const uendretTekst = erUendret
-                                    ? ` (${getTekst({ id: 'korrigeringDagIngenEndring' })})`
-                                    : '';
-
-                                return (
-                                    <option key={statusValg} value={statusValg}>
-                                        {`${statusTekst}${uendretTekst}`}
-                                    </option>
-                                );
-                            })
+                    <>
+                        {erUkeStart && (
+                            <BodyShort weight={'semibold'} className={classNames(styles.ukenr)}>
+                                <Tekst id={'ukeMedNummer'} resolverProps={{ dato: dag }} />
+                            </BodyShort>
                         )}
-                    </Select>
+                        <Select
+                            className={statusClassMap[status]}
+                            id={`select-${dag}`}
+                            key={dag}
+                            label={formatterDato({ medUkeDag: true, dato: dag })}
+                            value={status}
+                            onChange={(e) => {
+                                onChange(dag, e.target.value as MeldekortDagStatus);
+                            }}
+                            readOnly={ikkeRett}
+                        >
+                            {ikkeRett ? (
+                                <option value={status}>
+                                    {getTekst({ id: statusTilTekstId[status] })}
+                                </option>
+                            ) : (
+                                gyldigeStatusValg.map((statusValg) => {
+                                    const erUendret = forrigeStatus === statusValg;
+                                    const statusTekst = getTekst({
+                                        id: statusTilTekstId[statusValg],
+                                    });
+                                    const uendretTekst = erUendret
+                                        ? ` (${getTekst({ id: 'korrigeringDagIngenEndring' })})`
+                                        : '';
+
+                                    return (
+                                        <option key={statusValg} value={statusValg}>
+                                            {`${statusTekst}${uendretTekst}`}
+                                        </option>
+                                    );
+                                })
+                            )}
+                        </Select>
+                    </>
                 );
             })}
         </VStack>
