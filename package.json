@@ -29,7 +29,7 @@
         "@preact/compat": "18.3.1",
         "dayjs": "1.11.19",
         "preact-render-to-string": "6.6.3",
-        "swr": "2.3.7",
+        "swr": "2.3.8",
         "wouter": "3.8.1"
     },
     "devDependencies": {
