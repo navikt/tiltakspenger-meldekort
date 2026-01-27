@@ -24,12 +24,14 @@ import { getTekst } from '@tekster/tekster.ts';
 import { ErrorCodes, useApiClient } from '@utils/apiClient.ts';
 import { KorrigerMeldekortOppsummeringProps } from '@common/typer/KorrigerMeldekort.ts';
 import { KorrigerMeldekortOppsummering } from '@components/korrigerMeldekort/send-inn/oppsummering/KorrigerMeldekortOppsummering.tsx';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 export const KorrigerMeldekortSendInn = ({
     originaleMeldekort,
     kanKorrigeres,
 }: KorrigerMeldekortOppsummeringProps) => {
     const { navigate, base } = useRouting();
+    const { valgtSpråk } = useValgtSpråk();
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
 
@@ -86,7 +88,7 @@ export const KorrigerMeldekortSendInn = ({
                             kanSendeInnHelg={kanSendeInnHelg}
                         />
                         <ConfirmationPanel
-                            label={getTekst({ id: 'oppsummeringBekrefter' })}
+                            label={getTekst({ id: 'oppsummeringBekrefter', locale: valgtSpråk })}
                             checked={harBekreftet}
                             onChange={() => {
                                 setVisFeil(false);
@@ -105,7 +107,10 @@ export const KorrigerMeldekortSendInn = ({
                                 {apiClient.response.error.errorBody.kode ===
                                     ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig && (
                                     <Link to={getPath(siteRoutes.forside)}>
-                                        {getTekst({ id: 'tilbakeTilOversiktForNyKorrigering' })}
+                                        {getTekst({
+                                            id: 'tilbakeTilOversiktForNyKorrigering',
+                                            locale: valgtSpråk,
+                                        })}
                                     </Link>
                                 )}
                             </Alert>
@@ -122,7 +127,7 @@ export const KorrigerMeldekortSendInn = ({
                                     )
                                 }
                             >
-                                {getTekst({ id: 'forrige' })}
+                                {getTekst({ id: 'forrige', locale: valgtSpråk })}
                             </Button>
                             <FlashingButton
                                 loading={apiClient.apiStatus === 'loading'}

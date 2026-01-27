@@ -9,12 +9,12 @@ test.beforeEach(async ({ page }) => {
 
 test('Kan navigere til meldekort utfyllingen etter bekreftelse', async ({ page }) => {
     const startUtfyllingKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'startUtfylling' }),
+        name: getTekst({ id: 'startUtfylling', locale: 'nb' }),
     });
     const bekreftCheckbox = page.getByRole('checkbox', {
-        name: getTekst({ id: 'forsideBekrefter' }),
+        name: getTekst({ id: 'forsideBekrefter', locale: 'nb' }),
     });
-    const bekreftVarsel = page.getByText(getTekst({ id: 'forsideBekrefterFeil' }));
+    const bekreftVarsel = page.getByText(getTekst({ id: 'forsideBekrefterFeil', locale: 'nb' }));
 
     await expect(startUtfyllingKnapp).toBeVisible();
 

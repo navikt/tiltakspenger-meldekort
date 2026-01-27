@@ -12,6 +12,7 @@ import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
 import { getTekst } from '@tekster/tekster.ts';
 
 import style from './Forside.module.css';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;
@@ -19,16 +20,17 @@ type Props = {
 
 export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
     const { nesteMeldekort } = meldekortBruker;
+    const { valgtSpråk } = useValgtSpråk();
 
     return (
         <>
             <GuidePanel className={style.guide}>
                 <EksternLenke href={'https://www.nav.no/kontaktoss'}>
-                    {getTekst({ id: 'forsideGuidePanelLenkeTekst' })}
+                    {getTekst({ id: 'forsideGuidePanelLenkeTekst', locale: valgtSpråk })}
                 </EksternLenke>
             </GuidePanel>
 
-            <TekstSegmenter id={'forsideIngress'} spacing={true} />
+            <TekstSegmenter id={'forsideIngress'} spacing={true} locale={valgtSpråk} />
             {nesteMeldekort?.status === MeldekortStatus.KAN_UTFYLLES ? (
                 <TilUtfylling nesteMeldekort={nesteMeldekort} />
             ) : (

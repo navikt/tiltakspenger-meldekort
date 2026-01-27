@@ -35,8 +35,13 @@ export class SiteRoutesBuilder {
     }
 
     public routes(routePath: string, dataFetcher: DataFetcher) {
-        const fullPath = this.joinPaths(appConfig.baseUrl, routePath);
+        const routePathEn = this.joinPaths(routePath, 'en');
+
+        const fullPathNb = this.joinPaths(appConfig.baseUrl, routePath);
+        const fullPathEn = this.joinPaths(appConfig.baseUrl, routePathEn);
+
         const dataPath = this.joinPaths(routePath, 'data');
+        const dataPathEn = this.joinPaths(routePathEn, 'data');
 
         // Serverer SSR-html til frontend
         this.router.get(routePath, async (req, res) => {
@@ -45,17 +50,38 @@ export class SiteRoutesBuilder {
                 return res.redirect(redirectUrl);
             }
 
-            const html = await this.renderer(fullPath, {
+            const html = await this.renderer(fullPathNb, {
                 initialProps: props,
                 initialPath: req.path,
                 baseUrl: appConfig.baseUrl,
                 status,
+                språk: 'nb',
+            });
+            res.status(status).send(html);
+        });
+
+        this.router.get(routePathEn, async (req, res) => {
+            const { props, status = 200, redirectUrl } = await dataFetcher(req, this.apiFetchFunc);
+            if (redirectUrl) {
+                return res.redirect(redirectUrl);
+            }
+
+            const html = await this.renderer(fullPathEn, {
+                initialProps: props,
+                initialPath: req.path,
+                baseUrl: appConfig.baseUrl,
+                status,
+                språk: 'en',
             });
             res.status(status).send(html);
         });
 
         // Serverer json-props for client-side rendering ved navigering
         this.router.get(dataPath, async (req, res) => {
+            const { props, status = 200 } = await dataFetcher(req, this.apiFetchFunc);
+            res.status(status).json(props);
+        });
+        this.router.get(dataPathEn, async (req, res) => {
             const { props, status = 200 } = await dataFetcher(req, this.apiFetchFunc);
             res.status(status).json(props);
         });
@@ -67,8 +93,13 @@ export class SiteRoutesBuilder {
 
     private demoRoutes(routePath: string, dataFetcher: DataFetcher) {
         const demoRoutePath = this.joinPaths(appConfig.demoRoutePrefix, routePath);
+        const demoRoutePathEn = this.joinPaths(appConfig.demoRoutePrefix, routePath, 'en');
+
         const demoFullPath = this.joinPaths(appConfig.baseUrl, demoRoutePath);
+        const demoFullPathEn = this.joinPaths(appConfig.baseUrl, demoRoutePathEn);
+
         const demoDataPath = this.joinPaths(demoRoutePath, 'data');
+        const demoDataPathEn = this.joinPaths(demoRoutePathEn, 'data');
 
         this.router.get(demoRoutePath, async (req, res) => {
             const { props, status = 200 } = await dataFetcher(req, this.mockFetchFunc);
@@ -78,11 +109,29 @@ export class SiteRoutesBuilder {
                 initialPath: req.path.replace(appConfig.demoRoutePrefix, ''),
                 baseUrl: `${appConfig.baseUrl}${appConfig.demoRoutePrefix}`,
                 status,
+                språk: 'nb',
+            });
+            res.status(status).send(html);
+        });
+
+        this.router.get(demoRoutePathEn, async (req, res) => {
+            const { props, status = 200 } = await dataFetcher(req, this.mockFetchFunc);
+
+            const html = await this.renderer(demoFullPathEn, {
+                initialProps: props,
+                initialPath: req.path.replace(appConfig.demoRoutePrefix, ''),
+                baseUrl: `${appConfig.baseUrl}${appConfig.demoRoutePrefix}`,
+                status,
+                språk: 'en',
             });
             res.status(status).send(html);
         });
 
         this.router.get(demoDataPath, async (req, res) => {
+            const { props, status = 200 } = await dataFetcher(req, this.mockFetchFunc);
+            res.status(status).json(props);
+        });
+        this.router.get(demoDataPathEn, async (req, res) => {
             const { props, status = 200 } = await dataFetcher(req, this.mockFetchFunc);
             res.status(status).json(props);
         });

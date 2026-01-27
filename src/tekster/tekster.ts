@@ -1,15 +1,17 @@
 import { teksterNb } from '@tekster/nb';
-import { TeksterRecord, TeksterLocale, TeksterProps, TekstId } from '@tekster/typer.ts';
+import { TeksterRecord, TeksterLocale, TekstId, TeksterPropsMedLocale } from '@tekster/typer.ts';
+import { teksterEn } from '@tekster/en.ts';
 
 const tekster: Record<TeksterLocale, TeksterRecord> = {
     nb: teksterNb,
+    en: teksterEn,
 } as const;
 
 const getTekstVerdi = <Id extends TekstId>({
     id,
     locale = 'nb',
     resolverProps,
-}: TeksterProps<Id>): string | string[] => {
+}: TeksterPropsMedLocale<Id>): string | string[] => {
     const tekstVerdi = tekster[locale][id];
 
     if (typeof tekstVerdi === 'function') {
@@ -20,12 +22,12 @@ const getTekstVerdi = <Id extends TekstId>({
     return tekstVerdi;
 };
 
-export const getTekster = <Id extends TekstId>(props: TeksterProps<Id>): string[] => {
+export const getTekster = <Id extends TekstId>(props: TeksterPropsMedLocale<Id>): string[] => {
     const tekstVerdi = getTekstVerdi(props);
     return Array.isArray(tekstVerdi) ? tekstVerdi : [tekstVerdi];
 };
 
-export const getTekst = <Id extends TekstId>(props: TeksterProps<Id>): string => {
+export const getTekst = <Id extends TekstId>(props: TeksterPropsMedLocale<Id>): string => {
     const tekstVerdi = getTekstVerdi(props);
     return Array.isArray(tekstVerdi) ? tekstVerdi.join(' ') : tekstVerdi;
 };

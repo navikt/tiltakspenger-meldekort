@@ -1,4 +1,5 @@
 import React from 'react';
+import { TeksterLocale } from '@tekster/typer.ts';
 
 export type SiteRouteComponentProps = React.ComponentProps<any>;
 
@@ -7,4 +8,5 @@ export type AppContext = {
     initialProps: SiteRouteComponentProps;
     baseUrl: string;
     status: number;
+    språk: TeksterLocale;
 };

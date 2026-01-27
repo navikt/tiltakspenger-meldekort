@@ -32,10 +32,12 @@ import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrig
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import styles from './KorrigerMeldekort.module.scss';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) => {
     const { forrigeMeldekort } = props;
     const { navigate } = useRouting();
+    const { valgtSpråk } = useValgtSpråk();
 
     useEffect(() => {
         scrollTo(0, 0);
@@ -65,7 +67,7 @@ const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) =
             />
             <VStack gap="8">
                 <Heading size="large" level="3">
-                    {getTekst({ id: 'korrigeringTittel' })}
+                    {getTekst({ id: 'korrigeringTittel', locale: valgtSpråk })}
                 </Heading>
 
                 <InformasjonOmKorrigeringAvMeldekort />
@@ -85,6 +87,7 @@ const KorrigeringAvMeldekort = ({
     const { navigate } = useRouting();
     const [valideringResultat, setValideringResultat] =
         useState<KorrigerMeldekortValideringResultat | null>(null);
+    const { valgtSpråk } = useValgtSpråk();
 
     const {
         // Default dager for SSR/first render
@@ -108,13 +111,15 @@ const KorrigeringAvMeldekort = ({
     return (
         <VStack gap="8">
             {tilUtfylling.meldeperiodeId !== forrigeMeldekort.meldeperiodeId && (
-                <Alert variant="info">{getTekst({ id: 'korrigeringOppdatertAlert' })}</Alert>
+                <Alert variant="info">
+                    {getTekst({ id: 'korrigeringOppdatertAlert', locale: valgtSpråk })}
+                </Alert>
             )}
 
             <Heading size="medium" level="4">
-                {getTekst({ id: 'korrigeringBeskrivelseIngress' })}
+                {getTekst({ id: 'korrigeringBeskrivelseIngress', locale: valgtSpråk })}
             </Heading>
-            <BodyLong>{getTekst({ id: 'korrigeringBeskrivelse' })}</BodyLong>
+            <BodyLong>{getTekst({ id: 'korrigeringBeskrivelse', locale: valgtSpråk })}</BodyLong>
 
             <KorrigeringDager
                 dager={dager}
@@ -144,7 +149,7 @@ const KorrigeringAvMeldekort = ({
                     iconPosition="right"
                     icon={<ArrowRightIcon title="pil-høyre" fontSize="1.5rem" />}
                 >
-                    {getTekst({ id: 'neste' })}
+                    {getTekst({ id: 'neste', locale: valgtSpråk })}
                 </Button>
                 <Button
                     variant="tertiary"
@@ -153,7 +158,7 @@ const KorrigeringAvMeldekort = ({
                         navigate(getPath(siteRoutes.forside));
                     }}
                 >
-                    {getTekst({ id: 'avbrytEndring' })}
+                    {getTekst({ id: 'avbrytEndring', locale: valgtSpråk })}
                 </Button>
             </VStack>
         </VStack>
@@ -184,6 +189,7 @@ const KorrigeringDager = ({
     kanSendeInnHelg: boolean;
     onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
 }) => {
+    const { valgtSpråk } = useValgtSpråk();
     const dagerForUtfylling = hentAktuelleDager(dager, kanSendeInnHelg);
     const dagerFraForrigeMeldekort = hentAktuelleDager(forrigeDager, kanSendeInnHelg);
 
@@ -219,16 +225,17 @@ const KorrigeringDager = ({
                         >
                             {ikkeRett ? (
                                 <option value={status}>
-                                    {getTekst({ id: statusTilTekstId[status] })}
+                                    {getTekst({ id: statusTilTekstId[status], locale: valgtSpråk })}
                                 </option>
                             ) : (
                                 gyldigeStatusValg.map((statusValg) => {
                                     const erUendret = forrigeStatus === statusValg;
                                     const statusTekst = getTekst({
                                         id: statusTilTekstId[statusValg],
+                                        locale: valgtSpråk,
                                     });
                                     const uendretTekst = erUendret
-                                        ? ` (${getTekst({ id: 'korrigeringDagIngenEndring' })})`
+                                        ? ` (${getTekst({ id: 'korrigeringDagIngenEndring', locale: valgtSpråk })})`
                                         : '';
 
                                     return (
@@ -251,58 +258,76 @@ const gyldigeStatusValg = Object.values(MeldekortDagStatus).filter(
 );
 
 const InformasjonOmKorrigeringAvMeldekort = () => {
+    const { valgtSpråk } = useValgtSpråk();
     return (
         <Accordion>
             <Accordion.Item>
-                <Accordion.Header>{getTekst({ id: 'korrigeringLønnHeader' })}</Accordion.Header>
+                <Accordion.Header>
+                    {getTekst({ id: 'korrigeringLønnHeader', locale: valgtSpråk })}
+                </Accordion.Header>
                 <Accordion.Content>
-                    {getTekst({ id: 'korrigeringLønnBeskrivelse' })}
+                    {getTekst({ id: 'korrigeringLønnBeskrivelse', locale: valgtSpråk })}
                 </Accordion.Content>
             </Accordion.Item>
             <Accordion.Item>
-                <Accordion.Header>{getTekst({ id: 'korrigeringSykdomHeader' })}</Accordion.Header>
+                <Accordion.Header>
+                    {getTekst({ id: 'korrigeringSykdomHeader', locale: valgtSpråk })}
+                </Accordion.Header>
                 <Accordion.Content>
-                    <Label>{getTekst({ id: 'statusSyk' })}</Label>
+                    <Label>{getTekst({ id: 'statusSyk', locale: valgtSpråk })}</Label>
                     <ul>
-                        {getTekster({ id: 'fraværHjelpLesMerSykListe' }).map((tekst) => (
-                            <li key={tekst}>{tekst}</li>
-                        ))}
-                    </ul>
-                    <Label>{getTekst({ id: 'statusSyktBarn' })}</Label>
-                    <ul>
-                        {getTekster({ id: 'fraværHjelpLesMerSyktBarnListe' }).map((tekst) => (
-                            <li key={tekst}>{tekst}</li>
-                        ))}
-                    </ul>
-                </Accordion.Content>
-            </Accordion.Item>
-            <Accordion.Item>
-                <Accordion.Header>{getTekst({ id: 'korrigeringFraværHeader' })}</Accordion.Header>
-                <Accordion.Content>
-                    <Label>{getTekst({ id: 'statusGodkjentFravær' })}</Label>
-                    <ul>
-                        {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeStart' }).map(
+                        {getTekster({ id: 'fraværHjelpLesMerSykListe', locale: valgtSpråk }).map(
                             (tekst) => (
                                 <li key={tekst}>{tekst}</li>
                             ),
                         )}
+                    </ul>
+                    <Label>{getTekst({ id: 'statusSyktBarn', locale: valgtSpråk })}</Label>
+                    <ul>
+                        {getTekster({
+                            id: 'fraværHjelpLesMerSyktBarnListe',
+                            locale: valgtSpråk,
+                        }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
+                    </ul>
+                </Accordion.Content>
+            </Accordion.Item>
+            <Accordion.Item>
+                <Accordion.Header>
+                    {getTekst({ id: 'korrigeringFraværHeader', locale: valgtSpråk })}
+                </Accordion.Header>
+                <Accordion.Content>
+                    <Label>{getTekst({ id: 'statusGodkjentFravær', locale: valgtSpråk })}</Label>
+                    <ul>
+                        {getTekster({
+                            id: 'fraværHjelpLesMerFraværGodkjentListeStart',
+                            locale: valgtSpråk,
+                        }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
                         <ul>
-                            {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker' }).map(
-                                (tekst) => (
-                                    <li key={tekst}>{tekst}</li>
-                                ),
-                            )}
-                        </ul>
-                        {getTekster({ id: 'fraværHjelpLesMerFraværGodkjentListeSlutt' }).map(
-                            (tekst) => (
+                            {getTekster({
+                                id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker',
+                                locale: valgtSpråk,
+                            }).map((tekst) => (
                                 <li key={tekst}>{tekst}</li>
-                            ),
-                        )}
+                            ))}
+                        </ul>
+                        {getTekster({
+                            id: 'fraværHjelpLesMerFraværGodkjentListeSlutt',
+                            locale: valgtSpråk,
+                        }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
                     </ul>
 
-                    <Label>{getTekst({ id: 'statusAnnetFravær' })}</Label>
+                    <Label>{getTekst({ id: 'statusAnnetFravær', locale: valgtSpråk })}</Label>
                     <ul>
-                        {getTekster({ id: 'fraværHjelpLesMerFraværAnnetListe' }).map((tekst) => (
+                        {getTekster({
+                            id: 'fraværHjelpLesMerFraværAnnetListe',
+                            locale: valgtSpråk,
+                        }).map((tekst) => (
                             <li key={tekst}>{tekst}</li>
                         ))}
                     </ul>

@@ -13,6 +13,7 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import style from './FraværDagPanel.module.css';
 import { getTekst } from '@tekster/tekster.ts';
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     dag: MeldekortDag;
@@ -20,6 +21,7 @@ type Props = {
 
 export const FraværDagPanel = ({ dag }: Props) => {
     const { setValgtMeldekortDag } = useMeldekortUtfylling();
+    const { valgtSpråk } = useValgtSpråk();
 
     const { dag: dato, status } = dag;
 
@@ -36,13 +38,18 @@ export const FraværDagPanel = ({ dag }: Props) => {
         status === MeldekortDagStatus.IKKE_BESVART
             ? getTekst({
                   id: 'fraværPanelRegistrerSR',
+                  locale: valgtSpråk,
                   resolverProps: { datoTekst },
               })
             : getTekst({
                   id: 'fraværPanelValgRegistrertSR',
+                  locale: valgtSpråk,
                   resolverProps: {
                       datoTekst,
-                      valgtStatusTekst: getTekst({ id: statusTilTekstId[status] }),
+                      valgtStatusTekst: getTekst({
+                          id: statusTilTekstId[status],
+                          locale: valgtSpråk,
+                      }),
                   },
               });
 

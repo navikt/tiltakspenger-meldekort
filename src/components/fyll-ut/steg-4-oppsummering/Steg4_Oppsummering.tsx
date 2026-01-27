@@ -19,6 +19,7 @@ import { TekstId } from '@tekster/typer.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
 import { useApiClient } from '@utils/apiClient';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -45,6 +46,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
     } = useMeldekortUtfylling();
     const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
+    const { valgtSpråk } = useValgtSpråk();
 
     const errorRef = React.useRef<HTMLDivElement>(null);
     const [errors, setErrors] = useState<ErrorSummaryItem[]>([]);
@@ -181,7 +183,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
         <MeldekortStegWrapper>
             <Tekst id="oppsummeringIngress" />
             <Alert variant="info" className={style.varsel}>
-                <TekstSegmenter id={'oppsummeringIkkeSendtEnnå'} />
+                <TekstSegmenter id={'oppsummeringIkkeSendtEnnå'} locale={valgtSpråk} />
             </Alert>
             <Kalender
                 meldekort={meldekortUtfylling}
@@ -212,7 +214,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
             </VStack>
             {apiClient.apiStatus === 'error' && (
                 <Alert variant="error" className={style.varsel} ref={varselRef} tabIndex={-1}>
-                    <TekstSegmenter id="oppsummeringInnsendingFeilet" />
+                    <TekstSegmenter id="oppsummeringInnsendingFeilet" locale={valgtSpråk} />
                 </Alert>
             )}
             {visValideringsfeil && errors.length > 0 && (

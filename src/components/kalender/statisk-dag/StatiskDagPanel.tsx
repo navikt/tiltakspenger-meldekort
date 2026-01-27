@@ -11,6 +11,7 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 
 import style from './StatiskDagPanel.module.css';
 import { MeldekortDag } from '@common/typer/MeldekortBruker';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     dag: MeldekortDag;
@@ -18,6 +19,7 @@ type Props = {
 
 export const MeldekortdagOppsummering = ({ dag }: Props) => {
     const { status, dag: dato } = dag;
+    const { valgtSpråk } = useValgtSpråk();
 
     const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
 
@@ -28,7 +30,7 @@ export const MeldekortdagOppsummering = ({ dag }: Props) => {
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
             <IkonKomponent aria-hidden />
             <BodyLong>{`${datoTekst}: `}</BodyLong>
-            <TekstSegmenter id={tekstId} weight={'semibold'} />
+            <TekstSegmenter id={tekstId} weight={'semibold'} locale={valgtSpråk} />
         </div>
     );
 };

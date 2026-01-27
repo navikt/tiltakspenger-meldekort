@@ -9,6 +9,7 @@ import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
 import { getTekst } from '@tekster/tekster.ts';
 import { meldekortStegTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils.ts';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     children: React.ReactNode;
@@ -19,6 +20,7 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
     const { meldekortUtfylling, meldekortSteg, setMeldekortSteg, getUndertekster } =
         useMeldekortUtfylling();
     const { navigate } = useRouting();
+    const { valgtSpråk } = useValgtSpråk();
 
     useEffect(() => {
         scrollTo(0, 0);
@@ -52,30 +54,30 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('fravær', id))}
                     >
-                        {getTekst({ id: 'fraværTittel' })}
+                        {getTekst({ id: 'fraværTittel', locale: valgtSpråk })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('lønn', id))}
                     >
-                        {getTekst({ id: 'lønnTittel' })}
+                        {getTekst({ id: 'lønnTittel', locale: valgtSpråk })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('deltatt', id))}
                     >
-                        {getTekst({ id: 'deltattTittel' })}
+                        {getTekst({ id: 'deltattTittel', locale: valgtSpråk })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('oppsummering', id))}
                     >
-                        {getTekst({ id: 'kvitteringTittel' })}
+                        {getTekst({ id: 'kvitteringTittel', locale: valgtSpråk })}
                     </Stepper.Step>
                 </Stepper>
             )}
             <Heading level="2" size="large" className={style.stegTitle}>
-                {getTekst({ id: meldekortStegTilTekstId[meldekortSteg] })}
+                {getTekst({ id: meldekortStegTilTekstId[meldekortSteg], locale: valgtSpråk })}
             </Heading>
             {children}
         </div>

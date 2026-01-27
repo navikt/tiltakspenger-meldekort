@@ -5,6 +5,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import style from './PageHeader.module.css';
 import { getTekst } from '@tekster/tekster.ts';
 import { TekstId } from '@tekster/typer.ts';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     tekstId: TekstId;
@@ -12,8 +13,9 @@ type Props = {
 };
 
 export const PageHeader = ({ tekstId, underTekst }: Props) => {
+    const { valgtSpråk } = useValgtSpråk();
     useEffect(() => {
-        document.title = `${getTekst({ id: tekstId })} - nav.no`;
+        document.title = `${getTekst({ id: tekstId, locale: valgtSpråk })} - nav.no`;
     }, [tekstId]);
 
     return (

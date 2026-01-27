@@ -12,6 +12,7 @@ import { formatterDato } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './KorrigerMeldekortOppsummering.module.css';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     dager: MeldekortDag[];
@@ -54,6 +55,7 @@ type DagProps = {
 
 const OppsummertDag = ({ dag, forrigeStatus }: DagProps) => {
     const { status, dag: dato } = dag;
+    const { valgtSpråk } = useValgtSpråk();
 
     const IkonKomponent = statusTilIkon[status];
     const statusStyle = meldekortStatusTilStyle[status];
@@ -78,11 +80,16 @@ const OppsummertDag = ({ dag, forrigeStatus }: DagProps) => {
                     <BodyLong size={'small'}>
                         {erEndret ? (
                             <>
-                                {`${getTekst({ id: 'korrigeringDagEndretFra' })}: `}
-                                <strong>{getTekst({ id: statusTilTekstId[forrigeStatus] })}</strong>
+                                {`${getTekst({ id: 'korrigeringDagEndretFra', locale: valgtSpråk })}: `}
+                                <strong>
+                                    {getTekst({
+                                        id: statusTilTekstId[forrigeStatus],
+                                        locale: valgtSpråk,
+                                    })}
+                                </strong>
                             </>
                         ) : (
-                            getTekst({ id: 'korrigeringDagIkkeEndret' })
+                            getTekst({ id: 'korrigeringDagIkkeEndret', locale: valgtSpråk })
                         )}
                     </BodyLong>
                 </HStack>
