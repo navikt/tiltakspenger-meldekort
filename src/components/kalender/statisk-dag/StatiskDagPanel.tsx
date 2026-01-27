@@ -21,7 +21,12 @@ export const MeldekortdagOppsummering = ({ dag }: Props) => {
     const { status, dag: dato } = dag;
     const { valgtSpråk } = useValgtSpråk();
 
-    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
+    const datoTekst = formatterDato({
+        dato,
+        medUkeDag: true,
+        medStorForbokstav: true,
+        locale: valgtSpråk,
+    });
 
     const IkonKomponent = statusTilIkon[status];
     const tekstId = statusTilTekstId[status];
@@ -30,7 +35,7 @@ export const MeldekortdagOppsummering = ({ dag }: Props) => {
         <div className={classNames(style.statiskDag, meldekortStatusTilStyle[status])}>
             <IkonKomponent aria-hidden />
             <BodyLong>{`${datoTekst}: `}</BodyLong>
-            <TekstSegmenter id={tekstId} weight={'semibold'} locale={valgtSpråk} />
+            <TekstSegmenter id={tekstId} weight={'semibold'} />
         </div>
     );
 };

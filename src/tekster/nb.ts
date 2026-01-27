@@ -60,7 +60,7 @@ export const teksterNb = {
     forsideHarArenaMeldekort: 'Du kan finne meldekortene dine for tiltakspenger i ',
     forsideArenaLenke: 'den gamle løsningen for meldekort.',
 
-    ukeMedNummer: ({ dato }: { dato: string }) => `Uke ${getUkenummer(dato)}`,
+    ukeMedNummer: ({ dato }: { dato: string }) => `Uke ${getUkenummer(dato, 'nb')}`,
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Uke ${uke1} og ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} til ${tilOgMed}`,
@@ -201,7 +201,7 @@ export const teksterNb = {
 
     //InnsendteMeldekortForKjede
     meldekortForKjedeHeaderUndertekst: (args: { periode: Periode }) =>
-        `Her ser du innsendte meldekort for perioden ${formatterDato({ dato: args.periode.fraOgMed })} - ${formatterDato({ dato: args.periode.tilOgMed })}.`,
+        `Her ser du innsendte meldekort for perioden ${formatterDato({ dato: args.periode.fraOgMed, locale: 'nb' })} - ${formatterDato({ dato: args.periode.tilOgMed, locale: 'nb' })}.`,
     ingenInnsendteMeldekortForPerioden: 'Ingen innsendte meldekort for denne perioden.',
     sisteInnsendteMeldekortForPerioden: 'Siste innsendte meldekort for perioden',
     tidligereInnsendteMeldekortForPerioden: 'Tidligere innsendte meldekort for perioden',

@@ -31,7 +31,6 @@ export const SiteRouter = ({ appContext }: Props) => {
                 <Route path={innsendte.path} key={innsendte.path}>
                     <RouteComponent route={innsendte} appContext={appContext} />
                 </Route>
-
                 <Route path={meldekortForKjede.path} key={meldekortForKjede.path}>
                     <RouteComponent route={meldekortForKjede} appContext={appContext} />
                 </Route>

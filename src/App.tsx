@@ -7,11 +7,9 @@ import { Feilside } from '@Feilside.tsx';
 
 import style from './App.module.css';
 import { FeilsideServerfeil } from '@FeilsideServerfeil.tsx';
-import { SpråkProvider, useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
-import { onLanguageSelect } from '@navikt/nav-dekoratoren-moduler';
+import { SpråkProvider } from '@context/SpråkvelgerContext.tsx';
 
 export const App = (appContext: AppContext) => {
-    const { valgtSpråk, setValgtSpråk } = useValgtSpråk();
     return (
         <Page className={style.app}>
             <Page.Block

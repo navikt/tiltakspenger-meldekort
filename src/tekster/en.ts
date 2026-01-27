@@ -12,11 +12,11 @@ export const teksterEn = {
     avbryt: 'Cancel',
     avbrytEndring: 'Avbryt endring',
     avbrytUtfylling: 'Cancel report',
-    sendInn: 'Send inn',
+    sendInn: 'Submit',
 
     statusIkkeBesvart: 'No report',
-    statusDeltatt: 'Deltok',
-    statusDeltattMedLønn: 'Mottatt lønn',
+    statusDeltatt: 'Participated',
+    statusDeltattMedLønn: 'Received pay',
     statusSyk: 'Sick',
     statusSyktBarn: 'Sick child or sick child carer',
     statusGodkjentFravær: 'Absence approved by Nav',
@@ -28,13 +28,13 @@ export const teksterEn = {
 
     forMangeDagerEnkel: 'Du har fylt ut for mange dager',
     forFaDagerEnkel: 'Du har fylt ut for få dager',
-    ingenDagerFyltUt: 'Du må fylle ut minst én dag med fravær, lønn eller deltagelse.',
+    ingenDagerFyltUt: 'You must select at least one day with absence, pay or participation.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} day${antall === 1 ? '' : 's'} reported.`,
     forMangeDagerBesvart: ({ maks }: { maks: number }) =>
         `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
     forFaDagerBesvart: ({ maks }: { maks: number }) =>
-        `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
+        `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected all of the days you have participated, been absent or earned pay.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
@@ -61,17 +61,17 @@ export const teksterEn = {
     forsideHarArenaMeldekort: 'Du kan finne meldekortene dine for tiltakspenger i ',
     forsideArenaLenke: 'den gamle løsningen for meldekort.',
 
-    ukeMedNummer: ({ dato }: { dato: string }) => `Week ${getUkenummer(dato)}`,
+    ukeMedNummer: ({ dato }: { dato: string }) => `Week ${getUkenummer(dato, 'en')}`,
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Week ${uke1} and ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} to ${tilOgMed}`,
 
-    deltattTittel: 'Oppmøte',
+    deltattTittel: 'Attendance',
     deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
-        'Kryss av for de dagene du har deltatt på tiltaket som avtalt. Kryss også av for «deltok» hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.',
-    deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket.',
-    deltattDagPrefix: 'Deltok: ',
+        'Please select the days you participated in activities as agreed. You should select “participated” if the day was a public holiday and you did not participate because the employment scheme was closed.',
+    deltattUkeHjelp: 'Please select the days you participated in activities.',
+    deltattDagPrefix: 'Participated: ',
     fraværHjelpLesMer:
         'Du må informere oss dersom du har vært syk eller hatt annet fravær i perioden du var satt opp på tiltak.',
     fraværStegFraværSpørsmål:
@@ -146,19 +146,20 @@ export const teksterEn = {
     lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
     lønnInfoUndertittelLønn: 'Pay',
     lønnIngress:
-        'Hvis du får lønn (ikke tiltakspenger) som en del av tiltaket ditt, svarer du “ja”. Deretter oppgir du hvilke dager det gjelder.',
-    lønnHarMottattLønnSpørsmål: 'Mottar du lønn (ikke tiltakspenger) som en del av tiltaket?',
-    lønnHarMottattLønnSvarJa: 'Ja, jeg mottar lønn som en del av tiltaket',
-    lønnHarMottattLønnSvarNei: 'Nei, jeg skal bare motta tiltakspenger',
+        'If you are receiving pay (not employment scheme benefits) as part of your participation, answer “yes”. Then specify which days you are receiving pay for.',
+    lønnHarMottattLønnSpørsmål:
+        'Are you receiving pay (not employment scheme benefits) as part of your participation?',
+    lønnHarMottattLønnSvarJa: 'Yes, I am receiving pay as part of my participation',
+    lønnHarMottattLønnSvarNei: 'No, I am only receiving employment scheme benefits',
     lønnSpørsmålIkkeValgt: 'Velg et lønnsalternativ for å fortsette.',
-    lønnUkeHjelp: 'Kryss av for de dagene du mottar lønn',
-    lønnDagPrefix: 'Mottar lønn: ',
-    oppsummeringTittel: 'Oppsummering',
+    lønnUkeHjelp: 'Please select the days you are receiving pay for',
+    lønnDagPrefix: 'Receiving pay: ',
+    oppsummeringTittel: 'Summary',
     oppsummeringIngress:
-        'Her er en oppsummering av det du har fylt ut i meldekortet for denne perioden. Sjekk at det er korrekt før du sender inn. Du kan gå tilbake og rette opp hvis noe er feil.',
-    oppsummeringBekrefter: 'Jeg bekrefter at disse opplysningene stemmer',
-    oppsummeringBekrefterFeil: 'Du må bekrefte for å sende meldekortet',
-    oppsummeringIkkeSendtEnnå: 'Meldekortet er ikke sendt inn.',
+        'Below is a summary of the information you reported on your employment status form this period. Please make sure it is correct before you submit the form. You can go back and correct any incorrect information.',
+    oppsummeringBekrefter: 'I confirm that the above information is correct.',
+    oppsummeringBekrefterFeil: 'You must confirm in order to submit the employment status form',
+    oppsummeringIkkeSendtEnnå: 'You have not yet submitted the form.',
     oppsummeringIngenDagerMedFravær:
         'Du har svart ja på spørsmålet om du har vært syk eller har hatt fravær. Du må oppgi en fraværsgrunn for minst en dag eller endre svaret ditt til "Nei".',
     oppsummeringIngenDagerMedLønn:
@@ -168,12 +169,12 @@ export const teksterEn = {
         'Dersom problemet vedvarer, kontakt veilederen din.',
     ],
 
-    kvitteringTittel: 'Oppsummering',
-    kvitteringTilbake: 'Tilbake til startsiden for meldekort',
+    kvitteringTittel: 'Summary',
+    kvitteringTilbake: 'Back to the employment status form start page',
     kvittering: [
-        'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
-        'Du får pengene innen tre virkedager hvis vi har fått all informasjonen vi trenger for å beregne og betale ut tiltakspenger. ' +
-            'Hvis du har gitt svar som gjør at vi trenger dokumentasjon, kan det ta litt lengre tid før du får pengene.',
+        'The employment status form was submitted to Nav. Don’t forget to contact your counsellor if you have absences that need approving.',
+        'You will receive payment within 3 business days, provided you have submitted all the information we need to calculate and pay your employment scheme benefits. ' +
+            'If some of the information you provided means we need additional documentation, it may take a little longer before you receive payment.',
     ],
 
     tilbakeTilOversiktForNyKorrigering: 'Gå tilbake til oversikten for å starte en ny korrigering',
@@ -202,7 +203,7 @@ export const teksterEn = {
 
     //InnsendteMeldekortForKjede
     meldekortForKjedeHeaderUndertekst: (args: { periode: Periode }) =>
-        `Her ser du innsendte meldekort for perioden ${formatterDato({ dato: args.periode.fraOgMed })} - ${formatterDato({ dato: args.periode.tilOgMed })}.`,
+        `Her ser du innsendte meldekort for perioden ${formatterDato({ dato: args.periode.fraOgMed, locale: 'en' })} - ${formatterDato({ dato: args.periode.tilOgMed, locale: 'en' })}.`,
     ingenInnsendteMeldekortForPerioden: 'Ingen innsendte meldekort for denne perioden.',
     sisteInnsendteMeldekortForPerioden: 'Siste innsendte meldekort for perioden',
     tidligereInnsendteMeldekortForPerioden: 'Tidligere innsendte meldekort for perioden',

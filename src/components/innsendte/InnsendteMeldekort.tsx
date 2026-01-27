@@ -12,6 +12,7 @@ import { Meldekort } from '@common/typer/MeldekortBruker';
 import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
 
 import style from './InnsendteMeldekort.module.css';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = InnsendteMeldekortProps;
 
@@ -36,6 +37,7 @@ export const InnsendteMeldekort = ({
             return 0;
         }),
     );
+    const { valgtSpråk } = useValgtSpråk();
 
     return (
         <>
@@ -66,8 +68,14 @@ export const InnsendteMeldekort = ({
                                     resolverProps={{
                                         uke1: sisteMeldekort.uke1,
                                         uke2: sisteMeldekort.uke2,
-                                        fraOgMed: formatterDato({ dato: sisteMeldekort.fraOgMed }),
-                                        tilOgMed: formatterDato({ dato: sisteMeldekort.tilOgMed }),
+                                        fraOgMed: formatterDato({
+                                            dato: sisteMeldekort.fraOgMed,
+                                            locale: valgtSpråk,
+                                        }),
+                                        tilOgMed: formatterDato({
+                                            dato: sisteMeldekort.tilOgMed,
+                                            locale: valgtSpråk,
+                                        }),
                                     }}
                                 />
                             </Accordion.Header>

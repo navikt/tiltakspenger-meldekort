@@ -7,7 +7,6 @@ import { TekstId } from '@tekster/typer.ts';
 
 import style from './FraværStatusPanel.module.css';
 import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     status: MeldekortDagStatus;
@@ -16,11 +15,10 @@ type Props = {
 };
 
 export const FraværStatusPanel = ({ status, ingressId }: Props) => {
-    const { valgtSpråk } = useValgtSpråk();
     return (
         <Radio value={status} className={classNames(style.valg)}>
-            <TekstSegmenter id={statusTilTekstId[status]} weight={'semibold'} locale={valgtSpråk} />
-            <TekstSegmenter id={ingressId} className={style.ingress} locale={valgtSpråk} />
+            <TekstSegmenter id={statusTilTekstId[status]} weight={'semibold'} />
+            <TekstSegmenter id={ingressId} className={style.ingress} />
         </Radio>
     );
 };

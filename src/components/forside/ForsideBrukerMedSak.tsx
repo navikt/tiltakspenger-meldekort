@@ -30,7 +30,7 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
                 </EksternLenke>
             </GuidePanel>
 
-            <TekstSegmenter id={'forsideIngress'} spacing={true} locale={valgtSpråk} />
+            <TekstSegmenter id={'forsideIngress'} spacing={true} />
             {nesteMeldekort?.status === MeldekortStatus.KAN_UTFYLLES ? (
                 <TilUtfylling nesteMeldekort={nesteMeldekort} />
             ) : (

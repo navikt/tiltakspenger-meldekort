@@ -60,7 +60,7 @@ const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) =
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: forrigeMeldekort.fraOgMed })} til ${formatterDato({ dato: forrigeMeldekort.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: forrigeMeldekort.fraOgMed, locale: valgtSpråk })} til ${formatterDato({ dato: forrigeMeldekort.tilOgMed, locale: valgtSpråk })})`}
                         />
                     </HStack>
                 }
@@ -216,7 +216,11 @@ const KorrigeringDager = ({
                             className={statusClassMap[status]}
                             id={`select-${dag}`}
                             key={dag}
-                            label={formatterDato({ medUkeDag: true, dato: dag })}
+                            label={formatterDato({
+                                medUkeDag: true,
+                                dato: dag,
+                                locale: valgtSpråk,
+                            })}
                             value={status}
                             onChange={(e) => {
                                 onChange(dag, e.target.value as MeldekortDagStatus);

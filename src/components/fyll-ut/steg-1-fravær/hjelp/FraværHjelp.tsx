@@ -14,7 +14,7 @@ export const FraværHjelp = () => {
             <Heading size={'medium'} level={'2'} className={style.header}>
                 <Tekst id={'fraværHjelpTittel'} />
             </Heading>
-            <TekstSegmenter id={'fraværHjelpIngress'} locale={valgtSpråk} />
+            <TekstSegmenter id={'fraværHjelpIngress'} />
             <ReadMore
                 header={getTekster({ id: 'fraværHjelpLesMerSyk', locale: valgtSpråk })}
                 className={style.lesMer}

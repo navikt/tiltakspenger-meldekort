@@ -56,7 +56,7 @@ export const KorrigerMeldekortSendInn = ({
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: originaleMeldekort.fraOgMed })} til ${formatterDato({ dato: originaleMeldekort.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: originaleMeldekort.fraOgMed, locale: valgtSpråk })} til ${formatterDato({ dato: originaleMeldekort.tilOgMed, locale: valgtSpråk })})`}
                         />
                     </HStack>
                 }

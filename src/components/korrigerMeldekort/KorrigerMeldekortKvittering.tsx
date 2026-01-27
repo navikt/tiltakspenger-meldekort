@@ -6,8 +6,10 @@ import { Undertekst } from '@components/page-header/Undertekst';
 import { Tekst } from '@components/tekst/Tekst';
 import { Alert, BodyShort, HStack, VStack } from '@navikt/ds-react';
 import { formatterDato } from '@utils/datetime';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) => {
+    const { valgtSpråk } = useValgtSpråk();
     return (
         <div>
             <PageHeader
@@ -19,7 +21,7 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.originaleMeldekort.fraOgMed })} til ${formatterDato({ dato: props.originaleMeldekort.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: props.originaleMeldekort.fraOgMed, locale: valgtSpråk })} til ${formatterDato({ dato: props.originaleMeldekort.tilOgMed, locale: valgtSpråk })})`}
                         />
                     </HStack>
                 }

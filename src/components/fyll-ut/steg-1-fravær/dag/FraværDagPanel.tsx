@@ -25,7 +25,12 @@ export const FraværDagPanel = ({ dag }: Props) => {
 
     const { dag: dato, status } = dag;
 
-    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
+    const datoTekst = formatterDato({
+        dato,
+        medUkeDag: true,
+        medStorForbokstav: true,
+        locale: valgtSpråk,
+    });
 
     const harDeltatt = status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
     const harMottattLønn = status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET;

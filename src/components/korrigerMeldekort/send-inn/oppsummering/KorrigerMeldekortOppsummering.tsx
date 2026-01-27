@@ -61,7 +61,12 @@ const OppsummertDag = ({ dag, forrigeStatus }: DagProps) => {
     const statusStyle = meldekortStatusTilStyle[status];
 
     const erEndret = forrigeStatus !== status;
-    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
+    const datoTekst = formatterDato({
+        dato,
+        medUkeDag: true,
+        medStorForbokstav: true,
+        locale: valgtSpråk,
+    });
 
     return (
         <VStack className={classNames(style.dag, statusStyle)} as={'li'}>

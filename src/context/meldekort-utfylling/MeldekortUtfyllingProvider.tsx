@@ -5,6 +5,7 @@ import { formatterDato, getUkenummer } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { Meldekort, MeldekortDag, MeldekortStatus } from '@common/typer/MeldekortBruker';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     navigate?: (path: string) => void;
@@ -18,6 +19,7 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
     const [harHattFravær, setHarHattFravær] = useState<boolean | null>(null);
     const [harMottattLønn, setHarMottattLønn] = useState<boolean | null>(null);
     const [visValideringsfeil, setVisValideringsfeil] = useState<boolean | null>(null);
+    const { valgtSpråk } = useValgtSpråk();
 
     const lagreMeldekortDag = useCallback(
         (dag: MeldekortDag) => {
@@ -75,15 +77,26 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
             ukerTekst: (
                 <Tekst
                     id={'undertekstUker'}
-                    resolverProps={{ uke1: getUkenummer(fraOgMed), uke2: getUkenummer(tilOgMed) }}
+                    resolverProps={{
+                        uke1: getUkenummer(fraOgMed, valgtSpråk),
+                        uke2: getUkenummer(tilOgMed, valgtSpråk),
+                    }}
                 />
             ),
             datoerTekst: (
                 <Tekst
                     id={'undertekstDatoer'}
                     resolverProps={{
-                        fraOgMed: formatterDato({ dato: fraOgMed, medUkeDag: false }),
-                        tilOgMed: formatterDato({ dato: tilOgMed, medUkeDag: false }),
+                        fraOgMed: formatterDato({
+                            dato: fraOgMed,
+                            medUkeDag: false,
+                            locale: valgtSpråk,
+                        }),
+                        tilOgMed: formatterDato({
+                            dato: tilOgMed,
+                            medUkeDag: false,
+                            locale: valgtSpråk,
+                        }),
                     }}
                 />
             ),

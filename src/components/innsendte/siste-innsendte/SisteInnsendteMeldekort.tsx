@@ -7,6 +7,7 @@ import { Kalender } from '@components/kalender/Kalender.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
 import style from './SisteInnsendteMeldekort.module.css';
+import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     meldekort: Meldekort;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
+    const { valgtSpråk } = useValgtSpråk();
     return (
         <VStack gap={'4'}>
             <Heading size="medium" level="3">
@@ -24,7 +26,7 @@ export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
                     <Tekst
                         id={'alleInnsendt'}
                         resolverProps={{
-                            dato: formatterDatoTid(meldekort.innsendt),
+                            dato: formatterDatoTid(meldekort.innsendt, valgtSpråk),
                         }}
                     />
                     <Button

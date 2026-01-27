@@ -9,7 +9,6 @@ import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.t
 import { getPath, siteRoutes } from '@common/siteRoutes.ts';
 import { Meldekort, MeldekortStatus } from '@common/typer/MeldekortBruker';
 import useScript from '@components/fyll-ut/steg-5-kvittering/useScript.tsx';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -19,7 +18,6 @@ export const Steg5_Kvittering = ({ brukersMeldekort }: SSRProps) => {
     useScript(true); // UX Signals script for brukertesting
     const { meldekortUtfylling, setMeldekortUtfylling, redirectHvisMeldekortErInnsendt } =
         useMeldekortUtfylling();
-    const { valgtSpråk } = useValgtSpråk();
 
     useEffect(() => {
         redirectHvisMeldekortErInnsendt(brukersMeldekort, meldekortUtfylling, 'kvittering');
@@ -41,7 +39,7 @@ export const Steg5_Kvittering = ({ brukersMeldekort }: SSRProps) => {
             <VStack gap="8">
                 <div>
                     <Alert variant={'success'} className={style.kvittering}>
-                        <TekstSegmenter id={'kvittering'} spacing={true} locale={valgtSpråk} />
+                        <TekstSegmenter id={'kvittering'} spacing={true} />
                     </Alert>
                     <InternLenke path={getPath(siteRoutes.forside)}>
                         <Tekst id={'kvitteringTilbake'} />
