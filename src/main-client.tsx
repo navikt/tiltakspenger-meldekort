@@ -16,6 +16,7 @@ const parseAppContext = (): AppContext => {
             initialProps: {},
             baseUrl: appConfig.baseUrl,
             status: 500,
+            språk: 'nb',
         };
     }
 };
@@ -28,5 +29,5 @@ ReactDOM.hydrateRoot(
         <Router base={appContext.baseUrl}>
             <App {...appContext} />
         </Router>
-    </React.StrictMode>
+    </React.StrictMode>,
 );
