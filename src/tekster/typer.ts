@@ -1,5 +1,5 @@
 import { teksterNb } from '@tekster/nb.ts';
-import { TeksterLocale } from '@common/typer/locale.ts';
+import { TeksterLocale } from '@common/locale.ts';
 
 type TeksterNB = typeof teksterNb;
 

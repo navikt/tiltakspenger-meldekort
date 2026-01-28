@@ -1,5 +1,5 @@
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
-import { TeksterLocale } from '@common/typer/locale.ts';
+import { erLocaleGyldig, TeksterLocale } from '@common/locale.ts';
 import { useLocation } from 'wouter';
 import { onLanguageSelect } from '@navikt/nav-dekoratoren-moduler';
 import { replaceLocaleSuffix } from '@common/urls.ts';
@@ -18,7 +18,7 @@ export const SpråkProvider = ({ defaultSpråk, children }: Props) => {
 
     useEffect(() => {
         onLanguageSelect((language) => {
-            if (language.locale === 'nb' || language.locale === 'en') {
+            if (erLocaleGyldig(language.locale)) {
                 const nyPath = replaceLocaleSuffix(path, language.locale);
                 console.log(`Ny path: ${nyPath}`);
                 setValgtSpråk(language.locale);

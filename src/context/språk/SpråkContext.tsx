@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { TeksterLocale } from '@common/typer/locale.ts';
+import { TeksterLocale } from '@common/locale.ts';
 import { TeksterProps, TekstId } from '@tekster/typer.ts';
 
 type SpråkvelgerState = {

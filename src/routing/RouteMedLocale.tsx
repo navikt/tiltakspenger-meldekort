@@ -3,7 +3,7 @@ import { addLocaleSuffix } from '@common/urls.ts';
 import { RouteComponent } from '@routing/RouteComponent.tsx';
 import { AppContext } from '@common/typer/appContext.ts';
 import { SiteRouteConfig } from '@routing/siteRouteConfigs.ts';
-import { locales } from '@common/typer/locale';
+import { locales } from '@common/locale.ts';
 
 type Props = {
     appContext: AppContext;

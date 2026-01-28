@@ -1,7 +1,7 @@
 import { teksterNb } from '@tekster/nb';
 import { TeksterRecord, TekstId, TeksterPropsMedLocale } from '@tekster/typer.ts';
 import { teksterEn } from '@tekster/en.ts';
-import { baseLocale, TeksterLocale } from '@common/typer/locale.ts';
+import { baseLocale, TeksterLocale } from '@common/locale.ts';
 
 const tekster: Record<TeksterLocale, TeksterRecord> = {
     nb: teksterNb,

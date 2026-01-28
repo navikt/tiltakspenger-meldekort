@@ -6,7 +6,7 @@ import { fetchFraApiMock } from '@fetch/apiFetchMock';
 import { SiteRouteComponentProps } from '@common/typer/appContext';
 import { brukerTesterPågår, isProd } from '@utils/env';
 import { HtmlRenderFunc } from '@ssr/htmlRenderUtils';
-import { locales, TeksterLocale } from '@common/typer/locale';
+import { locales, TeksterLocale } from '@common/locale.ts';
 import { addLocaleSuffix } from '@common/urls';
 
 type ConstructorProps = {
