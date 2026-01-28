@@ -3,7 +3,6 @@ import { siteRouteConfigs } from '@routing/siteRouteConfigs.ts';
 import { Feilside } from '@Feilside.tsx';
 import { AppContext } from '@common/typer/appContext.ts';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider.tsx';
-import { useRouting } from '@routing/useRouting.ts';
 import KorrigeringAvMeldekortRouteWrapper from '@components/korrigerMeldekort/KorrigeringAvMeldekortRouteWrapper';
 import { RouteMedLocale } from '@routing/RouteMedLocale.tsx';
 
@@ -23,11 +22,14 @@ export const SiteRouter = ({ appContext }: Props) => {
         kvittering,
         korrigeringMeldekort,
     } = siteRouteConfigs;
-    const { navigate } = useRouting();
 
     return (
         <Switch>
-            <MeldekortUtfyllingProvider navigate={navigate}>
+            <Route path={korrigeringMeldekort.path}>
+                <KorrigeringAvMeldekortRouteWrapper appContext={appContext} />
+            </Route>
+
+            <MeldekortUtfyllingProvider>
                 {/* Forsiden trenger å informere provideren om hvilket meldekort som det skal jobbes med i stegene */}
                 <RouteMedLocale appContext={appContext} routeConfig={forside} />
                 <RouteMedLocale appContext={appContext} routeConfig={innsendte} />
@@ -37,13 +39,9 @@ export const SiteRouter = ({ appContext }: Props) => {
                 <RouteMedLocale appContext={appContext} routeConfig={lønn} />
                 <RouteMedLocale appContext={appContext} routeConfig={sendInn} />
                 <RouteMedLocale appContext={appContext} routeConfig={kvittering} />
-
-                <Route path={korrigeringMeldekort.path}>
-                    <KorrigeringAvMeldekortRouteWrapper appContext={appContext} />
-                </Route>
             </MeldekortUtfyllingProvider>
 
-            {/* 
+            {/*
                 Denne routen vil aldri matche fordi provideren vil alltid bli sett på som en match - Vi er derimot heldige fordi at appContext.status i App.tsx gir oss feilsiden. 
                 Kan enten flytte den inn i provideren, eller finne en annen måte å håndtere dette på. 
                 */}

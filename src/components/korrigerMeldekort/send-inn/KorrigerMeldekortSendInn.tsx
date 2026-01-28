@@ -13,7 +13,7 @@ import { formatterDato } from '@utils/datetime.ts';
 import styles from './KorrigerMeldekortSendInn.module.css';
 import { ArrowLeftIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { useRouting } from '@routing/useRouting.ts';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import { Link } from 'wouter';
 import { useEffect, useState } from 'react';
@@ -41,7 +41,7 @@ export const KorrigerMeldekortSendInn = ({
 
     useEffect(() => {
         if (!kanKorrigeres) {
-            navigate(getPath(siteRoutes.forside));
+            navigate(getPath(siteRoutePaths.forside));
         }
     }, [kanKorrigeres, navigate]);
 
@@ -73,7 +73,7 @@ export const KorrigerMeldekortSendInn = ({
                             Du har ikke gjort noen endringer på dette meldekortet.
                         </BodyShort>
                         <Link
-                            to={getPath(siteRoutes.korrigerMeldekortUtfylling, {
+                            to={getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
                                 meldekortId: originaleMeldekort.id,
                             })}
                         >
@@ -106,7 +106,7 @@ export const KorrigerMeldekortSendInn = ({
                                 <BodyShort>{apiClient.response.error.errorBody.melding}</BodyShort>
                                 {apiClient.response.error.errorBody.kode ===
                                     ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig && (
-                                    <Link to={getPath(siteRoutes.forside)}>
+                                    <Link to={getPath(siteRoutePaths.forside)}>
                                         {getTekst({
                                             id: 'tilbakeTilOversiktForNyKorrigering',
                                             locale: valgtSpråk,
@@ -121,7 +121,7 @@ export const KorrigerMeldekortSendInn = ({
                                 icon={<ArrowLeftIcon title="pil-venstre" fontSize="1.5rem" />}
                                 onClick={() =>
                                     navigate(
-                                        getPath(siteRoutes.korrigerMeldekortUtfylling, {
+                                        getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
                                             meldekortId: originaleMeldekort.id,
                                         }),
                                     )
@@ -147,9 +147,12 @@ export const KorrigerMeldekortSendInn = ({
                                         },
                                         onSuccess: () => {
                                             navigate(
-                                                getPath(siteRoutes.korrigerMeldekortKvittering, {
-                                                    meldekortId: originaleMeldekort.id,
-                                                }),
+                                                getPath(
+                                                    siteRoutePaths.korrigerMeldekortKvittering,
+                                                    {
+                                                        meldekortId: originaleMeldekort.id,
+                                                    },
+                                                ),
                                             );
                                         },
                                     });
@@ -166,7 +169,7 @@ export const KorrigerMeldekortSendInn = ({
                             className={styles.avbrytEndringButton}
                             variant="tertiary"
                             onClick={() => {
-                                navigate(getPath(siteRoutes.forside));
+                                navigate(getPath(siteRoutePaths.forside));
                             }}
                         >
                             Avbryt endring

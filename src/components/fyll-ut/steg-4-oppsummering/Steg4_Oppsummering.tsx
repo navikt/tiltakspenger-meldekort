@@ -9,7 +9,7 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 
-import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
@@ -251,7 +251,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                 }}
                 onAvbrytClick={() => {
                     setMeldekortSteg('fravær');
-                    navigate(getPath(siteRoutes.forside));
+                    navigate(getPath(siteRoutePaths.forside));
                 }}
             />
         </MeldekortStegWrapper>

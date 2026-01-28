@@ -1,4 +1,4 @@
-import { getPath, siteRoutes } from '@common/siteRoutes';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { MeldekortForKjedeResponse } from '@common/typer/MeldeperiodeKjede';
 import { Kalender } from '@components/kalender/Kalender';
 import { InternLenke } from '@components/lenke/InternLenke';
@@ -38,7 +38,7 @@ const InnsendteMeldekortForKjede = (props: {
                             />
                         )}
 
-                        <InternLenke path={getPath(siteRoutes.innsendte)}>
+                        <InternLenke path={getPath(siteRoutePaths.innsendte)}>
                             <Tekst id={'sideForInnsendteMeldekort'} />
                         </InternLenke>
                     </VStack>
@@ -49,7 +49,7 @@ const InnsendteMeldekortForKjede = (props: {
                 {props.meldekortForKjede.meldekort.length === 0 ? (
                     <VStack gap="2">
                         <Tekst id={'ingenInnsendteMeldekortForPerioden'} />
-                        <InternLenke path={getPath(siteRoutes.innsendte)}>
+                        <InternLenke path={getPath(siteRoutePaths.innsendte)}>
                             <Tekst id={'tilbakeTilInnsendte'} />
                         </InternLenke>
                     </VStack>

@@ -6,7 +6,7 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Meldekort, MeldekortStatus } from '@common/typer/MeldekortBruker';
 import useScript from '@components/fyll-ut/steg-5-kvittering/useScript.tsx';
 
@@ -41,7 +41,7 @@ export const Steg5_Kvittering = ({ brukersMeldekort }: SSRProps) => {
                     <Alert variant={'success'} className={style.kvittering}>
                         <TekstSegmenter id={'kvittering'} spacing={true} />
                     </Alert>
-                    <InternLenke path={getPath(siteRoutes.forside)}>
+                    <InternLenke path={getPath(siteRoutePaths.forside)}>
                         <Tekst id={'kvitteringTilbake'} />
                     </InternLenke>
                 </div>

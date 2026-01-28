@@ -15,8 +15,8 @@ import {
 } from '@navikt/ds-react';
 import { useRouting } from '@routing/useRouting';
 import { formatterDato } from '@utils/datetime';
-import { useEffect, useState } from 'react';
-import { getPath, siteRoutes } from '@common/siteRoutes';
+import { Fragment, useEffect, useState } from 'react';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import {
     validerMeldekortKorrigering,
@@ -45,7 +45,7 @@ const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) =
 
     useEffect(() => {
         if (!props.kanKorrigeres) {
-            navigate(getPath(siteRoutes.forside));
+            navigate(getPath(siteRoutePaths.forside));
         }
     }, [props.kanKorrigeres, navigate]);
 
@@ -140,7 +140,7 @@ const KorrigeringAvMeldekort = ({
 
                         if (valideringResultat.feil.size === 0) {
                             navigate(
-                                getPath(siteRoutes.korrigerMeldekortOppsummering, {
+                                getPath(siteRoutePaths.korrigerMeldekortOppsummering, {
                                     meldekortId: forrigeMeldekort.id,
                                 }),
                             );
@@ -155,7 +155,7 @@ const KorrigeringAvMeldekort = ({
                     variant="tertiary"
                     className={styles.button}
                     onClick={() => {
-                        navigate(getPath(siteRoutes.forside));
+                        navigate(getPath(siteRoutePaths.forside));
                     }}
                 >
                     {getTekst({ id: 'avbrytEndring', locale: valgtSpråk })}
@@ -206,7 +206,7 @@ const KorrigeringDager = ({
                 const ikkeRett = status === MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER;
 
                 return (
-                    <>
+                    <Fragment key={dag}>
                         {erUkeStart && (
                             <BodyShort weight={'semibold'} className={classNames(styles.ukenr)}>
                                 <Tekst id={'ukeMedNummer'} resolverProps={{ dato: dag }} />
@@ -250,7 +250,7 @@ const KorrigeringDager = ({
                                 })
                             )}
                         </Select>
-                    </>
+                    </Fragment>
                 );
             })}
         </VStack>

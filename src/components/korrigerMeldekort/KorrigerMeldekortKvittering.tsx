@@ -1,4 +1,4 @@
-import { getPath, siteRoutes } from '@common/siteRoutes';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { InternLenke } from '@components/lenke/InternLenke';
 import { PageHeader } from '@components/page-header/PageHeader';
@@ -31,7 +31,7 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
                 <Alert variant="success">
                     <BodyShort>Endringer på meldekortet er sendt inn.</BodyShort>
                 </Alert>
-                <InternLenke path={getPath(siteRoutes.forside)}>
+                <InternLenke path={getPath(siteRoutePaths.forside)}>
                     <Tekst id={'kvitteringTilbake'} />
                 </InternLenke>
             </VStack>

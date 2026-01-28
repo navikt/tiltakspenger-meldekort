@@ -2,7 +2,7 @@ import { Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { formatterDatoTid } from '@utils/datetime.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
@@ -33,7 +33,7 @@ export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
                         type={'button'}
                         variant={'secondary'}
                         as={InternLenke}
-                        path={getPath(siteRoutes.korrigerMeldekortUtfylling, {
+                        path={getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
                             meldekortId: meldekort.id,
                         })}
                         className={style.knapp}

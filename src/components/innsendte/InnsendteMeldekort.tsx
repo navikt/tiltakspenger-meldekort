@@ -5,7 +5,7 @@ import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { InnsendteMeldekortProps } from '@common/typer/alle-meldekort.ts';
 import { useEffect } from 'react';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { appConfig } from '@common/appConfig.ts';
 import { ArenaMeldekortStatus } from '@common/typer/meldekort-bruker.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
@@ -51,7 +51,7 @@ export const InnsendteMeldekort = ({
                         <Tekst id={'ingenInnsendteMeldekort'} />
                     )}
                 </Heading>
-                <InternLenke path={getPath(siteRoutes.forside)}>
+                <InternLenke path={getPath(siteRoutePaths.forside)}>
                     <Tekst id={'innsendteTilbake'} />
                 </InternLenke>
             </div>
@@ -86,7 +86,7 @@ export const InnsendteMeldekort = ({
                                 />
                                 {meldekortPåKjede.length > 1 && (
                                     <InternLenke
-                                        path={getPath(siteRoutes.meldekortForKjede, {
+                                        path={getPath(siteRoutePaths.meldekortForKjede, {
                                             //slipper å ha / i url'en mellom periodene.
                                             kjedeId: sisteMeldekort.kjedeId.replaceAll('/', '_'),
                                         })}

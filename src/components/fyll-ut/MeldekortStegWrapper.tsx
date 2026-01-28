@@ -3,7 +3,7 @@ import style from './MeldekortStegWrapper.module.css';
 import { Heading, Stepper } from '@navikt/ds-react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
 import { STEG_REKKEFOLGE } from '@common/typer/BrukersMeldekortUtfylling';
-import { getPathForMeldekortSteg } from '@common/siteRoutes';
+import { getPathForMeldekortSteg } from '@common/siteRoutePaths.ts';
 import { useRouting } from '@routing/useRouting.ts';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';

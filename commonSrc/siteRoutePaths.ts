@@ -1,6 +1,6 @@
 import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
 
-export const siteRoutes = {
+export const siteRoutePaths = {
     forside: '/',
     innsendte: '/innsendte',
     meldekortForKjede: '/innsendte/kjede/:kjedeId',
@@ -9,15 +9,15 @@ export const siteRoutes = {
     deltakelse: '/:meldekortId/deltakelse',
     sendInn: '/:meldekortId/send-inn',
     kvittering: '/:meldekortId/kvittering',
-    korrigeringMeldekort: '/:meldekortId/korrigering/:rest*',
+    korrigeringMeldekort: '/:meldekortId/korrigering/:rest*/:locale?',
     korrigerMeldekortUtfylling: '/:meldekortId/korrigering/utfylling',
     korrigerMeldekortOppsummering: '/:meldekortId/korrigering/oppsummering',
     korrigerMeldekortKvittering: '/:meldekortId/korrigering/kvittering',
 } as const satisfies Record<string, string>;
 
-export type SiteRouteName = keyof typeof siteRoutes;
+export type SiteRouteName = keyof typeof siteRoutePaths;
 
-export type SiteRoutePath = (typeof siteRoutes)[SiteRouteName];
+export type SiteRoutePath = (typeof siteRoutePaths)[SiteRouteName];
 
 /**
  *  Henter ut rutenavnet fra URL-en med eller uten parametere
@@ -34,16 +34,16 @@ export const getPath = (siteRoutePath: SiteRoutePath, params?: Record<string, st
 export const getPathForMeldekortSteg = (meldekortSteg: MeldekortSteg, meldekortId: string) => {
     switch (meldekortSteg) {
         case 'fravær':
-            return getPath(siteRoutes.fravær, { meldekortId });
+            return getPath(siteRoutePaths.fravær, { meldekortId });
         case 'lønn':
-            return getPath(siteRoutes.lønn, { meldekortId });
+            return getPath(siteRoutePaths.lønn, { meldekortId });
         case 'deltatt':
-            return getPath(siteRoutes.deltakelse, { meldekortId });
+            return getPath(siteRoutePaths.deltakelse, { meldekortId });
         case 'oppsummering':
-            return getPath(siteRoutes.sendInn, { meldekortId });
+            return getPath(siteRoutePaths.sendInn, { meldekortId });
         case 'kvittering':
-            return getPath(siteRoutes.kvittering, { meldekortId });
+            return getPath(siteRoutePaths.kvittering, { meldekortId });
         default:
-            return getPath(siteRoutes.forside);
+            return getPath(siteRoutePaths.forside);
     }
 };

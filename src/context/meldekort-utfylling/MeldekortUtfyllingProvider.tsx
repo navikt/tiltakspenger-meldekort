@@ -3,16 +3,18 @@ import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/Meldekor
 import { MeldekortSteg, STEG_REKKEFOLGE } from '@common/typer/BrukersMeldekortUtfylling';
 import { formatterDato, getUkenummer } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Meldekort, MeldekortDag, MeldekortStatus } from '@common/typer/MeldekortBruker';
 import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+import { useRouting } from '@routing/useRouting.ts';
 
 type Props = {
-    navigate?: (path: string) => void;
     children: React.ReactNode;
 };
 
-export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
+export const MeldekortUtfyllingProvider = ({ children }: Props) => {
+    const { navigate } = useRouting();
+
     const [meldekortUtfylling, setMeldekortUtfylling] = useState<Meldekort | undefined>(undefined);
     const [valgtMeldekortDag, setValgtMeldekortDag] = useState<MeldekortDag | null>(null);
     const [meldekortSteg, setMeldekortSteg] = useState<MeldekortSteg>(STEG_REKKEFOLGE[0]);
@@ -57,7 +59,7 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
             const meldekortFraKlientErInnsendt = meldekortFraKlient?.status === INNSENDT;
 
             if (meldekortFraBackendErInnsendt || meldekortFraKlientErInnsendt) {
-                navigate(getPath(siteRoutes.forside));
+                navigate(getPath(siteRoutePaths.forside));
                 return;
             }
         },
