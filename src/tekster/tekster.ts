@@ -1,7 +1,7 @@
 import { teksterNb } from '@tekster/nb';
 import { TeksterRecord, TekstId, TeksterPropsMedLocale } from '@tekster/typer.ts';
 import { teksterEn } from '@tekster/en.ts';
-import { TeksterLocale } from '@common/typer/locale.ts';
+import { baseLocale, TeksterLocale } from '@common/typer/locale.ts';
 
 const tekster: Record<TeksterLocale, TeksterRecord> = {
     nb: teksterNb,
@@ -10,7 +10,7 @@ const tekster: Record<TeksterLocale, TeksterRecord> = {
 
 const getTekstVerdi = <Id extends TekstId>({
     id,
-    locale = 'nb',
+    locale = baseLocale,
     resolverProps,
 }: TeksterPropsMedLocale<Id>): string | string[] => {
     const tekstVerdi = tekster[locale][id];
