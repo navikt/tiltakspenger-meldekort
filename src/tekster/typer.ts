@@ -1,4 +1,5 @@
 import { teksterNb } from '@tekster/nb.ts';
+import { TeksterLocale } from '@common/typer/TeksterLocale.ts';
 
 type TeksterNB = typeof teksterNb;
 
@@ -13,7 +14,6 @@ export type TeksterRecord = {
 };
 
 export type TekstId = keyof TeksterRecord;
-export type TeksterLocale = 'nb' | 'en';
 
 export type TekstResolver = (props: any) => string;
 

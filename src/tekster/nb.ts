@@ -116,6 +116,7 @@ export const teksterNb = {
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',
+        'Du skal velge «annet fravær» hvis du ikke møter opp til avtalt tiltak eller aktivitet, eller ikke gjennomfører andre aktiviteter som er avtalt med Nav.',
         'Du skal velge «annet fravær» hvis du har arbeidet i stedet for å delta på tiltaket. For eksempel: Du har avtalt tiltakstid 09-15 og arbeidet fra 09-10 i stedet for å delta hele den avtalte tiden på tiltaket.',
         'Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt ferieperiode for tiltaket.',
         'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.',

@@ -21,22 +21,22 @@ export const teksterEn = {
     statusSyktBarn: 'Sick child or sick child carer',
     statusGodkjentFravær: 'Absence approved by Nav',
     statusAnnetFravær: 'Other absence',
-    statusIkkeTiltaksdag: 'Ikke tiltaksdag',
-    statusIkkeRettTilTiltakspenger: 'Ikke rett',
+    statusIkkeTiltaksdag: 'No employment scheme activity',
+    statusIkkeRettTilTiltakspenger: 'Not entitled',
 
-    ikkeRett: 'Ikke rett',
+    ikkeRett: 'Not entitled',
 
-    forMangeDagerEnkel: 'Du har fylt ut for mange dager',
-    forFaDagerEnkel: 'Du har fylt ut for få dager',
+    forMangeDagerEnkel: 'You have selected too many days',
+    forFaDagerEnkel: 'You have selected too few days',
     ingenDagerFyltUt: 'You must select at least one day with absence, pay or participation.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} day${antall === 1 ? '' : 's'} reported.`,
     forMangeDagerBesvart: ({ maks }: { maks: number }) =>
-        `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
+        `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected only the days you have participated, been absent or earned pay.`,
     forFaDagerBesvart: ({ maks }: { maks: number }) =>
         `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected all of the days you have participated, been absent or earned pay.`,
     ingenDagerMedFravær:
-        'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
+        'You must select at least one day with absence, or select that you did not have any absence.',
 
     sideTittel: 'Employment status form for employment scheme benefits',
     forsideGuidePanelLenkeTekst:
@@ -47,7 +47,7 @@ export const teksterEn = {
     ],
     forsideBekrefter:
         'I confirm that I will fill out the employment status form correctly, to the best of my ability',
-    forsideBekrefterFeil: 'Du må bekrefte for å gå videre',
+    forsideBekrefterFeil: 'You must confirm to proceed',
     forsideSeOgEndre: 'See previous employment status form(s).',
     forsideIngenMeldekortSoknadUnderBehandling:
         'Du har ikke fått noen meldekort enda fordi Nav ikke er ferdig med å behandle søknaden din. ',
@@ -78,7 +78,7 @@ export const teksterEn = {
         'Have you been sick or absent for other reasons on any of the days you were supposed to participate in employment scheme activities?',
     fraværHarHattFraværSvarJa: 'Yes, I have been sick or absent for other reasons',
     fraværHarHattFraværSvarNei: 'No, I have not been sick or absent for other reasons',
-    fraværSpørsmålIkkeValgt: 'Velg et fraværsalternativ for å fortsette.',
+    fraværSpørsmålIkkeValgt: 'Select an absence option to continue.',
     fraværTittel: 'Absence',
     fraværIngress:
         'If you have not been sick or absent for other reasons this period, please answer “no”. If you have been sick or absent for other reasons for an entire day or part of a day with employment scheme activities, please answer “yes”. Then specify which days you were absent, as well as the type of absence.',
@@ -117,6 +117,7 @@ export const teksterEn = {
     fraværHjelpLesMerFraværAnnet: 'When do I select “other absence”?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Please select “other absence” if you were absent for all or part of a day with employment scheme activities.',
+        'Please select “other absence” if you do not attend the agreed programme or activity, or if you do not participate in other activities that have been agreed with Nav.',
         'Please select “other absence” if you worked instead of participating in employment scheme activities. For example: Your agreed employment scheme participation is from 09:00 to 15:00, and you worked from 09:00 to 10:00 instead of participating in employment scheme activities the entire day.',
         'Please select “other absence” if you took time off/went on holiday outside of the scheduled holiday periods for the employment scheme.',
         'Please select “other absence” if you are waiting for approval of your absence. You can always change your employment status form later after your Nav counsellor has approved your absence.',
@@ -126,14 +127,14 @@ export const teksterEn = {
 
     fraværPanelRegistrer: 'Select',
     fraværPanelRegistrerSR: ({ datoTekst }: { datoTekst: string }) =>
-        `${datoTekst} - Velg årsak til fravær`,
+        `${datoTekst} - Select reason for absence`,
     fraværPanelValgRegistrertSR: ({
         datoTekst,
         valgtStatusTekst,
     }: {
         datoTekst: string;
         valgtStatusTekst: string;
-    }) => `${datoTekst} - du har valgt "${valgtStatusTekst}", trykk for å endre.`,
+    }) => `${datoTekst} - you have selected "${valgtStatusTekst}", click to change.`,
     fraværModalHeader: 'Reason for absence',
     fraværModalSykIngress: 'You were too sick to participate in the employment scheme activity.',
     fraværModalSyktBarnIngress:
@@ -151,7 +152,7 @@ export const teksterEn = {
         'Are you receiving pay (not employment scheme benefits) as part of your participation?',
     lønnHarMottattLønnSvarJa: 'Yes, I am receiving pay as part of my participation',
     lønnHarMottattLønnSvarNei: 'No, I am only receiving employment scheme benefits',
-    lønnSpørsmålIkkeValgt: 'Velg et lønnsalternativ for å fortsette.',
+    lønnSpørsmålIkkeValgt: 'Select an option for pay to continue.',
     lønnUkeHjelp: 'Please select the days you are receiving pay for',
     lønnDagPrefix: 'Receiving pay: ',
     oppsummeringTittel: 'Summary',
@@ -161,12 +162,12 @@ export const teksterEn = {
     oppsummeringBekrefterFeil: 'You must confirm in order to submit the employment status form',
     oppsummeringIkkeSendtEnnå: 'You have not yet submitted the form.',
     oppsummeringIngenDagerMedFravær:
-        'Du har svart ja på spørsmålet om du har vært syk eller har hatt fravær. Du må oppgi en fraværsgrunn for minst en dag eller endre svaret ditt til "Nei".',
+        'You have answered yes to the question about whether you have been sick or have been absent. You must provide a reason for absence for at least one day or change your answer to "No".',
     oppsummeringIngenDagerMedLønn:
-        'Du har svart ja på spørsmålet om du har mottatt lønn, men ikke sjekket av noen dager med lønn. Du må krysse av for minst en dag med lønn eller endre svaret ditt til "Nei".',
+        'You have answered yes to the question about whether you have received pay, but not selected any days with pay. You must select at least one day with pay or change your answer to "No".',
     oppsummeringInnsendingFeilet: [
-        'Noe gikk galt ved innsending av meldekortet. Du kan prøve på nytt.',
-        'Dersom problemet vedvarer, kontakt veilederen din.',
+        'Something went wrong when submitting the employment status form. You can try again.',
+        'If the problem continues, please contact your counsellor.',
     ],
 
     kvitteringTittel: 'Summary',

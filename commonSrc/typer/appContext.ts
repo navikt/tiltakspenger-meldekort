@@ -1,5 +1,5 @@
 import React from 'react';
-import { TeksterLocale } from '@tekster/typer.ts';
+import { TeksterLocale } from '@common/typer/TeksterLocale';
 
 export type SiteRouteComponentProps = React.ComponentProps<any>;
 

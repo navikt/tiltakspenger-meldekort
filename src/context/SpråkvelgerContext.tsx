@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
-import { TeksterLocale } from '@tekster/typer.ts';
 import { onLanguageSelect } from '@navikt/nav-dekoratoren-moduler';
+import { TeksterLocale } from '@common/typer/TeksterLocale.ts';
 
 type SpråkvelgerState = {
     valgtSpråk: TeksterLocale;

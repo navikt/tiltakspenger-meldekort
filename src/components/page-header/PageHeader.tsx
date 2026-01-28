@@ -16,7 +16,7 @@ export const PageHeader = ({ tekstId, underTekst }: Props) => {
     const { valgtSpråk } = useValgtSpråk();
     useEffect(() => {
         document.title = `${getTekst({ id: tekstId, locale: valgtSpråk })} - nav.no`;
-    }, [tekstId]);
+    }, [tekstId, valgtSpråk]);
 
     return (
         <div className={style.wrapper}>
