@@ -4,8 +4,13 @@ import { KorrigerMeldekortProvider } from '@context/korriger/KorrigerMeldekortPr
 import { RouteComponent } from '@routing/RouteComponent';
 import { siteRouteConfigs } from '@routing/siteRouteConfigs';
 import { Route, Switch } from 'wouter';
+import { TeksterLocale } from '@common/typer/TeksterLocale.ts';
+import { addLocaleSuffix } from '@utils/urls.ts';
 
-const KorrigeringAvMeldekortRouteWrapper = (props: { appContext: AppContext }) => {
+const KorrigeringAvMeldekortRouteWrapper = (props: {
+    appContext: AppContext;
+    locale: TeksterLocale;
+}) => {
     const {
         korrigerMeldekortUtfylling,
         korrigerMeldekortOppsummering,
@@ -15,19 +20,19 @@ const KorrigeringAvMeldekortRouteWrapper = (props: { appContext: AppContext }) =
     return (
         <KorrigerMeldekortProvider>
             <Switch>
-                <Route path={korrigerMeldekortUtfylling.path}>
+                <Route path={addLocaleSuffix(korrigerMeldekortUtfylling.path, props.locale)}>
                     <RouteComponent
                         route={korrigerMeldekortUtfylling}
                         appContext={props.appContext}
                     />
                 </Route>
-                <Route path={korrigerMeldekortOppsummering.path}>
+                <Route path={addLocaleSuffix(korrigerMeldekortOppsummering.path, props.locale)}>
                     <RouteComponent
                         route={korrigerMeldekortOppsummering}
                         appContext={props.appContext}
                     />
                 </Route>
-                <Route path={korrigerMeldekortKvittering.path}>
+                <Route path={addLocaleSuffix(korrigerMeldekortKvittering.path, props.locale)}>
                     <RouteComponent
                         route={korrigerMeldekortKvittering}
                         appContext={props.appContext}

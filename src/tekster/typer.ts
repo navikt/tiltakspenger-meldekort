@@ -34,3 +34,5 @@ type TekstResolverProps<TekstVerdi extends TeksterRecord[TekstId]> =
         : {
               resolverProps?: never;
           };
+
+export const localeSuffixes = ['nb', 'en'] as const satisfies TeksterLocale[];

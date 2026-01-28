@@ -117,6 +117,8 @@ export class SiteRoutesBuilder {
         this.router.get(demoRoutePathEn, async (req, res) => {
             const { props, status = 200 } = await dataFetcher(req, this.mockFetchFunc);
 
+            console.log(`lol, ${req.path}`);
+
             const html = await this.renderer(demoFullPathEn, {
                 initialProps: props,
                 initialPath: req.path.replace(appConfig.demoRoutePrefix, ''),
