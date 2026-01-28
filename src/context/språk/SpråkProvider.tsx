@@ -20,7 +20,6 @@ export const SpråkProvider = ({ defaultSpråk, children }: Props) => {
         onLanguageSelect((language) => {
             if (erLocaleGyldig(language.locale)) {
                 const nyPath = replaceLocaleSuffix(path, language.locale);
-                console.log(`Ny path: ${nyPath}`);
                 setValgtSpråk(language.locale);
                 navigate(nyPath);
             }
