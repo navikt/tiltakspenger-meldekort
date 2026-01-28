@@ -1,16 +1,10 @@
 import { AppContext } from '@common/typer/appContext';
-
 import { KorrigerMeldekortProvider } from '@context/korriger/KorrigerMeldekortProvider';
-import { RouteComponent } from '@routing/RouteComponent';
 import { siteRouteConfigs } from '@routing/siteRouteConfigs';
-import { Route, Switch } from 'wouter';
-import { TeksterLocale } from '@common/typer/locale.ts';
-import { addLocaleSuffix } from '@common/urls.ts';
+import { Switch } from 'wouter';
+import { RouteMedLocale } from '@routing/RouteMedLocale.tsx';
 
-const KorrigeringAvMeldekortRouteWrapper = (props: {
-    appContext: AppContext;
-    locale: TeksterLocale;
-}) => {
+const KorrigeringAvMeldekortRouteWrapper = ({ appContext }: { appContext: AppContext }) => {
     const {
         korrigerMeldekortUtfylling,
         korrigerMeldekortOppsummering,
@@ -20,24 +14,12 @@ const KorrigeringAvMeldekortRouteWrapper = (props: {
     return (
         <KorrigerMeldekortProvider>
             <Switch>
-                <Route path={addLocaleSuffix(korrigerMeldekortUtfylling.path, props.locale)}>
-                    <RouteComponent
-                        route={korrigerMeldekortUtfylling}
-                        appContext={props.appContext}
-                    />
-                </Route>
-                <Route path={addLocaleSuffix(korrigerMeldekortOppsummering.path, props.locale)}>
-                    <RouteComponent
-                        route={korrigerMeldekortOppsummering}
-                        appContext={props.appContext}
-                    />
-                </Route>
-                <Route path={addLocaleSuffix(korrigerMeldekortKvittering.path, props.locale)}>
-                    <RouteComponent
-                        route={korrigerMeldekortKvittering}
-                        appContext={props.appContext}
-                    />
-                </Route>
+                <RouteMedLocale appContext={appContext} routeConfig={korrigerMeldekortUtfylling} />
+                <RouteMedLocale
+                    appContext={appContext}
+                    routeConfig={korrigerMeldekortOppsummering}
+                />
+                <RouteMedLocale appContext={appContext} routeConfig={korrigerMeldekortKvittering} />
             </Switch>
         </KorrigerMeldekortProvider>
     );
