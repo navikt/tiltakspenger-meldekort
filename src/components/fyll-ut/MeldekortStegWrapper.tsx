@@ -7,9 +7,9 @@ import { getPathForMeldekortSteg } from '@common/siteRoutePaths.ts';
 import { useRouting } from '@routing/useRouting.ts';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
-import { getTekst } from '@tekster/tekster.ts';
 import { meldekortStegTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils.ts';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     children: React.ReactNode;
@@ -20,7 +20,7 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
     const { meldekortUtfylling, meldekortSteg, setMeldekortSteg, getUndertekster } =
         useMeldekortUtfylling();
     const { navigate } = useRouting();
-    const { valgtSpråk } = useValgtSpråk();
+    const { getTekstForSpråk } = useSpråk();
 
     useEffect(() => {
         scrollTo(0, 0);
@@ -54,30 +54,30 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('fravær', id))}
                     >
-                        {getTekst({ id: 'fraværTittel', locale: valgtSpråk })}
+                        {getTekstForSpråk({ id: 'fraværTittel' })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('lønn', id))}
                     >
-                        {getTekst({ id: 'lønnTittel', locale: valgtSpråk })}
+                        {getTekstForSpråk({ id: 'lønnTittel' })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('deltatt', id))}
                     >
-                        {getTekst({ id: 'deltattTittel', locale: valgtSpråk })}
+                        {getTekstForSpråk({ id: 'deltattTittel' })}
                     </Stepper.Step>
                     <Stepper.Step
                         as="button"
                         onClick={() => navigate(getPathForMeldekortSteg('oppsummering', id))}
                     >
-                        {getTekst({ id: 'kvitteringTittel', locale: valgtSpråk })}
+                        {getTekstForSpråk({ id: 'kvitteringTittel' })}
                     </Stepper.Step>
                 </Stepper>
             )}
             <Heading level="2" size="large" className={style.stegTitle}>
-                {getTekst({ id: meldekortStegTilTekstId[meldekortSteg], locale: valgtSpråk })}
+                {getTekstForSpråk({ id: meldekortStegTilTekstId[meldekortSteg] })}
             </Heading>
             {children}
         </div>

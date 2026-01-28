@@ -6,7 +6,8 @@ import style from './Kalender.module.css';
 import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import { getUkenummer, lokalTid } from '@utils/datetime.ts';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     meldekort: BrukersMeldekortUtfylling;
@@ -18,7 +19,7 @@ type Props = {
 export const Kalender = ({ steg, meldekort, kanFylleUtHelg, className }: Props) => {
     const forsteUke = kanFylleUtHelg ? meldekort.dager.slice(0, 7) : meldekort.dager.slice(0, 5);
     const andreUke = kanFylleUtHelg ? meldekort.dager.slice(7, 14) : meldekort.dager.slice(7, 12);
-    const { valgtSpråk } = useValgtSpråk();
+    const { valgtSpråk } = useSpråk();
 
     function kanVæreJuleferie() {
         const førsteDagIMeldekort = lokalTid(meldekort.dager[0].dag, valgtSpråk);

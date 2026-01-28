@@ -16,7 +16,7 @@ export const getPathWithoutLocaleSuffix = (path: string) => {
 
     const hasLocaleSuffix = localesWithSuffix.some((locale) => locale === lastSegment);
 
-    return hasLocaleSuffix ? pathSegments.slice(-1).join('/') : path;
+    return hasLocaleSuffix ? pathSegments.slice(0, -1).join('/') : path;
 };
 
 export const replaceLocaleSuffix = (path: string, newLocale: TeksterLocale) => {

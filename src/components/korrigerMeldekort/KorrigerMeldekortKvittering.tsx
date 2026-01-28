@@ -6,10 +6,11 @@ import { Undertekst } from '@components/page-header/Undertekst';
 import { Tekst } from '@components/tekst/Tekst';
 import { Alert, BodyShort, HStack, VStack } from '@navikt/ds-react';
 import { formatterDato } from '@utils/datetime';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) => {
-    const { valgtSpråk } = useValgtSpråk();
+    const { valgtSpråk } = useSpråk();
     return (
         <div>
             <PageHeader

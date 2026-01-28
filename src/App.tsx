@@ -1,13 +1,12 @@
 import './global.css';
-
 import { Page, VStack } from '@navikt/ds-react';
 import { AppContext } from '@common/typer/appContext.ts';
 import { SiteRouter } from '@routing/SiteRouter.tsx';
 import { Feilside } from '@Feilside.tsx';
+import { FeilsideServerfeil } from '@FeilsideServerfeil.tsx';
+import { SpråkProvider } from '@context/språk/SpråkProvider.tsx';
 
 import style from './App.module.css';
-import { FeilsideServerfeil } from '@FeilsideServerfeil.tsx';
-import { SpråkProvider } from '@context/SpråkvelgerContext.tsx';
 
 export const App = (appContext: AppContext) => {
     return (

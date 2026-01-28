@@ -5,8 +5,8 @@ import { formatterDato, getUkenummer } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Meldekort, MeldekortDag, MeldekortStatus } from '@common/typer/MeldekortBruker';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 import { useRouting } from '@routing/useRouting.ts';
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     children: React.ReactNode;
@@ -21,7 +21,7 @@ export const MeldekortUtfyllingProvider = ({ children }: Props) => {
     const [harHattFravær, setHarHattFravær] = useState<boolean | null>(null);
     const [harMottattLønn, setHarMottattLønn] = useState<boolean | null>(null);
     const [visValideringsfeil, setVisValideringsfeil] = useState<boolean | null>(null);
-    const { valgtSpråk } = useValgtSpråk();
+    const { valgtSpråk } = useSpråk();
 
     const lagreMeldekortDag = useCallback(
         (dag: MeldekortDag) => {

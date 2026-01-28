@@ -1,7 +1,6 @@
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker.ts';
 import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils.ts';
 import { classNames } from '@utils/classNames.ts';
-import { getTekst } from '@tekster/tekster.ts';
 import {
     meldekortStatusTilStyle,
     statusTilIkon,
@@ -12,7 +11,8 @@ import { formatterDato } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './KorrigerMeldekortOppsummering.module.css';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     dager: MeldekortDag[];
@@ -55,7 +55,7 @@ type DagProps = {
 
 const OppsummertDag = ({ dag, forrigeStatus }: DagProps) => {
     const { status, dag: dato } = dag;
-    const { valgtSpråk } = useValgtSpråk();
+    const { valgtSpråk, getTekstForSpråk } = useSpråk();
 
     const IkonKomponent = statusTilIkon[status];
     const statusStyle = meldekortStatusTilStyle[status];
@@ -85,16 +85,15 @@ const OppsummertDag = ({ dag, forrigeStatus }: DagProps) => {
                     <BodyLong size={'small'}>
                         {erEndret ? (
                             <>
-                                {`${getTekst({ id: 'korrigeringDagEndretFra', locale: valgtSpråk })}: `}
+                                {`${getTekstForSpråk({ id: 'korrigeringDagEndretFra' })}: `}
                                 <strong>
-                                    {getTekst({
+                                    {getTekstForSpråk({
                                         id: statusTilTekstId[forrigeStatus],
-                                        locale: valgtSpråk,
                                     })}
                                 </strong>
                             </>
                         ) : (
-                            getTekst({ id: 'korrigeringDagIkkeEndret', locale: valgtSpråk })
+                            getTekstForSpråk({ id: 'korrigeringDagIkkeEndret' })
                         )}
                     </BodyLong>
                 </HStack>

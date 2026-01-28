@@ -5,7 +5,8 @@ import { MeldekortBrukerMedSak } from '@common/typer/meldekort-bruker.ts';
 
 import style from './IkkeKlarTilUtfylling.module.css';
 import { MeldekortStatus } from '@common/typer/MeldekortBruker';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;
@@ -13,7 +14,7 @@ type Props = {
 
 export const IkkeKlarTilUtfylling = ({ meldekortBruker }: Props) => {
     const { forrigeMeldekort, nesteMeldekort, harSoknadUnderBehandling } = meldekortBruker;
-    const { valgtSpråk } = useValgtSpråk();
+    const { valgtSpråk } = useSpråk();
 
     return (
         <Alert variant={'info'} contentMaxWidth={false} className={style.wrapper}>

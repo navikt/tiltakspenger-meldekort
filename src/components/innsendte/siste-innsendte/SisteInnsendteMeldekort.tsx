@@ -7,7 +7,8 @@ import { Kalender } from '@components/kalender/Kalender.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
 import style from './SisteInnsendteMeldekort.module.css';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     meldekort: Meldekort;
@@ -15,7 +16,7 @@ type Props = {
 };
 
 export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
-    const { valgtSpråk } = useValgtSpråk();
+    const { valgtSpråk } = useSpråk();
     return (
         <VStack gap={'4'}>
             <Heading size="medium" level="3">

@@ -9,7 +9,8 @@ import { formatterDatoTid } from '@utils/datetime';
 import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
 
 import styles from './InnsendteMeldekortForKjede.module.css';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 const InnsendteMeldekortForKjede = (props: {
     meldekortForKjede: MeldekortForKjedeResponse;
@@ -23,7 +24,7 @@ const InnsendteMeldekortForKjede = (props: {
     });
 
     const [sisteInnsendteMeldekort, ...tidligereMeldekort] = sorterteMeldekort;
-    const { valgtSpråk } = useValgtSpråk();
+    const { valgtSpråk } = useSpråk();
 
     return (
         <div>

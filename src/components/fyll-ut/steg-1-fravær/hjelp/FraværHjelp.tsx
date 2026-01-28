@@ -1,13 +1,13 @@
 import { Heading, ReadMore } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { getTekster } from '@tekster/tekster.ts';
 
 import style from './FraværHjelp.module.css';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 export const FraværHjelp = () => {
-    const { valgtSpråk } = useValgtSpråk();
+    const { getTeksterForSpråk } = useSpråk();
 
     return (
         <>
@@ -16,64 +16,56 @@ export const FraværHjelp = () => {
             </Heading>
             <TekstSegmenter id={'fraværHjelpIngress'} />
             <ReadMore
-                header={getTekster({ id: 'fraværHjelpLesMerSyk', locale: valgtSpråk })}
+                header={getTeksterForSpråk({ id: 'fraværHjelpLesMerSyk' })}
                 className={style.lesMer}
             >
                 <ul>
-                    {getTekster({ id: 'fraværHjelpLesMerSykListe', locale: valgtSpråk }).map(
-                        (tekst) => (
-                            <li key={tekst}>{tekst}</li>
-                        ),
-                    )}
+                    {getTeksterForSpråk({ id: 'fraværHjelpLesMerSykListe' }).map((tekst) => (
+                        <li key={tekst}>{tekst}</li>
+                    ))}
                 </ul>
             </ReadMore>
             <ReadMore
-                header={getTekster({ id: 'fraværHjelpLesMerSyktBarn', locale: valgtSpråk })}
+                header={getTeksterForSpråk({ id: 'fraværHjelpLesMerSyktBarn' })}
                 className={style.lesMer}
             >
                 <ul>
-                    {getTekster({ id: 'fraværHjelpLesMerSyktBarnListe', locale: valgtSpråk }).map(
-                        (tekst) => (
-                            <li key={tekst}>{tekst}</li>
-                        ),
-                    )}
+                    {getTeksterForSpråk({ id: 'fraværHjelpLesMerSyktBarnListe' }).map((tekst) => (
+                        <li key={tekst}>{tekst}</li>
+                    ))}
                 </ul>
             </ReadMore>
             <ReadMore
-                header={getTekster({ id: 'fraværHjelpLesMerFraværGodkjent', locale: valgtSpråk })}
+                header={getTeksterForSpråk({ id: 'fraværHjelpLesMerFraværGodkjent' })}
                 className={style.lesMer}
             >
                 <ul>
-                    {getTekster({
+                    {getTeksterForSpråk({
                         id: 'fraværHjelpLesMerFraværGodkjentListeStart',
-                        locale: valgtSpråk,
                     }).map((tekst) => (
                         <li key={tekst}>{tekst}</li>
                     ))}
                     <ul>
-                        {getTekster({
+                        {getTeksterForSpråk({
                             id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker',
-                            locale: valgtSpråk,
                         }).map((tekst) => (
                             <li key={tekst}>{tekst}</li>
                         ))}
                     </ul>
-                    {getTekster({
+                    {getTeksterForSpråk({
                         id: 'fraværHjelpLesMerFraværGodkjentListeSlutt',
-                        locale: valgtSpråk,
                     }).map((tekst) => (
                         <li key={tekst}>{tekst}</li>
                     ))}
                 </ul>
             </ReadMore>
             <ReadMore
-                header={getTekster({ id: 'fraværHjelpLesMerFraværAnnet', locale: valgtSpråk })}
+                header={getTeksterForSpråk({ id: 'fraværHjelpLesMerFraværAnnet' })}
                 className={style.lesMer}
             >
                 <ul>
-                    {getTekster({
+                    {getTeksterForSpråk({
                         id: 'fraværHjelpLesMerFraværAnnetListe',
-                        locale: valgtSpråk,
                     }).map((tekst) => (
                         <li key={tekst}>{tekst}</li>
                     ))}

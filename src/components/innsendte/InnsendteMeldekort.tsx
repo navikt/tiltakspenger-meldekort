@@ -12,7 +12,8 @@ import { Meldekort } from '@common/typer/MeldekortBruker';
 import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
 
 import style from './InnsendteMeldekort.module.css';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = InnsendteMeldekortProps;
 
@@ -37,7 +38,7 @@ export const InnsendteMeldekort = ({
             return 0;
         }),
     );
-    const { valgtSpråk } = useValgtSpråk();
+    const { valgtSpråk } = useSpråk();
 
     return (
         <>

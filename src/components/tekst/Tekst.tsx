@@ -1,9 +1,9 @@
-import { getTekster } from '@tekster/tekster.ts';
 import { TeksterProps, TekstId } from '@tekster/typer.ts';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 export const Tekst = <Id extends TekstId>(props: TeksterProps<Id>) => {
-    const { valgtSpråk } = useValgtSpråk();
+    const { getTeksterForSpråk } = useSpråk();
 
-    return getTekster({ ...props, locale: valgtSpråk }).join(' ');
+    return getTeksterForSpråk({ ...props }).join(' ');
 };

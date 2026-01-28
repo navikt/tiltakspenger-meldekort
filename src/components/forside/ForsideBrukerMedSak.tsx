@@ -9,10 +9,9 @@ import { Tekst } from '@components/tekst/Tekst.tsx';
 import { GuidePanel } from '@navikt/ds-react';
 import { MeldekortStatus } from '@common/typer/MeldekortBruker';
 import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
-import { getTekst } from '@tekster/tekster.ts';
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 import style from './Forside.module.css';
-import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;
@@ -20,13 +19,13 @@ type Props = {
 
 export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
     const { nesteMeldekort } = meldekortBruker;
-    const { valgtSpråk } = useValgtSpråk();
+    const { getTekstForSpråk } = useSpråk();
 
     return (
         <>
             <GuidePanel className={style.guide}>
                 <EksternLenke href={'https://www.nav.no/kontaktoss'}>
-                    {getTekst({ id: 'forsideGuidePanelLenkeTekst', locale: valgtSpråk })}
+                    {getTekstForSpråk({ id: 'forsideGuidePanelLenkeTekst' })}
                 </EksternLenke>
             </GuidePanel>
 
