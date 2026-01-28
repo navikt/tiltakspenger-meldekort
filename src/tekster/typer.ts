@@ -1,5 +1,5 @@
 import { teksterNb } from '@tekster/nb.ts';
-import { TeksterLocale } from '@common/typer/TeksterLocale.ts';
+import { TeksterLocale } from '@common/typer/locale.ts';
 
 type TeksterNB = typeof teksterNb;
 
@@ -34,5 +34,3 @@ type TekstResolverProps<TekstVerdi extends TeksterRecord[TekstId]> =
         : {
               resolverProps?: never;
           };
-
-export const localeSuffixes = ['nb', 'en'] as const satisfies TeksterLocale[];

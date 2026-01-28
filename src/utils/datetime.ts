@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/nb.js';
 import weekOfYear from 'dayjs/plugin/weekOfYear.js';
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
-import { TeksterLocale } from '@common/typer/TeksterLocale.ts';
+import { TeksterLocale } from '@common/typer/locale.ts';
 
 dayjs.extend(weekOfYear);
 dayjs.extend(localizedFormat);

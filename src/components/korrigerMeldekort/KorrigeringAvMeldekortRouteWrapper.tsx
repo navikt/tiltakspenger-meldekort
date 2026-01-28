@@ -4,8 +4,8 @@ import { KorrigerMeldekortProvider } from '@context/korriger/KorrigerMeldekortPr
 import { RouteComponent } from '@routing/RouteComponent';
 import { siteRouteConfigs } from '@routing/siteRouteConfigs';
 import { Route, Switch } from 'wouter';
-import { TeksterLocale } from '@common/typer/TeksterLocale.ts';
-import { addLocaleSuffix } from '@utils/urls.ts';
+import { TeksterLocale } from '@common/typer/locale.ts';
+import { addLocaleSuffix } from '@common/urls.ts';
 
 const KorrigeringAvMeldekortRouteWrapper = (props: {
     appContext: AppContext;

@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import { onLanguageSelect } from '@navikt/nav-dekoratoren-moduler';
-import { TeksterLocale } from '@common/typer/TeksterLocale.ts';
-import { stripTrailingSlash } from '@utils/urls.ts';
+import { TeksterLocale } from '@common/typer/locale.ts';
+import { stripTrailingSlash } from '@common/urls.ts';
 import { useLocation } from 'wouter';
 
 type SpråkvelgerState = {

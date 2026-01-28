@@ -1,9 +1,9 @@
-import { TeksterLocale } from '@common/typer/TeksterLocale.ts';
+import { TeksterLocale } from '@common/typer/locale.ts';
 
 export const stripTrailingSlash = (path: string) => path.replace(/\/$/, '');
 
 export const getLastPathSegment = (path: string) => {
-    return stripTrailingSlash(path).split('/').pop();
+    return stripTrailingSlash(path).split('/').slice(-1)[0];
 };
 
 export const addLocaleSuffix = (path: string, locale: TeksterLocale) => {

@@ -7,8 +7,8 @@ import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/Meldeko
 import { useRouting } from '@routing/useRouting.ts';
 import KorrigeringAvMeldekortRouteWrapper from '@components/korrigerMeldekort/KorrigeringAvMeldekortRouteWrapper';
 import { Fragment } from 'react';
-import { addLocaleSuffix } from '@utils/urls.ts';
-import { localeSuffixes } from '@tekster/typer.ts';
+import { addLocaleSuffix } from '@common/urls.ts';
+import { locales } from '@common/typer/locale.ts';
 
 type Props = {
     appContext: AppContext;
@@ -31,7 +31,7 @@ export const SiteRouter = ({ appContext }: Props) => {
     return (
         <Switch>
             <MeldekortUtfyllingProvider navigate={navigate}>
-                {localeSuffixes.flatMap((locale) => {
+                {locales.map((locale) => {
                     return (
                         <Fragment key={locale}>
                             <Route

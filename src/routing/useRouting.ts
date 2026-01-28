@@ -1,6 +1,6 @@
 import { useLocation, useRouter } from 'wouter';
 import { useValgtSpråk } from '@context/SpråkvelgerContext.tsx';
-import { addLocaleSuffix } from '@utils/urls.ts';
+import { addLocaleSuffix } from '@common/urls.ts';
 
 export const useRouting = () => {
     const [path, navigate] = useLocation();
