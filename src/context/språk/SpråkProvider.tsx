@@ -9,9 +9,10 @@ import { getTekst, getTekster } from '@tekster/tekster.ts';
 
 type Props = PropsWithChildren<{
     defaultSpråk: TeksterLocale;
+    alltidDefault?: boolean;
 }>;
 
-export const SpråkProvider = ({ defaultSpråk, children }: Props) => {
+export const SpråkProvider = ({ defaultSpråk, alltidDefault = false, children }: Props) => {
     const [valgtSpråk, setValgtSpråk] = useState(defaultSpråk);
 
     const [path, navigate] = useLocation();
@@ -20,7 +21,9 @@ export const SpråkProvider = ({ defaultSpråk, children }: Props) => {
         onLanguageSelect((language) => {
             if (erLocaleGyldig(language.locale)) {
                 const nyPath = replaceLocaleSuffix(path, language.locale);
-                setValgtSpråk(language.locale);
+                if (!alltidDefault) {
+                    setValgtSpråk(language.locale);
+                }
                 navigate(nyPath);
             }
         });
