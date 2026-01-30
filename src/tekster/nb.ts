@@ -60,7 +60,7 @@ export const teksterNb = {
     forsideHarArenaMeldekort: 'Du kan finne meldekortene dine for tiltakspenger i ',
     forsideArenaLenke: 'den gamle løsningen for meldekort.',
 
-    ukeMedNummer: ({ dato }: { dato: string }) => `Uke ${getUkenummer(dato)}`,
+    ukeMedNummer: ({ dato }: { dato: string }) => `Uke ${getUkenummer(dato, 'nb')}`,
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Uke ${uke1} og ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} til ${tilOgMed}`,
@@ -116,6 +116,7 @@ export const teksterNb = {
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',
+        'Du skal velge «annet fravær» hvis du ikke møter opp til avtalt tiltak eller aktivitet, eller ikke gjennomfører andre aktiviteter som er avtalt med Nav.',
         'Du skal velge «annet fravær» hvis du har arbeidet i stedet for å delta på tiltaket. For eksempel: Du har avtalt tiltakstid 09-15 og arbeidet fra 09-10 i stedet for å delta hele den avtalte tiden på tiltaket.',
         'Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt ferieperiode for tiltaket.',
         'Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.',
@@ -201,7 +202,7 @@ export const teksterNb = {
 
     //InnsendteMeldekortForKjede
     meldekortForKjedeHeaderUndertekst: (args: { periode: Periode }) =>
-        `Her ser du innsendte meldekort for perioden ${formatterDato({ dato: args.periode.fraOgMed })} - ${formatterDato({ dato: args.periode.tilOgMed })}.`,
+        `Her ser du innsendte meldekort for perioden ${formatterDato({ dato: args.periode.fraOgMed, locale: 'nb' })} - ${formatterDato({ dato: args.periode.tilOgMed, locale: 'nb' })}.`,
     ingenInnsendteMeldekortForPerioden: 'Ingen innsendte meldekort for denne perioden.',
     sisteInnsendteMeldekortForPerioden: 'Siste innsendte meldekort for perioden',
     tidligereInnsendteMeldekortForPerioden: 'Tidligere innsendte meldekort for perioden',

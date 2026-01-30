@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Heading } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
+import { TekstId } from '@tekster/typer.ts';
 
 import style from './PageHeader.module.css';
-import { getTekst } from '@tekster/tekster.ts';
-import { TekstId } from '@tekster/typer.ts';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     tekstId: TekstId;
@@ -12,9 +13,11 @@ type Props = {
 };
 
 export const PageHeader = ({ tekstId, underTekst }: Props) => {
+    const { getTekstForSpråk } = useSpråk();
+
     useEffect(() => {
-        document.title = `${getTekst({ id: tekstId })} - nav.no`;
-    }, [tekstId]);
+        document.title = `${getTekstForSpråk({ id: tekstId })} - nav.no`;
+    }, [tekstId, getTekstForSpråk]);
 
     return (
         <div className={style.wrapper}>

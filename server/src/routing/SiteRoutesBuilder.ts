@@ -6,6 +6,8 @@ import { fetchFraApiMock } from '@fetch/apiFetchMock';
 import { SiteRouteComponentProps } from '@common/typer/appContext';
 import { brukerTesterPågår, isProd } from '@utils/env';
 import { HtmlRenderFunc } from '@ssr/htmlRenderUtils';
+import { locales, TeksterLocale } from '@common/locale.ts';
+import { addLocaleSuffix } from '@common/urls';
 
 type ConstructorProps = {
     router: Router;
@@ -35,6 +37,12 @@ export class SiteRoutesBuilder {
     }
 
     public routes(routePath: string, dataFetcher: DataFetcher) {
+        locales.forEach((locale) => {
+            this.routesMedLocale(addLocaleSuffix(routePath, locale), dataFetcher, locale);
+        });
+    }
+
+    private routesMedLocale(routePath: string, dataFetcher: DataFetcher, locale: TeksterLocale) {
         const fullPath = this.joinPaths(appConfig.baseUrl, routePath);
         const dataPath = this.joinPaths(routePath, 'data');
 
@@ -50,6 +58,7 @@ export class SiteRoutesBuilder {
                 initialPath: req.path,
                 baseUrl: appConfig.baseUrl,
                 status,
+                språk: locale,
             });
             res.status(status).send(html);
         });
@@ -61,11 +70,11 @@ export class SiteRoutesBuilder {
         });
 
         if (!isProd() || brukerTesterPågår()) {
-            this.demoRoutes(routePath, dataFetcher);
+            this.demoRoutes(routePath, dataFetcher, locale);
         }
     }
 
-    private demoRoutes(routePath: string, dataFetcher: DataFetcher) {
+    private demoRoutes(routePath: string, dataFetcher: DataFetcher, locale: TeksterLocale) {
         const demoRoutePath = this.joinPaths(appConfig.demoRoutePrefix, routePath);
         const demoFullPath = this.joinPaths(appConfig.baseUrl, demoRoutePath);
         const demoDataPath = this.joinPaths(demoRoutePath, 'data');
@@ -78,6 +87,7 @@ export class SiteRoutesBuilder {
                 initialPath: req.path.replace(appConfig.demoRoutePrefix, ''),
                 baseUrl: `${appConfig.baseUrl}${appConfig.demoRoutePrefix}`,
                 status,
+                språk: locale,
             });
             res.status(status).send(html);
         });

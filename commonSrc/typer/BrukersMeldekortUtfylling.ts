@@ -1,10 +1,12 @@
 import { MeldekortDag } from './MeldekortBruker';
+import { Nullable } from '@common/typer/Nullable.ts';
 
 export type MeldekortSteg = 'fravær' | 'lønn' | 'deltatt' | 'oppsummering' | 'kvittering';
 
-export interface BrukersMeldekortUtfylling {
+export interface MeldekortUtfyltDTO {
     id: string;
     dager: MeldekortDag[];
+    locale: Nullable<string>;
 }
 
 /**

@@ -3,7 +3,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import React, { useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { useRouting } from '@routing/useRouting.ts';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
@@ -46,7 +46,7 @@ export const TilUtfylling = ({ nesteMeldekort }: Props) => {
                         return false;
                     }
                     setMeldekortSteg('fravær');
-                    navigate(getPath(siteRoutes.fravær, { meldekortId: nesteMeldekort.id }));
+                    navigate(getPath(siteRoutePaths.fravær, { meldekortId: nesteMeldekort.id }));
                     return true;
                 }}
             >

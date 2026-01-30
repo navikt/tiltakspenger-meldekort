@@ -1,6 +1,6 @@
 import useSWR, { preload } from 'swr';
 import { fetchJson } from '@utils/fetch.ts';
-import { stripTrailingSlash } from '@utils/urls.ts';
+import { stripTrailingSlash } from '@common/urls.ts';
 
 const isSsr = import.meta.env.SSR;
 

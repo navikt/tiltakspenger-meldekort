@@ -9,12 +9,15 @@ import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/Stati
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
+import { useSpråk } from '@context/språk/useSpråk.ts';
+
 type Props = {
     dag: MeldekortDag;
 };
 
 export const DeltattDagPanel = ({ dag }: Props) => {
     const { lagreMeldekortDag } = useMeldekortUtfylling();
+    const { valgtSpråk } = useSpråk();
 
     const erValgt = dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET;
 
@@ -39,7 +42,7 @@ export const DeltattDagPanel = ({ dag }: Props) => {
             className={classNames(style.dag, erValgt && style.valgt)}
         >
             <Tekst id={'deltattDagPrefix'} />
-            {formatterDato({ dato: dag.dag, medUkeDag: true })}
+            {formatterDato({ dato: dag.dag, medUkeDag: true, locale: valgtSpråk })}
         </Checkbox>
     );
 };

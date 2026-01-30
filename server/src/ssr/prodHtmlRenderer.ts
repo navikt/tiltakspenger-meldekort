@@ -23,7 +23,7 @@ export const initProdRenderer = async (router: Router): Promise<HtmlRenderFunc> 
     const { render } = await import('@_ssr-dist/main-server');
 
     return async (url, context) => {
-        const template = await getTemplateWithDecorator();
+        const template = await getTemplateWithDecorator(context.språk);
 
         try {
             const appHtml = render(url, context);

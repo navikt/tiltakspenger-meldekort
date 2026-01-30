@@ -32,7 +32,7 @@ export const initDevRenderer = async (router: Router): Promise<HtmlRenderFunc> =
     router.use(vite.middlewares);
 
     return async (url, context) => {
-        const template = await getTemplateWithDecorator();
+        const template = await getTemplateWithDecorator(context.språk);
         const html = await vite.transformIndexHtml(url, template);
 
         try {

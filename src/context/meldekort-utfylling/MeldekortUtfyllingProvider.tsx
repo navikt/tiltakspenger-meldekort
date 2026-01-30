@@ -3,21 +3,25 @@ import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/Meldekor
 import { MeldekortSteg, STEG_REKKEFOLGE } from '@common/typer/BrukersMeldekortUtfylling';
 import { formatterDato, getUkenummer } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Meldekort, MeldekortDag, MeldekortStatus } from '@common/typer/MeldekortBruker';
+import { useRouting } from '@routing/useRouting.ts';
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
-    navigate?: (path: string) => void;
     children: React.ReactNode;
 };
 
-export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
+export const MeldekortUtfyllingProvider = ({ children }: Props) => {
+    const { navigate } = useRouting();
+
     const [meldekortUtfylling, setMeldekortUtfylling] = useState<Meldekort | undefined>(undefined);
     const [valgtMeldekortDag, setValgtMeldekortDag] = useState<MeldekortDag | null>(null);
     const [meldekortSteg, setMeldekortSteg] = useState<MeldekortSteg>(STEG_REKKEFOLGE[0]);
     const [harHattFravær, setHarHattFravær] = useState<boolean | null>(null);
     const [harMottattLønn, setHarMottattLønn] = useState<boolean | null>(null);
     const [visValideringsfeil, setVisValideringsfeil] = useState<boolean | null>(null);
+    const { valgtSpråk } = useSpråk();
 
     const lagreMeldekortDag = useCallback(
         (dag: MeldekortDag) => {
@@ -55,7 +59,7 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
             const meldekortFraKlientErInnsendt = meldekortFraKlient?.status === INNSENDT;
 
             if (meldekortFraBackendErInnsendt || meldekortFraKlientErInnsendt) {
-                navigate(getPath(siteRoutes.forside));
+                navigate(getPath(siteRoutePaths.forside));
                 return;
             }
         },
@@ -75,15 +79,26 @@ export const MeldekortUtfyllingProvider = ({ navigate, children }: Props) => {
             ukerTekst: (
                 <Tekst
                     id={'undertekstUker'}
-                    resolverProps={{ uke1: getUkenummer(fraOgMed), uke2: getUkenummer(tilOgMed) }}
+                    resolverProps={{
+                        uke1: getUkenummer(fraOgMed, valgtSpråk),
+                        uke2: getUkenummer(tilOgMed, valgtSpråk),
+                    }}
                 />
             ),
             datoerTekst: (
                 <Tekst
                     id={'undertekstDatoer'}
                     resolverProps={{
-                        fraOgMed: formatterDato({ dato: fraOgMed, medUkeDag: false }),
-                        tilOgMed: formatterDato({ dato: tilOgMed, medUkeDag: false }),
+                        fraOgMed: formatterDato({
+                            dato: fraOgMed,
+                            medUkeDag: false,
+                            locale: valgtSpråk,
+                        }),
+                        tilOgMed: formatterDato({
+                            dato: tilOgMed,
+                            medUkeDag: false,
+                            locale: valgtSpråk,
+                        }),
                     }}
                 />
             ),

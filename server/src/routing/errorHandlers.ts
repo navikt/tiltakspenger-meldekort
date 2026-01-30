@@ -9,6 +9,7 @@ export const setupErrorHandler = (router: Router, htmlRenderer: HtmlRenderFunc) 
             status,
             initialPath: url,
             initialProps: {},
+            språk: 'nb',
         });
     };
 

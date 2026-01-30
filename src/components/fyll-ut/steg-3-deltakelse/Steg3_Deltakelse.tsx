@@ -8,7 +8,7 @@ import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/Dager
 
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { useRouting } from '@routing/useRouting.ts';
-import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker';
@@ -39,7 +39,7 @@ const MeldekortEksistererIkke = () => {
     return (
         <div>
             <Alert variant={'error'}>
-                <InternLenke path={getPath(siteRoutes.forside)}>
+                <InternLenke path={getPath(siteRoutePaths.forside)}>
                     En feil har skjedd. Tilbake til forsiden
                 </InternLenke>
             </Alert>
@@ -95,7 +95,7 @@ const DeltagelsUtfylling = ({
                     }}
                     onAvbrytClick={() => {
                         setMeldekortSteg('fravær');
-                        navigate(getPath(siteRoutes.forside));
+                        navigate(getPath(siteRoutePaths.forside));
                     }}
                 />
             </div>

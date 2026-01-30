@@ -13,23 +13,25 @@ import { formatterDato } from '@utils/datetime.ts';
 import styles from './KorrigerMeldekortSendInn.module.css';
 import { ArrowLeftIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import { useRouting } from '@routing/useRouting.ts';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import { Link } from 'wouter';
 import { useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker.ts';
-import { getTekst } from '@tekster/tekster.ts';
 import { ErrorCodes, useApiClient } from '@utils/apiClient.ts';
 import { KorrigerMeldekortOppsummeringProps } from '@common/typer/KorrigerMeldekort.ts';
 import { KorrigerMeldekortOppsummering } from '@components/korrigerMeldekort/send-inn/oppsummering/KorrigerMeldekortOppsummering.tsx';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 export const KorrigerMeldekortSendInn = ({
     originaleMeldekort,
     kanKorrigeres,
 }: KorrigerMeldekortOppsummeringProps) => {
     const { navigate, base } = useRouting();
+    const { valgtSpråk, getTekstForSpråk } = useSpråk();
     const [visFeil, setVisFeil] = useState(false);
     const [harBekreftet, setHarBekreftet] = useState(false);
 
@@ -39,7 +41,7 @@ export const KorrigerMeldekortSendInn = ({
 
     useEffect(() => {
         if (!kanKorrigeres) {
-            navigate(getPath(siteRoutes.forside));
+            navigate(getPath(siteRoutePaths.forside));
         }
     }, [kanKorrigeres, navigate]);
 
@@ -54,7 +56,7 @@ export const KorrigerMeldekortSendInn = ({
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: originaleMeldekort.fraOgMed })} til ${formatterDato({ dato: originaleMeldekort.tilOgMed })})`}
+                            tekst={`(${formatterDato({ dato: originaleMeldekort.fraOgMed, locale: valgtSpråk })} til ${formatterDato({ dato: originaleMeldekort.tilOgMed, locale: valgtSpråk })})`}
                         />
                     </HStack>
                 }
@@ -71,7 +73,7 @@ export const KorrigerMeldekortSendInn = ({
                             Du har ikke gjort noen endringer på dette meldekortet.
                         </BodyShort>
                         <Link
-                            to={getPath(siteRoutes.korrigerMeldekortUtfylling, {
+                            to={getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
                                 meldekortId: originaleMeldekort.id,
                             })}
                         >
@@ -86,7 +88,7 @@ export const KorrigerMeldekortSendInn = ({
                             kanSendeInnHelg={kanSendeInnHelg}
                         />
                         <ConfirmationPanel
-                            label={getTekst({ id: 'oppsummeringBekrefter' })}
+                            label={getTekstForSpråk({ id: 'oppsummeringBekrefter' })}
                             checked={harBekreftet}
                             onChange={() => {
                                 setVisFeil(false);
@@ -104,8 +106,10 @@ export const KorrigerMeldekortSendInn = ({
                                 <BodyShort>{apiClient.response.error.errorBody.melding}</BodyShort>
                                 {apiClient.response.error.errorBody.kode ===
                                     ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig && (
-                                    <Link to={getPath(siteRoutes.forside)}>
-                                        {getTekst({ id: 'tilbakeTilOversiktForNyKorrigering' })}
+                                    <Link to={getPath(siteRoutePaths.forside)}>
+                                        {getTekstForSpråk({
+                                            id: 'tilbakeTilOversiktForNyKorrigering',
+                                        })}
                                     </Link>
                                 )}
                             </Alert>
@@ -116,13 +120,13 @@ export const KorrigerMeldekortSendInn = ({
                                 icon={<ArrowLeftIcon title="pil-venstre" fontSize="1.5rem" />}
                                 onClick={() =>
                                     navigate(
-                                        getPath(siteRoutes.korrigerMeldekortUtfylling, {
+                                        getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
                                             meldekortId: originaleMeldekort.id,
                                         }),
                                     )
                                 }
                             >
-                                {getTekst({ id: 'forrige' })}
+                                {getTekstForSpråk({ id: 'forrige' })}
                             </Button>
                             <FlashingButton
                                 loading={apiClient.apiStatus === 'loading'}
@@ -142,9 +146,12 @@ export const KorrigerMeldekortSendInn = ({
                                         },
                                         onSuccess: () => {
                                             navigate(
-                                                getPath(siteRoutes.korrigerMeldekortKvittering, {
-                                                    meldekortId: originaleMeldekort.id,
-                                                }),
+                                                getPath(
+                                                    siteRoutePaths.korrigerMeldekortKvittering,
+                                                    {
+                                                        meldekortId: originaleMeldekort.id,
+                                                    },
+                                                ),
                                             );
                                         },
                                     });
@@ -161,7 +168,7 @@ export const KorrigerMeldekortSendInn = ({
                             className={styles.avbrytEndringButton}
                             variant="tertiary"
                             onClick={() => {
-                                navigate(getPath(siteRoutes.forside));
+                                navigate(getPath(siteRoutePaths.forside));
                             }}
                         >
                             Avbryt endring

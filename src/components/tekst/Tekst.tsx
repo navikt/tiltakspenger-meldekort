@@ -1,6 +1,9 @@
-import { getTekster } from '@tekster/tekster.ts';
 import { TeksterProps, TekstId } from '@tekster/typer.ts';
 
+import { useSpråk } from '@context/språk/useSpråk.ts';
+
 export const Tekst = <Id extends TekstId>(props: TeksterProps<Id>) => {
-    return getTekster(props).join(' ');
+    const { getTeksterForSpråk } = useSpråk();
+
+    return getTeksterForSpråk({ ...props }).join(' ');
 };

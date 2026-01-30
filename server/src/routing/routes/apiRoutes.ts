@@ -3,13 +3,13 @@ import { FetchFraApi, fetchFraApi } from '@fetch/apiFetch';
 import { fetchFraApiMock } from '@fetch/apiFetchMock';
 import { brukerTesterPågår, isProd } from '@utils/env';
 import { KorrigerMeldekortRequest } from '@common/typer/KorrigerMeldekort';
-import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling';
 import { appConfig } from '@common/appConfig';
+import { MeldekortUtfyltDTO } from '@common/typer/BrukersMeldekortUtfylling.ts';
 
 const sendInnRoute =
     (fetcher: FetchFraApi): RequestHandler =>
     async (req, res) => {
-        const body = req.body as BrukersMeldekortUtfylling;
+        const body = req.body as MeldekortUtfyltDTO;
 
         const response = await fetcher(req, 'send-inn', 'POST', JSON.stringify(body));
 

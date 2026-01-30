@@ -3,12 +3,11 @@ import { Tekst } from '@components/tekst/Tekst.tsx';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
 import React from 'react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
-import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling';
 import { Meldekort } from '@common/typer/MeldekortBruker';
 
 type Props = {
     brukersMeldekort: Meldekort;
-    meldekortUtfylling: BrukersMeldekortUtfylling;
+    meldekortUtfylling: Meldekort;
     ikkeVisDagTeller?: boolean;
     className?: string;
 };

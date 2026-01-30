@@ -7,7 +7,7 @@ import { Tekst } from '@components/tekst/Tekst.tsx';
 import { TekstId } from '@tekster/typer.ts';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
-import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { useRouting } from '@routing/useRouting';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
@@ -101,7 +101,7 @@ export const Steg2_Lønn = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
                     }}
                     onAvbrytClick={() => {
                         setMeldekortSteg('fravær');
-                        navigate(getPath(siteRoutes.forside));
+                        navigate(getPath(siteRoutePaths.forside));
                     }}
                 />
             </div>

@@ -10,7 +10,7 @@ import { TekstId } from '@tekster/typer.ts';
 import { FraværModal } from '@components/fyll-ut/steg-1-fravær/fravær-modal/FraværModal.tsx';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { useRouting } from '@routing/useRouting.ts';
-import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
@@ -101,12 +101,12 @@ export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) =>
                     }}
                     onForrigeClick={() => {
                         setMeldekortSteg('fravær');
-                        navigate(getPath(siteRoutes.forside));
+                        navigate(getPath(siteRoutePaths.forside));
                     }}
                     onAvbrytClick={() => {
                         fjernFravær(meldekortUtfylling);
                         setMeldekortSteg('fravær');
-                        navigate(getPath(siteRoutes.forside));
+                        navigate(getPath(siteRoutePaths.forside));
                     }}
                 />
             </div>

@@ -52,7 +52,7 @@ test('kan korrigere meldekort', async ({ page }) => {
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+    await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
     await page.waitForURL('**/12345/korrigering/utfylling');
     expect(page.url()).toContain('/12345/korrigering/utfylling');
@@ -85,40 +85,44 @@ test('kan korrigere meldekort', async ({ page }) => {
         value: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
     });
 
-    await page.getByText(getTekst({ id: 'neste' })).click();
+    await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
     await page.waitForURL('**/12345/korrigering/oppsummering');
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
     // Verifiserer at oppsummeringen viser de endrede statusene
     await expect(
-        page.getByText(`Mandag 2. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+        page.getByText(`Mandag 2. januar: ${getTekst({ id: 'statusDeltatt', locale: 'nb' })}`),
     ).toBeVisible();
     await expect(
-        page.getByText(`Tirsdag 3. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+        page.getByText(`Tirsdag 3. januar: ${getTekst({ id: 'statusDeltatt', locale: 'nb' })}`),
     ).toBeVisible();
     await expect(
-        page.getByText(`Onsdag 4. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+        page.getByText(`Onsdag 4. januar: ${getTekst({ id: 'statusDeltatt', locale: 'nb' })}`),
     ).toBeVisible();
     await expect(
-        page.getByText(`Torsdag 5. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+        page.getByText(`Torsdag 5. januar: ${getTekst({ id: 'statusDeltatt', locale: 'nb' })}`),
     ).toBeVisible();
     await expect(
-        page.getByText(`Fredag 6. januar: ${getTekst({ id: 'statusSyk' })}`),
+        page.getByText(`Fredag 6. januar: ${getTekst({ id: 'statusSyk', locale: 'nb' })}`),
     ).toBeVisible();
     await expect(
-        page.getByText(`Mandag 9. januar: ${getTekst({ id: 'statusDeltattMedLønn' })}`),
+        page.getByText(
+            `Mandag 9. januar: ${getTekst({ id: 'statusDeltattMedLønn', locale: 'nb' })}`,
+        ),
     ).toBeVisible();
     await expect(
-        page.getByText(`Tirsdag 10. januar: ${getTekst({ id: 'statusSyktBarn' })}`),
+        page.getByText(`Tirsdag 10. januar: ${getTekst({ id: 'statusSyktBarn', locale: 'nb' })}`),
     ).toBeVisible();
     await expect(
-        page.getByText(`Onsdag 11. januar: ${getTekst({ id: 'statusAnnetFravær' })}`),
+        page.getByText(`Onsdag 11. januar: ${getTekst({ id: 'statusAnnetFravær', locale: 'nb' })}`),
     ).toBeVisible();
     await expect(
-        page.getByText(`Torsdag 12. januar: ${getTekst({ id: 'statusDeltatt' })}`),
+        page.getByText(`Torsdag 12. januar: ${getTekst({ id: 'statusDeltatt', locale: 'nb' })}`),
     ).toBeVisible();
     await expect(
-        page.getByText(`Fredag 13. januar: ${getTekst({ id: 'statusGodkjentFravær' })}`),
+        page.getByText(
+            `Fredag 13. januar: ${getTekst({ id: 'statusGodkjentFravær', locale: 'nb' })}`,
+        ),
     ).toBeVisible();
 
     await page.getByText('Jeg bekrefter at disse opplysningene stemmer').click();
@@ -136,11 +140,11 @@ test.describe('kan avbryte korrigering av et meldekort', () => {
         await klikkCookieBanner(page);
         //Skal kunne navigere seg til korrigering
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+        await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
         await page.waitForURL('**/12345/korrigering/utfylling');
         expect(page.url()).toContain('/12345/korrigering/utfylling');
-        await page.getByText(getTekst({ id: 'avbrytEndring' })).click();
+        await page.getByText(getTekst({ id: 'avbrytEndring', locale: 'nb' })).click();
         expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/');
     });
 
@@ -150,17 +154,17 @@ test.describe('kan avbryte korrigering av et meldekort', () => {
 
         await page.getByText('Meldekort uke 1 - 2').click();
 
-        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+        await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
         await page.waitForURL('**/12345/korrigering/utfylling');
         expect(page.url()).toContain('/12345/korrigering');
         await page.selectOption('#select-2023-01-02', {
             value: MeldekortDagStatus.FRAVÆR_SYK,
         });
 
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
-        await page.getByText(getTekst({ id: 'avbrytEndring' })).click();
+        await page.getByText(getTekst({ id: 'avbrytEndring', locale: 'nb' })).click();
         expect(page.url()).toBe('http://localhost:3050/tiltakspenger/meldekort/demo/');
     });
 });
@@ -174,14 +178,14 @@ test('kan ikke kunne gå videre uten endringer', async ({ page }) => {
     await klikkCookieBanner(page);
 
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+    await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
     await page.waitForURL('**/12345/korrigering/utfylling');
     expect(page.url()).toContain('/12345/korrigering/utfylling');
 
-    await page.getByText(getTekst({ id: 'neste' })).click();
+    await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
     await expect(
-        page.getByText(getTekst({ id: 'korrigeringUtfyllingFeilIngenEndring' })),
+        page.getByText(getTekst({ id: 'korrigeringUtfyllingFeilIngenEndring', locale: 'nb' })),
     ).toBeVisible();
     expect(page.url()).toContain('/12345/korrigering/utfylling');
 });
@@ -195,7 +199,7 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+    await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
     await page.waitForURL('**/12345/korrigering/utfylling');
     expect(page.url()).toContain('/12345/korrigering/utfylling');
@@ -203,15 +207,15 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
         value: MeldekortDagStatus.FRAVÆR_SYK,
     });
 
-    await page.getByText(getTekst({ id: 'neste' })).click();
+    await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
     // Prøver å sende inn uten å bekrefte
-    await page.getByText(getTekst({ id: 'korrigeringSendMeldekortet' })).click();
+    await page.getByText(getTekst({ id: 'korrigeringSendMeldekortet', locale: 'nb' })).click();
     await expect(page.getByText('Du må bekrefte for å gå videre')).toBeVisible();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
-    await page.getByText(getTekst({ id: 'oppsummeringBekrefter' })).click();
+    await page.getByText(getTekst({ id: 'oppsummeringBekrefter', locale: 'nb' })).click();
     await page.getByText('Send meldekortet').click();
 
     // Verifiserer at vi kommer til bekreftelse
@@ -227,7 +231,7 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+    await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
     await page.waitForURL('**/12345/korrigering/utfylling');
     expect(page.url()).toContain('/12345/korrigering/utfylling');
@@ -261,11 +265,11 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
         value: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
     });
 
-    await page.getByText(getTekst({ id: 'neste' })).click();
+    await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
     // Går tilbake til korrigering
-    await page.getByText(getTekst({ id: 'forrige' })).click();
+    await page.getByText(getTekst({ id: 'forrige', locale: 'nb' })).click();
     expect(page.url()).toBe(
         'http://localhost:3050/tiltakspenger/meldekort/demo/12345/korrigering/utfylling',
     );
@@ -387,7 +391,7 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+    await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
     await page.waitForURL('**/12345/korrigering/utfylling');
     expect(page.url()).toContain('/12345/korrigering/utfylling');
@@ -404,7 +408,7 @@ test.describe('validerer korrigering av meldekort', () => {
         await klikkCookieBanner(page);
 
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+        await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
         await page.waitForURL('**/12345/korrigering/utfylling');
         expect(page.url()).toContain('/12345/korrigering/utfylling');
@@ -413,13 +417,13 @@ test.describe('validerer korrigering av meldekort', () => {
         await page.waitForTimeout(1000);
 
         await page.selectOption('#select-2023-01-02', 'Ikke besvart');
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
 
         expect(page.getByText('Merk: Følgende dager blir ikke regnet med:')).toBeVisible();
 
         await page.selectOption('#select-2023-01-02', 'Deltok');
         expect(page.getByText('Merk: Følgende dager blir ikke regnet med:')).toBeHidden();
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
 
         await page.waitForURL('**/12345/korrigering/oppsummering');
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
@@ -518,7 +522,7 @@ test.describe('validerer korrigering av meldekort', () => {
         await page.goto(`${testsBaseUrl}/innsendte`);
         await klikkCookieBanner(page);
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+        await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
         await page.waitForURL('**/12345/korrigering/utfylling');
         expect(page.url()).toContain('/12345/korrigering/utfylling');
@@ -526,8 +530,11 @@ test.describe('validerer korrigering av meldekort', () => {
         // Venter på at state skal stabilisere seg. Safari kan være litt treg her
         await page.waitForTimeout(1000);
 
-        await page.selectOption('#select-2025-01-10', getTekst({ id: 'statusDeltatt' }));
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.selectOption(
+            '#select-2025-01-10',
+            getTekst({ id: 'statusDeltatt', locale: 'nb' }),
+        );
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
 
         await expect(
             page.getByText('Du har registrert for mange dager (10). Maks antall er 9 dager.'),
@@ -538,7 +545,7 @@ test.describe('validerer korrigering av meldekort', () => {
             page.getByText('Du har registrert for mange dager (10). Maks antall er 9 dager.'),
         ).toBeHidden();
 
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
         await page.waitForURL('**/12345/korrigering/oppsummering');
         expect(page.url()).toContain('/12345/korrigering/oppsummering');
     });
@@ -562,7 +569,7 @@ test('får melding om at meldekortet er allerede korrigert - og en lenke til ove
     await klikkCookieBanner(page);
     //Skal kunne navigere seg til korrigering
     await page.getByText('Meldekort uke 1 - 2').click();
-    await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+    await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
     await page.waitForURL('**/12345/korrigering/utfylling');
     expect(page.url()).toContain('/12345/korrigering/utfylling');
@@ -570,10 +577,10 @@ test('får melding om at meldekortet er allerede korrigert - og en lenke til ove
         value: MeldekortDagStatus.FRAVÆR_SYK,
     });
 
-    await page.getByText(getTekst({ id: 'neste' })).click();
+    await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
     expect(page.url()).toContain('/12345/korrigering/oppsummering');
 
-    await page.getByText(getTekst({ id: 'oppsummeringBekrefter' })).click();
+    await page.getByText(getTekst({ id: 'oppsummeringBekrefter', locale: 'nb' })).click();
     await page.getByText('Send meldekortet').click();
 
     // Verifiserer at vi får riktig feilmelding
@@ -583,7 +590,7 @@ test('får melding om at meldekortet er allerede korrigert - og en lenke til ove
         ),
     ).toBeVisible();
     const tilbakeLenke = page.getByRole('link', {
-        name: getTekst({ id: 'tilbakeTilOversiktForNyKorrigering' }),
+        name: getTekst({ id: 'tilbakeTilOversiktForNyKorrigering', locale: 'nb' }),
     });
     await expect(tilbakeLenke).toBeVisible();
 
@@ -606,7 +613,7 @@ test.describe('navigerer til forsiden dersom man prøver å korrigere et meldeko
         await page.goto(`${testsBaseUrl}/innsendte`);
         await klikkCookieBanner(page);
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+        await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
 
         //vi hopper over å verifisere at vi har gått inn på utfyllingssiden fordi vi skal navigere bort med en gang og det fører til timing issues i testen
 
@@ -629,14 +636,14 @@ test.describe('navigerer til forsiden dersom man prøver å korrigere et meldeko
         await klikkCookieBanner(page);
         //Skal kunne navigere seg til korrigering
         await page.getByText('Meldekort uke 1 - 2').click();
-        await page.getByText(getTekst({ id: 'endreMeldekort' })).click();
+        await page.getByText(getTekst({ id: 'endreMeldekort', locale: 'nb' })).click();
         await page.waitForURL('**/12345/korrigering/utfylling');
         expect(page.url()).toContain('/12345/korrigering/utfylling');
 
         await page.selectOption('#select-2023-01-02', {
             value: MeldekortDagStatus.FRAVÆR_SYK,
         });
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
 
         //vi hopper over å verifisere at vi har gått inn på oppsummeringssiden fordi vi skal navigere bort med en gang og det fører til timing issues i testen
 

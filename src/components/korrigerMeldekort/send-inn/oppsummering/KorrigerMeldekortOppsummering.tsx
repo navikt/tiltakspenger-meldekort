@@ -1,7 +1,6 @@
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker.ts';
 import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils.ts';
 import { classNames } from '@utils/classNames.ts';
-import { getTekst } from '@tekster/tekster.ts';
 import {
     meldekortStatusTilStyle,
     statusTilIkon,
@@ -12,6 +11,8 @@ import { formatterDato } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 
 import style from './KorrigerMeldekortOppsummering.module.css';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     dager: MeldekortDag[];
@@ -54,12 +55,18 @@ type DagProps = {
 
 const OppsummertDag = ({ dag, forrigeStatus }: DagProps) => {
     const { status, dag: dato } = dag;
+    const { valgtSpråk, getTekstForSpråk } = useSpråk();
 
     const IkonKomponent = statusTilIkon[status];
     const statusStyle = meldekortStatusTilStyle[status];
 
     const erEndret = forrigeStatus !== status;
-    const datoTekst = formatterDato({ dato, medUkeDag: true, medStorForbokstav: true });
+    const datoTekst = formatterDato({
+        dato,
+        medUkeDag: true,
+        medStorForbokstav: true,
+        locale: valgtSpråk,
+    });
 
     return (
         <VStack className={classNames(style.dag, statusStyle)} as={'li'}>
@@ -78,11 +85,15 @@ const OppsummertDag = ({ dag, forrigeStatus }: DagProps) => {
                     <BodyLong size={'small'}>
                         {erEndret ? (
                             <>
-                                {`${getTekst({ id: 'korrigeringDagEndretFra' })}: `}
-                                <strong>{getTekst({ id: statusTilTekstId[forrigeStatus] })}</strong>
+                                {`${getTekstForSpråk({ id: 'korrigeringDagEndretFra' })}: `}
+                                <strong>
+                                    {getTekstForSpråk({
+                                        id: statusTilTekstId[forrigeStatus],
+                                    })}
+                                </strong>
                             </>
                         ) : (
-                            getTekst({ id: 'korrigeringDagIkkeEndret' })
+                            getTekstForSpråk({ id: 'korrigeringDagIkkeEndret' })
                         )}
                     </BodyLong>
                 </HStack>

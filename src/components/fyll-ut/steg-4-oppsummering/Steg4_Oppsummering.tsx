@@ -9,7 +9,7 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 
-import { getPath, getPathForMeldekortSteg, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
@@ -19,6 +19,8 @@ import { TekstId } from '@tekster/typer.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
 import { useApiClient } from '@utils/apiClient';
+import { useSpråk } from '@context/språk/useSpråk.ts';
+import { MeldekortUtfyltDTO } from '@common/typer/BrukersMeldekortUtfylling.ts';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -43,6 +45,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
         visValideringsfeil,
         setVisValideringsfeil,
     } = useMeldekortUtfylling();
+    const { valgtSpråk } = useSpråk();
     const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
 
@@ -68,7 +71,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
     const sendInn = () => {
         setMeldekortSteg('kvittering');
         apiClient.callApi({
-            body: meldekortUtfylling,
+            body: { ...meldekortUtfylling, locale: valgtSpråk } satisfies MeldekortUtfyltDTO,
             onSuccess: () => {
                 setVisValideringsfeil(null);
                 setHarHattFravær(null);
@@ -251,7 +254,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                 }}
                 onAvbrytClick={() => {
                     setMeldekortSteg('fravær');
-                    navigate(getPath(siteRoutes.forside));
+                    navigate(getPath(siteRoutePaths.forside));
                 }}
             />
         </MeldekortStegWrapper>

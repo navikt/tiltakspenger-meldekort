@@ -1,11 +1,10 @@
-import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling';
 import { Meldekort, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
 
 export const antallDagerValidering = (
     brukersMeldekort: Meldekort,
-    meldekortUtfylling: BrukersMeldekortUtfylling,
+    meldekortUtfylling: Meldekort,
 ) => {
     const dager = meldekortUtfylling?.dager || [];
     const { IKKE_RETT_TIL_TILTAKSPENGER, IKKE_BESVART, DELTATT_MED_LØNN_I_TILTAKET } =
