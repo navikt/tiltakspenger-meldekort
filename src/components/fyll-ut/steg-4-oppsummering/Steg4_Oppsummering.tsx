@@ -19,6 +19,7 @@ import { TekstId } from '@tekster/typer.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
 import { useApiClient } from '@utils/apiClient';
+import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling.ts';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -68,7 +69,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
     const sendInn = () => {
         setMeldekortSteg('kvittering');
         apiClient.callApi({
-            body: meldekortUtfylling,
+            body: meldekortUtfylling satisfies BrukersMeldekortUtfylling,
             onSuccess: () => {
                 setVisValideringsfeil(null);
                 setHarHattFravær(null);
