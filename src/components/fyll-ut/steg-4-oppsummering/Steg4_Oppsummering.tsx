@@ -19,7 +19,8 @@ import { TekstId } from '@tekster/typer.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
 import { useApiClient } from '@utils/apiClient';
-import { BrukersMeldekortUtfylling } from '@common/typer/BrukersMeldekortUtfylling.ts';
+import { useSpråk } from '@context/språk/useSpråk.ts';
+import { MeldekortUtfyltDTO } from '@common/typer/BrukersMeldekortUtfylling.ts';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -44,6 +45,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
         visValideringsfeil,
         setVisValideringsfeil,
     } = useMeldekortUtfylling();
+    const { valgtSpråk } = useSpråk();
     const varselRef = useRef<HTMLDivElement>(null);
     const [harBekreftet, setHarBekreftet] = useState(false);
 
@@ -69,7 +71,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
     const sendInn = () => {
         setMeldekortSteg('kvittering');
         apiClient.callApi({
-            body: meldekortUtfylling satisfies BrukersMeldekortUtfylling,
+            body: { ...meldekortUtfylling, locale: valgtSpråk } satisfies MeldekortUtfyltDTO,
             onSuccess: () => {
                 setVisValideringsfeil(null);
                 setHarHattFravær(null);

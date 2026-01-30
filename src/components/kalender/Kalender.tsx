@@ -1,5 +1,5 @@
 import { KalenderUke } from '@components/kalender/uke/KalenderUke.tsx';
-import { BrukersMeldekortUtfylling, MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
+import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
 import { classNames } from '@utils/classNames.ts';
 
 import style from './Kalender.module.css';
@@ -8,9 +8,10 @@ import React from 'react';
 import { getUkenummer, lokalTid } from '@utils/datetime.ts';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';
+import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
 type Props = {
-    meldekort: BrukersMeldekortUtfylling;
+    meldekort: Meldekort;
     steg: MeldekortSteg;
     kanFylleUtHelg: boolean;
     className?: string;
