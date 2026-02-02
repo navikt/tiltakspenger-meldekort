@@ -4,77 +4,77 @@
 */
 
 @mixin ikkeTiltaksdag {
-    background-color: var(--a-surface-action-subtle);
-    border-color: var(--a-surface-action);
+    background-color: var(--ax-bg-accent-soft);
+    border-color: var(--ax-bg-accent-strong);
 
     & > svg {
-        color: var(--a-blue-800);
+        color: var(--ax-accent-900);
     }
 }
 
 @mixin ikkeBesvart {
-    background: var(--a-surface-subtle);
-    border-color: var(--a-border-default);
+    background: var(--ax-bg-neutral-soft);
+    border-color: var(--ax-border-neutral);
 
     & > svg {
-        color: var(--a-gray-800);
+        color: var(--ax-neutral-900);
     }
 }
 
 //----- Disse er samme
 @mixin deltattUtenLønn {
-    background: var(--a-surface-success-subtle);
-    border-color: var(--a-border-success);
+    background: var(--ax-bg-success-soft);
+    border-color: var(--ax-border-success);
 
     & > svg {
-        color: var(--a-green-600);
+        color: var(--ax-success-700);
     }
 }
 
 @mixin fraværGodkjentAvNav {
-    background: var(--a-surface-success-subtle);
-    border-color: var(--a-border-success);
+    background: var(--ax-bg-success-soft);
+    border-color: var(--ax-border-success);
 
     & > svg {
-        color: var(--a-green-600);
+        color: var(--ax-success-700);
     }
 }
 //-----
 
 @mixin deltattMedLønn {
-    background: var(--a-surface-danger-subtle);
-    border-color: var(--a-border-danger);
+    background: var(--ax-bg-danger-soft);
+    border-color: var(--ax-border-danger);
 
     & > svg {
-        color: var(--a-red-600);
+        color: var(--ax-danger-700);
     }
 }
 
 //----- Disse er samme
 @mixin syk {
-    background: var(--a-surface-warning-subtle);
-    border-color: var(--a-border-warning);
+    background: var(--ax-bg-warning-soft);
+    border-color: var(--ax-border-warning);
 
     & > svg {
-        color: var(--a-orange-600);
+        color: var(--ax-warning-700);
     }
 }
 
 @mixin syktBarn {
-    background: var(--a-surface-warning-subtle);
-    border-color: var(--a-border-warning);
+    background: var(--ax-bg-warning-soft);
+    border-color: var(--ax-border-warning);
 
     & > svg {
-        color: var(--a-orange-600);
+        color: var(--ax-warning-700);
     }
 }
 //-----
 
 @mixin fraværAnnet {
-    background: var(--a-surface-danger-subtle);
-    border-color: var(--a-border-danger);
+    background: var(--ax-bg-danger-soft);
+    border-color: var(--ax-border-danger);
 
     & > svg {
-        color: var(--a-red-600);
+        color: var(--ax-danger-700);
     }
 }

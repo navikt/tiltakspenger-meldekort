@@ -6,6 +6,6 @@
 
 @keyframes flash {
     50% {
-        box-shadow: 0 0 2px 3px var(--a-border-danger);
+        box-shadow: 0 0 2px 3px var(--ax-border-danger);
     }
 }
