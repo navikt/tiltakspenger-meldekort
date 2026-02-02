@@ -16,7 +16,7 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
             <PageHeader
                 tekstId={'sideTittel'}
                 underTekst={
-                    <HStack gap="4">
+                    <HStack gap="space-16">
                         <Undertekst
                             tekst={`Uke ${props.originaleMeldekort.uke1} og ${props.originaleMeldekort.uke2}`}
                             weight={'semibold'}
@@ -27,8 +27,7 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
                     </HStack>
                 }
             />
-
-            <VStack gap="2">
+            <VStack gap="space-8">
                 <Alert variant="success">
                     <BodyShort>Endringer på meldekortet er sendt inn.</BodyShort>
                 </Alert>

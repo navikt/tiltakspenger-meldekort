@@ -18,7 +18,7 @@ type Props = {
 export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
     const { valgtSpråk } = useSpråk();
     return (
-        <VStack gap={'4'}>
+        <VStack gap={'space-16'}>
             <Heading size="medium" level="3">
                 <Tekst id={'sisteInnsendteMeldekortForPerioden'} />
             </Heading>
