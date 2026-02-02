@@ -24,7 +24,11 @@ export const formatterDato = ({
 }: FormatterDatoProps) => {
     const ukeDag = medUkeDag ? (kort ? 'ddd ' : 'dddd ') : '';
 
-    const formattert = lokalTid(dato, locale).format(`${ukeDag}D. ${kort ? 'MMM' : 'MMMM'}`);
+    const template =
+        locale === 'en'
+            ? `${ukeDag}D ${kort ? 'MMM' : 'MMMM'}`
+            : `${ukeDag}D. ${kort ? 'MMM' : 'MMMM'}`;
+    const formattert = lokalTid(dato, locale).format(template);
 
     return medStorForbokstav
         ? formattert.replace(/^./, (match) => match.toUpperCase())
@@ -32,7 +36,8 @@ export const formatterDato = ({
 };
 
 export const formatterDatoTid = (datoTid: string, locale: TeksterLocale) => {
-    return lokalTid(datoTid, locale).format('D[.] MMMM YYYY [kl.] H:mm');
+    const template = locale === 'en' ? 'D MMMM YYYY [at] H:mm' : 'D[.] MMMM YYYY [kl.] H:mm';
+    return lokalTid(datoTid, locale).format(template);
 };
 
 export const getUkenummer = (datoTid: string, locale: TeksterLocale) => {
