@@ -1,5 +1,5 @@
 import React from 'react';
-import { SiteRouteName, SiteRoutePath } from '@common/siteRoutes.ts';
+import { SiteRouteName, SiteRoutePath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Forside } from '@components/forside/Forside.tsx';
 import { InnsendteMeldekort } from '@components/innsendte/InnsendteMeldekort';
 import { Steg3_Deltakelse } from '@components/fyll-ut/steg-3-deltakelse/Steg3_Deltakelse.tsx';
@@ -20,51 +20,51 @@ export type SiteRouteConfig<Props = any> = {
 
 export const siteRouteConfigs = {
     forside: {
-        path: '/',
+        path: siteRoutePaths.forside,
         Component: Forside,
     },
     innsendte: {
-        path: '/innsendte',
+        path: siteRoutePaths.innsendte,
         Component: InnsendteMeldekort,
     },
     meldekortForKjede: {
-        path: '/innsendte/kjede/:kjedeId',
+        path: siteRoutePaths.meldekortForKjede,
         Component: InnsendteMeldekortForKjede,
     },
     deltakelse: {
-        path: '/:meldekortId/deltakelse',
+        path: siteRoutePaths.deltakelse,
         Component: Steg3_Deltakelse,
     },
     fravær: {
-        path: '/:meldekortId/fraver',
+        path: siteRoutePaths.fravær,
         Component: Steg1_Fravær,
     },
     lønn: {
-        path: '/:meldekortId/lonn',
+        path: siteRoutePaths.lønn,
         Component: Steg2_Lønn,
     },
     sendInn: {
-        path: '/:meldekortId/send-inn',
+        path: siteRoutePaths.sendInn,
         Component: Steg4_Oppsummering,
     },
     kvittering: {
-        path: '/:meldekortId/kvittering',
+        path: siteRoutePaths.kvittering,
         Component: Steg5_Kvittering,
     },
     korrigeringMeldekort: {
-        path: '/:meldekortId/korrigering/:rest*',
+        path: siteRoutePaths.korrigeringMeldekort,
         Component: KorrigeringAvMeldekortRouteWrapper,
     },
     korrigerMeldekortUtfylling: {
-        path: '/:meldekortId/korrigering/utfylling',
+        path: siteRoutePaths.korrigerMeldekortUtfylling,
         Component: KorrigerMeldekortUtfylling,
     },
     korrigerMeldekortOppsummering: {
-        path: '/:meldekortId/korrigering/oppsummering',
+        path: siteRoutePaths.korrigerMeldekortOppsummering,
         Component: KorrigerMeldekortSendInn,
     },
     korrigerMeldekortKvittering: {
-        path: '/:meldekortId/korrigering/kvittering',
+        path: siteRoutePaths.korrigerMeldekortKvittering,
         Component: KorrigerMeldekortKvittering,
     },
 } as const satisfies Record<SiteRouteName, SiteRouteConfig>;

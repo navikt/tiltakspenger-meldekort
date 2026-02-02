@@ -1,4 +1,4 @@
-import { getPath, siteRoutes } from '@common/siteRoutes';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { MeldekortForKjedeResponse } from '@common/typer/MeldeperiodeKjede';
 import { Kalender } from '@components/kalender/Kalender';
 import { InternLenke } from '@components/lenke/InternLenke';
@@ -9,6 +9,8 @@ import { formatterDatoTid } from '@utils/datetime';
 import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
 
 import styles from './InnsendteMeldekortForKjede.module.css';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 const InnsendteMeldekortForKjede = (props: {
     meldekortForKjede: MeldekortForKjedeResponse;
@@ -22,6 +24,7 @@ const InnsendteMeldekortForKjede = (props: {
     });
 
     const [sisteInnsendteMeldekort, ...tidligereMeldekort] = sorterteMeldekort;
+    const { valgtSpråk } = useSpråk();
 
     return (
         <div>
@@ -36,7 +39,7 @@ const InnsendteMeldekortForKjede = (props: {
                             />
                         )}
 
-                        <InternLenke path={getPath(siteRoutes.innsendte)}>
+                        <InternLenke path={getPath(siteRoutePaths.innsendte)}>
                             <Tekst id={'sideForInnsendteMeldekort'} />
                         </InternLenke>
                     </VStack>
@@ -47,7 +50,7 @@ const InnsendteMeldekortForKjede = (props: {
                 {props.meldekortForKjede.meldekort.length === 0 ? (
                     <VStack gap="2">
                         <Tekst id={'ingenInnsendteMeldekortForPerioden'} />
-                        <InternLenke path={getPath(siteRoutes.innsendte)}>
+                        <InternLenke path={getPath(siteRoutePaths.innsendte)}>
                             <Tekst id={'tilbakeTilInnsendte'} />
                         </InternLenke>
                     </VStack>
@@ -72,7 +75,10 @@ const InnsendteMeldekortForKjede = (props: {
                                             <Tekst
                                                 id={'alleInnsendt'}
                                                 resolverProps={{
-                                                    dato: formatterDatoTid(meldekort.innsendt),
+                                                    dato: formatterDatoTid(
+                                                        meldekort.innsendt,
+                                                        valgtSpråk,
+                                                    ),
                                                 }}
                                             />
                                         )}

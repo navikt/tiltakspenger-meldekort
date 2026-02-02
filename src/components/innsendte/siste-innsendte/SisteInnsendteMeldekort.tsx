@@ -2,11 +2,13 @@ import { Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { formatterDatoTid } from '@utils/datetime.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Kalender } from '@components/kalender/Kalender.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
 import style from './SisteInnsendteMeldekort.module.css';
+
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     meldekort: Meldekort;
@@ -14,6 +16,7 @@ type Props = {
 };
 
 export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
+    const { valgtSpråk } = useSpråk();
     return (
         <VStack gap={'4'}>
             <Heading size="medium" level="3">
@@ -24,14 +27,14 @@ export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
                     <Tekst
                         id={'alleInnsendt'}
                         resolverProps={{
-                            dato: formatterDatoTid(meldekort.innsendt),
+                            dato: formatterDatoTid(meldekort.innsendt, valgtSpråk),
                         }}
                     />
                     <Button
                         type={'button'}
                         variant={'secondary'}
                         as={InternLenke}
-                        path={getPath(siteRoutes.korrigerMeldekortUtfylling, {
+                        path={getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
                             meldekortId: meldekort.id,
                         })}
                         className={style.knapp}

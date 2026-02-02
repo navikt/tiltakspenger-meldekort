@@ -9,8 +9,11 @@ import { FraværStatusPanel } from '@components/fyll-ut/steg-1-fravær/fravær-m
 import style from './FraværModal.module.css';
 import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
+import { useSpråk } from '@context/språk/useSpråk.ts';
+
 export const FraværModal = () => {
     const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();
+    const { valgtSpråk } = useSpråk();
 
     const initiellStatus = valgtMeldekortDag?.status || MeldekortDagStatus.IKKE_BESVART;
 
@@ -44,7 +47,11 @@ export const FraværModal = () => {
             onClose={lukk}
             header={{
                 heading: valgtMeldekortDag
-                    ? formatterDato({ dato: valgtMeldekortDag.dag, medUkeDag: true })
+                    ? formatterDato({
+                          dato: valgtMeldekortDag.dag,
+                          medUkeDag: true,
+                          locale: valgtSpråk,
+                      })
                     : '',
             }}
             closeOnBackdropClick={true}

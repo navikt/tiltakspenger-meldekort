@@ -4,12 +4,12 @@ import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { IkkeKlarTilUtfylling } from '@components/forside/ikke-klar-til-utfylling/IkkeKlarTilUtfylling.tsx';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling.tsx';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
-import { getPath, siteRoutes } from '@common/siteRoutes.ts';
+import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { GuidePanel } from '@navikt/ds-react';
 import { MeldekortStatus } from '@common/typer/MeldekortBruker';
 import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
-import { getTekst } from '@tekster/tekster.ts';
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 import style from './Forside.module.css';
 
@@ -19,12 +19,13 @@ type Props = {
 
 export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
     const { nesteMeldekort } = meldekortBruker;
+    const { getTekstForSpråk } = useSpråk();
 
     return (
         <>
             <GuidePanel className={style.guide}>
                 <EksternLenke href={'https://www.nav.no/kontaktoss'}>
-                    {getTekst({ id: 'forsideGuidePanelLenkeTekst' })}
+                    {getTekstForSpråk({ id: 'forsideGuidePanelLenkeTekst' })}
                 </EksternLenke>
             </GuidePanel>
 
@@ -34,7 +35,7 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
             ) : (
                 <IkkeKlarTilUtfylling meldekortBruker={meldekortBruker} />
             )}
-            <InternLenke path={getPath(siteRoutes.innsendte)} className={style.tidligere}>
+            <InternLenke path={getPath(siteRoutePaths.innsendte)} className={style.tidligere}>
                 <Tekst id={'forsideSeOgEndre'} />
             </InternLenke>
         </>

@@ -17,8 +17,12 @@ test.describe('Meldekort steg', () => {
     });
 
     test('Kan ikke gå videre uten å velge fravær/ikke fravær', async ({ page }) => {
-        const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }) });
-        const ikkeValgtVarsel = page.getByText(getTekst({ id: 'fraværSpørsmålIkkeValgt' }));
+        const nesteKnapp = page.getByRole('button', {
+            name: getTekst({ id: 'neste', locale: 'nb' }),
+        });
+        const ikkeValgtVarsel = page.getByText(
+            getTekst({ id: 'fraværSpørsmålIkkeValgt', locale: 'nb' }),
+        );
 
         await nesteKnapp.click();
 
@@ -33,16 +37,20 @@ test.describe('Meldekort steg', () => {
         await fyllUtLønnSteg(page, 0);
         await fyllUtDeltattSteg(page, 10);
 
-        const sendInnKnapp = page.getByRole('button', { name: getTekst({ id: 'sendInn' }) });
+        const sendInnKnapp = page.getByRole('button', {
+            name: getTekst({ id: 'sendInn', locale: 'nb' }),
+        });
 
         await expect(sendInnKnapp).toBeVisible();
         await axeTestUtenDekoratøren(page, 'Send inn uten fravær eller lønn');
     });
 
     test('Kan fylle ut fravær og gå til send-inn', async ({ page }) => {
-        const sendInnKnapp = page.getByRole('button', { name: getTekst({ id: 'sendInn' }) });
+        const sendInnKnapp = page.getByRole('button', {
+            name: getTekst({ id: 'sendInn', locale: 'nb' }),
+        });
         const nesteKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'neste' }),
+            name: getTekst({ id: 'neste', locale: 'nb' }),
             exact: true,
         });
 
@@ -69,15 +77,15 @@ test.describe('Meldekort steg', () => {
 
     test('Utfylt fravær fjernes om bruker velger at de ikke har hatt fravær', async ({ page }) => {
         const forrigeKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'forrige' }),
+            name: getTekst({ id: 'forrige', locale: 'nb' }),
             exact: true,
         });
         const nesteKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'neste' }),
+            name: getTekst({ id: 'neste', locale: 'nb' }),
             exact: true,
         });
         const radioHarIkkeHattFravær = page.getByRole('radio', {
-            name: getTekst({ id: 'fraværHarHattFraværSvarNei' }),
+            name: getTekst({ id: 'fraværHarHattFraværSvarNei', locale: 'nb' }),
         });
         await fyllUtFraværSteg(page, 3);
 
@@ -100,15 +108,15 @@ test.describe('Meldekort steg', () => {
 
     test('Utfylt lønn fjernes om bruker velger at de ikke har hatt lønn', async ({ page }) => {
         const forrigeKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'forrige' }),
+            name: getTekst({ id: 'forrige', locale: 'nb' }),
             exact: true,
         });
         const nesteKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'neste' }),
+            name: getTekst({ id: 'neste', locale: 'nb' }),
             exact: true,
         });
         const radioHarIkkeHattFravær = page.getByRole('radio', {
-            name: getTekst({ id: 'lønnHarMottattLønnSvarNei' }),
+            name: getTekst({ id: 'lønnHarMottattLønnSvarNei', locale: 'nb' }),
         });
         await fyllUtFraværSteg(page, 0);
         await fyllUtLønnSteg(page, 3);
@@ -165,7 +173,7 @@ test.describe('kontroll av helg av meldekortet', () => {
         await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
         await klikkCookieBanner(page);
         await page.waitForURL(/fraver$/);
-        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarJa' })).click();
+        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarJa', locale: 'nb' })).click();
         // OBS: datoene for disse testene stemmer ikke med hva vi faktisk setter i mock-responsen over
         // Denne mock-responsen påvirker kun client-side data-fetching, men meldekort-stegene oppdaterer ikke
         // dagene etter den initielle render'en
@@ -180,17 +188,17 @@ test.describe('kontroll av helg av meldekortet', () => {
         await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
         await expect(page.getByText('Søndag 19. januar')).toBeHidden();
 
-        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarNei' })).click();
+        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarNei', locale: 'nb' })).click();
         await page.getByText('Neste steg').click();
 
         //Lønn steg
         await page.waitForURL(/lonn$/);
-        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarJa' })).click();
+        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarJa', locale: 'nb' })).click();
         await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
         await expect(page.getByText('Søndag 12. januar')).toBeHidden();
         await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
         await expect(page.getByText('Søndag 19. januar')).toBeHidden();
-        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarNei' })).click();
+        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarNei', locale: 'nb' })).click();
         await page.getByText('Neste steg').click();
 
         //Deltatt steg
@@ -243,25 +251,25 @@ test.describe('kontroll av helg av meldekortet', () => {
         await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
         await klikkCookieBanner(page);
         await page.waitForURL(/fraver$/);
-        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarJa' })).click();
+        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarJa', locale: 'nb' })).click();
         await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
         await expect(page.getByText('Søndag 12. januar')).toBeVisible();
         await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
         await expect(page.getByText('Søndag 19. januar')).toBeVisible();
 
-        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarNei' })).click();
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarNei', locale: 'nb' })).click();
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
 
         //Lønn steg
         await page.waitForURL(/lonn$/);
-        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarJa' })).click();
+        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarJa', locale: 'nb' })).click();
         await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
         await expect(page.getByText('Søndag 12. januar')).toBeVisible();
         await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
         await expect(page.getByText('Søndag 19. januar')).toBeVisible();
 
-        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarNei' })).click();
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarNei', locale: 'nb' })).click();
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
 
         //Deltatt steg
         await page.waitForURL(/deltakelse$/);
@@ -271,7 +279,7 @@ test.describe('kontroll av helg av meldekortet', () => {
         await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
         await expect(page.getByText('Søndag 19. januar')).toBeVisible();
 
-        await page.getByText(getTekst({ id: 'neste' })).click();
+        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
 
         //Send inn steg
         await page.waitForURL(/send-inn$/);
@@ -283,9 +291,12 @@ test.describe('kontroll av helg av meldekortet', () => {
 });
 
 const fyllUtDeltattSteg = async (page: Page, antallDagerMedDeltatt: number) => {
-    const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
+    const nesteKnapp = page.getByRole('button', {
+        name: getTekst({ id: 'neste', locale: 'nb' }),
+        exact: true,
+    });
     const deltattCheckboxes = page.getByRole('checkbox', {
-        name: getTekst({ id: 'deltattDagPrefix' }),
+        name: getTekst({ id: 'deltattDagPrefix', locale: 'nb' }),
     });
 
     for (let i = 0; i < antallDagerMedDeltatt; ++i) {
@@ -295,7 +306,10 @@ const fyllUtDeltattSteg = async (page: Page, antallDagerMedDeltatt: number) => {
 };
 
 const fyllUtFraværSteg = async (page: Page, antallDagerMedFravær: number) => {
-    const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
+    const nesteKnapp = page.getByRole('button', {
+        name: getTekst({ id: 'neste', locale: 'nb' }),
+        exact: true,
+    });
 
     const fraværValgRadio = page.getByRole('radio', {
         name: getTekst({
@@ -303,6 +317,7 @@ const fyllUtFraværSteg = async (page: Page, antallDagerMedFravær: number) => {
                 antallDagerMedFravær > 0
                     ? 'fraværHarHattFraværSvarJa'
                     : 'fraværHarHattFraværSvarNei',
+            locale: 'nb',
         }),
     });
 
@@ -310,14 +325,18 @@ const fyllUtFraværSteg = async (page: Page, antallDagerMedFravær: number) => {
 
     const velgFraværKnapper = page.getByRole('button', {
         // datoTekst varierer for hver dagså vi matcher på alt utenom den.
-        name: getTekst({ id: 'fraværPanelRegistrerSR', resolverProps: { datoTekst: '' } }),
+        name: getTekst({
+            id: 'fraværPanelRegistrerSR',
+            locale: 'nb',
+            resolverProps: { datoTekst: '' },
+        }),
         exact: false,
     });
     const sykRadio = page.getByRole('radio', {
-        name: getTekst({ id: 'fraværModalSykIngress' }),
+        name: getTekst({ id: 'fraværModalSykIngress', locale: 'nb' }),
     });
     const lagreKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'lagre' }),
+        name: getTekst({ id: 'lagre', locale: 'nb' }),
         exact: true,
     });
     const fraværModal = page.getByRole('dialog');
@@ -325,7 +344,7 @@ const fyllUtFraværSteg = async (page: Page, antallDagerMedFravær: number) => {
     if (antallDagerMedFravær > 0) {
         for (let i = 0; i < antallDagerMedFravær; ++i) {
             await expect(velgFraværKnapper.nth(i)).toHaveText(
-                getTekst({ id: 'fraværPanelRegistrer' }),
+                getTekst({ id: 'fraværPanelRegistrer', locale: 'nb' }),
             );
             await velgFraværKnapper.nth(i).click();
             await expect(fraværModal).toBeVisible();
@@ -338,14 +357,18 @@ const fyllUtFraværSteg = async (page: Page, antallDagerMedFravær: number) => {
 };
 
 const fyllUtLønnSteg = async (page: Page, antallDagerMedLønn: number) => {
-    const nesteKnapp = page.getByRole('button', { name: getTekst({ id: 'neste' }), exact: true });
+    const nesteKnapp = page.getByRole('button', {
+        name: getTekst({ id: 'neste', locale: 'nb' }),
+        exact: true,
+    });
     const lønnValgRadio = page.getByRole('radio', {
         name: getTekst({
             id: antallDagerMedLønn > 0 ? 'lønnHarMottattLønnSvarJa' : 'lønnHarMottattLønnSvarNei',
+            locale: 'nb',
         }),
     });
     const lønnCheckboxes = page.getByRole('checkbox', {
-        name: getTekst({ id: 'lønnDagPrefix' }),
+        name: getTekst({ id: 'lønnDagPrefix', locale: 'nb' }),
     });
 
     await lønnValgRadio.click();
@@ -372,11 +395,15 @@ type Antall = {
 const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
     await expect(page).toHaveURL(/send-inn$/);
 
-    const sendInnKnapp = page.getByRole('button', { name: getTekst({ id: 'sendInn' }) });
-    const bekreftCheckbox = page.getByRole('checkbox', {
-        name: getTekst({ id: 'oppsummeringBekrefter' }),
+    const sendInnKnapp = page.getByRole('button', {
+        name: getTekst({ id: 'sendInn', locale: 'nb' }),
     });
-    const bekreftVarsel = page.getByText(getTekst({ id: 'oppsummeringBekrefterFeil' }));
+    const bekreftCheckbox = page.getByRole('checkbox', {
+        name: getTekst({ id: 'oppsummeringBekrefter', locale: 'nb' }),
+    });
+    const bekreftVarsel = page.getByText(
+        getTekst({ id: 'oppsummeringBekrefterFeil', locale: 'nb' }),
+    );
 
     await sendInnKnapp.click();
 
