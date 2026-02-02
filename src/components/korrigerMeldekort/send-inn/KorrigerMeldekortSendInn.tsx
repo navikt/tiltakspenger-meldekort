@@ -50,7 +50,7 @@ export const KorrigerMeldekortSendInn = ({
             <PageHeader
                 tekstId={'sideTittel'}
                 underTekst={
-                    <HStack gap="space-16">
+                    <HStack gap="4">
                         <Undertekst
                             tekst={`Uke ${originaleMeldekort.uke1} og ${originaleMeldekort.uke2}`}
                             weight={'semibold'}
@@ -61,7 +61,8 @@ export const KorrigerMeldekortSendInn = ({
                     </HStack>
                 }
             />
-            <VStack gap="space-20">
+
+            <VStack gap="5">
                 <Heading size="large" level="3">
                     Oppsummering av endret meldekort
                 </Heading>
@@ -113,7 +114,7 @@ export const KorrigerMeldekortSendInn = ({
                                 )}
                             </Alert>
                         )}
-                        <HStack gap="space-8">
+                        <HStack gap="2">
                             <Button
                                 variant="secondary"
                                 icon={<ArrowLeftIcon title="pil-venstre" fontSize="1.5rem" />}

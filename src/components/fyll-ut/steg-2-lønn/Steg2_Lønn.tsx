@@ -36,7 +36,7 @@ export const Steg2_Lønn = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <HStack gap="space-16">
+            <HStack gap="4">
                 <div>
                     <Tekst id={'lønnIngress'} />
                 </div>

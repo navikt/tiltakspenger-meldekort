@@ -70,11 +70,7 @@ const OppsummertDag = ({ dag, forrigeStatus }: DagProps) => {
 
     return (
         <VStack className={classNames(style.dag, statusStyle)} as={'li'}>
-            <HStack
-                gap={'space-4'}
-                align={'center'}
-                className={classNames(style.over, statusStyle)}
-            >
+            <HStack gap={'1'} align={'center'} className={classNames(style.over, statusStyle)}>
                 <IkonKomponent aria-hidden={true} />
                 <BodyLong>
                     {`${datoTekst}: `}

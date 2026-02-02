@@ -5,9 +5,9 @@ import { BodyShort, Box, Button, Heading, Link, List, Page, VStack } from '@navi
 export const Feilside = () => {
     return (
         <Page.Block as="main" width="xl" gutters>
-            <Box paddingBlock="space-80 space-64">
-                <VStack gap="space-64">
-                    <VStack gap="space-48" align="start">
+            <Box paddingBlock="20 16">
+                <VStack gap="16">
+                    <VStack gap="12" align="start">
                         <div>
                             <Heading level="1" size="large" spacing>
                                 Beklager, vi fant ikke siden
@@ -16,14 +16,12 @@ export const Feilside = () => {
                                 Denne siden kan være slettet eller flyttet, eller det er en feil i
                                 lenken.
                             </BodyShort>
-                            <Box marginBlock="space-16" asChild>
-                                <List>
-                                    <List.Item>Bruk gjerne søket eller menyen</List.Item>
-                                    <List.Item>
-                                        <Link href="#">Gå til forsiden</Link>
-                                    </List.Item>
-                                </List>
-                            </Box>
+                            <List>
+                                <List.Item>Bruk gjerne søket eller menyen</List.Item>
+                                <List.Item>
+                                    <Link href="#">Gå til forsiden</Link>
+                                </List.Item>
+                            </List>
                         </div>
                         <Button as="a" href="#">
                             Gå til Min side

@@ -18,7 +18,7 @@ export const KorrigerMeldekortValideringFeil = ({ resultat }: Props) => {
 
     return (
         <Alert variant="error">
-            <VStack gap="space-16">
+            <VStack gap="4">
                 {feil.has(KorrigerMeldekortFeil.ForMangeDager) && (
                     <>
                         <BodyShort>

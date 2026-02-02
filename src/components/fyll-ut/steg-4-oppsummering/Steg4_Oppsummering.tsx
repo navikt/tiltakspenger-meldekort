@@ -191,7 +191,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                 steg={'oppsummering'}
                 kanFylleUtHelg={kanFylleUtHelg}
             />
-            <VStack gap="space-8">
+            <VStack gap="2">
                 <DagerUtfyltTeller
                     brukersMeldekort={brukersMeldekort}
                     meldekortUtfylling={meldekortUtfylling}

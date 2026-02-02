@@ -1,6 +1,6 @@
 .dager {
     display: grid;
-    gap: var(--ax-space-4) var(--ax-space-16);
+    gap: var(--a-spacing-1) var(--a-spacing-4);
     padding: 0;
 
     li {
