@@ -7,9 +7,9 @@ type Props = {
     path: string;
 } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
 
-export const InternLenke = ({ children, path }: Props) => {
+export const InternLenke = ({ children, path, ...rest }: Props) => {
     return (
-        <Link as={RouterLink} href={path}>
+        <Link as={RouterLink} {...rest} href={path}>
             {children}
         </Link>
     );
