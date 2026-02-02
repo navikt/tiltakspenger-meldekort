@@ -36,7 +36,7 @@ export const Steg5_Kvittering = ({ brukersMeldekort }: SSRProps) => {
 
     return (
         <MeldekortStegWrapper>
-            <VStack gap="8">
+            <VStack gap="space-32">
                 <div>
                     <Alert variant={'success'} className={style.kvittering}>
                         <TekstSegmenter id={'kvittering'} spacing={true} />

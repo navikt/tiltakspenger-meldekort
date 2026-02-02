@@ -45,17 +45,16 @@ const InnsendteMeldekortForKjede = (props: {
                     </VStack>
                 }
             />
-
             <div>
                 {props.meldekortForKjede.meldekort.length === 0 ? (
-                    <VStack gap="2">
+                    <VStack gap="space-8">
                         <Tekst id={'ingenInnsendteMeldekortForPerioden'} />
                         <InternLenke path={getPath(siteRoutePaths.innsendte)}>
                             <Tekst id={'tilbakeTilInnsendte'} />
                         </InternLenke>
                     </VStack>
                 ) : (
-                    <VStack gap="6">
+                    <VStack gap="space-24">
                         <SisteInnsendteMeldekort
                             meldekort={sisteInnsendteMeldekort}
                             visHelg={props.kanSendeInnHelgForMeldekort}
