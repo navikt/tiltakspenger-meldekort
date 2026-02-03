@@ -63,7 +63,7 @@ test('lister opp kun siste innsendte meldekort for en gitt kjede', async ({ page
 
     await page.getByText('Meldekort uke 30 - 31').click();
 
-    expect(page.getByText(/Innsendt 4\. august 2025/)).toBeVisible();
+    await expect(page.getByText(/Innsendt 4\. august 2025/)).toBeVisible();
 });
 
 test('ulike kjeder blir listet opp separat', async ({ page }) => {
