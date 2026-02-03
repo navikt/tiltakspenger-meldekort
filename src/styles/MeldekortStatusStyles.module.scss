@@ -42,7 +42,7 @@
 //-----
 
 @mixin deltattMedLønn {
-    background: var(--ax-bg-danger-soft);
+    background: var(--ax-bg-danger-moderate);
     border-color: var(--ax-border-danger);
 
     & > svg {
@@ -71,7 +71,7 @@
 //-----
 
 @mixin fraværAnnet {
-    background: var(--ax-bg-danger-soft);
+    background: var(--ax-bg-danger-moderate);
     border-color: var(--ax-border-danger);
 
     & > svg {
