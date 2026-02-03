@@ -39,7 +39,7 @@ export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) =>
 
     return (
         <MeldekortStegWrapper>
-            <HStack gap="4">
+            <HStack gap="space-16">
                 <Tekst id="fraværIngress" />
                 <RadioGroup
                     legend={<Tekst id={'fraværStegFraværSpørsmål'} />}
@@ -62,7 +62,6 @@ export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) =>
                     </Radio>
                 </RadioGroup>
             </HStack>
-
             {harHattFravær && (
                 <>
                     <FraværHjelp />

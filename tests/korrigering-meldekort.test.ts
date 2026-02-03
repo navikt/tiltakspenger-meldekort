@@ -397,7 +397,7 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     expect(page.url()).toContain('/12345/korrigering/utfylling');
     // Verifiserer at dager uten rett ikke kan endres - vi har ikke en god måte å faktisk teste dette, så vi bare sjekker at de har en readonly class
     const formField = page.locator(`label[for="select-2023-01-02"]`).locator('..');
-    await expect(formField).toHaveClass(/navds-form-field--readonly/);
+    await expect(formField).toHaveClass(/aksel-form-field--readonly/);
 });
 
 test.describe('validerer korrigering av meldekort', () => {

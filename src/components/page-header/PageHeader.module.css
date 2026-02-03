@@ -3,7 +3,7 @@
 }
 
 .separator {
-    background: var(--a-green-400);
+    background: var(--ax-success-500);
     height: 5px;
     margin-inline: calc((100vw - 100%) / -2);
     margin-top: 1rem;

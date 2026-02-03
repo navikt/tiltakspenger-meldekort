@@ -54,7 +54,7 @@ const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) =
             <PageHeader
                 tekstId={'sideTittel'}
                 underTekst={
-                    <HStack gap="4">
+                    <HStack gap="space-16">
                         <Undertekst
                             tekst={`Uke ${forrigeMeldekort.uke1} og ${forrigeMeldekort.uke2}`}
                             weight={'semibold'}
@@ -65,7 +65,7 @@ const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) =
                     </HStack>
                 }
             />
-            <VStack gap="8">
+            <VStack gap="space-32">
                 <Heading size="large" level="3">
                     {getTekstForSpråk({ id: 'korrigeringTittel' })}
                 </Heading>
@@ -109,7 +109,7 @@ const KorrigeringAvMeldekort = ({
     }, [tilUtfylling, setUtfylling, meldeperiodeId]);
 
     return (
-        <VStack gap="8">
+        <VStack gap="space-32">
             {tilUtfylling.meldeperiodeId !== forrigeMeldekort.meldeperiodeId && (
                 <Alert variant="info">
                     {getTekstForSpråk({ id: 'korrigeringOppdatertAlert' })}
@@ -127,10 +127,8 @@ const KorrigeringAvMeldekort = ({
                 kanSendeInnHelg={tilUtfylling.kanSendeInnHelg}
                 onChange={(dag, nyStatus) => oppdaterDag(dag, nyStatus)}
             />
-
             <KorrigerMeldekortValideringFeil resultat={valideringResultat} />
-
-            <VStack gap="2">
+            <VStack gap="space-8">
                 <Button
                     className={styles.button}
                     onClick={() => {
@@ -195,7 +193,7 @@ const KorrigeringDager = ({
 
     return (
         <VStack
-            gap={'4'}
+            gap={'space-16'}
             className={classNames(styles.dagSelectContainer, kanSendeInnHelg && styles.medHelg)}
         >
             {dagerForUtfylling.map((meldekortDag, index) => {

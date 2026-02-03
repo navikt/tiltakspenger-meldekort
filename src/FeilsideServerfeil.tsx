@@ -3,9 +3,9 @@ import { BodyShort, Box, Heading, Link, List, Page, VStack } from '@navikt/ds-re
 export const FeilsideServerfeil = () => {
     return (
         <Page.Block as="main" width="xl" gutters>
-            <Box paddingBlock="20 16">
-                <VStack gap="16">
-                    <VStack gap="12" align="start">
+            <Box paddingBlock="space-80 space-64">
+                <VStack gap="space-64">
+                    <VStack gap="space-48" align="start">
                         <div>
                             <Heading level="1" size="large" spacing>
                                 Oisann, her gikk det galt!
@@ -15,12 +15,14 @@ export const FeilsideServerfeil = () => {
                                 kan prøve å laste inn siden på nytt, eller logge ut og prøve igjen
                                 senere.
                             </BodyShort>
-                            <List>
-                                <List.Item>Bruk gjerne søket eller menyen</List.Item>
-                                <List.Item>
-                                    <Link href="#">Gå til forsiden</Link>
-                                </List.Item>
-                            </List>
+                            <Box marginBlock="space-16" asChild>
+                                <List>
+                                    <List.Item>Bruk gjerne søket eller menyen</List.Item>
+                                    <List.Item>
+                                        <Link href="#">Gå til forsiden</Link>
+                                    </List.Item>
+                                </List>
+                            </Box>
                         </div>
                     </VStack>
 
