@@ -19,6 +19,7 @@ export const teksterNb = {
     statusDeltattMedLønn: 'Mottatt lønn',
     statusSyk: 'Syk',
     statusSyktBarn: 'Sykt barn eller syk barnepasser',
+    statusSterkeVelferdsgrunnerEllerJobbintervju: 'Sterke velferdsgrunner eller jobbintervju',
     statusGodkjentFravær: 'Fravær godkjent av Nav',
     statusAnnetFravær: 'Annet fravær',
     statusIkkeTiltaksdag: 'Ikke tiltaksdag',
@@ -99,20 +100,21 @@ export const teksterNb = {
         'Du må sende legeerklæring for barnet ditt eller bekreftelse fra barnepasseren fra dag 4 for å ha rett til tiltakspenger i mer enn 3 dager.',
     ],
 
-    fraværHjelpLesMerFraværGodkjent: 'Når skal du velge "fravær godkjent av Nav"?',
-    fraværHjelpLesMerFraværGodkjentListeStart: [
-        'Du kan ha rett til tiltakspenger selv om du har hatt fravær. Det gjelder hvis fraværet skyldes aktiviteter som du har avtalt med Nav-veilederen din.',
-        'Godkjente årsaker til fravær, som fortsatt gir deg tiltakspenger, er for eksempel:',
+    fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervju:
+        'Når skal du velge "sterke velferdsgrunner eller jobbintervju"?',
+    fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeStart: [
+        'Du skal velge dette alternativet hvis Nav har godkjent at du har fravær fra tiltaket denne dagen på grunn av:',
     ],
-    fraværHjelpLesMerFraværGodkjentListeÅrsaker: [
+    fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeÅrsaker: [
         'jobbintervju',
-        'timeavtale i det offentlige hjelpeapparatet',
-        'alvorlig sykdom/begravelse/bisettelse i nærmeste familie',
+        'timeavtaler i det offentlige hjelpeapparatet',
+        'begravelse eller bisettelse i den nærmeste familien din',
+        'andre sterke velferdsgrunner',
     ],
-    fraværHjelpLesMerFraværGodkjentListeSlutt: [
+    fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeSlutt: [
         'Det er kun Nav-veilederen din som kan godkjenne fraværet, ikke tiltaksarrangøren.',
-        'Ta kontakt med Nav-veilederen din hvis du er i tvil om fraværet ditt er godkjent.',
     ],
+
     fraværHjelpLesMerFraværAnnet: 'Når skal du velge "annet fravær"?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.',
@@ -138,6 +140,8 @@ export const teksterNb = {
     fraværModalSykIngress: 'Du var for syk til å delta på tiltaksdagen.',
     fraværModalSyktBarnIngress:
         'Du kunne ikke delta på tiltaksdagen fordi barnet ditt eller barnepasseren var syk.',
+    fraværModalSterkeVelferdsgrunnerEllerJobbintervjuIngress:
+        'Du har hatt fravær fra tiltaket på grunn av sterke velferdsgrunner eller jobbintervju og Nav-veilederen har godkjent fraværet.',
     fraværModalAnnetGodkjentIngress:
         'Du har hatt fravær fra tiltaket, og Nav har godkjent dette fraværet.',
     fraværModalIkkeGodkjentIngress:

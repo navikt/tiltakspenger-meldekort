@@ -168,6 +168,7 @@ const statusClassMap: Record<MeldekortDagStatus, string> = {
     //Vi setter ikke en farge på ikke besvart fordi det blir vanskelig å skille den med ikke_rett
     IKKE_BESVART: '',
     DELTATT_UTEN_LØNN_I_TILTAKET: styles.deltattUtenLønn,
+    FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU: styles.sterkeVelferdsgrunnerEllerJobbintervju,
     FRAVÆR_GODKJENT_AV_NAV: styles.fraværGodkjentAvNav,
     DELTATT_MED_LØNN_I_TILTAKET: styles.deltattMedLønn,
     FRAVÆR_SYK: styles.syk,
@@ -297,22 +298,24 @@ const InformasjonOmKorrigeringAvMeldekort = () => {
                     {getTekstForSpråk({ id: 'korrigeringFraværHeader' })}
                 </Accordion.Header>
                 <Accordion.Content>
-                    <Label>{getTekstForSpråk({ id: 'statusGodkjentFravær' })}</Label>
+                    <Label>
+                        {getTekstForSpråk({ id: 'statusSterkeVelferdsgrunnerEllerJobbintervju' })}
+                    </Label>
                     <ul>
                         {getTeksterForSpråk({
-                            id: 'fraværHjelpLesMerFraværGodkjentListeStart',
+                            id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeStart',
                         }).map((tekst) => (
                             <li key={tekst}>{tekst}</li>
                         ))}
                         <ul>
                             {getTeksterForSpråk({
-                                id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker',
+                                id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeÅrsaker',
                             }).map((tekst) => (
                                 <li key={tekst}>{tekst}</li>
                             ))}
                         </ul>
                         {getTeksterForSpråk({
-                            id: 'fraværHjelpLesMerFraværGodkjentListeSlutt',
+                            id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeSlutt',
                         }).map((tekst) => (
                             <li key={tekst}>{tekst}</li>
                         ))}

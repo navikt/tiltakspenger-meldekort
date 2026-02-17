@@ -82,7 +82,7 @@ test('kan korrigere meldekort', async ({ page }) => {
         value: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     });
     await page.selectOption('#select-2023-01-13', {
-        value: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+        value: MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
     });
 
     await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
@@ -121,7 +121,7 @@ test('kan korrigere meldekort', async ({ page }) => {
     ).toBeVisible();
     await expect(
         page.getByText(
-            `Fredag 13. januar: ${getTekst({ id: 'statusGodkjentFravær', locale: 'nb' })}`,
+            `Fredag 13. januar: ${getTekst({ id: 'statusSterkeVelferdsgrunnerEllerJobbintervju', locale: 'nb' })}`,
         ),
     ).toBeVisible();
 
@@ -262,7 +262,7 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
         value: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     });
     await page.selectOption('#select-2023-01-13', {
-        value: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+        value: MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
     });
 
     await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
@@ -299,7 +299,7 @@ test('forrige steg på oppsummering tar deg tilbake til korrigering med den korr
         MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
     );
     await expect(page.locator('#select-2023-01-13')).toHaveValue(
-        MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+        MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
     );
 });
 
@@ -336,7 +336,7 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
             }),
             nyMeldekortDag({
                 dag: '2023-01-09',
-                status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+                status: MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
             }),
             nyMeldekortDag({
                 dag: '2023-01-10',

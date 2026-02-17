@@ -19,6 +19,7 @@ export const teksterEn = {
     statusDeltattMedLønn: 'Received pay',
     statusSyk: 'Sick',
     statusSyktBarn: 'Sick child or sick child carer',
+    statusSterkeVelferdsgrunnerEllerJobbintervju: 'Strong welfare reasons or job interview',
     statusGodkjentFravær: 'Absence approved by Nav',
     statusAnnetFravær: 'Other absence',
     statusIkkeTiltaksdag: 'No employment scheme activity',
@@ -100,20 +101,21 @@ export const teksterEn = {
         'You must submit a medical certificate for your child or a certificate from your child carer from day 4 in order to be entitled to employment scheme benefits beyond 3 days.',
     ],
 
-    fraværHjelpLesMerFraværGodkjent: 'When do I select “absence approved by Nav”?',
-    fraværHjelpLesMerFraværGodkjentListeStart: [
-        'You may be entitled to employment scheme benefits even if you have been absent. This applies if your absence is due to activities you have agreed with your Nav counsellor.',
-        'Approved reasons for absence, where you will still be entitled to employment scheme benefits, include:',
+    fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervju:
+        'When should you choose “strong welfare reasons or job interview”?',
+    fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeStart: [
+        'You should choose this option if Nav has approved your absence from the programme on this day due to:',
     ],
-    fraværHjelpLesMerFraværGodkjentListeÅrsaker: [
-        'job interviews',
-        'appointment in the public health care service',
-        'serious illness/burial/funeral service of close family member',
+    fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeÅrsaker: [
+        'a job interview',
+        'appointments with public support services',
+        'a funeral or memorial service for an immediate family member',
+        'other strong welfare reasons',
     ],
-    fraværHjelpLesMerFraværGodkjentListeSlutt: [
-        'Only your Nav counsellor can approve your absence – the scheme organiser cannot.',
-        'Please contact your Nav counsellor if you are not sure if your absence has been approved.',
+    fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeSlutt: [
+        'Only your Nav counsellor can approve the absence — not the programme provider.',
     ],
+
     fraværHjelpLesMerFraværAnnet: 'When do I select “other absence”?',
     fraværHjelpLesMerFraværAnnetListe: [
         'Please select “other absence” if you were absent for all or part of a day with employment scheme activities.',
@@ -139,6 +141,8 @@ export const teksterEn = {
     fraværModalSykIngress: 'You were too sick to participate in the employment scheme activity.',
     fraværModalSyktBarnIngress:
         'You were unable to participate because your child or child carer was sick.',
+    fraværModalSterkeVelferdsgrunnerEllerJobbintervjuIngress:
+        'You have been absent from the programme due to strong welfare reasons or a job interview, and your Nav counsellor has approved the absence.',
     fraværModalAnnetGodkjentIngress:
         'You were absent from activities, and Nav has approved this absence.',
     fraværModalIkkeGodkjentIngress:

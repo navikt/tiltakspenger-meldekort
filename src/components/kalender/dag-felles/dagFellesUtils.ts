@@ -19,6 +19,8 @@ export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
     [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: style.deltattMedLønn,
     [MeldekortDagStatus.FRAVÆR_SYK]: style.syk,
     [MeldekortDagStatus.FRAVÆR_SYKT_BARN]: style.syktBarn,
+    [MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU]:
+        style.sterkeVelferdsgrunnerEllerJobbintervju,
     [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: style.fraværGodkjentAvNav,
     [MeldekortDagStatus.FRAVÆR_ANNET]: style.fraværAnnet,
     [MeldekortDagStatus.IKKE_BESVART]: style.ikkeBesvart,
@@ -34,6 +36,7 @@ export const statusTilIkon: Record<
     [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: XMarkOctagonFillIcon,
     [MeldekortDagStatus.FRAVÆR_SYK]: FirstAidFillIcon,
     [MeldekortDagStatus.FRAVÆR_SYKT_BARN]: BabyWrappedFillIcon,
+    [MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU]: SunFillIcon,
     [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: SunFillIcon,
     [MeldekortDagStatus.FRAVÆR_ANNET]: XMarkOctagonFillIcon,
     [MeldekortDagStatus.IKKE_BESVART]: QuestionmarkDiamondIcon,
@@ -46,6 +49,8 @@ export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
     [MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET]: 'statusDeltattMedLønn',
     [MeldekortDagStatus.FRAVÆR_SYK]: 'statusSyk',
     [MeldekortDagStatus.FRAVÆR_SYKT_BARN]: 'statusSyktBarn',
+    [MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU]:
+        'statusSterkeVelferdsgrunnerEllerJobbintervju',
     [MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV]: 'statusGodkjentFravær',
     [MeldekortDagStatus.FRAVÆR_ANNET]: 'statusAnnetFravær',
     [MeldekortDagStatus.IKKE_BESVART]: 'statusIkkeBesvart',
@@ -64,6 +69,7 @@ export const meldekortStegTilTekstId: Record<MeldekortSteg, TekstId> = {
 export const dagStatusMedFravær: ReadonlySet<MeldekortDagStatus> = new Set([
     MeldekortDagStatus.FRAVÆR_SYK,
     MeldekortDagStatus.FRAVÆR_SYKT_BARN,
+    MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
     MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
     MeldekortDagStatus.FRAVÆR_ANNET,
 ]);

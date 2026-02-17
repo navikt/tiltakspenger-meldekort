@@ -16,6 +16,10 @@
     @include status.fraværGodkjentAvNav;
 }
 
+.sterkeVelferdsgrunnerEllerJobbintervju {
+  @include status.sterkeVelferdsgrunnerEllerJobbintervju;
+}
+
 .deltattMedLønn {
     @include status.deltattMedLønn;
 }

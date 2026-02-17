@@ -155,7 +155,7 @@ const forrigeMeldekort: Meldekort = {
             dag: formatDate('2025-01-01'),
         },
         {
-            status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+            status: MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
             harRett: true,
             dag: formatDate('2025-01-02'),
         },
