@@ -76,11 +76,6 @@ export const FraværModal = () => {
                         valgtStatus={valgtStatus}
                     />
                     <FraværStatusPanel
-                        status={MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV}
-                        ingressId={'fraværModalAnnetGodkjentIngress'}
-                        valgtStatus={valgtStatus}
-                    />
-                    <FraværStatusPanel
                         status={MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU}
                         ingressId={'fraværModalSterkeVelferdsgrunnerEllerJobbintervjuIngress'}
                         valgtStatus={valgtStatus}
