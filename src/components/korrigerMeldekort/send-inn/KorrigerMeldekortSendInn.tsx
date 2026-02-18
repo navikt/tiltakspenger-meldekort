@@ -63,20 +63,18 @@ export const KorrigerMeldekortSendInn = ({
             />
             <VStack gap="space-20">
                 <Heading size="large" level="3">
-                    Oppsummering av endret meldekort
+                    {getTekstForSpråk({ id: 'korrigeringOppsummering' })}
                 </Heading>
                 {/* Denne vil kun slå ut hvis brukeren går direkte til oppsummeringen uten å laste korrigeringssiden først for å populere dagene */}
                 {dager.length === 0 ? (
                     <Alert variant="info">
-                        <BodyShort>
-                            Du har ikke gjort noen endringer på dette meldekortet.
-                        </BodyShort>
+                        <Tekst id={'korrigeringIngenEndringer'} />
                         <Link
                             to={getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
                                 meldekortId: originaleMeldekort.id,
                             })}
                         >
-                            Gå tilbake til korrigering av meldekortet
+                            {getTekstForSpråk({ id: 'korrigeringIngenEndringerTilbake' })}
                         </Link>
                     </Alert>
                 ) : (
@@ -97,7 +95,7 @@ export const KorrigerMeldekortSendInn = ({
                         />
 
                         <Alert className={styles.alertInfo} variant="info">
-                            Meldekortet er ikke sendt inn.
+                            {getTekstForSpråk({ id: 'korrigeringIkkeSendt' })}
                         </Alert>
 
                         {apiClient.response?.status === 'error' && (
@@ -160,7 +158,7 @@ export const KorrigerMeldekortSendInn = ({
                                 icon={<PaperplaneIcon title="pil-høyre" fontSize="1.5rem" />}
                                 iconPosition="right"
                             >
-                                Send meldekortet
+                                {getTekstForSpråk({ id: 'korrigeringSendMeldekortet' })}
                             </FlashingButton>
                         </HStack>
                         <Button
@@ -170,7 +168,7 @@ export const KorrigerMeldekortSendInn = ({
                                 navigate(getPath(siteRoutePaths.forside));
                             }}
                         >
-                            Avbryt endring
+                            {getTekstForSpråk({ id: 'avbrytEndring' })}
                         </Button>
                     </>
                 )}

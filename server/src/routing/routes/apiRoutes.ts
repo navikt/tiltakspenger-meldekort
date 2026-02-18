@@ -25,7 +25,7 @@ const korrigerteDagerRoute =
 
         const response = await fetcher(
             req,
-            `${request.meldekortId}/korriger`,
+            `${request.meldekortId}/korriger?locale=${request.locale}`,
             'PATCH',
             JSON.stringify(request.korrigerteDager),
         );

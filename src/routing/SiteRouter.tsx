@@ -3,8 +3,8 @@ import { siteRouteConfigs } from '@routing/siteRouteConfigs.ts';
 import { Feilside } from '@Feilside.tsx';
 import { AppContext } from '@common/typer/appContext.ts';
 import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider.tsx';
-import KorrigeringAvMeldekortRouteWrapper from '@components/korrigerMeldekort/KorrigeringAvMeldekortRouteWrapper';
 import { RouteMedLocale } from '@routing/RouteMedLocale.tsx';
+import KorrigeringAvMeldekortRouteWrapper from '@components/korrigerMeldekort/KorrigeringAvMeldekortRouteWrapper.tsx';
 
 type Props = {
     appContext: AppContext;

@@ -10,7 +10,7 @@ export const teksterEn = {
     slett: 'Slett',
     nullstill: 'Reset',
     avbryt: 'Cancel',
-    avbrytEndring: 'Avbryt endring',
+    avbrytEndring: 'Cancel changes',
     avbrytUtfylling: 'Cancel report',
     sendInn: 'Submit',
 
@@ -148,7 +148,7 @@ export const teksterEn = {
     fraværModalIkkeGodkjentIngress:
         'You were absent from activities all day or part of the day, and this absence has not been approved by Nav. You are not entitled to employment scheme benefits for this day.',
     lønnTittel: 'Pay',
-    lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
+    lønnHjelpLesMerTittel: 'When do I select "received pay"?',
     lønnInfoUndertittelLønn: 'Pay',
     lønnIngress:
         'If you are receiving pay (not employment scheme benefits) as part of your participation, answer “yes”. Then specify which days you are receiving pay for.',
@@ -202,7 +202,7 @@ export const teksterEn = {
         fraOgMed: string;
         tilOgMed: string;
     }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
-    endreMeldekort: 'Endre meldekort',
+    endreMeldekort: 'Edit employment status form ',
     tidligereMeldekortForPeriode:
         'Se tidligere meldekort som har blitt sendt inn for samme perioden',
 
@@ -220,28 +220,33 @@ export const teksterEn = {
         'Dersom du fikk tiltakspenger i perioder før de som vises her, finner du meldekortene i den ',
     alleHarArenaMeldekort: 'Meldekort fra tidligere perioder finner du i den ',
     alleArenaLenke: 'gamle løsningen for meldekort',
-    korrigeringLønnHeader: 'Når skal jeg velge mottatt lønn?',
+    korrigeringLønnHeader: 'When do I select "received pay"?',
     korrigeringLønnBeskrivelse:
-        'Hvis du får lønn (ikke tiltakspenger) som en del av tiltaket ditt velger du "Lønn".',
-    korrigeringSykdomHeader: 'Når skal jeg velge sykdom?',
-    korrigeringFraværHeader: 'Når skal jeg velge fravær?',
-    korrigeringTittel: 'Endre meldekort',
-    korrigeringBeskrivelseIngress: 'Slik endrer du meldekortet',
+        'If you receive pay (not employment scheme benefits) as part of your programme, choose "Received pay".',
+    korrigeringSykdomHeader: 'When do I select “sick”?',
+    korrigeringFraværHeader: 'When do I select absence?',
+    korrigeringTittel: 'Edit employment status form ',
+    korrigeringBeskrivelseIngress: 'How to edit your employment status form',
     korrigeringBeskrivelse:
-        'Nedenfor ser du hva du har tidligere registrert i meldekortet. Endre valgene på de dagene som er feilregistrert. Etter du har sendt inn endringen vil endringen saksbehandles før det eventuelt blir endringer i utbetalingen din.',
+        'Below, you can see what you previously registered in the employment status form. Update the selections on the days where the information is incorrect. After you submit the changes, they will be processed before any adjustments are made to your payment.',
     korrigeringOppdatertAlert:
-        'Meldekortet ditt har blitt oppdatert - Meldekortet inneholder nå de seneste opplysningene registrert. Verifiser at disse er korrekt, eller endre valgene på de dagene som er feilregistrert.',
-    korrigeringSendMeldekortet: 'Send meldekortet',
-    korrigeringDagIngenEndring: 'ingen endring',
-    korrigeringDagIkkeEndret: 'Ikke endret',
-    korrigeringDagEndretFra: 'Endret fra',
+        'Your employment status form has been updated - The employment status form now contains the latest information registered. Verify that this is correct, or change the selections on the days that were registered incorrectly.',
+    korrigeringSendMeldekortet: 'Submit the employment status form',
+    korrigeringDagIngenEndring: 'no change',
+    korrigeringDagIkkeEndret: 'Not changed',
+    korrigeringDagEndretFra: 'Changed from',
 
-    korrigeringUtfyllingFeilStatusMerknad: 'Merk: Følgende dager blir ikke regnet med:',
+    korrigeringUtfyllingFeilStatusMerknad: 'Note: The following days are not counted:',
     korrigeringUtfyllingFeilForMange: ({ utfylt, maks }: { utfylt: number; maks: number }) =>
-        `Du har registrert for mange dager (${utfylt}). Maks antall er ${maks} dager.`,
+        `You have registered too many days (${utfylt}). The maximum number is ${maks} days.`,
     korrigeringUtfyllingFeilForFå: ({ utfylt, maks }: { utfylt: number; maks: number }) =>
-        `Du har registrert for få dager. Kun ${utfylt} av ${maks} dager besvart`,
-    korrigeringUtfyllingFeilIngenEndring: 'Ingen endringer er registrert.',
+        `You have registered too few days. Only ${utfylt} out of ${maks} days have been answered.`,
+    korrigeringUtfyllingFeilIngenEndring: 'No changes have been registered.',
+    korrigeringIkkeSendt: 'The employment status form has not been submitted.',
+    korrigeringOppsummering: 'Summary of edited employment status form',
+    korrigeringKvittering: 'The changes to the employment status form have been submitted.',
+    korrigeringIngenEndringer: 'You have not made any changes to this employment status form. ',
+    korrigeringIngenEndringerTilbake: 'Return to edit employment status form',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

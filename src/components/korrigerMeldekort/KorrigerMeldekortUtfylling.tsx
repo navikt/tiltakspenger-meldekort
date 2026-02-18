@@ -15,7 +15,7 @@ import {
 } from '@navikt/ds-react';
 import { useRouting } from '@routing/useRouting';
 import { formatterDato } from '@utils/datetime';
-import { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import {
@@ -56,11 +56,31 @@ const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) =
                 underTekst={
                     <HStack gap="space-16">
                         <Undertekst
-                            tekst={`Uke ${forrigeMeldekort.uke1} og ${forrigeMeldekort.uke2}`}
+                            tekst={getTekstForSpråk({
+                                id: 'undertekstUker',
+                                resolverProps: {
+                                    uke1: forrigeMeldekort.uke1,
+                                    uke2: forrigeMeldekort.uke2,
+                                },
+                            })}
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: forrigeMeldekort.fraOgMed, locale: valgtSpråk })} til ${formatterDato({ dato: forrigeMeldekort.tilOgMed, locale: valgtSpråk })})`}
+                            tekst={`(${getTekstForSpråk({
+                                id: 'undertekstDatoer',
+                                resolverProps: {
+                                    fraOgMed: formatterDato({
+                                        dato: forrigeMeldekort.fraOgMed,
+                                        medUkeDag: false,
+                                        locale: valgtSpråk,
+                                    }),
+                                    tilOgMed: formatterDato({
+                                        dato: forrigeMeldekort.tilOgMed,
+                                        medUkeDag: false,
+                                        locale: valgtSpråk,
+                                    }),
+                                },
+                            })})`}
                         />
                     </HStack>
                 }

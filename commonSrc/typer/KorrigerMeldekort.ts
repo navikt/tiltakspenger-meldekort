@@ -1,9 +1,11 @@
 import { Meldekort, MeldekortDag } from './MeldekortBruker';
 import { Periode } from '@common/typer/periode';
+import { TeksterLocale } from '@common/locale.ts';
 
 export interface KorrigerMeldekortRequest {
     meldekortId: string;
     korrigerteDager: MeldekortDag[];
+    locale: TeksterLocale;
 }
 
 export type MeldekortKorrigeringTilUtfylling = {
