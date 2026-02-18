@@ -20,7 +20,7 @@ export const nyMeldekortKorrigeringTilUtfylling = ({
         }),
         nyMeldekortDag({
             dag: '2023-01-05',
-            status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+            status: MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
         }),
         nyMeldekortDag({
             dag: '2023-01-06',
@@ -52,7 +52,7 @@ export const nyMeldekortKorrigeringTilUtfylling = ({
         }),
         nyMeldekortDag({
             dag: '2023-01-13',
-            status: MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+            status: MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
         }),
         nyMeldekortDag({
             dag: '2023-01-14',

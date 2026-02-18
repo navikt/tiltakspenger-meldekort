@@ -39,6 +39,15 @@
         color: var(--ax-success-700);
     }
 }
+
+@mixin sterkeVelferdsgrunnerEllerJobbintervju {
+  background: var(--ax-bg-success-soft);
+  border-color: var(--ax-border-success);
+
+  & > svg {
+    color: var(--ax-success-700);
+  }
+}
 //-----
 
 @mixin deltattMedLønn {

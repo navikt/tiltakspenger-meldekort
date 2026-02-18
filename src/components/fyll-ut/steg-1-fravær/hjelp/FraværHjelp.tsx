@@ -36,24 +36,26 @@ export const FraværHjelp = () => {
                 </ul>
             </ReadMore>
             <ReadMore
-                header={getTeksterForSpråk({ id: 'fraværHjelpLesMerFraværGodkjent' })}
+                header={getTeksterForSpråk({
+                    id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervju',
+                })}
                 className={style.lesMer}
             >
                 <ul>
                     {getTeksterForSpråk({
-                        id: 'fraværHjelpLesMerFraværGodkjentListeStart',
+                        id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeStart',
                     }).map((tekst) => (
                         <li key={tekst}>{tekst}</li>
                     ))}
                     <ul>
                         {getTeksterForSpråk({
-                            id: 'fraværHjelpLesMerFraværGodkjentListeÅrsaker',
+                            id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeÅrsaker',
                         }).map((tekst) => (
                             <li key={tekst}>{tekst}</li>
                         ))}
                     </ul>
                     {getTeksterForSpråk({
-                        id: 'fraværHjelpLesMerFraværGodkjentListeSlutt',
+                        id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeSlutt',
                     }).map((tekst) => (
                         <li key={tekst}>{tekst}</li>
                     ))}
