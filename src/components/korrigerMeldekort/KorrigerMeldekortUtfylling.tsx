@@ -14,13 +14,13 @@ import {
     VStack,
 } from '@navikt/ds-react';
 import { useRouting } from '@routing/useRouting';
-import { formatterDato, lokalTid } from '@utils/datetime';
+import { formatterDato } from '@utils/datetime';
 import { Fragment, useEffect, useState } from 'react';
 import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import {
-    validerMeldekortKorrigering,
     KorrigerMeldekortValideringResultat,
+    validerMeldekortKorrigering,
 } from './validering/korrigerMeldekortValideringUtils.ts';
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 import { KorrigeringMeldekortUtfyllingProps } from '@common/typer/KorrigerMeldekort.ts';
@@ -33,7 +33,6 @@ import { Tekst } from '@components/tekst/Tekst.tsx';
 import styles from './KorrigerMeldekort.module.scss';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';
-import dayjs from 'dayjs';
 
 const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) => {
     const { forrigeMeldekort } = props;
@@ -126,7 +125,6 @@ const KorrigeringAvMeldekort = ({
                 dager={dager}
                 forrigeDager={tilUtfylling.dager}
                 kanSendeInnHelg={tilUtfylling.kanSendeInnHelg}
-                mottattTidspunktSisteMeldekort={tilUtfylling.mottattTidspunktSisteMeldekort}
                 onChange={(dag, nyStatus) => oppdaterDag(dag, nyStatus)}
             />
             <KorrigerMeldekortValideringFeil resultat={valideringResultat} />
@@ -183,13 +181,11 @@ const KorrigeringDager = ({
     dager,
     forrigeDager,
     kanSendeInnHelg,
-    mottattTidspunktSisteMeldekort,
     onChange,
 }: {
     dager: MeldekortDag[];
     forrigeDager: MeldekortDag[];
     kanSendeInnHelg: boolean;
-    mottattTidspunktSisteMeldekort: string;
     onChange: (dag: string, nyStatus: MeldekortDagStatus) => void;
 }) => {
     const { valgtSpråk, getTekstForSpråk } = useSpråk();
@@ -235,23 +231,21 @@ const KorrigeringDager = ({
                                     {getTekstForSpråk({ id: statusTilTekstId[status] })}
                                 </option>
                             ) : (
-                                gyldigeStatusValg(mottattTidspunktSisteMeldekort).map(
-                                    (statusValg) => {
-                                        const erUendret = forrigeStatus === statusValg;
-                                        const statusTekst = getTekstForSpråk({
-                                            id: statusTilTekstId[statusValg],
-                                        });
-                                        const uendretTekst = erUendret
-                                            ? ` (${getTekstForSpråk({ id: 'korrigeringDagIngenEndring' })})`
-                                            : '';
+                                gyldigeStatusValg(dagerFraForrigeMeldekort).map((statusValg) => {
+                                    const erUendret = forrigeStatus === statusValg;
+                                    const statusTekst = getTekstForSpråk({
+                                        id: statusTilTekstId[statusValg],
+                                    });
+                                    const uendretTekst = erUendret
+                                        ? ` (${getTekstForSpråk({ id: 'korrigeringDagIngenEndring' })})`
+                                        : '';
 
-                                        return (
-                                            <option key={statusValg} value={statusValg}>
-                                                {`${statusTekst}${uendretTekst}`}
-                                            </option>
-                                        );
-                                    },
-                                )
+                                    return (
+                                        <option key={statusValg} value={statusValg}>
+                                            {`${statusTekst}${uendretTekst}`}
+                                        </option>
+                                    );
+                                })
                             )}
                         </Select>
                     </Fragment>
@@ -261,8 +255,8 @@ const KorrigeringDager = ({
     );
 };
 
-const gyldigeStatusValg = (mottattTidspunktSisteMeldekort: string) => {
-    const skalViseGodkjentFravaer = skalViseFravaerGodkjentAvNav(mottattTidspunktSisteMeldekort);
+const gyldigeStatusValg = (dagerFraForrigeMeldekort: MeldekortDag[]) => {
+    const skalViseGodkjentFravaer = skalViseFravaerGodkjentAvNav(dagerFraForrigeMeldekort);
     return Object.values(MeldekortDagStatus).filter(
         (status) =>
             status !== MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER &&
@@ -270,9 +264,10 @@ const gyldigeStatusValg = (mottattTidspunktSisteMeldekort: string) => {
     );
 };
 
-const skalViseFravaerGodkjentAvNav = (mottattTidspunktSisteMeldekort: string) => {
-    const prodsattNyttSvaralternativ = dayjs('2026-02-18');
-    return dayjs(mottattTidspunktSisteMeldekort).isBefore(prodsattNyttSvaralternativ);
+const skalViseFravaerGodkjentAvNav = (dagerFraForrigeMeldekort: MeldekortDag[]) => {
+    return dagerFraForrigeMeldekort.some(
+        (dag) => dag.status === MeldekortDagStatus.FRAVÆR_GODKJENT_AV_NAV,
+    );
 };
 
 const InformasjonOmKorrigeringAvMeldekort = () => {
