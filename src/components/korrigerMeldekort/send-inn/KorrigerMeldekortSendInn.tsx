@@ -140,6 +140,7 @@ export const KorrigerMeldekortSendInn = ({
                                                 dato: dag.dag,
                                                 status: dag.status,
                                             })),
+                                            locale: valgtSpråk,
                                         },
                                         onSuccess: () => {
                                             navigate(
