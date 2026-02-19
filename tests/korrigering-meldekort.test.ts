@@ -131,7 +131,7 @@ test('kan korrigere meldekort', async ({ page }) => {
     // Verifiserer at vi kommer til bekreftelse
     await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen.
     expect(page.url()).toContain('/12345/korrigering/kvittering');
-    expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
+    expect(page.getByText('Du har sendt inn endringene på meldekortet.')).toBeVisible();
 });
 
 test.describe('kan avbryte korrigering av et meldekort', () => {
@@ -221,7 +221,7 @@ test('kan ikke sende inn meldekort uten å bekrefte', async ({ page }) => {
     // Verifiserer at vi kommer til bekreftelse
     await page.waitForTimeout(1000); //her skjer det noe rare timing greier når man kjører fra terminalen.
     expect(page.url()).toContain('/12345/korrigering/kvittering');
-    await expect(page.getByText('Endringer på meldekortet er sendt inn.')).toBeVisible();
+    await expect(page.getByText('Du har sendt inn endringene på meldekortet.')).toBeVisible();
 });
 
 test('forrige steg på oppsummering tar deg tilbake til korrigering med den korrigerte dataen', async ({
