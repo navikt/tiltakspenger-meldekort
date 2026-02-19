@@ -238,7 +238,12 @@ export const teksterNb = {
     korrigeringUtfyllingFeilIngenEndring: 'Ingen endringer er registrert.',
     korrigeringIkkeSendt: 'Meldekortet er ikke sendt inn.',
     korrigeringOppsummering: 'Oppsummering av endret meldekort',
-    korrigeringKvittering: 'Endringer på meldekortet er sendt inn.',
+    korrigeringKvittering:
+        'Du har sendt inn endringene på meldekortet. Endringene behandles manuelt av en saksbehandler, og behandlingen kan ta noen dager. ',
+    korrigeringKvitteringMeldingSaksbehandler: 'Du vil enten få melding fra saksbehandleren på ',
+    korrigeringKvitteringForsideLenke: 'nav.no/minside',
+    korrigeringKvitteringUtbetaling: ' eller se eventuell utbetaling via ',
+    korrigeringKvitteringUtbetalingerLenke: 'nav.no/minside/utbetalinger',
     korrigeringIngenEndringer: 'Du har ikke gjort noen endringer på dette meldekortet. ',
     korrigeringIngenEndringerTilbake: 'Gå tilbake til korrigering av meldekortet',
 
