@@ -19,7 +19,7 @@ type Props = {
 
 export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
     const { nesteMeldekort } = meldekortBruker;
-    const { getTekstForSpråk } = useSpråk();
+    const { getTekstForSpråk, valgtSpråk } = useSpråk();
 
     return (
         <>
@@ -35,7 +35,11 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
             ) : (
                 <IkkeKlarTilUtfylling meldekortBruker={meldekortBruker} />
             )}
-            <InternLenke path={getPath(siteRoutePaths.innsendte)} className={style.tidligere}>
+            <InternLenke
+                path={getPath(siteRoutePaths.innsendte)}
+                locale={valgtSpråk}
+                className={style.tidligere}
+            >
                 <Tekst id={'forsideSeOgEndre'} />
             </InternLenke>
         </>

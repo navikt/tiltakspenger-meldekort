@@ -7,7 +7,6 @@ export const teksterNb = {
     startUtfylling: 'Start utfylling',
     forrige: 'Forrige steg',
     lagre: 'Lagre',
-    slett: 'Slett',
     nullstill: 'Nullstill',
     avbryt: 'Avbryt',
     avbrytEndring: 'Avbryt endring',
@@ -67,13 +66,10 @@ export const teksterNb = {
         `${fraOgMed} til ${tilOgMed}`,
 
     deltattTittel: 'Oppmøte',
-    deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
         'Kryss av for de dagene du har deltatt på tiltaket som avtalt. Kryss også av for «deltok» hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.',
     deltattUkeHjelp: 'Kryss av for de dagene du deltok på tiltaket.',
     deltattDagPrefix: 'Deltok: ',
-    fraværHjelpLesMer:
-        'Du må informere oss dersom du har vært syk eller hatt annet fravær i perioden du var satt opp på tiltak.',
     fraværStegFraværSpørsmål:
         'Har du vært syk eller hatt annet fravær noen av dagene du skulle vært på tiltaket?',
     fraværHarHattFraværSvarJa: 'Ja, jeg har vært syk eller hatt annet fravær',
@@ -245,6 +241,9 @@ export const teksterNb = {
     korrigeringKvittering: 'Endringer på meldekortet er sendt inn.',
     korrigeringIngenEndringer: 'Du har ikke gjort noen endringer på dette meldekortet. ',
     korrigeringIngenEndringerTilbake: 'Gå tilbake til korrigering av meldekortet',
+
+    juleferieInfo:
+        'Dersom tiltaket ditt er stengt på grunn av juleferie skal du melde «deltok» på dagene du skulle vært i tiltak. 🎄🎅🤶',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

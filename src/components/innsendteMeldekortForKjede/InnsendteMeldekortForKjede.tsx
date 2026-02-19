@@ -39,7 +39,7 @@ const InnsendteMeldekortForKjede = (props: {
                             />
                         )}
 
-                        <InternLenke path={getPath(siteRoutePaths.innsendte)}>
+                        <InternLenke path={getPath(siteRoutePaths.innsendte)} locale={valgtSpråk}>
                             <Tekst id={'sideForInnsendteMeldekort'} />
                         </InternLenke>
                     </VStack>
@@ -49,7 +49,7 @@ const InnsendteMeldekortForKjede = (props: {
                 {props.meldekortForKjede.meldekort.length === 0 ? (
                     <VStack gap="space-8">
                         <Tekst id={'ingenInnsendteMeldekortForPerioden'} />
-                        <InternLenke path={getPath(siteRoutePaths.innsendte)}>
+                        <InternLenke path={getPath(siteRoutePaths.innsendte)} locale={valgtSpråk}>
                             <Tekst id={'tilbakeTilInnsendte'} />
                         </InternLenke>
                     </VStack>

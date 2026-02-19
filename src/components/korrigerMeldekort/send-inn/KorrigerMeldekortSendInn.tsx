@@ -16,7 +16,7 @@ import { useRouting } from '@routing/useRouting.ts';
 import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
 import { Link } from 'wouter';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker.ts';
@@ -53,11 +53,31 @@ export const KorrigerMeldekortSendInn = ({
                 underTekst={
                     <HStack gap="space-16">
                         <Undertekst
-                            tekst={`Uke ${originaleMeldekort.uke1} og ${originaleMeldekort.uke2}`}
+                            tekst={getTekstForSpråk({
+                                id: 'undertekstUker',
+                                resolverProps: {
+                                    uke1: originaleMeldekort.uke1,
+                                    uke2: originaleMeldekort.uke2,
+                                },
+                            })}
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: originaleMeldekort.fraOgMed, locale: valgtSpråk })} til ${formatterDato({ dato: originaleMeldekort.tilOgMed, locale: valgtSpråk })})`}
+                            tekst={`(${getTekstForSpråk({
+                                id: 'undertekstDatoer',
+                                resolverProps: {
+                                    fraOgMed: formatterDato({
+                                        dato: originaleMeldekort.fraOgMed,
+                                        medUkeDag: false,
+                                        locale: valgtSpråk,
+                                    }),
+                                    tilOgMed: formatterDato({
+                                        dato: originaleMeldekort.tilOgMed,
+                                        medUkeDag: false,
+                                        locale: valgtSpråk,
+                                    }),
+                                },
+                            })})`}
                         />
                     </HStack>
                 }
