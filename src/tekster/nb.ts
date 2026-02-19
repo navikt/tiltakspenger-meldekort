@@ -240,6 +240,11 @@ export const teksterNb = {
     korrigeringUtfyllingFeilForFå: ({ utfylt, maks }: { utfylt: number; maks: number }) =>
         `Du har registrert for få dager. Kun ${utfylt} av ${maks} dager besvart`,
     korrigeringUtfyllingFeilIngenEndring: 'Ingen endringer er registrert.',
+    korrigeringIkkeSendt: 'Meldekortet er ikke sendt inn.',
+    korrigeringOppsummering: 'Oppsummering av endret meldekort',
+    korrigeringKvittering: 'Endringer på meldekortet er sendt inn.',
+    korrigeringIngenEndringer: 'Du har ikke gjort noen endringer på dette meldekortet. ',
+    korrigeringIngenEndringerTilbake: 'Gå tilbake til korrigering av meldekortet',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

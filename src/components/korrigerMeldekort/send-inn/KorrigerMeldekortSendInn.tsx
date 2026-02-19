@@ -25,6 +25,7 @@ import { KorrigerMeldekortOppsummeringProps } from '@common/typer/KorrigerMeldek
 import { KorrigerMeldekortOppsummering } from '@components/korrigerMeldekort/send-inn/oppsummering/KorrigerMeldekortOppsummering.tsx';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';
+import { addLocaleSuffix } from '@common/urls.ts';
 
 export const KorrigerMeldekortSendInn = ({
     originaleMeldekort,
@@ -63,20 +64,21 @@ export const KorrigerMeldekortSendInn = ({
             />
             <VStack gap="space-20">
                 <Heading size="large" level="3">
-                    Oppsummering av endret meldekort
+                    {getTekstForSpråk({ id: 'korrigeringOppsummering' })}
                 </Heading>
                 {/* Denne vil kun slå ut hvis brukeren går direkte til oppsummeringen uten å laste korrigeringssiden først for å populere dagene */}
                 {dager.length === 0 ? (
                     <Alert variant="info">
-                        <BodyShort>
-                            Du har ikke gjort noen endringer på dette meldekortet.
-                        </BodyShort>
+                        <Tekst id={'korrigeringIngenEndringer'} />
                         <Link
-                            to={getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
-                                meldekortId: originaleMeldekort.id,
-                            })}
+                            to={addLocaleSuffix(
+                                getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
+                                    meldekortId: originaleMeldekort.id,
+                                }),
+                                valgtSpråk,
+                            )}
                         >
-                            Gå tilbake til korrigering av meldekortet
+                            {getTekstForSpråk({ id: 'korrigeringIngenEndringerTilbake' })}
                         </Link>
                     </Alert>
                 ) : (
@@ -97,7 +99,7 @@ export const KorrigerMeldekortSendInn = ({
                         />
 
                         <Alert className={styles.alertInfo} variant="info">
-                            Meldekortet er ikke sendt inn.
+                            {getTekstForSpråk({ id: 'korrigeringIkkeSendt' })}
                         </Alert>
 
                         {apiClient.response?.status === 'error' && (
@@ -105,7 +107,12 @@ export const KorrigerMeldekortSendInn = ({
                                 <BodyShort>{apiClient.response.error.errorBody.melding}</BodyShort>
                                 {apiClient.response.error.errorBody.kode ===
                                     ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig && (
-                                    <Link to={getPath(siteRoutePaths.forside)}>
+                                    <Link
+                                        to={addLocaleSuffix(
+                                            getPath(siteRoutePaths.forside),
+                                            valgtSpråk,
+                                        )}
+                                    >
                                         {getTekstForSpråk({
                                             id: 'tilbakeTilOversiktForNyKorrigering',
                                         })}
@@ -142,6 +149,7 @@ export const KorrigerMeldekortSendInn = ({
                                                 dato: dag.dag,
                                                 status: dag.status,
                                             })),
+                                            locale: valgtSpråk,
                                         },
                                         onSuccess: () => {
                                             navigate(
@@ -160,7 +168,7 @@ export const KorrigerMeldekortSendInn = ({
                                 icon={<PaperplaneIcon title="pil-høyre" fontSize="1.5rem" />}
                                 iconPosition="right"
                             >
-                                Send meldekortet
+                                {getTekstForSpråk({ id: 'korrigeringSendMeldekortet' })}
                             </FlashingButton>
                         </HStack>
                         <Button
@@ -170,7 +178,7 @@ export const KorrigerMeldekortSendInn = ({
                                 navigate(getPath(siteRoutePaths.forside));
                             }}
                         >
-                            Avbryt endring
+                            {getTekstForSpråk({ id: 'avbrytEndring' })}
                         </Button>
                     </>
                 )}
