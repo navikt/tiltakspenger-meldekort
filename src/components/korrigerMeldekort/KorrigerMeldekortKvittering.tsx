@@ -8,9 +8,10 @@ import { Alert, HStack, VStack } from '@navikt/ds-react';
 import { formatterDato } from '@utils/datetime';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';
+import React from 'react';
 
 const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) => {
-    const { valgtSpråk } = useSpråk();
+    const { valgtSpråk, getTekstForSpråk } = useSpråk();
     return (
         <div>
             <PageHeader
@@ -18,11 +19,31 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
                 underTekst={
                     <HStack gap="space-16">
                         <Undertekst
-                            tekst={`Uke ${props.originaleMeldekort.uke1} og ${props.originaleMeldekort.uke2}`}
+                            tekst={getTekstForSpråk({
+                                id: 'undertekstUker',
+                                resolverProps: {
+                                    uke1: props.originaleMeldekort.uke1,
+                                    uke2: props.originaleMeldekort.uke2,
+                                },
+                            })}
                             weight={'semibold'}
                         />
                         <Undertekst
-                            tekst={`(${formatterDato({ dato: props.originaleMeldekort.fraOgMed, locale: valgtSpråk })} til ${formatterDato({ dato: props.originaleMeldekort.tilOgMed, locale: valgtSpråk })})`}
+                            tekst={`(${getTekstForSpråk({
+                                id: 'undertekstDatoer',
+                                resolverProps: {
+                                    fraOgMed: formatterDato({
+                                        dato: props.originaleMeldekort.fraOgMed,
+                                        medUkeDag: false,
+                                        locale: valgtSpråk,
+                                    }),
+                                    tilOgMed: formatterDato({
+                                        dato: props.originaleMeldekort.tilOgMed,
+                                        medUkeDag: false,
+                                        locale: valgtSpråk,
+                                    }),
+                                },
+                            })})`}
                         />
                     </HStack>
                 }
@@ -31,7 +52,7 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
                 <Alert variant="success">
                     <Tekst id={'korrigeringKvittering'} />
                 </Alert>
-                <InternLenke path={getPath(siteRoutePaths.forside)}>
+                <InternLenke path={getPath(siteRoutePaths.forside)} locale={valgtSpråk}>
                     <Tekst id={'kvitteringTilbake'} />
                 </InternLenke>
             </VStack>

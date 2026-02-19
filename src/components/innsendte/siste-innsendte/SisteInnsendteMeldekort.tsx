@@ -37,6 +37,7 @@ export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
                         path={getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
                             meldekortId: meldekort.id,
                         })}
+                        locale={valgtSpråk}
                         className={style.knapp}
                     >
                         <Tekst id={'endreMeldekort'} />

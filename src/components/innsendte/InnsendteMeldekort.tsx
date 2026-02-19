@@ -52,7 +52,7 @@ export const InnsendteMeldekort = ({
                         <Tekst id={'ingenInnsendteMeldekort'} />
                     )}
                 </Heading>
-                <InternLenke path={getPath(siteRoutePaths.forside)}>
+                <InternLenke path={getPath(siteRoutePaths.forside)} locale={valgtSpråk}>
                     <Tekst id={'innsendteTilbake'} />
                 </InternLenke>
             </div>
@@ -91,6 +91,7 @@ export const InnsendteMeldekort = ({
                                             //slipper å ha / i url'en mellom periodene.
                                             kjedeId: sisteMeldekort.kjedeId.replaceAll('/', '_'),
                                         })}
+                                        locale={valgtSpråk}
                                     >
                                         <Tekst id={'tidligereMeldekortForPeriode'} />
                                     </InternLenke>

@@ -15,12 +15,14 @@ type Props = {
 };
 
 export const TekstMedLenke = ({ tekst, tekstLenke, lenke, lenkeType }: Props) => {
-    const { getTekstForSpråk } = useSpråk();
+    const { getTekstForSpråk, valgtSpråk } = useSpråk();
     return (
         <div className={style.wrapper}>
             <Tekst id={tekst} />
             {lenkeType === 'intern' ? (
-                <InternLenke path={lenke}>{getTekstForSpråk({ id: tekstLenke })}</InternLenke>
+                <InternLenke path={lenke} locale={valgtSpråk}>
+                    {getTekstForSpråk({ id: tekstLenke })}
+                </InternLenke>
             ) : (
                 <EksternLenke href={lenke}>{getTekstForSpråk({ id: tekstLenke })}</EksternLenke>
             )}

@@ -13,6 +13,7 @@ import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.t
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 import { Meldekort } from '@common/typer/MeldekortBruker';
 import { InternLenke } from '@components/lenke/InternLenke';
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;
@@ -36,10 +37,11 @@ export const Steg3_Deltakelse = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps)
 };
 
 const MeldekortEksistererIkke = () => {
+    const { valgtSpråk } = useSpråk();
     return (
         <div>
             <Alert variant={'error'}>
-                <InternLenke path={getPath(siteRoutePaths.forside)}>
+                <InternLenke path={getPath(siteRoutePaths.forside)} locale={valgtSpråk}>
                     En feil har skjedd. Tilbake til forsiden
                 </InternLenke>
             </Alert>

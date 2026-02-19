@@ -7,7 +7,6 @@ export const teksterEn = {
     startUtfylling: 'Start filling out',
     forrige: 'Previous step',
     lagre: 'Save',
-    slett: 'Slett',
     nullstill: 'Reset',
     avbryt: 'Cancel',
     avbrytEndring: 'Cancel changes',
@@ -51,16 +50,17 @@ export const teksterEn = {
     forsideBekrefterFeil: 'You must confirm to proceed',
     forsideSeOgEndre: 'See previous employment status form(s).',
     forsideIngenMeldekortSoknadUnderBehandling:
-        'Du har ikke fått noen meldekort enda fordi Nav ikke er ferdig med å behandle søknaden din. ',
-    forsideIngenMeldekort: 'Du har ingen meldekort klare til innsending. ',
-    forsideNesteMeldekort1: 'Ditt neste meldekort kan sendes inn fra ',
-    forsideNesteMeldekort2: ' for perioden ',
-    forsideForrigeMeldekort1: 'Din forrige innsending var ',
-    forsideForrigeMeldekort2: ' for perioden ',
+        'You have not received any employment status forms yet because Nav has not finished processing your application. ',
+    forsideIngenMeldekort: 'You have no employment status forms ready for submission. ',
+    forsideNesteMeldekort1: 'Your next employment status form can be submitted from ',
+    forsideNesteMeldekort2: ' for the period ',
+    forsideForrigeMeldekort1: 'Your previous submission was ',
+    forsideForrigeMeldekort2: ' for the period ',
     forsideIkkeTiltakspenger:
-        'Fant ingen meldekort for tiltakspenger. Dersom du tidligere har mottatt tiltakspenger, finner du meldekortene dine i ',
-    forsideHarArenaMeldekort: 'Du kan finne meldekortene dine for tiltakspenger i ',
-    forsideArenaLenke: 'den gamle løsningen for meldekort.',
+        'No employment status forms found. If you received employment scheme benefits for periods earlier than the ones shown here, you can find those employment status forms in ',
+    forsideHarArenaMeldekort:
+        'You can find your employment status forms for employment scheme benefits in ',
+    forsideArenaLenke: 'the previous (old) solution.',
 
     ukeMedNummer: ({ dato }: { dato: string }) => `Week ${getUkenummer(dato, 'en')}`,
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Week ${uke1} and ${uke2}`,
@@ -68,13 +68,10 @@ export const teksterEn = {
         `${fraOgMed} to ${tilOgMed}`,
 
     deltattTittel: 'Attendance',
-    deltattHjelpTittel: 'Slik fyller du ut meldekortet',
     deltattHjelpIngress:
         'Please select the days you participated in activities as agreed. You should select “participated” if the day was a public holiday and you did not participate because the employment scheme was closed.',
     deltattUkeHjelp: 'Please select the days you participated in activities.',
     deltattDagPrefix: 'Participated: ',
-    fraværHjelpLesMer:
-        'Du må informere oss dersom du har vært syk eller hatt annet fravær i perioden du var satt opp på tiltak.',
     fraværStegFraværSpørsmål:
         'Have you been sick or absent for other reasons on any of the days you were supposed to participate in employment scheme activities?',
     fraværHarHattFraværSvarJa: 'Yes, I have been sick or absent for other reasons',
@@ -182,15 +179,15 @@ export const teksterEn = {
             'If some of the information you provided means we need additional documentation, it may take a little longer before you receive payment.',
     ],
 
-    tilbakeTilOversiktForNyKorrigering: 'Gå tilbake til oversikten for å starte en ny korrigering',
+    tilbakeTilOversiktForNyKorrigering: 'Return to the overview to start a new edit',
 
     // Innsendte
-    innsendteTittel: 'Innsendte meldekort',
-    innsendteHeading: 'Her er alle innsendte meldekortene dine',
-    ingenInnsendteMeldekort: 'Du har ingen innsendte meldekort',
-    innsendteTilbake: 'Tilbake til startsiden for meldekort',
-    alleInnsendt: ({ dato }: { dato: string }) => `Innsendt ${dato}`,
-    ikkeInnsendt: 'Ikke innsendt',
+    innsendteTittel: 'Submitted employment status forms',
+    innsendteHeading: 'Here are all your submitted employment status forms',
+    ingenInnsendteMeldekort: 'You have no submitted employment status forms',
+    innsendteTilbake: 'Back to the employment status form homepage',
+    alleInnsendt: ({ dato }: { dato: string }) => `Submitted ${dato}`,
+    ikkeInnsendt: 'Not submitted',
     innsendtMeldekortAccordionHeader: ({
         uke1,
         uke2,
@@ -201,25 +198,26 @@ export const teksterEn = {
         uke2: number;
         fraOgMed: string;
         tilOgMed: string;
-    }) => `Meldekort uke ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
-    endreMeldekort: 'Edit employment status form ',
+    }) => `Employment status form week ${uke1} - ${uke2} (${fraOgMed} - ${tilOgMed})`,
+    endreMeldekort: 'Edit employment status form',
     tidligereMeldekortForPeriode:
-        'Se tidligere meldekort som har blitt sendt inn for samme perioden',
+        'See previous employment status forms that have been submitted for the same period',
 
     //InnsendteMeldekortForKjede
     meldekortForKjedeHeaderUndertekst: (args: { periode: Periode }) =>
-        `Her ser du innsendte meldekort for perioden ${formatterDato({ dato: args.periode.fraOgMed, locale: 'en' })} - ${formatterDato({ dato: args.periode.tilOgMed, locale: 'en' })}.`,
-    ingenInnsendteMeldekortForPerioden: 'Ingen innsendte meldekort for denne perioden.',
-    sisteInnsendteMeldekortForPerioden: 'Siste innsendte meldekort for perioden',
-    tidligereInnsendteMeldekortForPerioden: 'Tidligere innsendte meldekort for perioden',
-    sideForInnsendteMeldekort: 'Tilbake til side for innsendte meldekort',
-    tilbakeTilInnsendte: 'Tilbake til innsendte meldekort',
+        `Here you can see submitted employment status forms for the period ${formatterDato({ dato: args.periode.fraOgMed, locale: 'en' })} - ${formatterDato({ dato: args.periode.tilOgMed, locale: 'en' })}.`,
+    ingenInnsendteMeldekortForPerioden: 'No submitted employment status forms for this period.',
+    sisteInnsendteMeldekortForPerioden: 'Last submitted employment status form for the period',
+    tidligereInnsendteMeldekortForPerioden:
+        'Previously submitted employment status forms for the period',
+    sideForInnsendteMeldekort: 'Return to submitted employment status forms page',
+    tilbakeTilInnsendte: 'Return to submitted employment status forms',
 
     //Arena
     alleUkjentArenaMeldekort:
-        'Dersom du fikk tiltakspenger i perioder før de som vises her, finner du meldekortene i den ',
-    alleHarArenaMeldekort: 'Meldekort fra tidligere perioder finner du i den ',
-    alleArenaLenke: 'gamle løsningen for meldekort',
+        'If you received employment scheme benefits for periods earlier than the ones shown here, you can find those employment status forms in ',
+    alleHarArenaMeldekort: 'Employment status forms for previous periods can be found in ',
+    alleArenaLenke: 'the previous (old) solution',
     korrigeringLønnHeader: 'When do I select "received pay"?',
     korrigeringLønnBeskrivelse:
         'If you receive pay (not employment scheme benefits) as part of your programme, choose "Received pay".',
@@ -247,6 +245,9 @@ export const teksterEn = {
     korrigeringKvittering: 'The changes to the employment status form have been submitted.',
     korrigeringIngenEndringer: 'You have not made any changes to this employment status form. ',
     korrigeringIngenEndringerTilbake: 'Return to edit employment status form',
+
+    juleferieInfo:
+        'If your programme is closed due to the Christmas holidays, you must report “participated” for the days you were scheduled to attend the programme. 🎄🎅🤶',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

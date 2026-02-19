@@ -9,6 +9,7 @@ import { getUkenummer, lokalTid } from '@utils/datetime.ts';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';
 import { Meldekort } from '@common/typer/MeldekortBruker.ts';
+import { Tekst } from '@components/tekst/Tekst.tsx';
 
 type Props = {
     meldekort: Meldekort;
@@ -39,9 +40,7 @@ export const Kalender = ({ steg, meldekort, kanFylleUtHelg, className }: Props) 
         <>
             {kanVæreJuleferie() && (
                 <Alert variant="info">
-                    {
-                        'Dersom tiltaket ditt er stengt på grunn av juleferie skal du melde «deltok» på dagene du skulle vært i tiltak. 🎄🎅🤶'
-                    }
+                    <Tekst id={'juleferieInfo'} />
                 </Alert>
             )}
             <div className={classNames(style.kalender, className)}>
