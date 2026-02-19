@@ -25,6 +25,7 @@ import { KorrigerMeldekortOppsummeringProps } from '@common/typer/KorrigerMeldek
 import { KorrigerMeldekortOppsummering } from '@components/korrigerMeldekort/send-inn/oppsummering/KorrigerMeldekortOppsummering.tsx';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';
+import { addLocaleSuffix } from '@common/urls.ts';
 
 export const KorrigerMeldekortSendInn = ({
     originaleMeldekort,
@@ -70,9 +71,12 @@ export const KorrigerMeldekortSendInn = ({
                     <Alert variant="info">
                         <Tekst id={'korrigeringIngenEndringer'} />
                         <Link
-                            to={getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
-                                meldekortId: originaleMeldekort.id,
-                            })}
+                            to={addLocaleSuffix(
+                                getPath(siteRoutePaths.korrigerMeldekortUtfylling, {
+                                    meldekortId: originaleMeldekort.id,
+                                }),
+                                valgtSpråk,
+                            )}
                         >
                             {getTekstForSpråk({ id: 'korrigeringIngenEndringerTilbake' })}
                         </Link>
@@ -103,7 +107,12 @@ export const KorrigerMeldekortSendInn = ({
                                 <BodyShort>{apiClient.response.error.errorBody.melding}</BodyShort>
                                 {apiClient.response.error.errorBody.kode ===
                                     ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig && (
-                                    <Link to={getPath(siteRoutePaths.forside)}>
+                                    <Link
+                                        to={addLocaleSuffix(
+                                            getPath(siteRoutePaths.forside),
+                                            valgtSpråk,
+                                        )}
+                                    >
                                         {getTekstForSpråk({
                                             id: 'tilbakeTilOversiktForNyKorrigering',
                                         })}
