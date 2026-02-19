@@ -242,7 +242,13 @@ export const teksterEn = {
     korrigeringUtfyllingFeilIngenEndring: 'No changes have been registered.',
     korrigeringIkkeSendt: 'The employment status form has not been submitted.',
     korrigeringOppsummering: 'Summary of edited employment status form',
-    korrigeringKvittering: 'The changes to the employment status form have been submitted.',
+    korrigeringKvittering:
+        'You have submitted the changes to your employment status form. The changes will be processed manually by a caseworker, and the processing may take a few days. ',
+    korrigeringKvitteringMeldingSaksbehandler:
+        'You will either receive a message from the caseworker at ',
+    korrigeringKvitteringForsideLenke: 'nav.no/minside',
+    korrigeringKvitteringUtbetaling: ', or you can check any payments at ',
+    korrigeringKvitteringUtbetalingerLenke: 'nav.no/minside/utbetalinger',
     korrigeringIngenEndringer: 'You have not made any changes to this employment status form. ',
     korrigeringIngenEndringerTilbake: 'Return to edit employment status form',
 

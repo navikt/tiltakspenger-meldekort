@@ -9,6 +9,7 @@ import { formatterDato } from '@utils/datetime';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';
 import React from 'react';
+import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
 
 const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) => {
     const { valgtSpråk, getTekstForSpråk } = useSpråk();
@@ -51,6 +52,17 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
             <VStack gap="space-8">
                 <Alert variant="success">
                     <Tekst id={'korrigeringKvittering'} />
+                    <br />
+                    <br />
+                    <Tekst id={'korrigeringKvitteringMeldingSaksbehandler'} />
+                    <EksternLenke href={'https://www.nav.no/minside'}>
+                        {getTekstForSpråk({ id: 'korrigeringKvitteringForsideLenke' })}
+                    </EksternLenke>
+                    <Tekst id={'korrigeringKvitteringUtbetaling'} />
+                    <EksternLenke href={'https://www.nav.no/minside/utbetalinger'}>
+                        {getTekstForSpråk({ id: 'korrigeringKvitteringUtbetalingerLenke' })}
+                    </EksternLenke>
+                    {'.'}
                 </Alert>
                 <InternLenke path={getPath(siteRoutePaths.forside)} locale={valgtSpråk}>
                     <Tekst id={'kvitteringTilbake'} />
