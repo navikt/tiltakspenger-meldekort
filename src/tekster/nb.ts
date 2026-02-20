@@ -42,7 +42,7 @@ export const teksterNb = {
     forsideGuidePanelLenkeTekst:
         'Ta kontakt med Nav hvis du er usikker på hvordan du skal fylle inn meldekortet.',
     forsideIngress: [
-        'For å få utbetalt tiltakspenger må du som deltar på tiltak hos Nav, sende meldekort hver 14. dag. Vi bruker informasjonen til å regne ut hvor mye du skal ha utbetalt i tiltakspenger.',
+        'For å få utbetalt tiltakspenger må du som deltar på tiltak hos Nav, sende meldekort hver 14. dag. Vi bruker informasjonen til å regne ut hvor mye du skal ha utbetalt i tiltakspenger. Utbetalingen skjer normalt automatisk.',
         'Vi deler informasjon fra meldekortet med andre systemer i Nav fordi informasjonen har betydning for oppfølgingen du får av Nav.',
     ],
     forsideBekrefter: 'Jeg bekrefter at jeg vil fylle ut meldekortet så riktig som jeg kan',
@@ -171,9 +171,9 @@ export const teksterNb = {
     kvitteringTittel: 'Oppsummering',
     kvitteringTilbake: 'Tilbake til startsiden for meldekort',
     kvittering: [
-        'Meldekortet ble sendt inn til Nav. Husk å ta kontakt med veileder hvis du har fravær som skal godkjennes.',
-        'Du får pengene innen tre virkedager hvis vi har fått all informasjonen vi trenger for å beregne og betale ut tiltakspenger. ' +
-            'Hvis du har gitt svar som gjør at vi trenger dokumentasjon, kan det ta litt lengre tid før du får pengene.',
+        'Meldekortet ble sendt inn til Nav.',
+        'Utbetalingen vil normalt bli behandlet automatisk, og du vil få pengene innen tre virkedager.',
+        'Hvis du har fravær som skal godkjennes av Nav eller vi trenger dokumentasjon fra deg, kan utbetalingen bli behandlet manuelt av en saksbehandler, og det kan det ta litt lengre tid før du får pengene.',
     ],
 
     tilbakeTilOversiktForNyKorrigering: 'Gå tilbake til oversikten for å starte en ny korrigering',
