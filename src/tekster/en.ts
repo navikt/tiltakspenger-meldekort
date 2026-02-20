@@ -42,7 +42,7 @@ export const teksterEn = {
     forsideGuidePanelLenkeTekst:
         'Please contact Nav if you are not sure how to fill out the employment status form.',
     forsideIngress: [
-        'To receive employment scheme benefits, all scheme participants must submit an employment status form every 14 days. We use this information to calculate your employment scheme benefits.',
+        'To receive employment scheme benefits, all scheme participants must submit an employment status form every 14 days. We use this information to calculate your employment scheme benefits. The payment is normally processed automatically.',
         'We share the information you provide in the employment status form with other systems within Nav, because this information is relevant for the follow-up you receive from Nav.',
     ],
     forsideBekrefter:
@@ -174,9 +174,9 @@ export const teksterEn = {
     kvitteringTittel: 'Summary',
     kvitteringTilbake: 'Back to the employment status form start page',
     kvittering: [
-        'The employment status form was submitted to Nav. Don’t forget to contact your counsellor if you have absences that need approving.',
-        'You will receive payment within 3 business days, provided you have submitted all the information we need to calculate and pay your employment scheme benefits. ' +
-            'If some of the information you provided means we need additional documentation, it may take a little longer before you receive payment.',
+        'The employment status form was submitted to Nav.',
+        'The payment will normally be processed automatically, and you will receive the money within three working days.',
+        'If you have absences that must be approved by Nav, or if we need documentation from you, the payment may be processed manually by a caseworker, and it may take a bit longer before you receive the money.',
     ],
 
     tilbakeTilOversiktForNyKorrigering: 'Return to the overview to start a new edit',
