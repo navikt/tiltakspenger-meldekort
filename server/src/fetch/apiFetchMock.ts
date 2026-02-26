@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from '@common/typer/meldekort-bruker';
 import { brukerTesterPågår } from '@utils/env';
 import { KorrigerMeldekortResponse } from '@common/typer/KorrigerMeldekort';
+import { MeldekortMedSisteMeldeperiode } from '@common/typer/alle-meldekort.ts';
 
 export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
     if (path === 'bruker') {
@@ -19,8 +20,8 @@ export const fetchFraApiMock: FetchFraApi = async (_1, path, _2, body) => {
 
         if (meldekortId === 'innsendte') {
             return mockResponse(200, {
-                meldekort: mockAlleMeldekort,
                 bruker: mockMeldekortBruker(),
+                meldekortMedSisteMeldeperiode: mockAlleMeldekortMedSisteMeldeperiode,
             });
         }
         if (meldekortId === 'meldekort_1') {
@@ -173,6 +174,26 @@ const forrigeMeldekort: Meldekort = {
 };
 
 const mockAlleMeldekort: Meldekort[] = [lagNesteMeldekort(), forrigeMeldekort];
+
+const mockMeldekortMedSisteMeldeperiode = (
+    meldekort: Meldekort,
+): MeldekortMedSisteMeldeperiode => ({
+    meldekort: meldekort,
+    sisteMeldeperiode: {
+        meldeperiodeId: meldekort.meldeperiodeId,
+        kjedeId: meldekort.kjedeId,
+        periode: {
+            fraOgMed: meldekort.fraOgMed,
+            tilOgMed: meldekort.tilOgMed,
+        },
+        maksAntallDagerForPeriode: meldekort.maksAntallDager,
+    },
+});
+
+const mockAlleMeldekortMedSisteMeldeperiode: MeldekortMedSisteMeldeperiode[] = [
+    mockMeldekortMedSisteMeldeperiode(lagNesteMeldekort()),
+    mockMeldekortMedSisteMeldeperiode(forrigeMeldekort),
+];
 
 const mockMeldekortBruker = (): MeldekortBrukerDTO => ({
     harSak: true,

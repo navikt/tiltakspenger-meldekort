@@ -5,6 +5,7 @@ import {
     MeldekortStatus,
 } from '../../commonSrc/typer/MeldekortBruker';
 import { Nullable } from '../../commonSrc/typer/Nullable';
+import { MeldekortMedSisteMeldeperiode } from '../../commonSrc/typer/alle-meldekort';
 
 export const nyMeldekortDag = ({
     dag = '2023-01-02',
@@ -141,4 +142,19 @@ export const nyUtfylltMeldekort = ({
     kanSendes: kanSendes,
     dager,
     status,
+});
+
+export const nyUtfylltMeldekortMedSisteMeldeperiode = (
+    meldekort: Meldekort,
+): MeldekortMedSisteMeldeperiode => ({
+    meldekort: meldekort,
+    sisteMeldeperiode: {
+        meldeperiodeId: meldekort.meldeperiodeId,
+        kjedeId: meldekort.kjedeId,
+        periode: {
+            fraOgMed: meldekort.fraOgMed,
+            tilOgMed: meldekort.tilOgMed,
+        },
+        maksAntallDagerForPeriode: meldekort.maksAntallDager,
+    },
 });

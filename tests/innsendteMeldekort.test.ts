@@ -1,36 +1,45 @@
 import test, { expect } from '@playwright/test';
 import { klikkCookieBanner, testsBaseUrl } from './helpers/utils';
-import { nyUtfylltMeldekort } from './test-data-generators/MeldekortTestData';
+import {
+    nyUtfylltMeldekort,
+    nyUtfylltMeldekortMedSisteMeldeperiode,
+} from './test-data-generators/MeldekortTestData';
 import { nyMeldekortForKjedeResponse } from './test-data-generators/MeldeperiodeKjedeTestData';
 
-const meldekort1 = nyUtfylltMeldekort({
-    id: 'mk1',
-    kjedeId: 'mpk_123',
-    periode: { fraOgMed: '2025-07-07', tilOgMed: '2025-07-20' },
-    uke1: 28,
-    uke2: 29,
-});
-const meldekort2 = nyUtfylltMeldekort({
-    id: 'mk2',
-    kjedeId: 'mpk_456',
-    periode: { fraOgMed: '2025-07-21', tilOgMed: '2025-08-03' },
-    innsendt: '2025-08-03T12:00:00Z',
-    uke1: 30,
-    uke2: 31,
-});
-const meldekort3 = nyUtfylltMeldekort({
-    id: 'mk3',
-    kjedeId: 'mpk_456',
-    periode: { fraOgMed: '2025-07-21', tilOgMed: '2025-08-03' },
-    innsendt: '2025-08-04T12:00:00Z',
-    uke1: 30,
-    uke2: 31,
-});
+const meldekort1 = nyUtfylltMeldekortMedSisteMeldeperiode(
+    nyUtfylltMeldekort({
+        id: 'mk1',
+        kjedeId: 'mpk_123',
+        periode: { fraOgMed: '2025-07-07', tilOgMed: '2025-07-20' },
+        uke1: 28,
+        uke2: 29,
+    }),
+);
+const meldekort2 = nyUtfylltMeldekortMedSisteMeldeperiode(
+    nyUtfylltMeldekort({
+        id: 'mk2',
+        kjedeId: 'mpk_456',
+        periode: { fraOgMed: '2025-07-21', tilOgMed: '2025-08-03' },
+        innsendt: '2025-08-03T12:00:00Z',
+        uke1: 30,
+        uke2: 31,
+    }),
+);
+const meldekort3 = nyUtfylltMeldekortMedSisteMeldeperiode(
+    nyUtfylltMeldekort({
+        id: 'mk3',
+        kjedeId: 'mpk_456',
+        periode: { fraOgMed: '2025-07-21', tilOgMed: '2025-08-03' },
+        innsendt: '2025-08-04T12:00:00Z',
+        uke1: 30,
+        uke2: 31,
+    }),
+);
 
 const meldekortForKjede2 = nyMeldekortForKjedeResponse({
     kjedeId: 'mpk_456',
     periode: { fraOgMed: '2025-07-21', tilOgMed: '2025-08-03' },
-    meldekort: [meldekort2, meldekort3],
+    meldekort: [meldekort2.meldekort, meldekort3.meldekort],
 });
 
 test('navigasjon til startisden fungerer', async ({ page }) => {
@@ -52,7 +61,7 @@ test('lister opp kun siste innsendte meldekort for en gitt kjede', async ({ page
     await page.route('*/**/innsendte/data', async (route) => {
         await route.fulfill({
             json: {
-                meldekort: [meldekort2, meldekort3],
+                meldekortMedSisteMeldeperiode: [meldekort2, meldekort3],
                 arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
             },
         });
@@ -70,7 +79,7 @@ test('ulike kjeder blir listet opp separat', async ({ page }) => {
     await page.route('*/**/innsendte/data', async (route) => {
         await route.fulfill({
             json: {
-                meldekort: [meldekort1, meldekort2],
+                meldekortMedSisteMeldeperiode: [meldekort1, meldekort2],
                 arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
             },
         });
@@ -87,7 +96,7 @@ test('navigasjon til tidligere meldekort for en kjede fungerer', async ({ page }
     await page.route('*/**/innsendte/data', async (route) => {
         await route.fulfill({
             json: {
-                meldekort: [meldekort2, meldekort3],
+                meldekortMedSisteMeldeperiode: [meldekort2, meldekort3],
                 arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
             },
         });
@@ -121,7 +130,7 @@ test('en kjede med kun 1 innsendt meldekort viser ikke lenke til tidligere innse
     await page.route('*/**/innsendte/data', async (route) => {
         await route.fulfill({
             json: {
-                meldekort: [meldekort1],
+                meldekortMedSisteMeldeperiode: [meldekort1],
                 arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
             },
         });
