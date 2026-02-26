@@ -3,12 +3,14 @@ import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { formatterDato } from '@utils/datetime';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Tekst } from '@components/tekst/Tekst.tsx';
-import { InnsendteMeldekortProps } from '@common/typer/alle-meldekort.ts';
+import {
+    InnsendteMeldekortProps,
+    MeldekortMedSisteMeldeperiode,
+} from '@common/typer/alle-meldekort.ts';
 import { useEffect } from 'react';
 import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { appConfig } from '@common/appConfig.ts';
 import { ArenaMeldekortStatus } from '@common/typer/meldekort-bruker.ts';
-import { Meldekort } from '@common/typer/MeldekortBruker';
 import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
 
 import style from './InnsendteMeldekort.module.css';
@@ -18,7 +20,7 @@ import { useSpråk } from '@context/språk/useSpråk.ts';
 type Props = InnsendteMeldekortProps;
 
 export const InnsendteMeldekort = ({
-    meldekort: meldekortListe,
+    meldekortMedSisteMeldeperiode: meldekortListe,
     arenaMeldekortStatus,
     kanSendeInnHelgForMeldekort,
 }: Props) => {
@@ -27,13 +29,16 @@ export const InnsendteMeldekort = ({
     }, []);
 
     const meldekortGruppertPåKjede = Object.values(
-        Object.groupBy(meldekortListe, (meldekort) => meldekort.kjedeId),
+        Object.groupBy(
+            meldekortListe,
+            (meldekortMedSisteMeldeperiode) => meldekortMedSisteMeldeperiode.meldekort.kjedeId,
+        ),
     ).map((meldekortArray) =>
         //object.values har loose typing som gjør at den gir ut undefined som en del av typen
         //dette er i realiteten ikke et problem fordi en tom liste gir {} i groupBy, og Object.values({}) gir da ut en tom liste
-        (meldekortArray as Meldekort[]).toSorted((a, b) => {
-            if (a.innsendt && b.innsendt) {
-                return b.innsendt.localeCompare(a.innsendt);
+        (meldekortArray as MeldekortMedSisteMeldeperiode[]).toSorted((a, b) => {
+            if (a.meldekort.innsendt && b.meldekort.innsendt) {
+                return b.meldekort.innsendt.localeCompare(a.meldekort.innsendt);
             }
             return 0;
         }),
@@ -61,20 +66,20 @@ export const InnsendteMeldekort = ({
                 const sisteMeldekort = meldekortPåKjede[0];
 
                 return (
-                    <Accordion key={sisteMeldekort.id}>
+                    <Accordion key={sisteMeldekort.meldekort.id}>
                         <Accordion.Item>
                             <Accordion.Header>
                                 <Tekst
                                     id={'innsendtMeldekortAccordionHeader'}
                                     resolverProps={{
-                                        uke1: sisteMeldekort.uke1,
-                                        uke2: sisteMeldekort.uke2,
+                                        uke1: sisteMeldekort.meldekort.uke1,
+                                        uke2: sisteMeldekort.meldekort.uke2,
                                         fraOgMed: formatterDato({
-                                            dato: sisteMeldekort.fraOgMed,
+                                            dato: sisteMeldekort.meldekort.fraOgMed,
                                             locale: valgtSpråk,
                                         }),
                                         tilOgMed: formatterDato({
-                                            dato: sisteMeldekort.tilOgMed,
+                                            dato: sisteMeldekort.meldekort.tilOgMed,
                                             locale: valgtSpråk,
                                         }),
                                     }}
@@ -82,14 +87,21 @@ export const InnsendteMeldekort = ({
                             </Accordion.Header>
                             <Accordion.Content>
                                 <SisteInnsendteMeldekort
-                                    meldekort={sisteMeldekort}
+                                    meldekort={sisteMeldekort.meldekort}
                                     visHelg={kanSendeInnHelgForMeldekort}
+                                    finnesNyereMeldeperiode={
+                                        sisteMeldekort.meldekort.meldeperiodeId !==
+                                        sisteMeldekort.sisteMeldeperiode.meldeperiodeId
+                                    }
                                 />
                                 {meldekortPåKjede.length > 1 && (
                                     <InternLenke
                                         path={getPath(siteRoutePaths.meldekortForKjede, {
                                             //slipper å ha / i url'en mellom periodene.
-                                            kjedeId: sisteMeldekort.kjedeId.replaceAll('/', '_'),
+                                            kjedeId: sisteMeldekort.meldekort.kjedeId.replaceAll(
+                                                '/',
+                                                '_',
+                                            ),
                                         })}
                                         locale={valgtSpråk}
                                     >

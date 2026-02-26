@@ -28,10 +28,10 @@ export const tilMeldekortBruker = (dto: MeldekortBrukerDTO): MeldekortBruker => 
 
 export const tilInnsendteMeldekortProps = (dto: InnsendteMeldekortDTO): InnsendteMeldekortProps => {
     return {
-        meldekort: dto.meldekort.map(tilMeldekortUtfylling),
         arenaMeldekortStatus: dto.bruker.arenaMeldekortStatus,
         kanSendeInnHelgForMeldekort: dto.bruker.harSak
             ? dto.bruker.kanSendeInnHelgForMeldekort
             : false,
+        meldekortMedSisteMeldeperiode: dto.meldekortMedSisteMeldeperiode,
     };
 };

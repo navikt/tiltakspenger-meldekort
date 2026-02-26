@@ -1,22 +1,23 @@
-import { Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { Alert, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { formatterDatoTid } from '@utils/datetime.ts';
 import { InternLenke } from '@components/lenke/InternLenke.tsx';
 import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Kalender } from '@components/kalender/Kalender.tsx';
-import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
 import style from './SisteInnsendteMeldekort.module.css';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';
+import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 
 type Props = {
     meldekort: Meldekort;
     visHelg: boolean;
+    finnesNyereMeldeperiode?: boolean;
 };
 
-export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
-    const { valgtSpråk } = useSpråk();
+export const SisteInnsendteMeldekort = ({ meldekort, visHelg, finnesNyereMeldeperiode }: Props) => {
+    const { valgtSpråk, getTekstForSpråk } = useSpråk();
     return (
         <VStack gap={'space-16'}>
             <Heading size="medium" level="3">
@@ -30,6 +31,11 @@ export const SisteInnsendteMeldekort = ({ meldekort, visHelg }: Props) => {
                             dato: formatterDatoTid(meldekort.innsendt, valgtSpråk),
                         }}
                     />
+                    {finnesNyereMeldeperiode && (
+                        <Alert variant="info">
+                            {getTekstForSpråk({ id: 'korrigeringOppdatertAlert' })}
+                        </Alert>
+                    )}
                     <Button
                         type={'button'}
                         variant={'secondary'}

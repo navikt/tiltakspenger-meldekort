@@ -3,7 +3,6 @@ import { Undertekst } from '@components/page-header/Undertekst';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
 import {
     Accordion,
-    Alert,
     BodyLong,
     BodyShort,
     Button,
@@ -130,12 +129,6 @@ const KorrigeringAvMeldekort = ({
 
     return (
         <VStack gap="space-32">
-            {tilUtfylling.meldeperiodeId !== forrigeMeldekort.meldeperiodeId && (
-                <Alert variant="info">
-                    {getTekstForSpråk({ id: 'korrigeringOppdatertAlert' })}
-                </Alert>
-            )}
-
             <Heading size="medium" level="4">
                 {getTekstForSpråk({ id: 'korrigeringBeskrivelseIngress' })}
             </Heading>
