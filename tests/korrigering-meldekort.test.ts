@@ -1,7 +1,11 @@
 import test, { expect } from '@playwright/test';
 import { klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 import { MeldekortDagStatus } from '../commonSrc/typer/MeldekortBruker';
-import { nyMeldekortDag, nyUtfylltMeldekort } from './test-data-generators/MeldekortTestData';
+import {
+    nyMeldekortDag,
+    nyUtfylltMeldekort,
+    nyUtfylltMeldekortMedSisteMeldeperiode,
+} from './test-data-generators/MeldekortTestData';
 import { nyMeldekortKorrigeringTilUtfylling } from './test-data-generators/MeldekortKorrigeringTestData';
 import { getTekst } from '../src/tekster/tekster';
 import {
@@ -15,7 +19,12 @@ const førsteMeldekort = nyUtfylltMeldekort({});
 test.beforeEach(async ({ page }) => {
     await page.route('*/**/innsendte/data', async (route) => {
         await route.fulfill({
-            json: { meldekort: [førsteMeldekort], arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT' },
+            json: {
+                meldekortMedSisteMeldeperiode: [
+                    nyUtfylltMeldekortMedSisteMeldeperiode(førsteMeldekort),
+                ],
+                arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
+            },
         });
     });
 
@@ -371,7 +380,9 @@ test('dager som ikke har rett skal ikke kunne endres', async ({ page }) => {
     await page.route('*/**/innsendte/data', async (route) => {
         await route.fulfill({
             json: {
-                meldekort: [meldekortMedDagerUtenRett],
+                meldekortMedSisteMeldeperiode: [
+                    nyUtfylltMeldekortMedSisteMeldeperiode(meldekortMedDagerUtenRett),
+                ],
                 arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
             },
         });
@@ -499,7 +510,9 @@ test.describe('validerer korrigering av meldekort', () => {
         await page.route('*/**/innsendte/data', async (route) => {
             await route.fulfill({
                 json: {
-                    meldekort: [meldekort],
+                    meldekortMedSisteMeldeperiode: [
+                        nyUtfylltMeldekortMedSisteMeldeperiode(meldekort),
+                    ],
                     arenaMeldekortStatus: 'HAR_IKKE_MELDEKORT',
                 },
             });
