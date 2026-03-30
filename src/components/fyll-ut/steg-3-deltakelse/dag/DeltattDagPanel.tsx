@@ -3,13 +3,12 @@ import { classNames } from '@utils/classNames.ts';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { Tekst } from '@components/tekst/Tekst';
+import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
+import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils.ts';
+import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+import { useSpråk } from '@context/språk/useSpråk.ts';
 
 import style from './DeltattDagPanel.module.css';
-import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
-import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
-import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
-
-import { useSpråk } from '@context/språk/useSpråk.ts';
 
 type Props = {
     dag: MeldekortDag;
@@ -26,7 +25,9 @@ export const DeltattDagPanel = ({ dag }: Props) => {
     const harHattFravær = dagStatusMedFravær.has(dag.status);
     const harMottattLønn = status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET;
 
-    if (harHattFravær || harMottattLønn) return <MeldekortdagOppsummering dag={dag} />;
+    if (harHattFravær || harMottattLønn) {
+        return <MeldekortdagOppsummering dag={dag} />;
+    }
 
     return (
         <Checkbox

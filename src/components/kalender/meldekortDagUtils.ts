@@ -1,5 +1,5 @@
 import React, { SVGProps } from 'react';
-import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling';
+import { MeldekortSteg } from '@common/typer/BrukersMeldekortUtfylling.ts';
 import {
     BabyWrappedFillIcon,
     CheckmarkCircleFillIcon,
@@ -9,10 +9,10 @@ import {
     SunFillIcon,
     XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-
-import style from './dagFellesStyle.module.scss';
 import { TekstId } from '@tekster/typer.ts';
-import { MeldekortDagStatus } from '@common/typer/MeldekortBruker';
+import { MeldekortDagStatus } from '@common/typer/MeldekortBruker.ts';
+
+import style from './meldekortDagStyleFelles.module.css';
 
 export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
     [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: style.deltattUtenLønn,
@@ -26,7 +26,7 @@ export const meldekortStatusTilStyle: Record<MeldekortDagStatus, string> = {
     [MeldekortDagStatus.IKKE_BESVART]: style.ikkeBesvart,
     [MeldekortDagStatus.IKKE_TILTAKSDAG]: style.ikkeTiltaksdag,
     [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: style.ikkeBesvart,
-};
+} as const;
 
 export const statusTilIkon: Record<
     MeldekortDagStatus,
@@ -42,7 +42,7 @@ export const statusTilIkon: Record<
     [MeldekortDagStatus.IKKE_BESVART]: QuestionmarkDiamondIcon,
     [MeldekortDagStatus.IKKE_TILTAKSDAG]: MinusCircleIcon,
     [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: QuestionmarkDiamondIcon,
-};
+} as const;
 
 export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
     [MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET]: 'statusDeltatt',
@@ -56,7 +56,7 @@ export const statusTilTekstId: Record<MeldekortDagStatus, TekstId> = {
     [MeldekortDagStatus.IKKE_BESVART]: 'statusIkkeBesvart',
     [MeldekortDagStatus.IKKE_TILTAKSDAG]: 'statusIkkeTiltaksdag',
     [MeldekortDagStatus.IKKE_RETT_TIL_TILTAKSPENGER]: 'statusIkkeRettTilTiltakspenger',
-};
+} as const;
 
 export const meldekortStegTilTekstId: Record<MeldekortSteg, TekstId> = {
     deltatt: 'deltattTittel',
@@ -64,7 +64,7 @@ export const meldekortStegTilTekstId: Record<MeldekortSteg, TekstId> = {
     lønn: 'lønnTittel',
     oppsummering: 'oppsummeringTittel',
     kvittering: 'kvitteringTittel',
-};
+} as const;
 
 export const dagStatusMedFravær: ReadonlySet<MeldekortDagStatus> = new Set([
     MeldekortDagStatus.FRAVÆR_SYK,

@@ -60,7 +60,7 @@ export const teksterNb = {
     forsideHarArenaMeldekort: 'Du kan finne meldekortene dine for tiltakspenger i ',
     forsideArenaLenke: 'den gamle løsningen for meldekort.',
 
-    ukeMedNummer: ({ dato }: { dato: string }) => `Uke ${getUkenummer(dato, 'nb')}`,
+    ukeMedNummer: ({ dato }: { dato: string }) => `Uke ${getUkenummer(dato)}`,
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Uke ${uke1} og ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} til ${tilOgMed}`,
@@ -249,6 +249,8 @@ export const teksterNb = {
 
     juleferieInfo:
         'Dersom tiltaket ditt er stengt på grunn av juleferie skal du melde «deltok» på dagene du skulle vært i tiltak. 🎄🎅🤶',
+    påskeferieInfo:
+        'Hvis tiltaket ditt er stengt på grunn av påskeferie, skal du melde «deltok» på dagene du skulle vært på tiltak. 🐣🐇🪺',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

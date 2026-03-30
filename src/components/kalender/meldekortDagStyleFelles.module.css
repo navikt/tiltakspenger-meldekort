@@ -1,0 +1,87 @@
+/**
+ * Shared styles for Meldekort statuser
+ * Disse er fargene vi har lyst til å benytte oss av rundt omkring
+ */
+
+.accent {
+    background-color: var(--ax-bg-accent-soft);
+    border-color: var(--ax-bg-accent-strong);
+
+    & > svg {
+        color: var(--ax-accent-900);
+    }
+}
+
+.neutral {
+    background: var(--ax-bg-neutral-soft);
+    border-color: var(--ax-border-neutral);
+
+    & > svg {
+        color: var(--ax-neutral-900);
+    }
+}
+
+.success {
+    background: var(--ax-bg-success-soft);
+    border-color: var(--ax-border-success);
+
+    & > svg {
+        color: var(--ax-success-700);
+    }
+}
+
+.danger {
+    background: var(--ax-bg-danger-moderate);
+    border-color: var(--ax-border-danger);
+
+    & > svg {
+        color: var(--ax-danger-700);
+    }
+}
+
+.warning {
+    background: var(--ax-bg-warning-soft);
+    border-color: var(--ax-border-warning);
+
+    & > svg {
+        color: var(--ax-warning-700);
+    }
+}
+
+/* Status-specific classes */
+
+.ikkeTiltaksdag {
+    composes: accent;
+}
+
+.ikkeBesvart {
+    composes: neutral;
+}
+
+.deltattUtenLønn {
+    composes: success;
+}
+
+.fraværGodkjentAvNav {
+    composes: success;
+}
+
+.sterkeVelferdsgrunnerEllerJobbintervju {
+    composes: success;
+}
+
+.deltattMedLønn {
+    composes: danger;
+}
+
+.syk {
+    composes: warning;
+}
+
+.syktBarn {
+    composes: warning;
+}
+
+.fraværAnnet {
+    composes: danger;
+}

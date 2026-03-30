@@ -8,11 +8,11 @@ type Props = {
     children: React.ReactNode;
     path: string;
     locale: TeksterLocale;
-} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'data-color'>;
 
-export const InternLenke = ({ children, path, locale }: Props) => {
+export const InternLenke = ({ children, path, locale, ...rest }: Props) => {
     return (
-        <Link as={RouterLink} href={addLocaleSuffix(path, locale)}>
+        <Link {...rest} as={RouterLink} href={addLocaleSuffix(path, locale)}>
             {children}
         </Link>
     );

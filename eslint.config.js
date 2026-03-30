@@ -5,12 +5,6 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import cssModules from 'eslint-plugin-css-modules';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import globals from 'globals';
-
-const parserOptions = {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-};
 
 export default [
     {
@@ -22,11 +16,6 @@ export default [
         files: ['src/**/*.{ts,tsx,js,jsx}'],
         languageOptions: {
             parser: tsParser,
-            parserOptions,
-            globals: {
-                ...globals.browser,
-                ...globals.es2020,
-            },
         },
         plugins: {
             react,
@@ -63,12 +52,6 @@ export default [
         files: ['server/**/*.{ts,tsx,js,jsx}', 'vite.config.{ts,js}', 'playwright.config.{ts,js}'],
         languageOptions: {
             parser: tsParser,
-            parserOptions,
-            globals: {
-                ...globals.node,
-                ...globals.browser,
-                ...globals.es2020,
-            },
         },
         plugins: {
             '@typescript-eslint': tseslint,
@@ -92,12 +75,6 @@ export default [
         files: ['commonSrc/**/*.{ts,js}'],
         languageOptions: {
             parser: tsParser,
-            parserOptions,
-            globals: {
-                ...globals.browser,
-                ...globals.node,
-                ...globals.es2020,
-            },
         },
         plugins: {
             '@typescript-eslint': tseslint,

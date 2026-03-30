@@ -7,7 +7,7 @@ import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/Stati
 import {
     meldekortStatusTilStyle,
     statusTilTekstId,
-} from '@components/kalender/dag-felles/dagFellesUtils';
+} from '@components/kalender/meldekortDagUtils.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 
 import style from './FraværDagPanel.module.css';

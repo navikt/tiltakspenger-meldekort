@@ -11,7 +11,7 @@ import { FraværModal } from '@components/fyll-ut/steg-1-fravær/fravær-modal/F
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
 import { useRouting } from '@routing/useRouting.ts';
 import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@common/siteRoutePaths.ts';
-import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
+import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils.ts';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
 import { Meldekort, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
@@ -35,7 +35,9 @@ export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) =>
 
     useInitMeldekortSteg(brukersMeldekort, 'fravær');
 
-    if (!meldekortUtfylling) return;
+    if (!meldekortUtfylling) {
+        return null;
+    }
 
     return (
         <MeldekortStegWrapper>

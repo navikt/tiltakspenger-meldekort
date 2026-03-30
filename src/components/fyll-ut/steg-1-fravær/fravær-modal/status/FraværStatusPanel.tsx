@@ -1,7 +1,7 @@
 import { Radio } from '@navikt/ds-react';
 import { classNames } from '@utils/classNames.ts';
 
-import { statusTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils';
+import { statusTilTekstId } from '@components/kalender/meldekortDagUtils.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 import { TekstId } from '@tekster/typer.ts';
 

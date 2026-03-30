@@ -5,7 +5,7 @@ import {
     meldekortStatusTilStyle,
     statusTilIkon,
     statusTilTekstId,
-} from '@components/kalender/dag-felles/dagFellesUtils.ts';
+} from '@components/kalender/meldekortDagUtils.ts';
 import { BodyLong, BodyShort, HStack, VStack } from '@navikt/ds-react';
 import { formatterDato } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';

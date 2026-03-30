@@ -1,5 +1,5 @@
 import { Periode } from '@common/typer/periode';
-import { TekstResolver } from '@tekster/typer.ts';
+import { TeksterRecord } from '@tekster/typer.ts';
 import { formatterDato, getUkenummer } from '@utils/datetime';
 
 export const teksterEn = {
@@ -62,7 +62,7 @@ export const teksterEn = {
         'You can find your employment status forms for employment scheme benefits in ',
     forsideArenaLenke: 'the previous (old) solution.',
 
-    ukeMedNummer: ({ dato }: { dato: string }) => `Week ${getUkenummer(dato, 'en')}`,
+    ukeMedNummer: ({ dato }: { dato: string }) => `Week ${getUkenummer(dato)}`,
     undertekstUker: ({ uke1, uke2 }: { uke1: number; uke2: number }) => `Week ${uke1} and ${uke2}`,
     undertekstDatoer: ({ fraOgMed, tilOgMed }: { fraOgMed: string; tilOgMed: string }) =>
         `${fraOgMed} to ${tilOgMed}`,
@@ -254,6 +254,6 @@ export const teksterEn = {
 
     juleferieInfo:
         'If your programme is closed due to the Christmas holidays, you must report “participated” for the days you were scheduled to attend the programme. 🎄🎅🤶',
-} as const satisfies TeksterBaseRecord;
-
-type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;
+    påskeferieInfo:
+        'If your employment scheme is closed due to the Easter holidays, you must report “participated” for the days you were scheduled to attend the scheme. 🐣🐇🪺',
+} as const satisfies TeksterRecord;

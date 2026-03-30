@@ -5,7 +5,7 @@ import {
     meldekortStatusTilStyle,
     statusTilIkon,
     statusTilTekstId,
-} from '@components/kalender/dag-felles/dagFellesUtils.ts';
+} from '@components/kalender/meldekortDagUtils.ts';
 import { classNames } from '@utils/classNames.ts';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
 

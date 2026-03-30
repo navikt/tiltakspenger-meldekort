@@ -4,7 +4,8 @@
 
 .guide {
     margin: 2rem 0;
-    & > :global(.aksel-guide-panel__content) {
+
+    :global(.aksel-guide-panel__content-inner) {
         display: flex;
         align-items: center;
     }

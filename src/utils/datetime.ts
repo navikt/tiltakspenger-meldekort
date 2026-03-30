@@ -11,6 +11,7 @@ type FormatterDatoProps = {
     dato: string;
     medUkeDag?: boolean;
     medStorForbokstav?: boolean;
+    medÅr?: boolean;
     kort?: boolean;
     locale: TeksterLocale;
 };
@@ -20,14 +21,15 @@ export const formatterDato = ({
     medUkeDag,
     medStorForbokstav = true,
     kort = false,
+    medÅr = false,
     locale,
 }: FormatterDatoProps) => {
     const ukeDag = medUkeDag ? (kort ? 'ddd ' : 'dddd ') : '';
 
     const template =
         locale === 'en'
-            ? `${ukeDag}D ${kort ? 'MMM' : 'MMMM'}`
-            : `${ukeDag}D. ${kort ? 'MMM' : 'MMMM'}`;
+            ? `${ukeDag}D ${kort ? 'MMM' : 'MMMM'}${medÅr ? ' YYYY' : ''}`
+            : `${ukeDag}D. ${kort ? 'MMM' : 'MMMM'}${medÅr ? ' YYYY' : ''}`;
     const formattert = lokalTid(dato, locale).format(template);
 
     return medStorForbokstav
@@ -40,8 +42,8 @@ export const formatterDatoTid = (datoTid: string, locale: TeksterLocale) => {
     return lokalTid(datoTid, locale).format(template);
 };
 
-export const getUkenummer = (datoTid: string, locale: TeksterLocale) => {
-    return lokalTid(datoTid, locale).week();
+export const getUkenummer = (datoTid: string) => {
+    return dayjs(datoTid).week();
 };
 
 export const lokalTid = (date: string, locale: TeksterLocale): Dayjs => {

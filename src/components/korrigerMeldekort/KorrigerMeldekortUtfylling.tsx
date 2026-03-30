@@ -24,14 +24,13 @@ import {
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 import { KorrigeringMeldekortUtfyllingProps } from '@common/typer/KorrigerMeldekort.ts';
 import { classNames } from '@utils/classNames.ts';
-import { statusTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils.ts';
+import { statusTilTekstId } from '@components/kalender/meldekortDagUtils.ts';
 import { KorrigerMeldekortValideringFeil } from '@components/korrigerMeldekort/validering/KorrigerMeldekortValideringFeil.tsx';
 import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
-
-import styles from './KorrigerMeldekort.module.scss';
-
 import { useSpråk } from '@context/språk/useSpråk.ts';
+
+import styles from './KorrigerMeldekort.module.css';
 
 const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) => {
     const { forrigeMeldekort } = props;
@@ -176,7 +175,7 @@ const KorrigeringAvMeldekort = ({
     );
 };
 
-const statusClassMap: Record<MeldekortDagStatus, string> = {
+const statusStyles: Record<MeldekortDagStatus, string> = {
     IKKE_TILTAKSDAG: styles.ikkeTiltaksdag,
     //Vi setter ikke en farge på ikke besvart fordi det blir vanskelig å skille den med ikke_rett
     IKKE_BESVART: '',
@@ -225,7 +224,7 @@ const KorrigeringDager = ({
                             </BodyShort>
                         )}
                         <Select
-                            className={statusClassMap[status]}
+                            className={statusStyles[status]}
                             id={`select-${dag}`}
                             key={dag}
                             label={formatterDato({

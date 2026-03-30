@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import style from './MeldekortStegWrapper.module.css';
 import { Heading, Stepper } from '@navikt/ds-react';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
 import { STEG_REKKEFOLGE } from '@common/typer/BrukersMeldekortUtfylling';
@@ -7,9 +6,11 @@ import { getPathForMeldekortSteg } from '@common/siteRoutePaths.ts';
 import { useRouting } from '@routing/useRouting.ts';
 import { PageHeader } from '@components/page-header/PageHeader.tsx';
 import { Undertekst } from '@components/page-header/Undertekst.tsx';
-import { meldekortStegTilTekstId } from '@components/kalender/dag-felles/dagFellesUtils.ts';
-
+import { meldekortStegTilTekstId } from '@components/kalender/meldekortDagUtils.ts';
 import { useSpråk } from '@context/språk/useSpråk.ts';
+import { TidsstyrteMeldekortVarsler } from '@components/fyll-ut/tidsspesifikke-varsler/TidsstyrteMeldekortVarsler.tsx';
+
+import style from './MeldekortStegWrapper.module.css';
 
 type Props = {
     children: React.ReactNode;
@@ -27,8 +28,11 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
         ref.current?.focus();
     }, []);
 
-    if (!meldekortUtfylling) return null;
-    const { id } = meldekortUtfylling || {};
+    if (!meldekortUtfylling) {
+        return null;
+    }
+
+    const { id } = meldekortUtfylling;
     const undertekster = getUndertekster();
 
     return (
@@ -42,43 +46,53 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
                     </div>
                 }
             />
+
             {meldekortSteg !== 'kvittering' && (
-                <Stepper
-                    aria-label={'Meldekort steg'}
-                    activeStep={STEG_REKKEFOLGE.indexOf(meldekortSteg) + 1}
-                    onStepChange={(value) => setMeldekortSteg(STEG_REKKEFOLGE[value - 1])}
-                    orientation="horizontal"
-                    className={style.stepper}
-                >
-                    <Stepper.Step
-                        as="button"
-                        onClick={() => navigate(getPathForMeldekortSteg('fravær', id))}
+                <>
+                    <Stepper
+                        aria-label={'Meldekort steg'}
+                        activeStep={STEG_REKKEFOLGE.indexOf(meldekortSteg) + 1}
+                        onStepChange={(value) => setMeldekortSteg(STEG_REKKEFOLGE[value - 1])}
+                        orientation="horizontal"
+                        className={style.stepper}
                     >
-                        {getTekstForSpråk({ id: 'fraværTittel' })}
-                    </Stepper.Step>
-                    <Stepper.Step
-                        as="button"
-                        onClick={() => navigate(getPathForMeldekortSteg('lønn', id))}
-                    >
-                        {getTekstForSpråk({ id: 'lønnTittel' })}
-                    </Stepper.Step>
-                    <Stepper.Step
-                        as="button"
-                        onClick={() => navigate(getPathForMeldekortSteg('deltatt', id))}
-                    >
-                        {getTekstForSpråk({ id: 'deltattTittel' })}
-                    </Stepper.Step>
-                    <Stepper.Step
-                        as="button"
-                        onClick={() => navigate(getPathForMeldekortSteg('oppsummering', id))}
-                    >
-                        {getTekstForSpråk({ id: 'kvitteringTittel' })}
-                    </Stepper.Step>
-                </Stepper>
+                        <Stepper.Step
+                            as="button"
+                            onClick={() => navigate(getPathForMeldekortSteg('fravær', id))}
+                        >
+                            {getTekstForSpråk({ id: 'fraværTittel' })}
+                        </Stepper.Step>
+                        <Stepper.Step
+                            as="button"
+                            onClick={() => navigate(getPathForMeldekortSteg('lønn', id))}
+                        >
+                            {getTekstForSpråk({ id: 'lønnTittel' })}
+                        </Stepper.Step>
+                        <Stepper.Step
+                            as="button"
+                            onClick={() => navigate(getPathForMeldekortSteg('deltatt', id))}
+                        >
+                            {getTekstForSpråk({ id: 'deltattTittel' })}
+                        </Stepper.Step>
+                        <Stepper.Step
+                            as="button"
+                            onClick={() => navigate(getPathForMeldekortSteg('oppsummering', id))}
+                        >
+                            {getTekstForSpråk({ id: 'kvitteringTittel' })}
+                        </Stepper.Step>
+                    </Stepper>
+
+                    <TidsstyrteMeldekortVarsler
+                        meldekort={meldekortUtfylling}
+                        className={style.varsler}
+                    />
+                </>
             )}
-            <Heading level="2" size="large" className={style.stegTitle}>
+
+            <Heading level={'2'} size={'large'} className={style.stegTitle}>
                 {getTekstForSpråk({ id: meldekortStegTilTekstId[meldekortSteg] })}
             </Heading>
+
             {children}
         </div>
     );

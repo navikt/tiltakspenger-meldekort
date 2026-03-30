@@ -6,7 +6,7 @@ import { Tekst } from '@components/tekst/Tekst';
 
 import style from './LønnDagPanel.module.css';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
-import { dagStatusMedFravær } from '@components/kalender/dag-felles/dagFellesUtils.ts';
+import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils.ts';
 import { MeldekortDag, MeldekortDagStatus } from '@common/typer/MeldekortBruker';
 
 import { useSpråk } from '@context/språk/useSpråk.ts';

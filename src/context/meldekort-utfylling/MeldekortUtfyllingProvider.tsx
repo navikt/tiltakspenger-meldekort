@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
 import { MeldekortSteg, STEG_REKKEFOLGE } from '@common/typer/BrukersMeldekortUtfylling';
-import { formatterDato, getUkenummer } from '@utils/datetime.ts';
+import { formatterDato } from '@utils/datetime.ts';
 import { Tekst } from '@components/tekst/Tekst.tsx';
 import { getPath, siteRoutePaths } from '@common/siteRoutePaths.ts';
 import { Meldekort, MeldekortDag, MeldekortStatus } from '@common/typer/MeldekortBruker';
@@ -74,14 +74,14 @@ export const MeldekortUtfyllingProvider = ({ children }: Props) => {
             };
         }
 
-        const { fraOgMed, tilOgMed } = meldekortUtfylling;
+        const { fraOgMed, tilOgMed, uke1, uke2 } = meldekortUtfylling;
         return {
             ukerTekst: (
                 <Tekst
                     id={'undertekstUker'}
                     resolverProps={{
-                        uke1: getUkenummer(fraOgMed, valgtSpråk),
-                        uke2: getUkenummer(tilOgMed, valgtSpråk),
+                        uke1,
+                        uke2,
                     }}
                 />
             ),
@@ -92,11 +92,13 @@ export const MeldekortUtfyllingProvider = ({ children }: Props) => {
                         fraOgMed: formatterDato({
                             dato: fraOgMed,
                             medUkeDag: false,
+                            medÅr: uke1 > uke2, // Vis år for første uke dersom meldeperioden krysser årsskifte
                             locale: valgtSpråk,
                         }),
                         tilOgMed: formatterDato({
                             dato: tilOgMed,
                             medUkeDag: false,
+                            medÅr: true,
                             locale: valgtSpråk,
                         }),
                     }}

@@ -30,11 +30,13 @@ export const ForsideBrukerMedSak = ({ meldekortBruker }: Props) => {
             </GuidePanel>
 
             <TekstSegmenter id={'forsideIngress'} spacing={true} />
+
             {nesteMeldekort?.status === MeldekortStatus.KAN_UTFYLLES ? (
                 <TilUtfylling nesteMeldekort={nesteMeldekort} />
             ) : (
                 <IkkeKlarTilUtfylling meldekortBruker={meldekortBruker} />
             )}
+
             <InternLenke
                 path={getPath(siteRoutePaths.innsendte)}
                 locale={valgtSpråk}
