@@ -44,6 +44,7 @@ export default [
             ],
             'react/react-in-jsx-scope': 'off',
             '@typescript-eslint/ban-ts-comment': 'off',
+            'react-hooks/set-state-in-effect': 'warn',
         },
     },
 
