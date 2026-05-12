@@ -7,9 +7,9 @@ export const appConfig = {
     baseUrl: '/tiltakspenger/meldekort',
     demoRoutePrefix: '/demo',
     arenaUrl: isDev
-        ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/meldekort/send-meldekort'
-        : 'https://www.nav.no/meldekort/send-meldekort',
+        ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/felles-meldekort/send-meldekort'
+        : 'https://www.nav.no/felles-meldekort/send-meldekort',
     arenaTidligereMeldekortUrl: isDev
-        ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/meldekort/tidligere-meldekort'
-        : 'https://www.nav.no/meldekort/tidligere-meldekort',
+        ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/felles-meldekort/tidligere-meldekort'
+        : 'https://www.nav.no/felles-meldekort/tidligere-meldekort',
 } as const;
