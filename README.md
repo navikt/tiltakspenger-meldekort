@@ -9,19 +9,19 @@ For å starte appen lokalt:
 - Logg inn på Github package registry. Bruk en PAT med navikt SSO auth og `read: packages` scope som passord.
 
 ```
-npm login --registry=https://npm.pkg.github.com --auth-type=legacy
+pnpm login --registry=https://npm.pkg.github.com --auth-type=legacy
 ```
 
 ### Start i dev-modus:
 
 - Kopier `.env-template` til `.env.development`
-- Kjør `npm run dev`
+- Kjør `pnpm dev`
 
 ### Start i prod-modus:
 
 - Kopier `.env-template` til `.env`
 - Sett `NODE_ENV: production` i `.env`
-- Kjør `npm run build` + `npm run start`
+- Kjør `pnpm build` + `pnpm start`
 
 #### Med kun mock-data uten backend-kall:
 Appen serveres i demo-modus på http://localhost:3050/tiltakspenger/meldekort/demo uten avhengigheter til andre tjenester.
@@ -39,6 +39,25 @@ i [tiltakspenger-meta-repo](https://github.com/navikt/tiltakspenger).
 
 Se på [denne siden](https://confluence.adeo.no/display/POAO/Ny+Utvikler+i+Tiltakspenger) for tips til lokalt oppsett av
 utviklingsmiljø.
+
+---
+
+### pnpm how-to
+
+Repoet bruker [pnpm](https://pnpm.io/) som package manager, pinnet via `packageManager`-feltet i `package.json`
+og håndtert av [Corepack](https://nodejs.org/api/corepack.html) (som følger med Node.js).
+
+- **Førstegangsoppsett:** kjør `corepack enable` én gang per maskin. Deretter laster Corepack ned og
+  bruker akkurat den pnpm-versjonen som er pinnet i `package.json`, uten global installasjon. Slett node_modules
+  og kjør `pnpm i` dersom du har node_modules fra npm.
+- **Husky-hooks:** siden `.npmrc` har `ignore-scripts=true` kjøres ikke `prepare`-scriptet automatisk
+  etter `pnpm install`. Kjør `pnpm run prepare` én gang etter første installasjon for å sette opp
+  git-hookene.
+- **JetBrains IDE:** når du åpner prosjektet vil IntelliJ oppdage `pnpm-lock.yaml` og foreslå å bytte
+  package manager til pnpm under *Settings → Languages & Frameworks → Node.js → Package manager*.
+  Aksepter det.
+- **Oppgradering av pnpm:** endre versjonen i `packageManager`-feltet i `package.json` og commit.
+  Corepack plukker opp den nye versjonen automatisk hos alle utviklere og i CI.
 
 ---
 
