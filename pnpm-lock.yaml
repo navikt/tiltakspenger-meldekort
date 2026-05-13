@@ -155,7 +155,7 @@ importers:
         specifier: 5.0.6
         version: 5.0.6
       concurrently:
-        specifier: ^9.2.1
+        specifier: 9.2.1
         version: 9.2.1
       esbuild:
         specifier: 0.28.0
