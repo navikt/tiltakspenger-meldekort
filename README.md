@@ -53,9 +53,6 @@ og håndtert av [Corepack](https://nodejs.org/api/corepack.html) (som følger me
 - **Husky-hooks:** siden `.npmrc` har `ignore-scripts=true` kjøres ikke `prepare`-scriptet automatisk
   etter `pnpm install`. Kjør `pnpm run prepare` én gang etter første installasjon for å sette opp
   git-hookene.
-- **JetBrains IDE:** når du åpner prosjektet vil IntelliJ oppdage `pnpm-lock.yaml` og foreslå å bytte
-  package manager til pnpm under *Settings → Languages & Frameworks → Node.js → Package manager*.
-  Aksepter det.
 - **Oppgradering av pnpm:** endre versjonen i `packageManager`-feltet i `package.json` og commit.
   Corepack plukker opp den nye versjonen automatisk hos alle utviklere og i CI.
 
