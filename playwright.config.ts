@@ -49,10 +49,6 @@ export default defineConfig({
             name: 'Firefox',
             use: { ...devices['Desktop Firefox'] },
         },
-        {
-            name: 'Microsoft Edge',
-            use: { ...devices['Desktop Edge'] },
-        },
         /* Test against mobile viewports. */
         // {
         //   name: 'Mobile Chrome',
