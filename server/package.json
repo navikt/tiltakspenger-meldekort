@@ -7,6 +7,7 @@
         "build": "node build.mjs",
         "build-and-watch": "node build.mjs watch",
         "start": "node -r dotenv/config ./dist/server.cjs dotenv_config_path=../.env",
+        "deploy-and-start": "cd .. && pnpm deploy --filter tiltakspenger-meldekort-server --prod --legacy --force deploy && cp -r server/dist deploy/dist && cd deploy && pnpm start",
         "nodemon-start": "nodemon -r dotenv/config -w ./dist/server.cjs -w ../.env.development ./dist/server/server.cjs dotenv_config_path=../.env.development",
         "dev": "concurrently -n esbuild,nodemon -c blue,green -k \"pnpm run build-and-watch\" \"pnpm run nodemon-start\"",
         "tsc": "tsc --noEmit"

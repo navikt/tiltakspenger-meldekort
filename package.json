@@ -7,7 +7,7 @@
     "scripts": {
         "prepare": "husky",
         "dev": "pnpm --filter tiltakspenger-meldekort-server dev",
-        "start": "pnpm --filter tiltakspenger-meldekort-server start",
+        "start": "pnpm --filter tiltakspenger-meldekort-server deploy-and-start",
         "build": "pnpm run build:client && pnpm run build:ssr && pnpm run build:server",
         "build:client": "vite build --outDir server/dist/client",
         "build:ssr": "vite build --ssr src/main-server.tsx --outDir server/src/_ssr-dist --emptyOutDir false",
@@ -25,7 +25,6 @@
         "@navikt/ds-react": "8.10.4",
         "@navikt/nav-dekoratoren-moduler": "3.7.1",
         "@preact/compat": "18.3.2",
-        "date-easter": "1.0.3",
         "dayjs": "1.11.20",
         "dotenv": "17.4.2",
         "preact": "10.29.1",
