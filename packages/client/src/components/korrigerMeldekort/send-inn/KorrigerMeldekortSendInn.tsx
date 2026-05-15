@@ -16,7 +16,7 @@ import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext';
 import { Link } from 'wouter';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { Tekst } from '@components/tekst/Tekst';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';

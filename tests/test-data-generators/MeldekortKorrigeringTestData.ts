@@ -83,4 +83,5 @@ export const nyMeldekortKorrigeringTilUtfylling = ({
     },
     mottattTidspunktSisteMeldekort,
     maksAntallDagerForPeriode,
+    kanSendeInnHelg: false,
 });

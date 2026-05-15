@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import style from './TekstMedLenke.module.css';
 import { TekstId } from '@tekster/typer';

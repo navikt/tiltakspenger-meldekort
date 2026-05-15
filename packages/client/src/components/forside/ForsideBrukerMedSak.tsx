@@ -1,5 +1,4 @@
 import { MeldekortBrukerMedSak } from '@meldekort/common/typer/meldekort-bruker';
-import React from 'react';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
 import { IkkeKlarTilUtfylling } from '@components/forside/ikke-klar-til-utfylling/IkkeKlarTilUtfylling';
 import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';

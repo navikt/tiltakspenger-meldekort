@@ -1,4 +1,3 @@
-import React from 'react';
 import { SiteRouteConfig } from '@routing/siteRouteConfigs';
 import { Alert, Loader } from '@navikt/ds-react';
 import { useFetchPageData } from '@context/useFetchPageData';

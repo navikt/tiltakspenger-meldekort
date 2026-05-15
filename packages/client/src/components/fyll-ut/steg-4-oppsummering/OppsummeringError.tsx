@@ -1,4 +1,3 @@
-import React from 'react';
 import style from './OppsummeringError.module.css';
 import { ErrorSummary } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';

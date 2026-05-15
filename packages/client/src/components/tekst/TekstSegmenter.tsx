@@ -1,5 +1,4 @@
 import { BodyLong, BodyLongProps } from '@navikt/ds-react';
-import React from 'react';
 import { TeksterProps, TekstId } from '@tekster/typer';
 
 import { useSpråk } from '@context/språk/useSpråk';

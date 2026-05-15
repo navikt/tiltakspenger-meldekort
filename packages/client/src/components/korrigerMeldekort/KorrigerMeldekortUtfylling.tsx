@@ -14,7 +14,7 @@ import {
 } from '@navikt/ds-react';
 import { useRouting } from '@routing/useRouting';
 import { formatterDato } from '@utils/datetime';
-import React, { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
 import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext';
 import {

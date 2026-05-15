@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import style from './Steg5_Kvittering.module.css';
 import { Alert, VStack } from '@navikt/ds-react';
 import { InternLenke } from '@components/lenke/InternLenke';

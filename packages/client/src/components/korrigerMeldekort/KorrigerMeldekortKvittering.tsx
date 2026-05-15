@@ -8,7 +8,6 @@ import { Alert, HStack, VStack } from '@navikt/ds-react';
 import { formatterDato } from '@utils/datetime';
 
 import { useSpråk } from '@context/språk/useSpråk';
-import React from 'react';
 import { EksternLenke } from '@components/lenke/EksternLenke';
 
 const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) => {
