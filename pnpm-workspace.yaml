@@ -2,3 +2,4 @@ packages:
   - 'server'
 allowBuilds:
   esbuild: true
+injectWorkspacePackages: true

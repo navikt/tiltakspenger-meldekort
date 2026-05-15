@@ -2,6 +2,7 @@ import { Meldekort } from '@common/typer/MeldekortBruker.ts';
 import { TekstId } from '@tekster/typer.ts';
 import { Alert, VStack } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst.tsx';
+import { førstePåskedagPerÅr } from '@common/appConfig.ts';
 import dayjs from 'dayjs';
 
 type Props = {
@@ -41,15 +42,6 @@ const varselJul: VarselForTidsrom = {
         return potensielleJuleferieUker.some((uke) => uke === uke1 || uke === uke2);
     },
 } as const;
-
-// Husk å oppdatere denne!
-const førstePåskedagPerÅr: Record<number, string> = {
-    2025: '2025-04-20',
-    2026: '2026-04-05',
-    2027: '2027-03-28',
-    2028: '2028-04-16',
-    2029: '2029-04-01',
-};
 
 const varselPåske: VarselForTidsrom = {
     tekstId: 'påskeferieInfo',

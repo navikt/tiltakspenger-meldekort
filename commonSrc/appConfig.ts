@@ -13,3 +13,12 @@ export const appConfig = {
         ? 'https://meldekort-frontend-q2.ansatt.dev.nav.no/felles-meldekort/tidligere-meldekort'
         : 'https://www.nav.no/felles-meldekort/tidligere-meldekort',
 } as const;
+
+// Husk å holde denne oppdatert
+export const førstePåskedagPerÅr: Record<number, string> = {
+    2025: '2025-04-20',
+    2026: '2026-04-05',
+    2027: '2027-03-28',
+    2028: '2028-04-16',
+    2029: '2029-04-01',
+} as const;
