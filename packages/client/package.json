@@ -1,0 +1,36 @@
+{
+    "name": "@meldekort/client",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "pnpm run build:client && pnpm run build:ssr",
+        "build:client": "vite build --outDir ../server/dist/client",
+        "build:ssr": "vite build --ssr src/main-server.tsx --outDir ../server/src/_ssr-dist --emptyOutDir false",
+        "tsc": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@meldekort/common": "workspace:*",
+        "@navikt/aksel-icons": "8.10.4",
+        "@navikt/ds-css": "8.10.4",
+        "@navikt/ds-react": "8.10.4",
+        "@navikt/nav-dekoratoren-moduler": "3.7.1",
+        "dayjs": "1.11.20",
+        "preact": "10.29.1",
+        "preact-render-to-string": "6.6.7",
+        "swr": "2.4.1",
+        "wouter": "3.9.0"
+    },
+    "devDependencies": {
+        "@preact/preset-vite": "2.10.5",
+        "@types/react": "19.2.14",
+        "@types/react-dom": "19.2.3",
+        "@vitejs/plugin-react": "5.2.0",
+        "react": "19.2.6",
+        "react-dom": "19.2.6",
+        "rollup-plugin-visualizer": "6.0.11",
+        "vite": "7.3.3",
+        "vite-tsconfig-paths": "6.1.1"
+    }
+}
+

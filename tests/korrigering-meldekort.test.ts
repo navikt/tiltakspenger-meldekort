@@ -1,18 +1,18 @@
 import test, { expect } from '@playwright/test';
 import { klikkCookieBanner, testsBaseUrl } from './helpers/utils';
-import { MeldekortDagStatus } from '../commonSrc/typer/MeldekortBruker';
+import { MeldekortDagStatus } from '../packages/common/src/typer/MeldekortBruker';
 import {
     nyMeldekortDag,
     nyUtfylltMeldekort,
     nyUtfylltMeldekortMedSisteMeldeperiode,
 } from './test-data-generators/MeldekortTestData';
 import { nyMeldekortKorrigeringTilUtfylling } from './test-data-generators/MeldekortKorrigeringTestData';
-import { getTekst } from '../src/tekster/tekster';
+import { getTekst } from '../packages/client/src/tekster/tekster';
 import {
     KorrigeringMeldekortUtfyllingProps,
     KorrigerMeldekortOppsummeringProps,
-} from '../commonSrc/typer/KorrigerMeldekort';
-import { ErrorCodes } from '../src/utils/apiClient';
+} from '../packages/common/src/typer/KorrigerMeldekort';
+import { ErrorCodes } from '../packages/client/src/utils/apiClient';
 
 const førsteMeldekort = nyUtfylltMeldekort({});
 

@@ -3,9 +3,9 @@ import {
     MeldekortDag,
     MeldekortDagStatus,
     MeldekortStatus,
-} from '../../commonSrc/typer/MeldekortBruker';
-import { Nullable } from '../../commonSrc/typer/Nullable';
-import { MeldekortMedSisteMeldeperiode } from '../../commonSrc/typer/alle-meldekort';
+} from '../../packages/common/src/typer/MeldekortBruker';
+import { Nullable } from '../../packages/common/src/typer/Nullable';
+import { MeldekortMedSisteMeldeperiode } from '../../packages/common/src/typer/alle-meldekort';
 
 export const nyMeldekortDag = ({
     dag = '2023-01-02',

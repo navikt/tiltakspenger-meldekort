@@ -1,8 +1,8 @@
 import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
-import { getTekst } from '../src/tekster/tekster';
+import { getTekst } from '../packages/client/src/tekster/tekster';
 import test, { expect, Page } from '@playwright/test';
-import { MeldekortDagStatus, MeldekortStatus } from '../commonSrc/typer/MeldekortBruker';
-import { BrukersMeldekortUtfylling } from '../commonSrc/typer/BrukersMeldekortUtfylling';
+import { MeldekortDagStatus, MeldekortStatus } from '../packages/common/src/typer/MeldekortBruker';
+import { BrukersMeldekortUtfylling } from '../packages/common/src/typer/BrukersMeldekortUtfylling';
 import {
     nyMeldekortDagerForPeriode,
     nyUtfylltMeldekort,

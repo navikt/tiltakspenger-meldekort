@@ -1,7 +1,7 @@
-import { Meldekort } from '../../commonSrc/typer/MeldekortBruker';
-import { MeldekortForKjedeResponse } from '../../commonSrc/typer/MeldeperiodeKjede';
-import { Nullable } from '../../commonSrc/typer/Nullable';
-import { Periode } from '../../commonSrc/typer/periode';
+import { Meldekort } from '../../packages/common/src/typer/MeldekortBruker';
+import { MeldekortForKjedeResponse } from '../../packages/common/src/typer/MeldeperiodeKjede';
+import { Nullable } from '../../packages/common/src/typer/Nullable';
+import { Periode } from '../../packages/common/src/typer/periode';
 import { nyMeldekortDagerForPeriode, nyUtfylltMeldekort } from './MeldekortTestData';
 
 /**

@@ -1,6 +1,6 @@
-import { MeldekortDag, MeldekortDagStatus } from '../../commonSrc/typer/MeldekortBruker';
+import { MeldekortDag, MeldekortDagStatus } from '../../packages/common/src/typer/MeldekortBruker';
 import { nyMeldekortDag } from './MeldekortTestData';
-import { MeldekortKorrigeringTilUtfylling } from '../../commonSrc/typer/KorrigerMeldekort';
+import { MeldekortKorrigeringTilUtfylling } from '../../packages/common/src/typer/KorrigerMeldekort';
 
 export const nyMeldekortKorrigeringTilUtfylling = ({
     meldeperiodeId = '12345',
