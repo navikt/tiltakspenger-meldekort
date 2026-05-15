@@ -3,9 +3,9 @@ import { erLocaleGyldig, TeksterLocale } from '@meldekort/common/locale';
 import { useLocation } from 'wouter';
 import { onLanguageSelect } from '@navikt/nav-dekoratoren-moduler';
 import { replaceLocaleSuffix } from '@meldekort/common/urls';
-import { SpråkContext } from './SpråkContext.tsx';
-import { TeksterProps, TekstId } from '@tekster/typer.ts';
-import { getTekst, getTekster } from '@tekster/tekster.ts';
+import { SpråkContext } from './SpråkContext';
+import { TeksterProps, TekstId } from '@tekster/typer';
+import { getTekst, getTekster } from '@tekster/tekster';
 
 type Props = PropsWithChildren<{
     defaultSpråk: TeksterLocale;

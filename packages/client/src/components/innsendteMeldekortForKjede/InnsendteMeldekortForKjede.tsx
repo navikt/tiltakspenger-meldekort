@@ -6,11 +6,11 @@ import { PageHeader } from '@components/page-header/PageHeader';
 import { Tekst } from '@components/tekst/Tekst';
 import { Heading, VStack } from '@navikt/ds-react';
 import { formatterDatoTid } from '@utils/datetime';
-import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
+import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort';
 
 import styles from './InnsendteMeldekortForKjede.module.css';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 const InnsendteMeldekortForKjede = (props: {
     meldekortForKjede: MeldekortForKjedeResponse;

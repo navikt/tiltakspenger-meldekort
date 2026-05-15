@@ -1,4 +1,4 @@
-import { teksterNb } from '@tekster/nb.ts';
+import { teksterNb } from '@tekster/nb';
 import { TeksterLocale } from '@meldekort/common/locale';
 
 type TeksterNB = typeof teksterNb;

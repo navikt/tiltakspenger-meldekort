@@ -1,4 +1,4 @@
-import { baseLocale, localesWithSuffix, TeksterLocale } from './locale.ts';
+import { baseLocale, localesWithSuffix, TeksterLocale } from './locale';
 
 export const stripTrailingSlash = (path: string) => path.replace(/\/$/, '');
 

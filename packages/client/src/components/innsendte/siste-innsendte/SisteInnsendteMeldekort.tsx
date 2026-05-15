@@ -1,13 +1,13 @@
 import { Alert, Button, Heading, HStack, VStack } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { formatterDatoTid } from '@utils/datetime.ts';
-import { InternLenke } from '@components/lenke/InternLenke.tsx';
+import { Tekst } from '@components/tekst/Tekst';
+import { formatterDatoTid } from '@utils/datetime';
+import { InternLenke } from '@components/lenke/InternLenke';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
-import { Kalender } from '@components/kalender/Kalender.tsx';
+import { Kalender } from '@components/kalender/Kalender';
 
 import style from './SisteInnsendteMeldekort.module.css';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 
 type Props = {

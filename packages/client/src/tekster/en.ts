@@ -1,5 +1,5 @@
 import { Periode } from '@meldekort/common/typer/periode';
-import { TeksterRecord } from '@tekster/typer.ts';
+import { TeksterRecord } from '@tekster/typer';
 import { formatterDato, getUkenummer } from '@utils/datetime';
 
 export const teksterEn = {

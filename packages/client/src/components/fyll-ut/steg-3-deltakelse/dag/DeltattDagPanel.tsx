@@ -1,12 +1,12 @@
 import { Checkbox } from '@navikt/ds-react';
-import { classNames } from '@utils/classNames.ts';
+import { classNames } from '@utils/classNames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { Tekst } from '@components/tekst/Tekst';
-import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
-import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils.ts';
+import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
+import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils';
 import { MeldekortDag, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 import style from './DeltattDagPanel.module.css';
 

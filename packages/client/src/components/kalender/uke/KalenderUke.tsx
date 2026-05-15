@@ -1,11 +1,11 @@
 import React from 'react';
 import { MeldekortSteg } from '@meldekort/common/typer/BrukersMeldekortUtfylling';
 import { Heading } from '@navikt/ds-react';
-import { DeltattDagPanel } from '@components/fyll-ut/steg-3-deltakelse/dag/DeltattDagPanel.tsx';
-import { FraværDagPanel } from '@components/fyll-ut/steg-1-fravær/dag/FraværDagPanel.tsx';
-import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel.tsx';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { LønnDagPanel } from '@components/fyll-ut/steg-2-lønn/dag/LønnDagPanel.tsx';
+import { DeltattDagPanel } from '@components/fyll-ut/steg-3-deltakelse/dag/DeltattDagPanel';
+import { FraværDagPanel } from '@components/fyll-ut/steg-1-fravær/dag/FraværDagPanel';
+import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
+import { Tekst } from '@components/tekst/Tekst';
+import { LønnDagPanel } from '@components/fyll-ut/steg-2-lønn/dag/LønnDagPanel';
 import { MeldekortDag, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 
 import style from './KalenderUke.module.css';

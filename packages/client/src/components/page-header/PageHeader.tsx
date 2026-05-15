@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Heading } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
-import { TekstId } from '@tekster/typer.ts';
+import { TekstId } from '@tekster/typer';
 
 import style from './PageHeader.module.css';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props = {
     tekstId: TekstId;

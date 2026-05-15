@@ -1,10 +1,10 @@
 import { ConfirmationPanel } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
 import React, { useEffect, useState } from 'react';
-import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
-import { useRouting } from '@routing/useRouting.ts';
+import { FlashingButton } from '@components/flashing-button/FlashingButton';
+import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
-import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 
 import style from './TilUtfylling.module.css';

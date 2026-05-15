@@ -1,6 +1,6 @@
 import { Meldekort, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 
-import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils.ts';
+import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils';
 
 export const antallDagerValidering = (
     brukersMeldekort: Meldekort,

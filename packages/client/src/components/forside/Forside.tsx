@@ -1,8 +1,8 @@
-import { PageHeader } from '@components/page-header/PageHeader.tsx';
+import { PageHeader } from '@components/page-header/PageHeader';
 import { MeldekortBruker } from '@meldekort/common/typer/meldekort-bruker';
-import { ForsideBrukerMedSak } from '@components/forside/ForsideBrukerMedSak.tsx';
-import { ForsideBrukerUtenSak } from '@components/forside/ForsideBrukerUtenSak.tsx';
-import { DemoVarsel } from '@components/demo/DemoVarsel.tsx';
+import { ForsideBrukerMedSak } from '@components/forside/ForsideBrukerMedSak';
+import { ForsideBrukerUtenSak } from '@components/forside/ForsideBrukerUtenSak';
+import { DemoVarsel } from '@components/demo/DemoVarsel';
 
 type Props = {
     meldekortBruker: MeldekortBruker;

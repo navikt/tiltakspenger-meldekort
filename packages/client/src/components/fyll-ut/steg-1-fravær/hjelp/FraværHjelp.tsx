@@ -1,10 +1,10 @@
 import { Heading, ReadMore } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
+import { Tekst } from '@components/tekst/Tekst';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
 
 import style from './FraværHjelp.module.css';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 export const FraværHjelp = () => {
     const { getTeksterForSpråk } = useSpråk();

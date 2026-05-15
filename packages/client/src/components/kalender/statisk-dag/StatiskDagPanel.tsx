@@ -1,18 +1,18 @@
 import { BodyLong } from '@navikt/ds-react';
 
-import { formatterDato } from '@utils/datetime.ts';
+import { formatterDato } from '@utils/datetime';
 import {
     meldekortStatusTilStyle,
     statusTilIkon,
     statusTilTekstId,
-} from '@components/kalender/meldekortDagUtils.ts';
-import { classNames } from '@utils/classNames.ts';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
+} from '@components/kalender/meldekortDagUtils';
+import { classNames } from '@utils/classNames';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
 
 import style from './StatiskDagPanel.module.css';
 import { MeldekortDag } from '@meldekort/common/typer/MeldekortBruker';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props = {
     dag: MeldekortDag;

@@ -3,23 +3,23 @@ import style from './Steg4_Oppsummering.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert, ConfirmationPanel, ErrorSummary, VStack } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
-import { Kalender } from '@components/kalender/Kalender.tsx';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
+import { Kalender } from '@components/kalender/Kalender';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
 
-import { useRouting } from '@routing/useRouting.ts';
-import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
+import { useRouting } from '@routing/useRouting';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper';
 
 import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
-import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
+import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
-import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
-import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
-import { OppsummeringError } from '@components/fyll-ut/steg-4-oppsummering/OppsummeringError.tsx';
-import { TekstId } from '@tekster/typer.ts';
+import { antallDagerValidering } from '@utils/utfyllingValidering';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg';
+import { OppsummeringError } from '@components/fyll-ut/steg-4-oppsummering/OppsummeringError';
+import { TekstId } from '@tekster/typer';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
 import { useApiClient } from '@utils/apiClient';
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 import { MeldekortUtfyltDTO } from '@meldekort/common/typer/BrukersMeldekortUtfylling';
 
 type SSRProps = {

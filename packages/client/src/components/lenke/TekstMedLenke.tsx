@@ -1,11 +1,11 @@
 import React from 'react';
 import { Tekst } from '@components/tekst/Tekst';
 import style from './TekstMedLenke.module.css';
-import { TekstId } from '@tekster/typer.ts';
-import { InternLenke } from '@components/lenke/InternLenke.tsx';
-import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
+import { TekstId } from '@tekster/typer';
+import { InternLenke } from '@components/lenke/InternLenke';
+import { EksternLenke } from '@components/lenke/EksternLenke';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props = {
     tekst: TekstId;

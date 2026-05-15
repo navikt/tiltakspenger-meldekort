@@ -1,6 +1,6 @@
 import { Meldekort } from './MeldekortBruker';
 import { ArenaMeldekortStatus, MeldekortBrukerDTO } from './meldekort-bruker';
-import { Periode } from './periode.ts';
+import { Periode } from './periode';
 
 export type InnsendteMeldekortDTO = {
     bruker: MeldekortBrukerDTO;

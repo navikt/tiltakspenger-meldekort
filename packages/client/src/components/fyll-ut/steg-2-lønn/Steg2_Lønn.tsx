@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react';
 import style from './Steg2_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper';
 import { Alert, HStack, Radio, RadioGroup } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { TekstId } from '@tekster/typer.ts';
-import { Kalender } from '@components/kalender/Kalender.tsx';
-import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
+import { Tekst } from '@components/tekst/Tekst';
+import { TekstId } from '@tekster/typer';
+import { Kalender } from '@components/kalender/Kalender';
+import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller';
 import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
 import { useRouting } from '@routing/useRouting';
-import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
-import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
+import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg';
 import { Meldekort, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 
 type SSRProps = {

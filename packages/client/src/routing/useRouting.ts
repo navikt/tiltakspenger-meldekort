@@ -1,6 +1,6 @@
 import { useLocation, useRouter } from 'wouter';
 import { addLocaleSuffix } from '@meldekort/common/urls';
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 export const useRouting = () => {
     const [path, navigate] = useLocation();

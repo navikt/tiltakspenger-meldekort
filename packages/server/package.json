@@ -14,7 +14,7 @@
     },
     "dependencies": {
         "@meldekort/common": "workspace:*",
-        "@navikt/nav-dekoratoren-moduler": "3.7.1",
+        "@navikt/nav-dekoratoren-moduler": "4.0.0",
         "@navikt/oasis": "4.1.4",
         "compression": "1.8.1",
         "csp-header": "6.3.1",

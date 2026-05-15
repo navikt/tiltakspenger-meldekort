@@ -9,7 +9,7 @@ import {
     SunFillIcon,
     XMarkOctagonFillIcon,
 } from '@navikt/aksel-icons';
-import { TekstId } from '@tekster/typer.ts';
+import { TekstId } from '@tekster/typer';
 import { MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 
 import style from './meldekortDagStyleFelles.module.css';

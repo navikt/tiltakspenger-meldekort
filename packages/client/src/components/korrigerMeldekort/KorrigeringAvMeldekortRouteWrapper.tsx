@@ -1,7 +1,7 @@
 import { AppContext } from '@meldekort/common/typer/appContext';
 import { KorrigerMeldekortProvider } from '@context/korriger/KorrigerMeldekortProvider';
 import { siteRouteConfigs } from '@routing/siteRouteConfigs';
-import { RouteMedLocale } from '@routing/RouteMedLocale.tsx';
+import { RouteMedLocale } from '@routing/RouteMedLocale';
 
 const KorrigeringAvMeldekortRouteWrapper = ({ appContext }: { appContext: AppContext }) => {
     const {

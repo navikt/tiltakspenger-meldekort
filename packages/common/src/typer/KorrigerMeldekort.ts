@@ -1,6 +1,6 @@
 import { Meldekort, MeldekortDag } from './MeldekortBruker';
 import { Periode } from './periode';
-import { TeksterLocale } from '../locale.ts';
+import { TeksterLocale } from '../locale';
 
 export interface KorrigerMeldekortRequest {
     meldekortId: string;

@@ -1,5 +1,5 @@
 import useSWR, { preload } from 'swr';
-import { fetchJson } from '@utils/fetch.ts';
+import { fetchJson } from '@utils/fetch';
 import { stripTrailingSlash } from '@meldekort/common/urls';
 
 const isSsr = import.meta.env.SSR;

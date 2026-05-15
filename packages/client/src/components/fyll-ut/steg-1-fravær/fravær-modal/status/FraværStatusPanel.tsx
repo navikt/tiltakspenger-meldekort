@@ -1,9 +1,9 @@
 import { Radio } from '@navikt/ds-react';
-import { classNames } from '@utils/classNames.ts';
+import { classNames } from '@utils/classNames';
 
-import { statusTilTekstId } from '@components/kalender/meldekortDagUtils.ts';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { TekstId } from '@tekster/typer.ts';
+import { statusTilTekstId } from '@components/kalender/meldekortDagUtils';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
+import { TekstId } from '@tekster/typer';
 
 import style from './FraværStatusPanel.module.css';
 import { MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';

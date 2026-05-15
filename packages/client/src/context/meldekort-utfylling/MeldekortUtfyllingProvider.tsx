@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { MeldekortUtfyllingContext } from '@context/meldekort-utfylling/MeldekortUtfyllingContext';
 import { MeldekortSteg, STEG_REKKEFOLGE } from '@meldekort/common/typer/BrukersMeldekortUtfylling';
-import { formatterDato } from '@utils/datetime.ts';
-import { Tekst } from '@components/tekst/Tekst.tsx';
+import { formatterDato } from '@utils/datetime';
+import { Tekst } from '@components/tekst/Tekst';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
 import { Meldekort, MeldekortDag, MeldekortStatus } from '@meldekort/common/typer/MeldekortBruker';
-import { useRouting } from '@routing/useRouting.ts';
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useRouting } from '@routing/useRouting';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props = {
     children: React.ReactNode;

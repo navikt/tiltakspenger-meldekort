@@ -7,9 +7,9 @@ import { Tekst } from '@components/tekst/Tekst';
 import { Alert, HStack, VStack } from '@navikt/ds-react';
 import { formatterDato } from '@utils/datetime';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 import React from 'react';
-import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
+import { EksternLenke } from '@components/lenke/EksternLenke';
 
 const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) => {
     const { valgtSpråk, getTekstForSpråk } = useSpråk();

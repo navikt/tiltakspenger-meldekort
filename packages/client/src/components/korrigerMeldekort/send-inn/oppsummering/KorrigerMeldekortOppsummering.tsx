@@ -1,18 +1,18 @@
 import { MeldekortDag, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
-import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils.ts';
-import { classNames } from '@utils/classNames.ts';
+import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils';
+import { classNames } from '@utils/classNames';
 import {
     meldekortStatusTilStyle,
     statusTilIkon,
     statusTilTekstId,
-} from '@components/kalender/meldekortDagUtils.ts';
+} from '@components/kalender/meldekortDagUtils';
 import { BodyLong, BodyShort, HStack, VStack } from '@navikt/ds-react';
-import { formatterDato } from '@utils/datetime.ts';
-import { Tekst } from '@components/tekst/Tekst.tsx';
+import { formatterDato } from '@utils/datetime';
+import { Tekst } from '@components/tekst/Tekst';
 
 import style from './KorrigerMeldekortOppsummering.module.css';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props = {
     dager: MeldekortDag[];

@@ -1,5 +1,5 @@
-import { PageHeader } from '@components/page-header/PageHeader.tsx';
-import { Undertekst } from '@components/page-header/Undertekst.tsx';
+import { PageHeader } from '@components/page-header/PageHeader';
+import { Undertekst } from '@components/page-header/Undertekst';
 import {
     Alert,
     BodyShort,
@@ -9,22 +9,22 @@ import {
     HStack,
     VStack,
 } from '@navikt/ds-react';
-import { formatterDato } from '@utils/datetime.ts';
+import { formatterDato } from '@utils/datetime';
 import styles from './KorrigerMeldekortSendInn.module.css';
 import { ArrowLeftIcon, PaperplaneIcon } from '@navikt/aksel-icons';
-import { useRouting } from '@routing/useRouting.ts';
+import { useRouting } from '@routing/useRouting';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
-import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
+import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext';
 import { Link } from 'wouter';
 import React, { useEffect, useState } from 'react';
-import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
-import { Tekst } from '@components/tekst/Tekst.tsx';
+import { FlashingButton } from '@components/flashing-button/FlashingButton';
+import { Tekst } from '@components/tekst/Tekst';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
-import { ErrorCodes, useApiClient } from '@utils/apiClient.ts';
+import { ErrorCodes, useApiClient } from '@utils/apiClient';
 import { KorrigerMeldekortOppsummeringProps } from '@meldekort/common/typer/KorrigerMeldekort';
-import { KorrigerMeldekortOppsummering } from '@components/korrigerMeldekort/send-inn/oppsummering/KorrigerMeldekortOppsummering.tsx';
+import { KorrigerMeldekortOppsummering } from '@components/korrigerMeldekort/send-inn/oppsummering/KorrigerMeldekortOppsummering';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 import { addLocaleSuffix } from '@meldekort/common/urls';
 
 export const KorrigerMeldekortSendInn = ({

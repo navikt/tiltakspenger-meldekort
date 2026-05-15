@@ -1,5 +1,5 @@
 import { MeldekortDag } from './MeldekortBruker';
-import { Nullable } from './Nullable.ts';
+import { Nullable } from './Nullable';
 
 export type MeldekortSteg = 'fravær' | 'lønn' | 'deltatt' | 'oppsummering' | 'kvittering';
 

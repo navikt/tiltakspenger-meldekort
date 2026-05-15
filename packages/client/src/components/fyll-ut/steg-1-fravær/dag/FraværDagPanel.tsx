@@ -1,19 +1,16 @@
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
 import { BodyLong, Button } from '@navikt/ds-react';
-import { classNames } from '@utils/classNames.ts';
+import { classNames } from '@utils/classNames';
 import { Tekst } from '@components/tekst/Tekst';
 import { MeldekortdagOppsummering } from '@components/kalender/statisk-dag/StatiskDagPanel';
-import {
-    meldekortStatusTilStyle,
-    statusTilTekstId,
-} from '@components/kalender/meldekortDagUtils.ts';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
+import { meldekortStatusTilStyle, statusTilTekstId } from '@components/kalender/meldekortDagUtils';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
 
 import style from './FraværDagPanel.module.css';
 import { MeldekortDag, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props = {
     dag: MeldekortDag;

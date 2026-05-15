@@ -6,7 +6,7 @@ import { MeldekortBrukerMedSak } from '@meldekort/common/typer/meldekort-bruker'
 import style from './IkkeKlarTilUtfylling.module.css';
 import { MeldekortStatus } from '@meldekort/common/typer/MeldekortBruker';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props = {
     meldekortBruker: MeldekortBrukerMedSak;

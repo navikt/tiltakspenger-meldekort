@@ -16,19 +16,19 @@ import { useRouting } from '@routing/useRouting';
 import { formatterDato } from '@utils/datetime';
 import React, { Fragment, useEffect, useState } from 'react';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
-import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext.tsx';
+import { useKorrigerMeldekortContext } from '@context/korriger/KorrigerMeldekortContext';
 import {
     KorrigerMeldekortValideringResultat,
     validerMeldekortKorrigering,
-} from './validering/korrigerMeldekortValideringUtils.ts';
+} from './validering/korrigerMeldekortValideringUtils';
 import { MeldekortDag, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 import { KorrigeringMeldekortUtfyllingProps } from '@meldekort/common/typer/KorrigerMeldekort';
-import { classNames } from '@utils/classNames.ts';
-import { statusTilTekstId } from '@components/kalender/meldekortDagUtils.ts';
-import { KorrigerMeldekortValideringFeil } from '@components/korrigerMeldekort/validering/KorrigerMeldekortValideringFeil.tsx';
-import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils.ts';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { classNames } from '@utils/classNames';
+import { statusTilTekstId } from '@components/kalender/meldekortDagUtils';
+import { KorrigerMeldekortValideringFeil } from '@components/korrigerMeldekort/validering/KorrigerMeldekortValideringFeil';
+import { hentAktuelleDager } from '@components/korrigerMeldekort/meldekortKorrigeringUtils';
+import { Tekst } from '@components/tekst/Tekst';
+import { useSpråk } from '@context/språk/useSpråk';
 
 import styles from './KorrigerMeldekort.module.css';
 

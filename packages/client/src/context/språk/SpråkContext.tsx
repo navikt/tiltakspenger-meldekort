@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { TeksterLocale } from '@meldekort/common/locale';
-import { TeksterProps, TekstId } from '@tekster/typer.ts';
+import { TeksterProps, TekstId } from '@tekster/typer';
 
 type SpråkvelgerState = {
     valgtSpråk: TeksterLocale;

@@ -1,19 +1,19 @@
 import style from './Steg3_Deltakelse.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Alert, BodyLong } from '@navikt/ds-react';
-import { Kalender } from '@components/kalender/Kalender.tsx';
+import { Kalender } from '@components/kalender/Kalender';
 import { Tekst } from '@components/tekst/Tekst';
-import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
-import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
+import { antallDagerValidering } from '@utils/utfyllingValidering';
+import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller';
 
-import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { useRouting } from '@routing/useRouting.ts';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper';
+import { useRouting } from '@routing/useRouting';
 import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
-import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
-import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
+import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 import { InternLenke } from '@components/lenke/InternLenke';
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;

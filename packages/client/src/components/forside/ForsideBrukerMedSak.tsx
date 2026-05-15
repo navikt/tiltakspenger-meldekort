@@ -1,15 +1,15 @@
 import { MeldekortBrukerMedSak } from '@meldekort/common/typer/meldekort-bruker';
 import React from 'react';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { IkkeKlarTilUtfylling } from '@components/forside/ikke-klar-til-utfylling/IkkeKlarTilUtfylling.tsx';
-import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling.tsx';
-import { InternLenke } from '@components/lenke/InternLenke.tsx';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
+import { IkkeKlarTilUtfylling } from '@components/forside/ikke-klar-til-utfylling/IkkeKlarTilUtfylling';
+import { TilUtfylling } from '@components/forside/til-utfylling/TilUtfylling';
+import { InternLenke } from '@components/lenke/InternLenke';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
-import { Tekst } from '@components/tekst/Tekst.tsx';
+import { Tekst } from '@components/tekst/Tekst';
 import { GuidePanel } from '@navikt/ds-react';
 import { MeldekortStatus } from '@meldekort/common/typer/MeldekortBruker';
-import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { EksternLenke } from '@components/lenke/EksternLenke';
+import { useSpråk } from '@context/språk/useSpråk';
 
 import style from './Forside.module.css';
 

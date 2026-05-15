@@ -1,6 +1,6 @@
 import { teksterNb } from '@tekster/nb';
-import { TeksterRecord, TekstId, TeksterPropsMedLocale } from '@tekster/typer.ts';
-import { teksterEn } from '@tekster/en.ts';
+import { TeksterRecord, TekstId, TeksterPropsMedLocale } from '@tekster/typer';
+import { teksterEn } from '@tekster/en';
 import { baseLocale, TeksterLocale } from '@meldekort/common/locale';
 
 const tekster: Record<TeksterLocale, TeksterRecord> = {

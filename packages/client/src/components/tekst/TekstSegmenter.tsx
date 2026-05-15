@@ -1,8 +1,8 @@
 import { BodyLong, BodyLongProps } from '@navikt/ds-react';
 import React from 'react';
-import { TeksterProps, TekstId } from '@tekster/typer.ts';
+import { TeksterProps, TekstId } from '@tekster/typer';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props<Id extends TekstId> = TeksterProps<Id> & Omit<BodyLongProps, 'children' | 'id'>;
 

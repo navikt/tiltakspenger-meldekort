@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import style from './Steg5_Kvittering.module.css';
 import { Alert, VStack } from '@navikt/ds-react';
-import { InternLenke } from '@components/lenke/InternLenke.tsx';
-import { TekstSegmenter } from '@components/tekst/TekstSegmenter.tsx';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
-import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
+import { InternLenke } from '@components/lenke/InternLenke';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
+import { Tekst } from '@components/tekst/Tekst';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
 import { Meldekort, MeldekortStatus } from '@meldekort/common/typer/MeldekortBruker';
-import useScript from '@components/fyll-ut/steg-5-kvittering/useScript.tsx';
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import useScript from '@components/fyll-ut/steg-5-kvittering/useScript';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type SSRProps = {
     brukersMeldekort: Meldekort;

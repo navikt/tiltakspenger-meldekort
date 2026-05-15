@@ -9,7 +9,7 @@ import { FraværStatusPanel } from '@components/fyll-ut/steg-1-fravær/fravær-m
 import style from './FraværModal.module.css';
 import { MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 export const FraværModal = () => {
     const { valgtMeldekortDag, setValgtMeldekortDag, lagreMeldekortDag } = useMeldekortUtfylling();

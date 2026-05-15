@@ -1,7 +1,7 @@
-import { Tekst } from '@components/tekst/Tekst.tsx';
+import { Tekst } from '@components/tekst/Tekst';
 import { Alert } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
-import { EksternLenke } from '@components/lenke/EksternLenke.tsx';
+import { EksternLenke } from '@components/lenke/EksternLenke';
 import { appConfig } from '@meldekort/common/appConfig';
 
 // TODO Bare mens brukertest pågår, se https://trello.com/c/G6ICjV3j/1399-planlegge-brukertest-av-meldekortet

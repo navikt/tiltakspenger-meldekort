@@ -2,8 +2,8 @@ import { Alert, BodyShort, VStack } from '@navikt/ds-react';
 import {
     KorrigerMeldekortFeil,
     KorrigerMeldekortValideringResultat,
-} from '@components/korrigerMeldekort/validering/korrigerMeldekortValideringUtils.ts';
-import { Tekst } from '@components/tekst/Tekst.tsx';
+} from '@components/korrigerMeldekort/validering/korrigerMeldekortValideringUtils';
+import { Tekst } from '@components/tekst/Tekst';
 
 type Props = {
     resultat: KorrigerMeldekortValideringResultat | null;

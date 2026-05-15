@@ -1,10 +1,10 @@
 import { Route, Switch } from 'wouter';
-import { siteRouteConfigs } from '@routing/siteRouteConfigs.ts';
-import { Feilside } from '@Feilside.tsx';
+import { siteRouteConfigs } from '@routing/siteRouteConfigs';
+import { Feilside } from '@Feilside';
 import { AppContext } from '@meldekort/common/typer/appContext';
-import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider.tsx';
-import { RouteMedLocale } from '@routing/RouteMedLocale.tsx';
-import KorrigeringAvMeldekortRouteWrapper from '@components/korrigerMeldekort/KorrigeringAvMeldekortRouteWrapper.tsx';
+import { MeldekortUtfyllingProvider } from '@context/meldekort-utfylling/MeldekortUtfyllingProvider';
+import { RouteMedLocale } from '@routing/RouteMedLocale';
+import KorrigeringAvMeldekortRouteWrapper from '@components/korrigerMeldekort/KorrigeringAvMeldekortRouteWrapper';
 
 type Props = {
     appContext: AppContext;

@@ -1,8 +1,8 @@
 import { Alert, BodyLong } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { antallDagerValidering } from '@utils/utfyllingValidering.ts';
+import { Tekst } from '@components/tekst/Tekst';
+import { antallDagerValidering } from '@utils/utfyllingValidering';
 import React from 'react';
-import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 
 type Props = {

@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@navikt/ds-react';
 import React, { useState } from 'react';
-import { classNames } from '@utils/classNames.ts';
+import { classNames } from '@utils/classNames';
 
 import style from './FlashingButton.module.css';
 

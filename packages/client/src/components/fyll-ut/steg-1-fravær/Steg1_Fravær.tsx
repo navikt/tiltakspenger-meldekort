@@ -1,19 +1,19 @@
 import React, { useRef, useState } from 'react';
 import style from './Steg1_Fravær.module.css';
 import { Alert, HStack, Radio, RadioGroup } from '@navikt/ds-react';
-import { Kalender } from '@components/kalender/Kalender.tsx';
+import { Kalender } from '@components/kalender/Kalender';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
-import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller.tsx';
-import { FraværHjelp } from '@components/fyll-ut/steg-1-fravær/hjelp/FraværHjelp.tsx';
-import { TekstId } from '@tekster/typer.ts';
-import { FraværModal } from '@components/fyll-ut/steg-1-fravær/fravær-modal/FraværModal.tsx';
-import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper.tsx';
-import { useRouting } from '@routing/useRouting.ts';
+import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller';
+import { FraværHjelp } from '@components/fyll-ut/steg-1-fravær/hjelp/FraværHjelp';
+import { TekstId } from '@tekster/typer';
+import { FraværModal } from '@components/fyll-ut/steg-1-fravær/fravær-modal/FraværModal';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper';
+import { useRouting } from '@routing/useRouting';
 import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
-import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils.ts';
-import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons.tsx';
-import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg.tsx';
+import { dagStatusMedFravær } from '@components/kalender/meldekortDagUtils';
+import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg';
 import { Meldekort, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 
 type SSRProps = {

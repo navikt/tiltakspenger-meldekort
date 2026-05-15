@@ -1,8 +1,8 @@
 import React from 'react';
 import style from './OppsummeringError.module.css';
 import { ErrorSummary } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { TekstId } from '@tekster/typer.ts';
+import { Tekst } from '@components/tekst/Tekst';
+import { TekstId } from '@tekster/typer';
 
 type Props = {
     tekstId: TekstId;

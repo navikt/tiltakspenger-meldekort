@@ -1,7 +1,7 @@
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
-import { TekstId } from '@tekster/typer.ts';
+import { TekstId } from '@tekster/typer';
 import { Alert, VStack } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst.tsx';
+import { Tekst } from '@components/tekst/Tekst';
 import { førstePåskedagPerÅr } from '@meldekort/common/appConfig';
 import dayjs from 'dayjs';
 

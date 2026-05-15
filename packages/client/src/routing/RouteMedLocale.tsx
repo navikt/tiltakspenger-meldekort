@@ -1,8 +1,8 @@
 import { Route } from 'wouter';
 import { addLocaleSuffix } from '@meldekort/common/urls';
-import { RouteComponent } from '@routing/RouteComponent.tsx';
+import { RouteComponent } from '@routing/RouteComponent';
 import { AppContext } from '@meldekort/common/typer/appContext';
-import { SiteRouteConfig } from '@routing/siteRouteConfigs.ts';
+import { SiteRouteConfig } from '@routing/siteRouteConfigs';
 import { locales } from '@meldekort/common/locale';
 
 type Props = {

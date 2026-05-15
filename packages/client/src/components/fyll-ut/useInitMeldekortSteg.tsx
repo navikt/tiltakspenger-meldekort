@@ -1,6 +1,6 @@
 import { MeldekortSteg } from '@meldekort/common/typer/BrukersMeldekortUtfylling';
 import { useEffect } from 'react';
-import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 
 /**

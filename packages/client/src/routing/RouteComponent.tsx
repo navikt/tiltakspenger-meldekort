@@ -1,9 +1,9 @@
 import React from 'react';
-import { SiteRouteConfig } from '@routing/siteRouteConfigs.ts';
+import { SiteRouteConfig } from '@routing/siteRouteConfigs';
 import { Alert, Loader } from '@navikt/ds-react';
-import { useFetchPageData } from '@context/useFetchPageData.ts';
+import { useFetchPageData } from '@context/useFetchPageData';
 import { AppContext } from '@meldekort/common/typer/appContext';
-import { useRouting } from '@routing/useRouting.ts';
+import { useRouting } from '@routing/useRouting';
 
 type Props = {
     route: SiteRouteConfig;

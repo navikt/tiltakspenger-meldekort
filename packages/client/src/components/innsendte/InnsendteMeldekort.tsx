@@ -1,8 +1,8 @@
 import { Accordion, BodyLong, Heading, Link } from '@navikt/ds-react';
-import { InternLenke } from '@components/lenke/InternLenke.tsx';
+import { InternLenke } from '@components/lenke/InternLenke';
 import { formatterDato } from '@utils/datetime';
-import { PageHeader } from '@components/page-header/PageHeader.tsx';
-import { Tekst } from '@components/tekst/Tekst.tsx';
+import { PageHeader } from '@components/page-header/PageHeader';
+import { Tekst } from '@components/tekst/Tekst';
 import {
     InnsendteMeldekortProps,
     MeldekortMedSisteMeldeperiode,
@@ -11,11 +11,11 @@ import { useEffect } from 'react';
 import { getPath, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
 import { appConfig } from '@meldekort/common/appConfig';
 import { ArenaMeldekortStatus } from '@meldekort/common/typer/meldekort-bruker';
-import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort.tsx';
+import { SisteInnsendteMeldekort } from '@components/innsendte/siste-innsendte/SisteInnsendteMeldekort';
 
 import style from './InnsendteMeldekort.module.css';
 
-import { useSpråk } from '@context/språk/useSpråk.ts';
+import { useSpråk } from '@context/språk/useSpråk';
 
 type Props = InnsendteMeldekortProps;
 

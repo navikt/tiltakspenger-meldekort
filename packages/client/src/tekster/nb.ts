@@ -1,5 +1,5 @@
 import { Periode } from '@meldekort/common/typer/periode';
-import { TekstResolver } from '@tekster/typer.ts';
+import { TekstResolver } from '@tekster/typer';
 import { formatterDato, getUkenummer } from '@utils/datetime';
 
 export const teksterNb = {

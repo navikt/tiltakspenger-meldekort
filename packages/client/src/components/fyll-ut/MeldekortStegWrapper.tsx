@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { Heading, Stepper } from '@navikt/ds-react';
-import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling.ts';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { STEG_REKKEFOLGE } from '@meldekort/common/typer/BrukersMeldekortUtfylling';
 import { getPathForMeldekortSteg } from '@meldekort/common/siteRoutePaths';
-import { useRouting } from '@routing/useRouting.ts';
-import { PageHeader } from '@components/page-header/PageHeader.tsx';
-import { Undertekst } from '@components/page-header/Undertekst.tsx';
-import { meldekortStegTilTekstId } from '@components/kalender/meldekortDagUtils.ts';
-import { useSpråk } from '@context/språk/useSpråk.ts';
-import { TidsstyrteMeldekortVarsler } from '@components/fyll-ut/tidsspesifikke-varsler/TidsstyrteMeldekortVarsler.tsx';
+import { useRouting } from '@routing/useRouting';
+import { PageHeader } from '@components/page-header/PageHeader';
+import { Undertekst } from '@components/page-header/Undertekst';
+import { meldekortStegTilTekstId } from '@components/kalender/meldekortDagUtils';
+import { useSpråk } from '@context/språk/useSpråk';
+import { TidsstyrteMeldekortVarsler } from '@components/fyll-ut/tidsspesifikke-varsler/TidsstyrteMeldekortVarsler';
 
 import style from './MeldekortStegWrapper.module.css';
 

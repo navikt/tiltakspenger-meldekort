@@ -1,5 +1,5 @@
 import { Alert, Link } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst.tsx';
+import { Tekst } from '@components/tekst/Tekst';
 import {
     ArenaMeldekortStatus,
     MeldekortBrukerUtenSak,

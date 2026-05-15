@@ -1,6 +1,6 @@
-import { KalenderUke } from '@components/kalender/uke/KalenderUke.tsx';
+import { KalenderUke } from '@components/kalender/uke/KalenderUke';
 import { MeldekortSteg } from '@meldekort/common/typer/BrukersMeldekortUtfylling';
-import { classNames } from '@utils/classNames.ts';
+import { classNames } from '@utils/classNames';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 
 import style from './Kalender.module.css';

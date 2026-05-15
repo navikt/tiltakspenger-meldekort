@@ -1,6 +1,6 @@
 import { Button } from '@navikt/ds-react';
-import { Tekst } from '@components/tekst/Tekst.tsx';
-import { FlashingButton } from '@components/flashing-button/FlashingButton.tsx';
+import { Tekst } from '@components/tekst/Tekst';
+import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import React from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@navikt/aksel-icons';
 import { TekstId } from '@tekster/typer';
