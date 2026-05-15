@@ -32,6 +32,7 @@
         "swr": "2.4.1",
         "wouter": "3.9.0"
     },
+    "comments": "Husk å holde imaget i GHA workflow i sync med playwright-versjonen i devDependencies",
     "devDependencies": {
         "@axe-core/playwright": "4.11.3",
         "@eslint/js": "9.39.4",
