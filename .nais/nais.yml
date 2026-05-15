@@ -9,9 +9,17 @@ metadata:
 
 spec:
   ingresses:
-    - {{ ingress }}
+    - {{ ingressOrigin }}{{ ingressPath }}
   image: {{ image }}
   port: 3050
+  liveness:
+    path: {{ ingressPath }}/internal/isAlive
+    initialDelay: 15
+  readiness:
+    path: {{ ingressPath }}/internal/isReady
+    initialDelay: 15
+    periodSeconds: 5
+    failureThreshold: 1
   env:
   {{#each env}}
     - name: {{name}}

@@ -1,0 +1,121 @@
+import { useRef, useState } from 'react';
+import style from './Steg2_Lønn.module.css';
+import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
+import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper';
+import { Alert, HStack, Radio, RadioGroup } from '@navikt/ds-react';
+import { Tekst } from '@components/tekst/Tekst';
+import { TekstId } from '@tekster/typer';
+import { Kalender } from '@components/kalender/Kalender';
+import { DagerUtfyltTeller } from '@components/fyll-ut/dager-utfylt-teller/DagerUtfyltTeller';
+import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
+import { useRouting } from '@routing/useRouting';
+import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons';
+import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg';
+import { Meldekort, MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
+
+type SSRProps = {
+    brukersMeldekort: Meldekort;
+    kanFylleUtHelg: boolean;
+};
+
+export const Steg2_Lønn = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
+    const { navigate } = useRouting();
+    const {
+        meldekortUtfylling,
+        setMeldekortUtfylling,
+        setMeldekortSteg,
+        harMottattLønn,
+        setHarMottattLønn,
+    } = useMeldekortUtfylling();
+    const [feil, setFeil] = useState<TekstId | null>(null);
+    const varselRef = useRef<HTMLDivElement>(null);
+
+    useInitMeldekortSteg(brukersMeldekort, 'lønn');
+
+    if (!meldekortUtfylling) return;
+
+    return (
+        <MeldekortStegWrapper>
+            <HStack gap="space-16">
+                <div>
+                    <Tekst id={'lønnIngress'} />
+                </div>
+                <RadioGroup
+                    legend={<Tekst id={'lønnHarMottattLønnSpørsmål'} />}
+                    value={harMottattLønn}
+                    error={feil && <Tekst id={feil} />}
+                    onChange={(harMottattLønnSpørsmålSvar: boolean) => {
+                        setFeil(null);
+                        setHarMottattLønn(harMottattLønnSpørsmålSvar);
+                        if (harMottattLønnSpørsmålSvar === false) {
+                            setMeldekortUtfylling(fjernLønn(meldekortUtfylling));
+                        }
+                    }}
+                    className={style.lønnValg}
+                >
+                    <Radio value={false}>
+                        <Tekst id={'lønnHarMottattLønnSvarNei'} />
+                    </Radio>
+                    <Radio value={true}>
+                        <Tekst id={'lønnHarMottattLønnSvarJa'} />
+                    </Radio>
+                </RadioGroup>
+            </HStack>
+            {harMottattLønn && (
+                <>
+                    <Kalender
+                        meldekort={meldekortUtfylling}
+                        steg={'lønn'}
+                        className={style.kalender}
+                        kanFylleUtHelg={kanFylleUtHelg}
+                    />
+                    <DagerUtfyltTeller
+                        brukersMeldekort={brukersMeldekort}
+                        meldekortUtfylling={meldekortUtfylling}
+                        className={style.teller}
+                        ref={varselRef}
+                    />
+                </>
+            )}
+            <div className={style.knapperOgVarsel}>
+                {feil && (
+                    <Alert variant={'error'} className={style.varsel}>
+                        <Tekst id={feil} />
+                    </Alert>
+                )}
+                <MeldekortStegButtons
+                    onNesteClick={() => {
+                        if (harMottattLønn === null) {
+                            setFeil('lønnSpørsmålIkkeValgt');
+                            return false;
+                        }
+
+                        setFeil(null);
+                        setMeldekortSteg('deltatt');
+                        navigate(getPathForMeldekortSteg('deltatt', meldekortUtfylling.id));
+                        return true;
+                    }}
+                    onForrigeClick={() => {
+                        setMeldekortSteg('fravær');
+                        navigate(getPathForMeldekortSteg('fravær', meldekortUtfylling.id));
+                    }}
+                    onAvbrytClick={() => {
+                        setMeldekortSteg('fravær');
+                        navigate(getPath(siteRoutePaths.forside));
+                    }}
+                />
+            </div>
+        </MeldekortStegWrapper>
+    );
+};
+
+const fjernLønn = (meldekortUtfylling: Meldekort) => ({
+    ...meldekortUtfylling,
+    dager: meldekortUtfylling.dager.map((dag) => ({
+        ...dag,
+        status:
+            dag.status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET
+                ? MeldekortDagStatus.IKKE_BESVART
+                : dag.status,
+    })),
+});

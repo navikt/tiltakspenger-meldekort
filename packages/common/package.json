@@ -1,0 +1,11 @@
+{
+    "name": "@meldekort/common",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        "./*": "./src/*.ts",
+        "./typer/*": "./src/typer/*.ts"
+    }
+}
+

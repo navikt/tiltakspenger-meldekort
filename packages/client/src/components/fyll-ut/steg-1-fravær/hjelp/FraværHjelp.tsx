@@ -1,0 +1,78 @@
+import { Heading, ReadMore } from '@navikt/ds-react';
+import { Tekst } from '@components/tekst/Tekst';
+import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
+
+import style from './FraværHjelp.module.css';
+
+import { useSpråk } from '@context/språk/useSpråk';
+
+export const FraværHjelp = () => {
+    const { getTeksterForSpråk } = useSpråk();
+
+    return (
+        <>
+            <Heading size={'medium'} level={'2'} className={style.header}>
+                <Tekst id={'fraværHjelpTittel'} />
+            </Heading>
+            <TekstSegmenter id={'fraværHjelpIngress'} />
+            <ReadMore
+                header={getTeksterForSpråk({ id: 'fraværHjelpLesMerSyk' })}
+                className={style.lesMer}
+            >
+                <ul>
+                    {getTeksterForSpråk({ id: 'fraværHjelpLesMerSykListe' }).map((tekst) => (
+                        <li key={tekst}>{tekst}</li>
+                    ))}
+                </ul>
+            </ReadMore>
+            <ReadMore
+                header={getTeksterForSpråk({ id: 'fraværHjelpLesMerSyktBarn' })}
+                className={style.lesMer}
+            >
+                <ul>
+                    {getTeksterForSpråk({ id: 'fraværHjelpLesMerSyktBarnListe' }).map((tekst) => (
+                        <li key={tekst}>{tekst}</li>
+                    ))}
+                </ul>
+            </ReadMore>
+            <ReadMore
+                header={getTeksterForSpråk({
+                    id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervju',
+                })}
+                className={style.lesMer}
+            >
+                <ul>
+                    {getTeksterForSpråk({
+                        id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeStart',
+                    }).map((tekst) => (
+                        <li key={tekst}>{tekst}</li>
+                    ))}
+                    <ul>
+                        {getTeksterForSpråk({
+                            id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeÅrsaker',
+                        }).map((tekst) => (
+                            <li key={tekst}>{tekst}</li>
+                        ))}
+                    </ul>
+                    {getTeksterForSpråk({
+                        id: 'fraværHjelpLesMerSterkeVelferdsgrunnerEllerJobbintervjuListeSlutt',
+                    }).map((tekst) => (
+                        <li key={tekst}>{tekst}</li>
+                    ))}
+                </ul>
+            </ReadMore>
+            <ReadMore
+                header={getTeksterForSpråk({ id: 'fraværHjelpLesMerFraværAnnet' })}
+                className={style.lesMer}
+            >
+                <ul>
+                    {getTeksterForSpråk({
+                        id: 'fraværHjelpLesMerFraværAnnetListe',
+                    }).map((tekst) => (
+                        <li key={tekst}>{tekst}</li>
+                    ))}
+                </ul>
+            </ReadMore>
+        </>
+    );
+};

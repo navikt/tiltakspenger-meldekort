@@ -1,4 +1,5 @@
-ingress: https://www.nav.no/tiltakspenger/meldekort
+ingressPath: /tiltakspenger/meldekort
+ingressOrigin: https://www.nav.no
 env:
   - name: MELDEKORT_API_URL
     value: http://tiltakspenger-meldekort-api

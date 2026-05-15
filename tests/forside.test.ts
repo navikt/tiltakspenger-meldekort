@@ -1,5 +1,5 @@
 import test, { expect } from '@playwright/test';
-import { getTekst } from '../src/tekster/tekster';
+import { getTekst } from '../packages/client/src/tekster/tekster';
 import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
 
 test.beforeEach(async ({ page }) => {

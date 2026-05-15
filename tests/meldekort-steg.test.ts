@@ -1,12 +1,12 @@
 import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
-import { getTekst } from '../src/tekster/tekster';
+import { getTekst } from '../packages/client/src/tekster/tekster';
 import test, { expect, Page } from '@playwright/test';
-import { MeldekortDagStatus, MeldekortStatus } from '../commonSrc/typer/MeldekortBruker';
-import { BrukersMeldekortUtfylling } from '../commonSrc/typer/BrukersMeldekortUtfylling';
+import { MeldekortDagStatus, MeldekortStatus } from '../packages/common/src/typer/MeldekortBruker';
 import {
     nyMeldekortDagerForPeriode,
     nyUtfylltMeldekort,
 } from './test-data-generators/MeldekortTestData';
+import { MeldekortUtfyltDTO } from '../packages/common/src/typer/BrukersMeldekortUtfylling';
 
 test.describe('Meldekort steg', () => {
     // TODO: disse testene er avhengig av mock-dataene fra demo-modusen til appen
@@ -48,10 +48,6 @@ test.describe('Meldekort steg', () => {
     test('Kan fylle ut fravær og gå til send-inn', async ({ page }) => {
         const sendInnKnapp = page.getByRole('button', {
             name: getTekst({ id: 'sendInn', locale: 'nb' }),
-        });
-        const nesteKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'neste', locale: 'nb' }),
-            exact: true,
         });
 
         await fyllUtFraværSteg(page, 2);
@@ -412,7 +408,7 @@ const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
     await bekreftCheckbox.click();
     await expect(bekreftVarsel).not.toBeVisible();
 
-    const sendInnPromise: Promise<BrukersMeldekortUtfylling> = page
+    const sendInnPromise: Promise<MeldekortUtfyltDTO> = page
         .waitForRequest((request) => request.url().endsWith('/api/send-inn'))
         .then((request) => request.postDataJSON());
 
