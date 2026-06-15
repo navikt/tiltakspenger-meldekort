@@ -8,7 +8,7 @@ import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
 import { meldekortStegTilTekstId } from '@components/kalender/meldekortDagUtils';
 import { useSpråk } from '@context/språk/useSpråk';
-import { TidsstyrteMeldekortVarsler } from '@components/fyll-ut/tidsspesifikke-varsler/TidsstyrteMeldekortVarsler';
+import { TidsstyrteMeldekortVarsler } from '@components/fyll-ut/varsler/TidsstyrteMeldekortVarsler';
 
 import style from './MeldekortStegWrapper.module.css';
 

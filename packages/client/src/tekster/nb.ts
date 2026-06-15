@@ -251,6 +251,18 @@ export const teksterNb = {
         'Dersom tiltaket ditt er stengt på grunn av juleferie skal du melde «deltok» på dagene du skulle vært i tiltak. 🎄🎅🤶',
     påskeferieInfo:
         'Hvis tiltaket ditt er stengt på grunn av påskeferie, skal du melde «deltok» på dagene du skulle vært på tiltak. 🐣🐇🪺',
+    sommerferieInfoStart:
+        'Du må sende meldekort også i sommerferien. Reglene for tiltakspenger i sommerferien varierer etter hvilket tiltak man deltar på. ' +
+        'Du har ikke rett til tiltakspenger hvis du har ferie, og du skal oppgi det som annet fravær. ' +
+        'Opplæringstiltak gir som hovedregel ingen tiltakspenger i sommerferien, og du må krysse for annet fravær med mindre tiltaket har vart over ett skoleår og ',
+    sommerferieInfoListe: [
+        'du enten ikke kan arbeide av helsemessige årsaker eller',
+        'ikke har krav på feriepenger',
+    ],
+    sommerferieInfoLesMer:
+        'Andre tiltak kan gi rett til tiltakspenger hvis arrangøren har fellesferie, og du må da krysse av for deltatt. Les mer på ',
+    sommerferieInfoLenkeTekst: 'Ferie og feriepenger',
+    sommerferieInfoLenkeUrl: 'https://www.nav.no/feriepenger#tiltakspenger',
 } as const satisfies TeksterBaseRecord;
 
 type TeksterBaseRecord = Record<string, string | string[] | TekstResolver>;

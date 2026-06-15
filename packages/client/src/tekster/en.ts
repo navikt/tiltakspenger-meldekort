@@ -256,4 +256,17 @@ export const teksterEn = {
         'If your programme is closed due to the Christmas holidays, you must report “participated” for the days you were scheduled to attend the programme. 🎄🎅🤶',
     påskeferieInfo:
         'If your employment scheme is closed due to the Easter holidays, you must report “participated” for the days you were scheduled to attend the scheme. 🐣🐇🪺',
+    sommerferieInfoStart:
+        'You must submit an employment status form even during the summer holidays. ' +
+        'The rules for employment scheme benefits during the summer holidays depend on which scheme you are participating in. ' +
+        'You are not entitled to employment scheme benefits if you are on holiday, and you must report this as other absence. ' +
+        'As a general rule, training schemes do not give the right to employment scheme benefits during the summer holidays. You must tick other absence, unless the scheme has lasted for more than one school year and ',
+    sommerferieInfoListe: [
+        'you are unable to work for health reasons, or',
+        'you are not entitled to holiday pay',
+    ],
+    sommerferieInfoLesMer:
+        'Other schemes may give the right to employment scheme benefits if the organiser has a joint holiday period. In that case, you must tick participated. Read more at ',
+    sommerferieInfoLenkeTekst: 'Holiday and holiday pay',
+    sommerferieInfoLenkeUrl: 'https://www.nav.no/feriepenger/en#employment-scheme-benefit',
 } as const satisfies TeksterRecord;
