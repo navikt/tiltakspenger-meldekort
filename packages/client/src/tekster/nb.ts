@@ -167,6 +167,30 @@ export const teksterNb = {
         'Dersom problemet vedvarer, kontakt veilederen din.',
     ],
 
+    // Spesifikke feilmeldinger ved innsending av meldekort
+    innsendingFeiletAlleredeMottatt: [
+        'Dette meldekortet er allerede sendt inn.',
+        'Du finner meldekortene du har sendt inn under «Innsendte meldekort».',
+    ],
+    innsendingFeiletMeldekortUtdatert: [
+        'Dette meldekortet er ikke lenger gyldig, fordi det har kommet en nyere versjon.',
+        'Gå tilbake til oversikten og send inn det nyeste meldekortet.',
+    ],
+    innsendingFeiletIkkeKlart: [
+        'Meldekortet er ikke klart til innsending ennå.',
+        'Vent litt og prøv på nytt. Hvis problemet fortsetter, kontakt veilederen din.',
+    ],
+    innsendingFeiletFantIkkeMeldekort: [
+        'Vi fant ikke meldekortet du prøver å sende inn.',
+        'Gå tilbake til oversikten og prøv på nytt. Hvis problemet fortsetter, kontakt veilederen din.',
+    ],
+    innsendingFeiletTekniskFeil: [
+        'Det oppstod en teknisk feil, og meldekortet ble ikke sendt inn.',
+        'Prøv på nytt om litt. Hvis problemet fortsetter, kontakt veilederen din.',
+    ],
+    tilbakeTilOversikten: 'Gå til oversikten',
+    tilInnsendteMeldekort: 'Gå til innsendte meldekort',
+
     kvitteringTittel: 'Oppsummering',
     kvitteringTilbake: 'Tilbake til startsiden for meldekort',
     kvittering: [

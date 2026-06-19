@@ -10,6 +10,7 @@ import { useRouting } from '@routing/useRouting';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper';
 
 import { getPath, getPathForMeldekortSteg, siteRoutePaths } from '@meldekort/common/siteRoutePaths';
+import { InternLenke } from '@components/lenke/InternLenke';
 import { MeldekortStegButtons } from '@components/fyll-ut/MeldekortStegButtons';
 import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { antallDagerValidering } from '@utils/utfyllingValidering';
@@ -18,7 +19,7 @@ import { OppsummeringError } from '@components/fyll-ut/steg-4-oppsummering/Oppsu
 import { TekstId } from '@tekster/typer';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
-import { useApiClient } from '@utils/apiClient';
+import { ErrorCodes, useApiClient } from '@utils/apiClient';
 import { useSpråk } from '@context/språk/useSpråk';
 import { MeldekortUtfyltDTO } from '@meldekort/common/typer/BrukersMeldekortUtfylling';
 
@@ -31,6 +32,51 @@ type ErrorSummaryItem = {
     tekstId: TekstId;
     onClick?: () => void;
     href?: string;
+};
+
+/**
+ * Oversetter feilkoden fra backend (se SendInnMeldekortRoute i tiltakspenger-meldekort-api)
+ * til en brukervennlig tekst. Ukjente/uventede koder faller tilbake til en generell feilmelding.
+ */
+const innsendingFeilTekstId = (kode?: string): TekstId => {
+    switch (kode) {
+        case ErrorCodes.meldekort_allerede_mottatt:
+            return 'innsendingFeiletAlleredeMottatt';
+        case ErrorCodes.meldekort_deaktivert:
+        case ErrorCodes.meldekortets_meldeperiode_er_erstattet:
+            return 'innsendingFeiletMeldekortUtdatert';
+        case ErrorCodes.meldekort_ikke_klart_til_innsending:
+            return 'innsendingFeiletIkkeKlart';
+        case ErrorCodes.fant_ikke_meldekort:
+            return 'innsendingFeiletFantIkkeMeldekort';
+        case ErrorCodes.fant_ikke_meldeperiode:
+        case ErrorCodes.ugyldig_meldekort_innsending:
+        case ErrorCodes.uventet_feil_ved_lagring:
+            return 'innsendingFeiletTekniskFeil';
+        default:
+            return 'oppsummeringInnsendingFeilet';
+    }
+};
+
+/**
+ * Lenke som hjelper brukeren videre for feil der det finnes en naturlig neste handling.
+ * Øvrige feil viser ingen lenke (returnerer null).
+ */
+type InnsendingFeilLenke = { path: string; tekstId: TekstId };
+
+const innsendingFeilLenke = (kode?: string): InnsendingFeilLenke | null => {
+    switch (kode) {
+        // Meldekortet er utdatert eller borte → tilbake til oversikten for å sende inn nyeste meldekort
+        case ErrorCodes.meldekort_deaktivert:
+        case ErrorCodes.meldekortets_meldeperiode_er_erstattet:
+        case ErrorCodes.fant_ikke_meldekort:
+            return { path: getPath(siteRoutePaths.forside), tekstId: 'tilbakeTilOversikten' };
+        // Allerede sendt inn → til siden for innsendte meldekort
+        case ErrorCodes.meldekort_allerede_mottatt:
+            return { path: getPath(siteRoutePaths.innsendte), tekstId: 'tilInnsendteMeldekort' };
+        default:
+            return null;
+    }
 };
 
 export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
@@ -213,9 +259,21 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                     }
                 />
             </VStack>
-            {apiClient.apiStatus === 'error' && (
+            {apiClient.apiStatus === 'error' && apiClient.response?.status === 'error' && (
                 <Alert variant="error" className={style.varsel} ref={varselRef} tabIndex={-1}>
-                    <TekstSegmenter id="oppsummeringInnsendingFeilet" />
+                    <TekstSegmenter
+                        id={innsendingFeilTekstId(apiClient.response.error.errorBody.kode)}
+                    />
+                    {(() => {
+                        const lenke = innsendingFeilLenke(apiClient.response.error.errorBody.kode);
+                        return (
+                            lenke && (
+                                <InternLenke path={lenke.path} locale={valgtSpråk}>
+                                    <Tekst id={lenke.tekstId} />
+                                </InternLenke>
+                            )
+                        );
+                    })()}
                 </Alert>
             )}
             {visValideringsfeil && errors.length > 0 && (

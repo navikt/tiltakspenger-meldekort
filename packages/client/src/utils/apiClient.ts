@@ -12,6 +12,16 @@ export interface ErrorBody {
 
 export enum ErrorCodes {
     meldekort_allerede_korrigert_og_ikke_lenger_gyldig = 'meldekort_allerede_korrigert_og_ikke_lenger_gyldig',
+
+    // Feilkoder ved innsending av brukers meldekort (se SendInnMeldekortRoute i tiltakspenger-meldekort-api)
+    ugyldig_meldekort_innsending = 'ugyldig_meldekort_innsending',
+    fant_ikke_meldekort = 'fant_ikke_meldekort',
+    fant_ikke_meldeperiode = 'fant_ikke_meldeperiode',
+    meldekort_allerede_mottatt = 'meldekort_allerede_mottatt',
+    meldekort_deaktivert = 'meldekort_deaktivert',
+    meldekortets_meldeperiode_er_erstattet = 'meldekortets_meldeperiode_er_erstattet',
+    meldekort_ikke_klart_til_innsending = 'meldekort_ikke_klart_til_innsending',
+    uventet_feil_ved_lagring = 'uventet_feil_ved_lagring',
 }
 
 type Method = 'POST' | 'PATCH';
