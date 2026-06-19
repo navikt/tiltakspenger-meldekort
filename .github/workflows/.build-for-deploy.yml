@@ -42,6 +42,8 @@ jobs:
           ASSETS_URL: https://cdn.nav.no/tpts/tp-meldekort
       - name: Create production node_modules for server
         run: pnpm deploy --filter @meldekort/server --prod deploy
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Upload static assets to Nav CDN
         uses: nais/deploy/actions/cdn-upload/v2@master
         with:
