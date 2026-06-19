@@ -46,6 +46,7 @@ jobs:
         # the checkout step chowns $HOME to a non-root user, but the container
         # runs as root, so we point HOME at /root which root owns.
         HOME: /root
+        NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
     - name: Notify Slack in case of build failure
       if: failure() && github.ref == 'refs/heads/main'
       run: |
