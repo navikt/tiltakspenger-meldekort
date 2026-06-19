@@ -8,7 +8,10 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 //Hva er behovet for å ha .env.tests her? Denne gjør at vi må kjøre appen lokalt for at vi skal kunne kjøre på aktive endringer vi har gjort i koden.
-dotenv.config({ path: path.resolve(process.cwd(), '.env.tests') });
+// override: true slik at .env.tests (bl.a. NODE_ENV=production) vinner over eventuelle
+// allerede satte miljøvariabler i CI (Playwright-imaget setter NODE_ENV=development).
+// Uten dette kjører serveren i dev-modus og forsøker å importere vite, som er fjernet av `pnpm deploy --prod`.
+dotenv.config({ path: path.resolve(process.cwd(), '.env.tests'), override: true });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
