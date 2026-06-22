@@ -144,7 +144,6 @@ export const teksterNb = {
         'Du har vært borte hele eller deler av tiltaksdagen, og fraværet er ikke godkjent av Nav. Dette gir ikke rett til tiltakspenger.',
     lønnTittel: 'Lønn',
     lønnHjelpLesMerTittel: 'Når skal du registrere lønn?',
-    lønnInfoUndertittelLønn: 'Lønn',
     lønnIngress:
         'Hvis du får lønn (ikke tiltakspenger) som en del av tiltaket ditt, svarer du “ja”. Deretter oppgir du hvilke dager det gjelder.',
     lønnHarMottattLønnSpørsmål: 'Mottar du lønn (ikke tiltakspenger) som en del av tiltaket?',

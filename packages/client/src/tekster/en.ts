@@ -15,7 +15,7 @@ export const teksterEn = {
 
     statusIkkeBesvart: 'No report',
     statusDeltatt: 'Participated',
-    statusDeltattMedLønn: 'Received pay',
+    statusDeltattMedLønn: 'Received paid wage',
     statusSyk: 'Sick',
     statusSyktBarn: 'Sick child or sick child carer',
     statusSterkeVelferdsgrunnerEllerJobbintervju: 'Strong welfare reasons or job interview',
@@ -28,13 +28,13 @@ export const teksterEn = {
 
     forMangeDagerEnkel: 'You have selected too many days',
     forFaDagerEnkel: 'You have selected too few days',
-    ingenDagerFyltUt: 'You must select at least one day with absence, pay or participation.',
+    ingenDagerFyltUt: 'You must select at least one day with absence, paid wage or participation.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} day${antall === 1 ? '' : 's'} reported.`,
     forMangeDagerBesvart: ({ maks }: { maks: number }) =>
-        `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected only the days you have participated, been absent or earned pay.`,
+        `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected only the days you have participated, been absent or earned paid wage.`,
     forFaDagerBesvart: ({ maks }: { maks: number }) =>
-        `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected all of the days you have participated, been absent or earned pay.`,
+        `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected all of the days you have participated, been absent or earned paid wage.`,
     ingenDagerMedFravær:
         'You must select at least one day with absence, or select that you did not have any absence.',
 
@@ -144,18 +144,17 @@ export const teksterEn = {
         'You were absent from activities, and Nav has approved this absence.',
     fraværModalIkkeGodkjentIngress:
         'You were absent from activities all day or part of the day, and this absence has not been approved by Nav. You are not entitled to employment scheme benefits for this day.',
-    lønnTittel: 'Pay',
-    lønnHjelpLesMerTittel: 'When do I select "received pay"?',
-    lønnInfoUndertittelLønn: 'Pay',
+    lønnTittel: 'Payment',
+    lønnHjelpLesMerTittel: 'When do I select "received paid wage"?',
     lønnIngress:
-        'If you are receiving pay (not employment scheme benefits) as part of your participation, answer “yes”. Then specify which days you are receiving pay for.',
+        'If you are receiving paid wage (not employment scheme benefits) as part of your participation, answer “yes”. Then specify which days you are receiving paid wage for.',
     lønnHarMottattLønnSpørsmål:
-        'Are you receiving pay (not employment scheme benefits) as part of your participation?',
-    lønnHarMottattLønnSvarJa: 'Yes, I am receiving pay as part of my participation',
+        'Are you receiving paid wage (not employment scheme benefits) as part of your participation?',
+    lønnHarMottattLønnSvarJa: 'Yes, I am receiving paid wage as part of my participation',
     lønnHarMottattLønnSvarNei: 'No, I am only receiving employment scheme benefits',
-    lønnSpørsmålIkkeValgt: 'Select an option for pay to continue.',
-    lønnUkeHjelp: 'Please select the days you are receiving pay for',
-    lønnDagPrefix: 'Receiving pay: ',
+    lønnSpørsmålIkkeValgt: 'Select an option for paid wage to continue.',
+    lønnUkeHjelp: 'Please select the days you are receiving paid wage for',
+    lønnDagPrefix: 'Receiving paid wage: ',
     oppsummeringTittel: 'Summary',
     oppsummeringIngress:
         'Below is a summary of the information you reported on your employment status form this period. Please make sure it is correct before you submit the form. You can go back and correct any incorrect information.',
@@ -165,7 +164,7 @@ export const teksterEn = {
     oppsummeringIngenDagerMedFravær:
         'You have answered yes to the question about whether you have been sick or have been absent. You must provide a reason for absence for at least one day or change your answer to "No".',
     oppsummeringIngenDagerMedLønn:
-        'You have answered yes to the question about whether you have received pay, but not selected any days with pay. You must select at least one day with pay or change your answer to "No".',
+        'You have answered yes to the question about whether you have received paid wage, but not selected any days with paid wage. You must select at least one day with paid wage or change your answer to "No".',
     oppsummeringInnsendingFeilet: [
         'Something went wrong when submitting the employment status form. You can try again.',
         'If the problem continues, please contact your counsellor.',
@@ -218,9 +217,9 @@ export const teksterEn = {
         'If you received employment scheme benefits for periods earlier than the ones shown here, you can find those employment status forms in ',
     alleHarArenaMeldekort: 'Employment status forms for previous periods can be found in ',
     alleArenaLenke: 'the previous (old) solution',
-    korrigeringLønnHeader: 'When do I select "received pay"?',
+    korrigeringLønnHeader: 'When do I select "received paid wage"?',
     korrigeringLønnBeskrivelse:
-        'If you receive pay (not employment scheme benefits) as part of your programme, choose "Received pay".',
+        'If you receive paid wage (not employment scheme benefits) as part of your programme, choose "Received paid wage".',
     korrigeringSykdomHeader: 'When do I select “sick”?',
     korrigeringFraværHeader: 'When do I select absence?',
     korrigeringTittel: 'Edit employment status form ',
@@ -263,10 +262,10 @@ export const teksterEn = {
         'As a general rule, training schemes do not give the right to employment scheme benefits during the summer holidays. You must tick other absence, unless the scheme has lasted for more than one school year and ',
     sommerferieInfoListe: [
         'you are unable to work for health reasons, or',
-        'you are not entitled to holiday pay',
+        'you are not entitled to holiday paid wage',
     ],
     sommerferieInfoLesMer:
         'Other schemes may give the right to employment scheme benefits if the organiser has a joint holiday period. In that case, you must tick participated. Read more at ',
-    sommerferieInfoLenkeTekst: 'Holiday and holiday pay',
+    sommerferieInfoLenkeTekst: 'Holiday and holiday paid wage',
     sommerferieInfoLenkeUrl: 'https://www.nav.no/feriepenger/en#employment-scheme-benefit',
 } as const satisfies TeksterRecord;
