@@ -14,7 +14,7 @@ export const getTemplateWithDecorator = async (språk: DecoratorLocale) => {
             ? path.resolve(process.cwd(), '..', 'client', 'index.html')
             : path.resolve(process.cwd(), 'dist', 'client', 'index.html');
 
-    return injectDecoratorServerSide({
+    const html = await injectDecoratorServerSide({
         ...envProps,
         filePath: templatePath,
         params: {
@@ -26,6 +26,12 @@ export const getTemplateWithDecorator = async (språk: DecoratorLocale) => {
             })),
         },
     });
+
+    /**
+     * nav dekoratøren cdn returnerer assets med </link> avslutningstagger, men <link> er et void element — parse5 kaster en exception i loggen.
+     * En quick fix er å replace denne taggen med en tom string intill videre
+     */
+    return html.replace(/<\/link>/gi, '');
 };
 
 export const processHtmlTemplate = (
