@@ -1,5 +1,5 @@
 import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
-import { getTekst } from '../packages/client/src/tekster/tekster';
+import { getTekst, getTekster } from '../packages/client/src/tekster/tekster';
 import test, { expect, Page } from '@playwright/test';
 import { MeldekortDagStatus, MeldekortStatus } from '../packages/common/src/typer/MeldekortBruker';
 import {
@@ -7,6 +7,7 @@ import {
     nyUtfylltMeldekort,
 } from './test-data-generators/MeldekortTestData';
 import { MeldekortUtfyltDTO } from '../packages/common/src/typer/BrukersMeldekortUtfylling';
+import { ErrorCodes } from '../packages/client/src/utils/apiClient';
 
 test.describe('Meldekort steg', () => {
     // TODO: disse testene er avhengig av mock-dataene fra demo-modusen til appen
@@ -436,3 +437,107 @@ const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
     expect(dagerMedLønn).toBe(antall.antallDagerMedLønn);
     expect(dagerIkkeBesvart).toBe(antall.antallDagerMedIkkeBesvart);
 };
+
+test.describe('Send inn - feilmeldinger ved innsending', () => {
+    test.beforeEach(async ({ page }) => {
+        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
+        await klikkCookieBanner(page);
+    });
+
+    // Mocker /api/send-inn til å feile med en gitt backend-feilkode (errorBody.kode)
+    const mockSendInnFeil = async (page: Page, kode: ErrorCodes, status = 409) => {
+        await page.route('*/**/api/send-inn', async (route) => {
+            await route.fulfill({
+                status,
+                body: JSON.stringify({
+                    kode,
+                    // Backend-meldingen skal IKKE vises til bruker - vi viser vår egen lokaliserte tekst
+                    melding: 'Intern backend-melding som ikke skal vises',
+                }),
+            });
+        });
+    };
+
+    const fyllUtOgSendInn = async (page: Page) => {
+        await fyllUtFraværSteg(page, 0);
+        await fyllUtLønnSteg(page, 0);
+        await fyllUtDeltattSteg(page, 10);
+
+        await expect(page).toHaveURL(/send-inn$/);
+        await page
+            .getByRole('checkbox', {
+                name: getTekst({ id: 'oppsummeringBekrefter', locale: 'nb' }),
+            })
+            .click();
+        await page.getByRole('button', { name: getTekst({ id: 'sendInn', locale: 'nb' }) }).click();
+    };
+
+    test('viser melding om at meldekortet allerede er sendt inn, med lenke til innsendte meldekort', async ({
+        page,
+    }) => {
+        await mockSendInnFeil(page, ErrorCodes.meldekort_allerede_mottatt);
+        await fyllUtOgSendInn(page);
+
+        const [førsteSegment] = getTekster({
+            id: 'innsendingFeiletAlleredeMottatt',
+            locale: 'nb',
+        });
+        await expect(page.getByText(førsteSegment)).toBeVisible();
+
+        const lenke = page.getByRole('link', {
+            name: getTekst({ id: 'tilInnsendteMeldekort', locale: 'nb' }),
+        });
+        await expect(lenke).toBeVisible();
+
+        await lenke.click();
+        await expect(page).toHaveURL(`${testsBaseUrl}/innsendte`);
+    });
+
+    test('viser melding om utdatert meldekort, med lenke tilbake til oversikten', async ({
+        page,
+    }) => {
+        await mockSendInnFeil(page, ErrorCodes.meldekort_deaktivert);
+        await fyllUtOgSendInn(page);
+
+        const [førsteSegment] = getTekster({
+            id: 'innsendingFeiletMeldekortUtdatert',
+            locale: 'nb',
+        });
+        await expect(page.getByText(førsteSegment)).toBeVisible();
+
+        const lenke = page.getByRole('link', {
+            name: getTekst({ id: 'tilbakeTilOversikten', locale: 'nb' }),
+        });
+        await expect(lenke).toBeVisible();
+
+        await lenke.click();
+        await expect(page).toHaveURL(`${testsBaseUrl}/`);
+    });
+
+    test('viser generell teknisk feil uten navigasjonslenke, og blir værende på send-inn-steget', async ({
+        page,
+    }) => {
+        await mockSendInnFeil(page, ErrorCodes.uventet_feil_ved_lagring, 500);
+        await fyllUtOgSendInn(page);
+
+        const [førsteSegment] = getTekster({
+            id: 'innsendingFeiletTekniskFeil',
+            locale: 'nb',
+        });
+        await expect(page.getByText(førsteSegment)).toBeVisible();
+
+        // Tekniske feil skal ikke vise noen navigasjonslenke
+        await expect(
+            page.getByRole('link', {
+                name: getTekst({ id: 'tilbakeTilOversikten', locale: 'nb' }),
+            }),
+        ).toBeHidden();
+        await expect(
+            page.getByRole('link', {
+                name: getTekst({ id: 'tilInnsendteMeldekort', locale: 'nb' }),
+            }),
+        ).toBeHidden();
+
+        await expect(page).toHaveURL(/send-inn$/);
+    });
+});

@@ -170,6 +170,30 @@ export const teksterEn = {
         'If the problem continues, please contact your counsellor.',
     ],
 
+    // Spesifikke feilmeldinger når en bruker sender inn et meldekort (førstgangsinnsending)
+    innsendingFeiletAlleredeMottatt: [
+        'This employment status form has already been submitted.',
+        'You can find the forms you have submitted under “Submitted employment status forms”.',
+    ],
+    innsendingFeiletMeldekortUtdatert: [
+        'This employment status form is no longer valid, because a newer version is available.',
+        'Please go back to the overview and submit the newest form.',
+    ],
+    innsendingFeiletIkkeKlart: [
+        'The employment status form is not ready for submission yet.',
+        'Please wait a moment and try again. If the problem continues, contact your counsellor.',
+    ],
+    innsendingFeiletFantIkkeMeldekort: [
+        'We could not find the employment status form you are trying to submit.',
+        'Please go back to the overview and try again. If the problem continues, contact your counsellor.',
+    ],
+    innsendingFeiletTekniskFeil: [
+        'A technical error occurred, and the employment status form was not submitted.',
+        'Please try again shortly. If the problem continues, contact your counsellor.',
+    ],
+    tilbakeTilOversikten: 'Go to the overview',
+    tilInnsendteMeldekort: 'Go to submitted employment status forms',
+
     kvitteringTittel: 'Summary',
     kvitteringTilbake: 'Back to the employment status form start page',
     kvittering: [
