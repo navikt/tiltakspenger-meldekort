@@ -17,6 +17,9 @@ const PORT = 3050;
 
 const isDevMode = process.env.NODE_ENV === 'development';
 
+// Lokal dev binder kun loopback; i container/pod må serveren kunne nås utenfra
+const HOST = isDevMode ? '127.0.0.1' : '0.0.0.0';
+
 validateEnv()
     .then(async () => {
         const app = express();
@@ -47,7 +50,7 @@ validateEnv()
         throw e;
     })
     .then((app) => {
-        const server = app.listen(PORT, () => {
+        const server = app.listen(PORT, HOST, () => {
             console.log(`Server starting on port ${PORT}`);
             console.log(`localhost \t\thttp://localhost:${PORT}${baseUrl}`);
             console.log(`localhost (DEMO)\thttp://localhost:${PORT}${baseUrl}${demoRoutePrefix}`);
