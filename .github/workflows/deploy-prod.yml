@@ -1,0 +1,75 @@
+name: Build and deploy
+
+# Raske påfølgende pushes ga overlappende NAIS-rollouts i backend-repoene (2026-07-16).
+# Kjør deployene serielt; ved flere ventende kjøringer vinner den nyeste.
+concurrency:
+  group: build-and-deploy
+  cancel-in-progress: false
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '.env-template'
+      - '.gitattributes'
+      # CI-endringer deployer ikke - de verifiseres av branch-gaten og metarepoets lint (beslutning i navikt/tiltakspenger#39).
+      - '.github/**'
+      - '.gitignore'
+      - '.husky/**'
+      - 'CODEOWNERS'
+      - 'docker-compose/**'
+      - 'LICENSE'
+
+# Minste privilegium: toppnivået nullstiller alle token-rettigheter, hver jobb deklarerer eksplisitt det den trenger.
+permissions: {}
+
+# Testgaten og deployene er delte; image-bygget er lokalt (.build-for-deploy.yml) - se
+# https://github.com/navikt/tiltakspenger/blob/main/.github/workflows/README.md
+jobs:
+  test:
+    name: Run tests
+    # Delt workflow i metarepoet, se https://github.com/navikt/tiltakspenger/blob/main/.github/workflows/README.md
+    uses: navikt/tiltakspenger/.github/workflows/test-og-bygg-node.yml@main
+    permissions:
+      contents: read
+    with:
+      # Samme sjekker som den gamle lokale gaten: lint (inkl. typer), bygg og playwright e2e.
+      # Playwright-containeren fra den gamle gaten er byttet mot install --with-deps for å kunne bruke delt workflow; kostnaden er ~1 min browserinstallasjon per kjøring.
+      kommando: '"$PAKKEHANDTERER" run lint && "$PAKKEHANDTERER" run build && "$PAKKEHANDTERER" exec playwright install --with-deps && "$PAKKEHANDTERER" exec playwright test'
+    secrets:
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
+      SLACK_VARSEL_WEBHOOK_URL: ${{ secrets.SLACK_VARSEL_WEBHOOK_URL }}
+
+  build:
+    name: Build and push image
+    uses: ./.github/workflows/.build-for-deploy.yml
+    permissions:
+      contents: read
+      id-token: write
+    secrets:
+      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
+
+  deploy-dev:
+    name: Deploy to NAIS (dev)
+    needs: [ test, build ]
+    uses: navikt/tiltakspenger/.github/workflows/deploy-nais.yml@main
+    permissions:
+      contents: read
+      id-token: write
+    with:
+      NAIS_ENV: dev
+      IMAGE: ${{ needs.build.outputs.IMAGE }}
+
+  deploy-prod:
+    name: Deploy to NAIS (prod)
+    needs: [ test, build ]
+    uses: navikt/tiltakspenger/.github/workflows/deploy-nais.yml@main
+    permissions:
+      contents: read
+      id-token: write
+    with:
+      NAIS_ENV: prod
+      IMAGE: ${{ needs.build.outputs.IMAGE }}
