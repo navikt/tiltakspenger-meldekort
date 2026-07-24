@@ -26,6 +26,11 @@ pnpm login --registry=https://npm.pkg.github.com --auth-type=legacy
 #### Med kun mock-data uten backend-kall:
 Appen serveres i demo-modus på http://localhost:3050/tiltakspenger/meldekort/demo uten avhengigheter til andre tjenester.
 
+Demoen har en periodevelger øverst på forsiden. Forhåndsvalgene jul, påske og sommer viser meldekortet med de
+tidsstyrte informasjonsvarslene for ferie og helligdager, og med egen periode kan man velge en vilkårlig
+innvilgelsesperiode — dager utenfor perioden vises da uten rett til tiltakspenger. Valget lagres i en cookie som
+kun demo-mocken leser.
+
 #### Med integrasjon mot tiltakspenger-meldekort-api kjørende lokalt:
 Dersom du setter `BRUK_LOKAL_FAKE_AUTH: true` benyttes fake auth mot meldekort-api. Sett `LOKAL_FNR: <fnr i din lokale mk-api db>` for å autentisere som bruker med valgt fnr.
 

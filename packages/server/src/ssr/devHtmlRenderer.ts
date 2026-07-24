@@ -25,7 +25,8 @@ export const initDevRenderer = async (router: Router): Promise<HtmlRenderFunc> =
     const { createServer } = await import('vite');
 
     const vite = await createServer({
-        server: { middlewareMode: true },
+        // hmr.host binder HMR-websocketen til loopback; uten den lytter Vite på alle grensesnitt
+        server: { middlewareMode: true, hmr: { host: '127.0.0.1' } },
         appType: 'custom',
         root: '../client',
         base: appConfig.baseUrl,
