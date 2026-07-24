@@ -31,6 +31,7 @@ import { Tekst } from '@components/tekst/Tekst';
 import { useSpråk } from '@context/språk/useSpråk';
 
 import styles from './KorrigerMeldekort.module.css';
+import { TidsstyrteMeldekortVarsler } from '@components/varsler/TidsstyrteMeldekortVarsler';
 
 const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) => {
     const { forrigeMeldekort } = props;
@@ -87,7 +88,7 @@ const KorrigerMeldekortUtfylling = (props: KorrigeringMeldekortUtfyllingProps) =
                 <Heading size="large" level="3">
                     {getTekstForSpråk({ id: 'korrigeringTittel' })}
                 </Heading>
-
+                <TidsstyrteMeldekortVarsler meldekort={forrigeMeldekort} />
                 <InformasjonOmKorrigeringAvMeldekort />
 
                 <KorrigeringAvMeldekort {...props} />

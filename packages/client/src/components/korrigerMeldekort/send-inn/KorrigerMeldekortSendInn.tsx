@@ -26,6 +26,7 @@ import { KorrigerMeldekortOppsummering } from '@components/korrigerMeldekort/sen
 
 import { useSpråk } from '@context/språk/useSpråk';
 import { addLocaleSuffix } from '@meldekort/common/urls';
+import { TidsstyrteMeldekortVarsler } from '@components/varsler/TidsstyrteMeldekortVarsler';
 
 export const KorrigerMeldekortSendInn = ({
     originaleMeldekort,
@@ -86,6 +87,9 @@ export const KorrigerMeldekortSendInn = ({
                 <Heading size="large" level="3">
                     {getTekstForSpråk({ id: 'korrigeringOppsummering' })}
                 </Heading>
+
+                <TidsstyrteMeldekortVarsler meldekort={originaleMeldekort} />
+
                 {/* Denne vil kun slå ut hvis brukeren går direkte til oppsummeringen uten å laste korrigeringssiden først for å populere dagene */}
                 {dager.length === 0 ? (
                     <Alert variant="info">
