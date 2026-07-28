@@ -1,0 +1,57 @@
+name: Build and test
+
+on:
+  workflow_call:
+    secrets:
+      READER_TOKEN:
+        required: true
+      SLACK_VARSEL_WEBHOOK_URL:
+        required: true
+
+jobs:
+  test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    # Use Playwright's official image — ships with all browsers and the system
+    # libraries they need, so we skip the slow `playwright install-deps` step.
+    # NB: keep the image tag in sync with the `@playwright/test` version in package.json.
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
+    permissions:
+      contents: read
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Set up pnpm
+      uses: pnpm/action-setup@v4
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        registry-url: "https://npm.pkg.github.com"
+        cache: 'pnpm'
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+    - name: Run linting & type checking
+      run: pnpm run lint
+    - name: Build app
+      run: pnpm run build
+    - name: Run Playwright tests
+      run: pnpm exec playwright test
+      env:
+        CI: true
+        # Required by Firefox when running in the Playwright container image —
+        # the checkout step chowns $HOME to a non-root user, but the container
+        # runs as root, so we point HOME at /root which root owns.
+        HOME: /root
+        NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+    - name: Notify Slack in case of build failure
+      if: failure() && github.ref == 'refs/heads/main'
+      run: |
+        curl -X POST --data-urlencode "payload={ \"attachments\": [{ \"pretext\": \"[${{ github.event.repository.name }}] Bygg eller tester feilet! :cry:\", \"color\": \"danger\", \"fields\": [ { \"title\": \"Author\", \"value\": \"$AUTHOR\", \"short\": false }, { \"title\": \"Commit\", \"value\": \"<https://github.com/${{ github.repository }}/commit/$GITHUB_SHA|$GITHUB_SHA>\", \"short\": false } ] }] }" $WEBHOOK_URL
+      env:
+        BRANCH: ${{ github.ref }}
+        AUTHOR: ${{ github.event.pusher.name }}
+        WEBHOOK_URL: ${{ secrets.SLACK_VARSEL_WEBHOOK_URL }}

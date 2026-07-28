@@ -11,14 +11,9 @@ permissions: {}
 jobs:
   test:
     name: Run tests
-    # Delt workflow i metarepoet, se https://github.com/navikt/tiltakspenger/blob/main/.github/workflows/README.md
-    uses: navikt/tiltakspenger/.github/workflows/test-og-bygg-node.yml@main
+    uses: ./.github/workflows/.build-and-test.yml
     permissions:
       contents: read
-    with:
-      # Samme sjekker som den gamle lokale gaten: lint (inkl. typer), bygg og playwright e2e.
-      # Playwright-containeren fra den gamle gaten er byttet mot install --with-deps for å kunne bruke delt workflow; kostnaden er ~1 min browserinstallasjon per kjøring.
-      kommando: '"$PAKKEHANDTERER" run lint && "$PAKKEHANDTERER" run build && "$PAKKEHANDTERER" exec playwright install --with-deps && "$PAKKEHANDTERER" exec playwright test'
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       SLACK_VARSEL_WEBHOOK_URL: ${{ secrets.SLACK_VARSEL_WEBHOOK_URL }}
