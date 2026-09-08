@@ -8,8 +8,10 @@ injectWorkspacePackages: true
 # en uke
 minimumReleaseAge: 10080
 
-# Sikkerhetsfikser i transitive pakker: js-cookie kommer via nav-dekoratoren-moduler, qs og body-parser via express.
+# Sikkerhetsfikser i transitive pakker: js-cookie kommer via nav-dekoratoren-moduler, qs og body-parser via express,
+# shell-quote via concurrently (dev), som pinner 1.8.3 eksakt.
 overrides:
   js-cookie: 3.0.8
   qs: 6.16.0
   body-parser: 2.3.0
+  shell-quote: 1.8.4
