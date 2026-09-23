@@ -1,11 +1,6 @@
-# Digesten er det som faktisk kjører; taggen er det Dependabot følger, og gir PR når `24-alpine` flyttes.
-# `apk upgrade` under henter fortsatt sikkerhetsoppdateringer i perioden mellom digest-bumpene.
-FROM node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
-
-# Docker Hub-bildet kan ligge etter alpines sikkerhetsoppdateringer (openssl 7.9.2026), så pakkene løftes her.
-# npm, corepack og yarn brukes ikke i drift og drar med seg sårbare bundlede pakker (tar, brace-expansion, ip-address).
-RUN apk upgrade --no-cache \
-    && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
+# Distroless har ingen semver-tagger — versjonen ligger i repo-navnet (nodejs24-debian13) — så taggen er `latest`.
+# Digesten er det som faktisk kjører; taggen er det Dependabot følger, og gir PR når `latest` flyttes.
+FROM gcr.io/distroless/nodejs24-debian13:latest@sha256:b1fc33242cc74151f50c62b4a03d48afd759dccf81279b5f8e401db4546479c1
 WORKDIR /app
 # `deploy/node_modules` is produced by `pnpm deploy` in CI (see .build-for-deploy.yml)
 COPY deploy/node_modules /app/node_modules/
@@ -14,4 +9,5 @@ ENV PORT=3050
 ENV NODE_ENV=production
 ENV TZ=Europe/Oslo
 EXPOSE 3050
-CMD ["node", "dist/server.cjs"]
+# Entrypointet i distroless er node, så CMD er bare skriptet.
+CMD ["dist/server.cjs"]
