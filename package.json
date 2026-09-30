@@ -13,7 +13,7 @@
         "lint": "pnpm run /^lint:/",
         "lint:tsc-client": "pnpm --filter @meldekort/client tsc",
         "lint:tsc-server": "pnpm --filter @meldekort/server tsc",
-        "lint:eslint": "eslint \"**/*.ts\" \"**/*.tsx\"",
+        "lint:eslint": "eslint --cache --cache-location node_modules/.cache/eslint/ \"**/*.ts\" \"**/*.tsx\"",
         "test": "playwright test",
         "test:ui": "playwright test --ui"
     },

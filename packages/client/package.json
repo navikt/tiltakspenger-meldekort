@@ -7,7 +7,7 @@
         "build": "pnpm run build:client && pnpm run build:ssr",
         "build:client": "vite build --outDir ../server/dist/client",
         "build:ssr": "vite build --ssr src/main-server.tsx --outDir ../server/src/_ssr-dist --emptyOutDir false",
-        "tsc": "tsc --noEmit"
+        "tsc": "tsc --noEmit --incremental --tsBuildInfoFile ../../node_modules/.cache/tsc/client.tsbuildinfo"
     },
     "dependencies": {
         "@meldekort/common": "workspace:*",

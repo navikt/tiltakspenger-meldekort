@@ -10,7 +10,7 @@
         "deploy-and-start": "cd ../.. && pnpm deploy --filter @meldekort/server --prod --force deploy && cp -r packages/server/dist deploy/dist && cd deploy && NODE_ENV=production pnpm start",
         "nodemon-start": "nodemon -r dotenv/config -w ./dist/server.cjs -w ../../.env.development ./dist/server.cjs dotenv_config_path=../../.env.development",
         "dev": "concurrently -n esbuild,nodemon -c blue,green -k \"pnpm run build-and-watch\" \"pnpm run nodemon-start\"",
-        "tsc": "tsc --noEmit"
+        "tsc": "tsc --noEmit --incremental --tsBuildInfoFile ../../node_modules/.cache/tsc/server.tsbuildinfo"
     },
     "dependencies": {
         "@meldekort/common": "workspace:*",
