@@ -19,7 +19,7 @@
         "compression": "1.8.2",
         "csp-header": "6.4.0",
         "dayjs": "1.11.23",
-        "dotenv": "18.0.3",
+        "dotenv": "18.0.4",
         "express": "5.2.1",
         "http-terminator": "3.2.0",
         "sirv": "3.0.2"
