@@ -68,5 +68,9 @@ export default defineConfig({
         command: 'pnpm run start',
         url: 'http://localhost:3050/tiltakspenger/meldekort/demo',
         reuseExistingServer: !process.env.CI,
+        // Uten terminal (CI) starter pnpm ≥ 11.27 scriptet i en egen prosessgruppe og videresender signaler dit.
+        // Playwrights standard SIGKILL treffer da bare pnpm, mens serveren overlever, holder stdout åpen og
+        // gjør at testkjøringen aldri avslutter. SIGTERM blir videresendt av pnpm og stopper serveren pent.
+        gracefulShutdown: { signal: 'SIGTERM', timeout: 10_000 },
     },
 });
