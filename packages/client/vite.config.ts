@@ -1,6 +1,5 @@
-import { defineConfig, loadEnv, UserConfig } from 'vite';
+import { defineConfig, loadEnv, mergeConfig, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { preact } from '@preact/preset-vite';
 
@@ -15,12 +14,14 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     // preact/compat er litt janky i vite dev-modus, så der bruker vi bare standard react
     const usePreact = process.env.NODE_ENV === 'production';
 
-    return {
+    const config: UserConfig = {
         plugins: [
             usePreact ? preact() : react(),
-            tsconfigPaths(),
             ...(analyzeClientBundle ? [visualizer({ open: true, gzipSize: true })] : []),
         ],
+        resolve: {
+            tsconfigPaths: true,
+        },
         base: process.env.ASSETS_URL ?? '/tiltakspenger/meldekort',
         css: {
             modules: {
@@ -30,8 +31,9 @@ export default defineConfig(({ mode, isSsrBuild }) => {
                 }),
             },
         },
-        ...(usePreact && preactOptions),
     };
+
+    return usePreact ? mergeConfig(config, preactOptions) : config;
 });
 
 const preactRoot = `${process.cwd()}/node_modules/preact`;
@@ -43,7 +45,7 @@ const preactOptions: UserConfig = {
             // preset-vite aliaser ikke denne selv
             'use-sync-external-store/shim/index.js': `${preactRoot}/compat/src/hooks.js`,
             // Tvinger ESM-kopiene av preact selv når en transitive dep gjør
-            // `require('preact')` — uten dette ender Rollups commonjs-plugin
+            // `require('preact')` — uten dette ender bundleren (Rolldown)
             // opp med å bundle både ESM- og CJS-kopiene, og hooks krasjer
             // (TypeError: Cannot read properties of undefined (reading '__H'))
             // fordi de to har hver sitt `options`-objekt.

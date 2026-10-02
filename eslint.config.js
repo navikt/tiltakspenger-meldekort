@@ -1,3 +1,4 @@
+import { fixupPluginRules } from '@eslint/compat';
 import js from '@eslint/js';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -22,10 +23,10 @@ export default [
         files: ['packages/client/src/**/*.{ts,tsx}'],
         languageOptions: { parser: tsParser },
         plugins: {
-            react,
+            react: fixupPluginRules(react),
             'react-hooks': reactHooks,
             '@typescript-eslint': tseslint,
-            'css-modules': cssModules,
+            'css-modules': fixupPluginRules(cssModules),
             'react-refresh': reactRefresh,
         },
         settings: { react: { version: 'detect' } },
@@ -44,7 +45,7 @@ export default [
     {
         files: ['packages/server/src/**/*.{ts,tsx}'],
         languageOptions: { parser: tsParser },
-        plugins: { '@typescript-eslint': tseslint, import: importPlugin },
+        plugins: { '@typescript-eslint': tseslint, import: fixupPluginRules(importPlugin) },
         settings: {
             // Node-resolver kun: TS path aliases (@*) blir uresolvable og
             // dermed ignorert av no-extraneous-dependencies, mens reelle
