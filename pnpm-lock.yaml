@@ -104,8 +104,8 @@ importers:
         specifier: 2.5.1
         version: 2.5.1(react@19.3.0)
       wouter:
-        specifier: 3.11.1
-        version: 3.11.1(react@19.3.0)
+        specifier: 3.12.0
+        version: 3.12.0(react@19.3.0)
     devDependencies:
       '@preact/preset-vite':
         specifier: 2.10.6
@@ -2960,8 +2960,8 @@ packages:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
 
-  wouter@3.11.1:
-    resolution: {integrity: sha512-HodhSFaJTnASOFifOKl+eFXmwDMsEkxb9lO0r1GGUptm1nsWxJfpf/PThCUI4GMHw5ANFMzZAycZgmW7T2Nf+g==}
+  wouter@3.12.0:
+    resolution: {integrity: sha512-aJQjVAbrymRz47VFaeMbEZF71dn+5+olVm3dJR6OsHO37Pswa23DoIzy6PwsEtznGSmv9YBu9HC84OJFDMQ9Cg==}
     peerDependencies:
       react: '>=16.8.0'
 
@@ -5925,7 +5925,7 @@ snapshots:
 
   word-wrap@1.2.5: {}
 
-  wouter@3.11.1(react@19.3.0):
+  wouter@3.12.0(react@19.3.0):
     dependencies:
       react: 19.3.0
       regexparam: 3.0.0
