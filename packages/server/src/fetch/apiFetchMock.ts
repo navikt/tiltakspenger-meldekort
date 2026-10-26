@@ -285,7 +285,10 @@ const lagMeldekortForPeriode = (
     };
 
     const antallDagerMedRett = datoer.filter(harRett).length;
-    const maksAntallDager = Math.max(1, Math.min(maksDagerPerMeldeperiode, antallDagerMedRett));
+    const maksAntallDager = Math.max(
+        1,
+        Math.min(innvilgelse.antallDager ?? maksDagerPerMeldeperiode, antallDagerMedRett),
+    );
 
     let antallBesvarte = 0;
     const dager = datoer.map((dato) => {

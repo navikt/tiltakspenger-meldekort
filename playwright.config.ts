@@ -52,15 +52,17 @@ export default defineConfig({
             name: 'Firefox',
             use: { ...devices['Desktop Firefox'] },
         },
-        /* Test against mobile viewports. */
-        // {
-        //   name: 'Mobile Chrome',
-        //   use: { ...devices['Pixel 5'] },
-        // },
-        // {
-        //   name: 'Mobile Safari',
-        //   use: { ...devices['iPhone 12'] },
-        // },
+        // ponytail: mobil kjører bare antall-dager-testene; utvid testMatch når flere flyter skal dekkes på mobil.
+        {
+            name: 'Mobil Safari',
+            use: { ...devices['iPhone 15'] },
+            testMatch: /antall-dager/,
+        },
+        {
+            name: 'Mobil Chrome',
+            use: { ...devices['Pixel 7'] },
+            testMatch: /antall-dager/,
+        },
     ],
 
     /* Run your local dev server before starting the tests */

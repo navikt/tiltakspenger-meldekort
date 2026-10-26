@@ -1,12 +1,17 @@
 import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
+import {
+    fyllUtDeltattSteg,
+    fyllUtFraværSteg,
+    fyllUtLønnSteg,
+    sendInnOgAssertInnsending,
+} from './helpers/utfylling';
 import { getTekst, getTekster } from '../packages/client/src/tekster/tekster';
 import test, { expect, Page } from '@playwright/test';
-import { MeldekortDagStatus, MeldekortStatus } from '../packages/common/src/typer/MeldekortBruker';
+import { MeldekortStatus } from '../packages/common/src/typer/MeldekortBruker';
 import {
     nyMeldekortDagerForPeriode,
     nyUtfylltMeldekort,
 } from './test-data-generators/MeldekortTestData';
-import { MeldekortUtfyltDTO } from '../packages/common/src/typer/BrukersMeldekortUtfylling';
 import { ErrorCodes } from '../packages/client/src/utils/apiClient';
 
 test.describe('Meldekort steg', () => {
@@ -286,157 +291,6 @@ test.describe('kontroll av helg av meldekortet', () => {
         await expect(page.getByText('Søndag 19. januar')).toBeVisible();
     });
 });
-
-const fyllUtDeltattSteg = async (page: Page, antallDagerMedDeltatt: number) => {
-    const nesteKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'neste', locale: 'nb' }),
-        exact: true,
-    });
-    const deltattCheckboxes = page.getByRole('checkbox', {
-        name: getTekst({ id: 'deltattDagPrefix', locale: 'nb' }),
-    });
-
-    for (let i = 0; i < antallDagerMedDeltatt; ++i) {
-        await deltattCheckboxes.nth(i).click();
-    }
-    await nesteKnapp.click();
-};
-
-const fyllUtFraværSteg = async (page: Page, antallDagerMedFravær: number) => {
-    const nesteKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'neste', locale: 'nb' }),
-        exact: true,
-    });
-
-    const fraværValgRadio = page.getByRole('radio', {
-        name: getTekst({
-            id:
-                antallDagerMedFravær > 0
-                    ? 'fraværHarHattFraværSvarJa'
-                    : 'fraværHarHattFraværSvarNei',
-            locale: 'nb',
-        }),
-    });
-
-    await fraværValgRadio.click();
-
-    const velgFraværKnapper = page.getByRole('button', {
-        // datoTekst varierer for hver dagså vi matcher på alt utenom den.
-        name: getTekst({
-            id: 'fraværPanelRegistrerSR',
-            locale: 'nb',
-            resolverProps: { datoTekst: '' },
-        }),
-        exact: false,
-    });
-    const sykRadio = page.getByRole('radio', {
-        name: getTekst({ id: 'fraværModalSykIngress', locale: 'nb' }),
-    });
-    const lagreKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'lagre', locale: 'nb' }),
-        exact: true,
-    });
-    const fraværModal = page.getByRole('dialog');
-
-    if (antallDagerMedFravær > 0) {
-        for (let i = 0; i < antallDagerMedFravær; ++i) {
-            await expect(velgFraværKnapper.nth(i)).toHaveText(
-                getTekst({ id: 'fraværPanelRegistrer', locale: 'nb' }),
-            );
-            await velgFraværKnapper.nth(i).click();
-            await expect(fraværModal).toBeVisible();
-            await sykRadio.click();
-            await lagreKnapp.click();
-        }
-    }
-
-    await nesteKnapp.click();
-};
-
-const fyllUtLønnSteg = async (page: Page, antallDagerMedLønn: number) => {
-    const nesteKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'neste', locale: 'nb' }),
-        exact: true,
-    });
-    const lønnValgRadio = page.getByRole('radio', {
-        name: getTekst({
-            id: antallDagerMedLønn > 0 ? 'lønnHarMottattLønnSvarJa' : 'lønnHarMottattLønnSvarNei',
-            locale: 'nb',
-        }),
-    });
-    const lønnCheckboxes = page.getByRole('checkbox', {
-        name: getTekst({ id: 'lønnDagPrefix', locale: 'nb' }),
-    });
-
-    await lønnValgRadio.click();
-
-    if (antallDagerMedLønn > 0) {
-        for (let i = 0; i < antallDagerMedLønn; ++i) {
-            await lønnCheckboxes.nth(i).click();
-        }
-    }
-
-    await nesteKnapp.click();
-};
-
-type Antall = {
-    antallDagerMedDeltatt: number;
-    antallDagerMedFravær: number;
-    antallDagerMedLønn: number;
-    antallDagerMedIkkeBesvart: number;
-};
-
-/**
- * Bekreft innsending og assert at det som sendes er som forventet
- */
-const sendInnOgAssertInnsending = async (page: Page, antall: Antall) => {
-    await expect(page).toHaveURL(/send-inn$/);
-
-    const sendInnKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'sendInn', locale: 'nb' }),
-    });
-    const bekreftCheckbox = page.getByRole('checkbox', {
-        name: getTekst({ id: 'oppsummeringBekrefter', locale: 'nb' }),
-    });
-    const bekreftVarsel = page.getByText(
-        getTekst({ id: 'oppsummeringBekrefterFeil', locale: 'nb' }),
-    );
-
-    await sendInnKnapp.click();
-
-    // Må bekrefte før innsending
-    await expect(bekreftVarsel).toBeVisible();
-    await bekreftCheckbox.click();
-    await expect(bekreftVarsel).not.toBeVisible();
-
-    const sendInnPromise: Promise<MeldekortUtfyltDTO> = page
-        .waitForRequest((request) => request.url().endsWith('/api/send-inn'))
-        .then((request) => request.postDataJSON());
-
-    await sendInnKnapp.click();
-
-    await expect(page).toHaveURL(/kvittering$/);
-
-    const sendInnData = await sendInnPromise;
-
-    const dagerDeltatt = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-    ).length;
-    const dagerFraværSyk = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.FRAVÆR_SYK,
-    ).length;
-    const dagerMedLønn = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
-    ).length;
-    const dagerIkkeBesvart = sendInnData.dager.filter(
-        (dag) => dag.status === MeldekortDagStatus.IKKE_BESVART,
-    ).length;
-
-    expect(dagerDeltatt).toBe(antall.antallDagerMedDeltatt);
-    expect(dagerFraværSyk).toBe(antall.antallDagerMedFravær);
-    expect(dagerMedLønn).toBe(antall.antallDagerMedLønn);
-    expect(dagerIkkeBesvart).toBe(antall.antallDagerMedIkkeBesvart);
-};
 
 test.describe('Send inn - feilmeldinger ved innsending', () => {
     test.beforeEach(async ({ page }) => {
