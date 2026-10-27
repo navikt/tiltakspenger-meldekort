@@ -152,3 +152,17 @@ test.describe(`Meldekort med vedtak om ${antallDager} dager per meldeperiode`, (
         });
     }
 });
+
+test('demoen lar deg velge antall dager per meldeperiode', async ({ page, context }) => {
+    await page.goto(testsBaseUrl);
+    await klikkCookieBanner(page);
+
+    await page.getByRole('radio', { name: 'Jul' }).click();
+    await page.getByLabel('Antall dager per meldeperiode').selectOption(String(antallDager));
+
+    await expect(page.getByText(`${antallDager} dager per meldeperiode.`)).toBeVisible();
+    const cookie = (await context.cookies(testsBaseUrl)).find(
+        (kandidat) => kandidat.name === demoInnvilgelseCookieNavn,
+    );
+    expect(cookie?.value).toMatch(new RegExp(`_${antallDager}$`));
+});

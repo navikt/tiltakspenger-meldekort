@@ -7,6 +7,7 @@ import {
     Button,
     DatePicker,
     HStack,
+    Select,
     ToggleGroup,
     useRangeDatepicker,
     VStack,
@@ -25,6 +26,9 @@ export const DemoPeriodeVelger = () => {
     const { mutate } = useSWRConfig();
     const [aktivInnvilgelse, setAktivInnvilgelse] = useState(lesInnvilgelseFraCookie);
     const [egenPeriode, setEgenPeriode] = useState<DemoInnvilgelsesperiode | null>(null);
+    const [antallDager, setAntallDager] = useState(
+        aktivInnvilgelse?.antallDager ?? standardAntallDager,
+    );
 
     const iDag = dayjs();
 
@@ -42,9 +46,8 @@ export const DemoPeriodeVelger = () => {
     const aktivtForhåndsvalg: Forhåndsvalg = aktivInnvilgelse
         ? (forhåndsvalg.find(
               (kandidat) =>
-                  kandidat.innvilgelse &&
-                  serialiserDemoInnvilgelse(kandidat.innvilgelse) ===
-                      serialiserDemoInnvilgelse(aktivInnvilgelse),
+                  kandidat.innvilgelse?.fraOgMed === aktivInnvilgelse.fraOgMed &&
+                  kandidat.innvilgelse.tilOgMed === aktivInnvilgelse.tilOgMed,
           )?.valg ?? 'egen')
         : 'standard';
 
@@ -70,7 +73,11 @@ export const DemoPeriodeVelger = () => {
         },
     });
 
-    const brukInnvilgelse = (innvilgelse: DemoInnvilgelsesperiode | null) => {
+    const brukInnvilgelse = (
+        valgtInnvilgelse: DemoInnvilgelsesperiode | null,
+        dager: number = antallDager,
+    ) => {
+        const innvilgelse = valgtInnvilgelse && { ...valgtInnvilgelse, antallDager: dager };
         settInnvilgelseCookie(innvilgelse);
         setAktivInnvilgelse(innvilgelse);
         // Demo-dataene hentes fra /data-endepunktene som leser cookien på nytt.
@@ -92,6 +99,13 @@ export const DemoPeriodeVelger = () => {
         }
     };
 
+    const onAntallDagerChange = (dager: number) => {
+        setAntallDager(dager);
+        if (aktivInnvilgelse) {
+            brukInnvilgelse(aktivInnvilgelse, dager);
+        }
+    };
+
     return (
         <VStack gap={'space-8'}>
             <ToggleGroup
@@ -110,6 +124,22 @@ export const DemoPeriodeVelger = () => {
                 ferie og helligdager. Med egen periode velger du selv perioden bruker har fått
                 innvilget tiltakspenger for.
             </BodyShort>
+            {(aktivInnvilgelse || visEgenPeriode) && (
+                <HStack>
+                    <Select
+                        label={'Antall dager per meldeperiode'}
+                        size={'small'}
+                        value={antallDager}
+                        onChange={(event) => onAntallDagerChange(Number(event.target.value))}
+                    >
+                        {Array.from({ length: 14 }, (_, i) => i + 1).map((dager) => (
+                            <option key={dager} value={dager}>
+                                {dager}
+                            </option>
+                        ))}
+                    </Select>
+                </HStack>
+            )}
             {visEgenPeriode && (
                 <DatePicker {...datepickerProps}>
                     <HStack gap={'space-16'} align={'end'} wrap>
@@ -142,9 +172,11 @@ export const DemoPeriodeVelger = () => {
     );
 };
 
-const formaterPeriode = ({ fraOgMed, tilOgMed }: DemoInnvilgelsesperiode) => {
+const standardAntallDager = 10;
+
+const formaterPeriode = ({ fraOgMed, tilOgMed, antallDager }: DemoInnvilgelsesperiode) => {
     const formater = (dato: string) => dayjs(dato).locale('nb').format('D. MMMM YYYY');
-    return `${formater(fraOgMed)}–${formater(tilOgMed)}`;
+    return `${formater(fraOgMed)}–${formater(tilOgMed)}, ${antallDager ?? standardAntallDager} dager per meldeperiode`;
 };
 
 const lesInnvilgelseFraCookie = (): DemoInnvilgelsesperiode | null => {
