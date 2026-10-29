@@ -11,9 +11,12 @@ minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   - "@navikt/*"
   - "@nais/*"
+  # body-parser 2.3.0 krasjer prosessen på én request med Content-Encoding og etterfølgende bytes (GHSA-27r3-jxmh-p828).
+  # Serveren bruker express.json() på alle ruter. Fjernes når 2.4.0 er eldre enn cooldownen.
+  - "body-parser@2.4.0"
 
 # Sikkerhetsfikser i transitive pakker: qs og body-parser kommer via express, som bare tillater (ikke krever) fikset versjon.
 # Fjernes når foreldrepakken selv krever fikset versjon (`pnpm why <pakke>`).
 overrides:
   qs: 6.16.0
-  body-parser: 2.3.0
+  body-parser: 2.4.0
