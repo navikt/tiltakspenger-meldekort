@@ -1,5 +1,6 @@
 import { SiteRouteConfig } from '@routing/siteRouteConfigs';
-import { Alert, Loader } from '@navikt/ds-react';
+import { Loader } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { useFetchPageData } from '@context/useFetchPageData';
 import { AppContext } from '@meldekort/common/typer/appContext';
 import { useRouting } from '@routing/useRouting';
@@ -22,7 +23,9 @@ export const RouteComponent = ({ route, appContext }: Props) => {
     );
 
     if (error) {
-        return <Alert variant={'error'}>{`Noe gikk galt ved henting av data - ${error}`}</Alert>;
+        return (
+            <Infokort variant={'feil'}>{`Noe gikk galt ved henting av data - ${error}`}</Infokort>
+        );
     }
 
     if (!data) {

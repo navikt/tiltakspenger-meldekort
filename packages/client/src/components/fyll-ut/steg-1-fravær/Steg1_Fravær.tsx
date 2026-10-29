@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import style from './Steg1_Fravær.module.css';
-import { Alert, HStack, Radio, RadioGroup } from '@navikt/ds-react';
+import { HStack, Radio, RadioGroup } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { Kalender } from '@components/kalender/Kalender';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { Tekst } from '@components/tekst/Tekst';
@@ -84,9 +85,9 @@ export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) =>
             )}
             <div className={style.knapperOgVarsel}>
                 {feil && feil !== 'fraværSpørsmålIkkeValgt' && (
-                    <Alert variant={'error'} className={style.varsel}>
+                    <Infokort variant={'feil'} className={style.varsel}>
                         <Tekst id={feil} />
-                    </Alert>
+                    </Infokort>
                 )}
                 <MeldekortStegButtons
                     onNesteClick={() => {

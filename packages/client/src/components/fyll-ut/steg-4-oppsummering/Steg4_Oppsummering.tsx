@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import style from './Steg4_Oppsummering.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Alert, ConfirmationPanel, ErrorSummary, VStack } from '@navikt/ds-react';
+import { ErrorSummary, VStack } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
+import { BekreftelseCheckbox } from '@components/bekreftelse/BekreftelseCheckbox';
 import { Tekst } from '@components/tekst/Tekst';
 import { Kalender } from '@components/kalender/Kalender';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
@@ -229,9 +231,9 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
     return (
         <MeldekortStegWrapper>
             <Tekst id="oppsummeringIngress" />
-            <Alert variant="info" className={style.varsel}>
+            <Infokort variant={'info'} className={style.varsel}>
                 <TekstSegmenter id={'oppsummeringIkkeSendtEnnå'} />
-            </Alert>
+            </Infokort>
             <Kalender
                 meldekort={meldekortUtfylling}
                 steg={'oppsummering'}
@@ -245,13 +247,10 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                     ref={varselRef}
                     ikkeVisDagTeller={true}
                 />
-                <ConfirmationPanel
+                <BekreftelseCheckbox
                     id={'bekreft'}
-                    onChange={() => {
-                        setHarBekreftet(!harBekreftet);
-                    }}
+                    onChange={setHarBekreftet}
                     checked={harBekreftet}
-                    value={harBekreftet}
                     label={<Tekst id={'oppsummeringBekrefter'} />}
                     error={
                         !harBekreftet &&
@@ -260,7 +259,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                 />
             </VStack>
             {apiClient.apiStatus === 'error' && apiClient.response?.status === 'error' && (
-                <Alert variant="error" className={style.varsel} ref={varselRef} tabIndex={-1}>
+                <Infokort variant={'feil'} className={style.varsel} ref={varselRef} tabIndex={-1}>
                     <TekstSegmenter
                         id={innsendingFeilTekstId(apiClient.response.error.errorBody.kode)}
                     />
@@ -274,7 +273,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                             )
                         );
                     })()}
-                </Alert>
+                </Infokort>
             )}
             {visValideringsfeil && errors.length > 0 && (
                 <ErrorSummary className={style.varsel} ref={errorRef}>

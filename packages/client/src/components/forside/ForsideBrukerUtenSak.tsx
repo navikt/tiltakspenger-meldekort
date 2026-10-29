@@ -1,4 +1,5 @@
-import { Alert, Link } from '@navikt/ds-react';
+import { Link } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { Tekst } from '@components/tekst/Tekst';
 import {
     ArenaMeldekortStatus,
@@ -16,7 +17,7 @@ export const ForsideBrukerUtenSak = ({ meldekortBruker }: Props) => {
     const { arenaMeldekortStatus } = meldekortBruker;
 
     return (
-        <Alert variant={'info'} contentMaxWidth={false}>
+        <Infokort variant={'info'}>
             <Tekst
                 id={
                     arenaMeldekortStatus === ArenaMeldekortStatus.HAR_MELDEKORT
@@ -28,6 +29,6 @@ export const ForsideBrukerUtenSak = ({ meldekortBruker }: Props) => {
             <Link href={arenaUrl} inlineText={true}>
                 <Tekst id={'forsideArenaLenke'} />
             </Link>
-        </Alert>
+        </Infokort>
     );
 };

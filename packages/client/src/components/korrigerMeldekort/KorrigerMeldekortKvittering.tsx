@@ -4,7 +4,8 @@ import { InternLenke } from '@components/lenke/InternLenke';
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
 import { Tekst } from '@components/tekst/Tekst';
-import { Alert, HStack, VStack } from '@navikt/ds-react';
+import { HStack, VStack } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { formatterDato } from '@utils/datetime';
 
 import { useSpråk } from '@context/språk/useSpråk';
@@ -49,7 +50,7 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
                 }
             />
             <VStack gap="space-8">
-                <Alert variant="success">
+                <Infokort variant={'suksess'}>
                     <Tekst id={'korrigeringKvittering'} />
                     <br />
                     <br />
@@ -62,7 +63,7 @@ const KorrigerMeldekortKvittering = (props: { originaleMeldekort: Meldekort }) =
                         {getTekstForSpråk({ id: 'korrigeringKvitteringUtbetalingerLenke' })}
                     </EksternLenke>
                     {'.'}
-                </Alert>
+                </Infokort>
                 <InternLenke path={getPath(siteRoutePaths.forside)} locale={valgtSpråk}>
                     <Tekst id={'kvitteringTilbake'} />
                 </InternLenke>

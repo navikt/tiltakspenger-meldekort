@@ -1,4 +1,4 @@
-import { Checkbox } from '@navikt/ds-react';
+import { CheckboxCard } from '@navikt/ds-react/PREVIEW/CheckboxCard';
 import { classNames } from '@utils/classNames';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { formatterDato } from '@utils/datetime';
@@ -30,7 +30,7 @@ export const DeltattDagPanel = ({ dag }: Props) => {
     }
 
     return (
-        <Checkbox
+        <CheckboxCard
             onChange={(e) => {
                 lagreMeldekortDag({
                     ...dag,
@@ -40,10 +40,10 @@ export const DeltattDagPanel = ({ dag }: Props) => {
                 });
             }}
             checked={erValgt}
-            className={classNames(style.dag, erValgt && style.valgt)}
+            className={classNames(erValgt && style.valgt)}
         >
             <Tekst id={'deltattDagPrefix'} />
             {formatterDato({ dato: dag.dag, medUkeDag: true, locale: valgtSpråk })}
-        </Checkbox>
+        </CheckboxCard>
     );
 };

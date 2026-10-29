@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 import style from './Steg2_Lønn.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { MeldekortStegWrapper } from '@components/fyll-ut/MeldekortStegWrapper';
-import { Alert, HStack, Radio, RadioGroup } from '@navikt/ds-react';
+import { HStack, Radio, RadioGroup } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { Tekst } from '@components/tekst/Tekst';
 import { TekstId } from '@tekster/typer';
 import { Kalender } from '@components/kalender/Kalender';
@@ -79,9 +80,9 @@ export const Steg2_Lønn = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) => {
             )}
             <div className={style.knapperOgVarsel}>
                 {feil && (
-                    <Alert variant={'error'} className={style.varsel}>
+                    <Infokort variant={'feil'} className={style.varsel}>
                         <Tekst id={feil} />
-                    </Alert>
+                    </Infokort>
                 )}
                 <MeldekortStegButtons
                     onNesteClick={() => {

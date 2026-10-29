@@ -1,4 +1,5 @@
-import { Alert, BodyShort, VStack } from '@navikt/ds-react';
+import { BodyShort, VStack } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import {
     KorrigerMeldekortFeil,
     KorrigerMeldekortValideringResultat,
@@ -17,7 +18,7 @@ export const KorrigerMeldekortValideringFeil = ({ resultat }: Props) => {
     const { feil, maksAntallUtfylt, antallUtfylt } = resultat;
 
     return (
-        <Alert variant="error">
+        <Infokort variant={'feil'}>
             <VStack gap="space-16">
                 {feil.has(KorrigerMeldekortFeil.ForMangeDager) && (
                     <>
@@ -49,7 +50,7 @@ export const KorrigerMeldekortValideringFeil = ({ resultat }: Props) => {
                     </BodyShort>
                 )}
             </VStack>
-        </Alert>
+        </Infokort>
     );
 };
 

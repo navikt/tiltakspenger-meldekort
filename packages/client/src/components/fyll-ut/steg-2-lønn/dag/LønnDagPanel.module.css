@@ -1,29 +1,7 @@
-.dag {
-    padding: 0.25rem 0.625rem;
-    border: 1px solid var(--ax-neutral-500);
-    border-radius: var(--ax-radius-4);
-    display: flex;
-    align-items: center;
-    min-height: 3.625rem;
-
-    &:hover {
-        background: var(--ax-bg-neutral-moderate-hover);
-        color: unset;
-    }
-}
-
 .valgt {
-    background: var(--ax-bg-success-moderate);
+    background-color: var(--ax-bg-danger-moderate);
 
     &:hover {
-        background: var(--ax-bg-success-moderate-hover);
-    }
-}
-
-.valgtLønn {
-    background: var(--ax-bg-danger-moderate);
-
-    &:hover {
-        background: var(--ax-bg-danger-moderate-hover);
+        background-color: var(--ax-bg-danger-moderate-hover);
     }
 }

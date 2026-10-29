@@ -1,4 +1,5 @@
-import { Alert, BodyLong } from '@navikt/ds-react';
+import { BodyLong } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { Tekst } from '@components/tekst/Tekst';
 import { antallDagerValidering } from '@utils/utfyllingValidering';
 import React from 'react';
@@ -20,34 +21,34 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
 
         if (visValideringsfeil && antallDagerBesvart === 0) {
             return (
-                <Alert className={className} variant={'warning'} ref={ref} tabIndex={-1}>
+                <Infokort className={className} variant={'advarsel'} ref={ref} tabIndex={-1}>
                     <Tekst id={'ingenDagerFyltUt'} />
-                </Alert>
+                </Infokort>
             );
         }
 
         if (visValideringsfeil && harForFaDagerBesvart) {
             return (
-                <Alert className={className} variant={'warning'} ref={ref} tabIndex={-1}>
+                <Infokort className={className} variant={'advarsel'} ref={ref} tabIndex={-1}>
                     <Tekst
                         id={'forFaDagerBesvart'}
                         resolverProps={{
                             maks: brukersMeldekort.maksAntallDager,
                         }}
                     />
-                </Alert>
+                </Infokort>
             );
         }
         if (harForMangeDagerBesvart) {
             return (
-                <Alert className={className} variant={'warning'} ref={ref} tabIndex={-1}>
+                <Infokort className={className} variant={'advarsel'} ref={ref} tabIndex={-1}>
                     <Tekst
                         id={'forMangeDagerBesvart'}
                         resolverProps={{
                             maks: brukersMeldekort.maksAntallDager,
                         }}
                     />
-                </Alert>
+                </Infokort>
             );
         }
 

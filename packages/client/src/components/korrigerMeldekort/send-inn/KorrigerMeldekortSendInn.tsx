@@ -1,14 +1,8 @@
 import { PageHeader } from '@components/page-header/PageHeader';
 import { Undertekst } from '@components/page-header/Undertekst';
-import {
-    Alert,
-    BodyShort,
-    Button,
-    ConfirmationPanel,
-    Heading,
-    HStack,
-    VStack,
-} from '@navikt/ds-react';
+import { BodyShort, Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
+import { BekreftelseCheckbox } from '@components/bekreftelse/BekreftelseCheckbox';
 import { formatterDato } from '@utils/datetime';
 import styles from './KorrigerMeldekortSendInn.module.css';
 import { ArrowLeftIcon, PaperplaneIcon } from '@navikt/aksel-icons';
@@ -92,7 +86,7 @@ export const KorrigerMeldekortSendInn = ({
 
                 {/* Denne vil kun slå ut hvis brukeren går direkte til oppsummeringen uten å laste korrigeringssiden først for å populere dagene */}
                 {dager.length === 0 ? (
-                    <Alert variant="info">
+                    <Infokort variant={'info'}>
                         <Tekst id={'korrigeringIngenEndringer'} />
                         <Link
                             to={addLocaleSuffix(
@@ -104,7 +98,7 @@ export const KorrigerMeldekortSendInn = ({
                         >
                             {getTekstForSpråk({ id: 'korrigeringIngenEndringerTilbake' })}
                         </Link>
-                    </Alert>
+                    </Infokort>
                 ) : (
                     <>
                         <KorrigerMeldekortOppsummering
@@ -112,22 +106,22 @@ export const KorrigerMeldekortSendInn = ({
                             forrigeDager={originaleMeldekort.dager}
                             kanSendeInnHelg={kanSendeInnHelg}
                         />
-                        <ConfirmationPanel
+                        <BekreftelseCheckbox
                             label={getTekstForSpråk({ id: 'oppsummeringBekrefter' })}
                             checked={harBekreftet}
-                            onChange={() => {
+                            onChange={(checked) => {
                                 setVisFeil(false);
-                                setHarBekreftet(!harBekreftet);
+                                setHarBekreftet(checked);
                             }}
                             error={visFeil && <Tekst id={'forsideBekrefterFeil'} />}
                         />
 
-                        <Alert className={styles.alertInfo} variant="info">
+                        <Infokort className={styles.alertInfo} variant={'info'}>
                             {getTekstForSpråk({ id: 'korrigeringIkkeSendt' })}
-                        </Alert>
+                        </Infokort>
 
                         {apiClient.response?.status === 'error' && (
-                            <Alert variant="error">
+                            <Infokort variant={'feil'}>
                                 <BodyShort>{apiClient.response.error.errorBody.melding}</BodyShort>
                                 {apiClient.response.error.errorBody.kode ===
                                     ErrorCodes.meldekort_allerede_korrigert_og_ikke_lenger_gyldig && (
@@ -142,7 +136,7 @@ export const KorrigerMeldekortSendInn = ({
                                         })}
                                     </Link>
                                 )}
-                            </Alert>
+                            </Infokort>
                         )}
                         <HStack gap="space-8">
                             <Button

@@ -1,5 +1,6 @@
 import { Tekst } from '@components/tekst/Tekst';
-import { Alert, VStack } from '@navikt/ds-react';
+import { VStack } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { useEffect, useState } from 'react';
 import { EksternLenke } from '@components/lenke/EksternLenke';
 import { appConfig } from '@meldekort/common/appConfig';
@@ -18,7 +19,7 @@ export const DemoVarsel = () => {
         <>
             {isDemoMode && (
                 <VStack gap={'space-16'} style={{ paddingBottom: '1rem' }}>
-                    <Alert variant="info">
+                    <Infokort variant={'info'}>
                         Dette er en demo av Nav sitt nye meldekort for tiltakspenger som brukes i
                         forbindelse med brukertester. Dersom du ikke har meldt deg på en brukertest
                         så kan du komme tilbake til ditt meldekort med lenken under.
@@ -26,7 +27,7 @@ export const DemoVarsel = () => {
                         <EksternLenke href={appConfig.baseUrl}>
                             <Tekst id={'kvitteringTilbake'} />
                         </EksternLenke>
-                    </Alert>
+                    </Infokort>
                     <DemoPeriodeVelger />
                 </VStack>
             )}

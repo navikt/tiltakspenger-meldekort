@@ -1,4 +1,5 @@
-import { Alert, Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { Button, Heading, HStack, VStack } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { Tekst } from '@components/tekst/Tekst';
 import { formatterDatoTid } from '@utils/datetime';
 import { InternLenke } from '@components/lenke/InternLenke';
@@ -32,9 +33,9 @@ export const SisteInnsendteMeldekort = ({ meldekort, visHelg, finnesNyereMeldepe
                         }}
                     />
                     {finnesNyereMeldeperiode && (
-                        <Alert variant="info">
+                        <Infokort variant={'info'}>
                             {getTekstForSpråk({ id: 'korrigeringOppdatertAlert' })}
-                        </Alert>
+                        </Infokort>
                     )}
                     <Button
                         type={'button'}

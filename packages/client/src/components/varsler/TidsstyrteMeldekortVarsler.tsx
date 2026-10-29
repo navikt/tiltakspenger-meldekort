@@ -1,5 +1,6 @@
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
-import { Alert, BodyLong, Link, List, VStack } from '@navikt/ds-react';
+import { BodyLong, Link, List, VStack } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { Tekst } from '@components/tekst/Tekst';
 import { useSpråk } from '@context/språk/useSpråk';
 import { førstePåskedagPerÅr } from '@meldekort/common/appConfig';
@@ -20,9 +21,9 @@ export const TidsstyrteMeldekortVarsler = ({ meldekort, className }: Props) => {
     return (
         <VStack gap={'space-8'} className={className}>
             {aktuelleVarsler.map(({ id, Component }) => (
-                <Alert variant={'info'} key={id}>
+                <Infokort variant={'info'} key={id}>
                     <Component />
-                </Alert>
+                </Infokort>
             ))}
         </VStack>
     );

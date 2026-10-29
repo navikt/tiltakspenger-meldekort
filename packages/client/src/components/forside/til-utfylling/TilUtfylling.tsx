@@ -1,5 +1,5 @@
-import { ConfirmationPanel } from '@navikt/ds-react';
 import { Tekst } from '@components/tekst/Tekst';
+import { BekreftelseCheckbox } from '@components/bekreftelse/BekreftelseCheckbox';
 import { useEffect, useState } from 'react';
 import { FlashingButton } from '@components/flashing-button/FlashingButton';
 import { useRouting } from '@routing/useRouting';
@@ -27,13 +27,12 @@ export const TilUtfylling = ({ nesteMeldekort }: Props) => {
 
     return (
         <>
-            <ConfirmationPanel
-                onChange={() => {
+            <BekreftelseCheckbox
+                onChange={(checked) => {
                     setVisFeil(false);
-                    setHarBekreftet(!harBekreftet);
+                    setHarBekreftet(checked);
                 }}
                 checked={harBekreftet}
-                value={harBekreftet}
                 label={<Tekst id={'forsideBekrefter'} />}
                 error={visFeil && <Tekst id={'forsideBekrefterFeil'} />}
             />

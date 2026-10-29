@@ -1,4 +1,4 @@
-import { Button, Modal, RadioGroup } from '@navikt/ds-react';
+import { Button, Dialog, RadioGroup } from '@navikt/ds-react';
 
 import { useEffect, useState } from 'react';
 import { Tekst } from '@components/tekst/Tekst';
@@ -6,7 +6,6 @@ import { formatterDato } from '@utils/datetime';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
 import { FraværStatusPanel } from '@components/fyll-ut/steg-1-fravær/fravær-modal/status/FraværStatusPanel';
 
-import style from './FraværModal.module.css';
 import { MeldekortDagStatus } from '@meldekort/common/typer/MeldekortBruker';
 
 import { useSpråk } from '@context/språk/useSpråk';
@@ -42,66 +41,74 @@ export const FraværModal = () => {
     }, [valgtMeldekortDag]);
 
     return (
-        <Modal
+        <Dialog
             open={!!valgtMeldekortDag}
-            onClose={lukk}
-            header={{
-                heading: valgtMeldekortDag
-                    ? formatterDato({
-                          dato: valgtMeldekortDag.dag,
-                          medUkeDag: true,
-                          locale: valgtSpråk,
-                      })
-                    : '',
+            onOpenChange={(open) => {
+                if (!open) lukk();
             }}
-            closeOnBackdropClick={true}
-            className={style.modal}
         >
-            <Modal.Body>
-                <RadioGroup
-                    value={valgtStatus}
-                    legend={<Tekst id={'fraværModalHeader'} />}
-                    onChange={(value: MeldekortDagStatus) => {
-                        setValgtStatus(value);
-                    }}
-                >
-                    <FraværStatusPanel
-                        status={MeldekortDagStatus.FRAVÆR_SYK}
-                        ingressId={'fraværModalSykIngress'}
-                        valgtStatus={valgtStatus}
-                    />
-                    <FraværStatusPanel
-                        status={MeldekortDagStatus.FRAVÆR_SYKT_BARN}
-                        ingressId={'fraværModalSyktBarnIngress'}
-                        valgtStatus={valgtStatus}
-                    />
-                    <FraværStatusPanel
-                        status={MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU}
-                        ingressId={'fraværModalSterkeVelferdsgrunnerEllerJobbintervjuIngress'}
-                        valgtStatus={valgtStatus}
-                    />
-                    <FraværStatusPanel
-                        status={MeldekortDagStatus.FRAVÆR_ANNET}
-                        ingressId={'fraværModalIkkeGodkjentIngress'}
-                        valgtStatus={valgtStatus}
-                    />
-                </RadioGroup>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant={'primary'} onClick={() => lagreOgLukk(valgtStatus)}>
-                    <Tekst id={'lagre'} />
-                </Button>
-                <Button
-                    variant={'secondary'}
-                    onClick={() => lagreOgLukk(MeldekortDagStatus.IKKE_BESVART)}
-                >
-                    <Tekst
-                        id={
-                            valgtStatus === MeldekortDagStatus.IKKE_BESVART ? 'avbryt' : 'nullstill'
-                        }
-                    />
-                </Button>
-            </Modal.Footer>
-        </Modal>
+            <Dialog.Popup width={'small'}>
+                <Dialog.Header>
+                    <Dialog.Title>
+                        {valgtMeldekortDag
+                            ? formatterDato({
+                                  dato: valgtMeldekortDag.dag,
+                                  medUkeDag: true,
+                                  locale: valgtSpråk,
+                              })
+                            : ''}
+                    </Dialog.Title>
+                </Dialog.Header>
+                <Dialog.Body>
+                    <RadioGroup
+                        value={valgtStatus}
+                        legend={<Tekst id={'fraværModalHeader'} />}
+                        onChange={(value: MeldekortDagStatus) => {
+                            setValgtStatus(value);
+                        }}
+                    >
+                        <FraværStatusPanel
+                            status={MeldekortDagStatus.FRAVÆR_SYK}
+                            ingressId={'fraværModalSykIngress'}
+                            valgtStatus={valgtStatus}
+                        />
+                        <FraværStatusPanel
+                            status={MeldekortDagStatus.FRAVÆR_SYKT_BARN}
+                            ingressId={'fraværModalSyktBarnIngress'}
+                            valgtStatus={valgtStatus}
+                        />
+                        <FraværStatusPanel
+                            status={
+                                MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU
+                            }
+                            ingressId={'fraværModalSterkeVelferdsgrunnerEllerJobbintervjuIngress'}
+                            valgtStatus={valgtStatus}
+                        />
+                        <FraværStatusPanel
+                            status={MeldekortDagStatus.FRAVÆR_ANNET}
+                            ingressId={'fraværModalIkkeGodkjentIngress'}
+                            valgtStatus={valgtStatus}
+                        />
+                    </RadioGroup>
+                </Dialog.Body>
+                <Dialog.Footer>
+                    <Button
+                        variant={'secondary'}
+                        onClick={() => lagreOgLukk(MeldekortDagStatus.IKKE_BESVART)}
+                    >
+                        <Tekst
+                            id={
+                                valgtStatus === MeldekortDagStatus.IKKE_BESVART
+                                    ? 'avbryt'
+                                    : 'nullstill'
+                            }
+                        />
+                    </Button>
+                    <Button variant={'primary'} onClick={() => lagreOgLukk(valgtStatus)}>
+                        <Tekst id={'lagre'} />
+                    </Button>
+                </Dialog.Footer>
+            </Dialog.Popup>
+        </Dialog>
     );
 };

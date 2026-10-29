@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import style from './Steg5_Kvittering.module.css';
-import { Alert, VStack } from '@navikt/ds-react';
+import { VStack } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { InternLenke } from '@components/lenke/InternLenke';
 import { TekstSegmenter } from '@components/tekst/TekstSegmenter';
 import { Tekst } from '@components/tekst/Tekst';
@@ -40,9 +41,9 @@ export const Steg5_Kvittering = ({ brukersMeldekort }: SSRProps) => {
         <MeldekortStegWrapper>
             <VStack gap="space-32">
                 <div>
-                    <Alert variant={'success'} className={style.kvittering}>
+                    <Infokort variant={'suksess'} className={style.kvittering}>
                         <TekstSegmenter id={'kvittering'} spacing={true} />
-                    </Alert>
+                    </Infokort>
                     <InternLenke path={getPath(siteRoutePaths.forside)} locale={valgtSpråk}>
                         <Tekst id={'kvitteringTilbake'} />
                     </InternLenke>

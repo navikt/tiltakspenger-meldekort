@@ -1,6 +1,7 @@
 import style from './Steg3_Deltakelse.module.css';
 import { useMeldekortUtfylling } from '@context/meldekort-utfylling/useMeldekortUtfylling';
-import { Alert, BodyLong } from '@navikt/ds-react';
+import { BodyLong } from '@navikt/ds-react';
+import { Infokort } from '@components/infokort/Infokort';
 import { Kalender } from '@components/kalender/Kalender';
 import { Tekst } from '@components/tekst/Tekst';
 import { antallDagerValidering } from '@utils/utfyllingValidering';
@@ -40,11 +41,11 @@ const MeldekortEksistererIkke = () => {
     const { valgtSpråk } = useSpråk();
     return (
         <div>
-            <Alert variant={'error'}>
+            <Infokort variant={'feil'}>
                 <InternLenke path={getPath(siteRoutePaths.forside)} locale={valgtSpråk}>
                     En feil har skjedd. Tilbake til forsiden
                 </InternLenke>
-            </Alert>
+            </Infokort>
         </div>
     );
 };
