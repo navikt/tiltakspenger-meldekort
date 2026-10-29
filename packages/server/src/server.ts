@@ -8,6 +8,7 @@ import { cspMiddleware } from '@routing/cspMiddleware';
 import { setupInternalRoutes } from '@routing/routes/internalRoutes';
 import { setupSiteRoutes } from '@routing/routes/siteRoutes';
 import { setupApiRoutes } from '@routing/routes/apiRoutes';
+import { setupTestScenarioRoutes } from '@routing/routes/testScenarioRoutes';
 import { initDevRenderer } from '@ssr/devHtmlRenderer';
 import { initProdRenderer } from '@ssr/prodHtmlRenderer';
 
@@ -41,6 +42,9 @@ validateEnv()
 
         setupInternalRoutes(siteRouter);
         setupApiRoutes(siteRouter);
+        if (__INKLUDER_TESTSCENARIO__) {
+            setupTestScenarioRoutes(siteRouter);
+        }
         setupErrorHandler(siteRouter, htmlRenderer);
 
         return app;

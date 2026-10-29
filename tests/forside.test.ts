@@ -1,32 +1,38 @@
-import test, { expect } from '@playwright/test';
-import { getTekst } from '../packages/client/src/tekster/tekster';
-import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
+import { expect, test } from './helpers/mockApi';
+import {
+    axeTestUtenDekoratøren,
+    checkbox,
+    gåTil,
+    knapp,
+    tekst,
+    testsBaseUrl,
+} from './helpers/utils';
+import { nyMeldekortTilUtfylling } from './test-data-generators/MeldekortTestData';
+import { nyMeldekortBruker } from './test-data-generators/MeldekortBrukerTestData';
 
-test.beforeEach(async ({ page }) => {
-    await page.goto(`${testsBaseUrl}`);
-    await klikkCookieBanner(page);
+const meldekort = nyMeldekortTilUtfylling();
+
+test.beforeEach(async ({ page, mockApi }) => {
+    await mockApi({
+        bruker: nyMeldekortBruker({ nesteMeldekort: meldekort }),
+        meldekort: [meldekort],
+    });
+    await gåTil(page, '/');
 });
 
 test('Kan navigere til meldekort utfyllingen etter bekreftelse', async ({ page }) => {
-    const startUtfyllingKnapp = page.getByRole('button', {
-        name: getTekst({ id: 'startUtfylling', locale: 'nb' }),
-    });
-    const bekreftCheckbox = page.getByRole('checkbox', {
-        name: getTekst({ id: 'forsideBekrefter', locale: 'nb' }),
-    });
-    const bekreftVarsel = page.getByText(getTekst({ id: 'forsideBekrefterFeil', locale: 'nb' }));
-
-    await expect(startUtfyllingKnapp).toBeVisible();
+    const startUtfyllingKnapp = knapp(page, 'startUtfylling');
+    const bekreftVarsel = page.getByText(tekst('forsideBekrefterFeil'));
 
     await startUtfyllingKnapp.click();
     await expect(bekreftVarsel).toBeVisible();
-    await expect(page).toHaveURL(testsBaseUrl);
+    await expect(page).toHaveURL(`${testsBaseUrl}/`);
 
-    await bekreftCheckbox.click();
-    await expect(bekreftVarsel).not.toBeVisible();
+    await checkbox(page, 'forsideBekrefter').click();
+    await expect(bekreftVarsel).toBeHidden();
 
     await startUtfyllingKnapp.click();
-    await expect(page).toHaveURL(/fraver$/);
+    await expect(page).toHaveURL(`${testsBaseUrl}/${meldekort.id}/fraver`);
 });
 
 test('Skal ikke ha UU-feil', async ({ page }) => {

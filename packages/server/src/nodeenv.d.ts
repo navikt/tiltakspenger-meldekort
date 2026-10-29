@@ -1,4 +1,7 @@
 declare global {
+    // Settes av esbuild (build.mjs). Er false i produksjonsbygget, slik at testscenario-koden fjernes helt.
+    const __INKLUDER_TESTSCENARIO__: boolean;
+
     namespace NodeJS {
         interface ProcessEnv {
             MELDEKORT_API_URL: string;

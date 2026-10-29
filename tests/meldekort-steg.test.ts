@@ -1,397 +1,234 @@
-import { axeTestUtenDekoratøren, klikkCookieBanner, testsBaseUrl } from './helpers/utils';
+import { Page } from '@playwright/test';
+import { ApiScenario, expect, MockApi, test } from './helpers/mockApi';
 import {
+    axeTestUtenDekoratøren,
+    checkbox,
+    gåTil,
+    knapp,
+    lenke,
+    radio,
+    tekst,
+    tekstSegmenter,
+    testsBaseUrl,
+} from './helpers/utils';
+import {
+    antallDagerMedStatus,
     fyllUtDeltattSteg,
     fyllUtFraværSteg,
     fyllUtLønnSteg,
-    sendInnOgAssertInnsending,
+    fyllUtSteg,
+    sendInn,
 } from './helpers/utfylling';
-import { getTekst, getTekster } from '../packages/client/src/tekster/tekster';
-import test, { expect, Page } from '@playwright/test';
-import { MeldekortStatus } from '../packages/common/src/typer/MeldekortBruker';
-import {
-    nyMeldekortDagerForPeriode,
-    nyUtfylltMeldekort,
-} from './test-data-generators/MeldekortTestData';
+import { MeldekortDagStatus } from '../packages/common/src/typer/MeldekortBruker';
+import { MeldekortUtfyltDTO } from '../packages/common/src/typer/BrukersMeldekortUtfylling';
 import { ErrorCodes } from '../packages/client/src/utils/apiClient';
+import { nyMeldekortTilUtfylling } from './test-data-generators/MeldekortTestData';
+import { nyMeldekortBruker } from './test-data-generators/MeldekortBrukerTestData';
+
+// 14 dager uten noen besvarte, og maks 10 dager som kan fylles ut
+const meldekort = nyMeldekortTilUtfylling();
+
+const startUtfylling = async (page: Page, mockApi: MockApi, scenario: ApiScenario = {}) => {
+    await mockApi({ meldekort: [meldekort], ...scenario });
+    await gåTil(page, `/${meldekort.id}/fraver`);
+};
 
 test.describe('Meldekort steg', () => {
-    // TODO: disse testene er avhengig av mock-dataene fra demo-modusen til appen
-    // Burde ha mock-data som defineres i testene
-    test.beforeEach(async ({ page }) => {
-        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
-        await klikkCookieBanner(page);
+    test.beforeEach(async ({ page, mockApi }) => {
+        await startUtfylling(page, mockApi);
     });
 
     test('Kan ikke gå videre uten å velge fravær/ikke fravær', async ({ page }) => {
-        const nesteKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'neste', locale: 'nb' }),
-        });
-        const ikkeValgtVarsel = page.getByText(
-            getTekst({ id: 'fraværSpørsmålIkkeValgt', locale: 'nb' }),
-        );
+        await knapp(page, 'neste').click();
 
-        await nesteKnapp.click();
-
-        await expect(ikkeValgtVarsel).toBeVisible();
+        await expect(page.getByText(tekst('fraværSpørsmålIkkeValgt'))).toBeVisible();
         await axeTestUtenDekoratøren(page, 'Fylt ut deltagelse uten bekreftelse');
     });
 
     test('Går til send-inn med akseptabelt antall dager utfylt og ingen fravær eller lønn valgt', async ({
         page,
     }) => {
-        await fyllUtFraværSteg(page, 0);
-        await fyllUtLønnSteg(page, 0);
-        await fyllUtDeltattSteg(page, 10);
+        await fyllUtSteg(page, { fravær: 0, lønn: 0, deltatt: 10 });
 
-        const sendInnKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'sendInn', locale: 'nb' }),
-        });
-
-        await expect(sendInnKnapp).toBeVisible();
+        await expect(knapp(page, 'sendInn')).toBeVisible();
         await axeTestUtenDekoratøren(page, 'Send inn uten fravær eller lønn');
     });
 
     test('Kan fylle ut fravær og gå til send-inn', async ({ page }) => {
-        const sendInnKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'sendInn', locale: 'nb' }),
-        });
+        await fyllUtSteg(page, { fravær: 2, lønn: 0, deltatt: 8 });
 
-        await fyllUtFraværSteg(page, 2);
-        await fyllUtLønnSteg(page, 0);
-        await fyllUtDeltattSteg(page, 8);
-
-        await expect(sendInnKnapp).toBeVisible();
+        await expect(knapp(page, 'sendInn')).toBeVisible();
         await axeTestUtenDekoratøren(page, 'Send inn med fravær');
     });
 
     test('Kan sende inn et meldekort', async ({ page }) => {
-        await fyllUtFraværSteg(page, 0);
-        await fyllUtLønnSteg(page, 0);
-        await fyllUtDeltattSteg(page, 10);
-        await sendInnOgAssertInnsending(page, {
-            antallDagerMedDeltatt: 10,
-            antallDagerMedFravær: 0,
-            antallDagerMedLønn: 0,
-            antallDagerMedIkkeBesvart: 4,
-        });
+        await fyllUtSteg(page, { fravær: 0, lønn: 0, deltatt: 10 });
+
+        const innsendt = await sendInn(page);
+
+        forventAntallDager(innsendt, { deltatt: 10, fravær: 0, lønn: 0, ikkeBesvart: 4 });
         await axeTestUtenDekoratøren(page, 'Kvittering etter innsending');
     });
 
     test('Utfylt fravær fjernes om bruker velger at de ikke har hatt fravær', async ({ page }) => {
-        const forrigeKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'forrige', locale: 'nb' }),
-            exact: true,
-        });
-        const nesteKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'neste', locale: 'nb' }),
-            exact: true,
-        });
-        const radioHarIkkeHattFravær = page.getByRole('radio', {
-            name: getTekst({ id: 'fraværHarHattFraværSvarNei', locale: 'nb' }),
-        });
         await fyllUtFraværSteg(page, 3);
 
-        await forrigeKnapp.click();
+        await knapp(page, 'forrige').click();
         await expect(page).toHaveURL(/fraver$/);
-        await radioHarIkkeHattFravær.click();
-        await nesteKnapp.click();
+        await radio(page, 'fraværHarHattFraværSvarNei').click();
+        await knapp(page, 'neste').click();
 
         await fyllUtLønnSteg(page, 0);
         await fyllUtDeltattSteg(page, 10);
 
-        // På steget for bekreftelse skal det ikke være noen dager med fravær
-        await sendInnOgAssertInnsending(page, {
-            antallDagerMedDeltatt: 10,
-            antallDagerMedFravær: 0,
-            antallDagerMedLønn: 0,
-            antallDagerMedIkkeBesvart: 4,
-        });
+        const innsendt = await sendInn(page);
+        forventAntallDager(innsendt, { deltatt: 10, fravær: 0, lønn: 0, ikkeBesvart: 4 });
     });
 
     test('Utfylt lønn fjernes om bruker velger at de ikke har hatt lønn', async ({ page }) => {
-        const forrigeKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'forrige', locale: 'nb' }),
-            exact: true,
-        });
-        const nesteKnapp = page.getByRole('button', {
-            name: getTekst({ id: 'neste', locale: 'nb' }),
-            exact: true,
-        });
-        const radioHarIkkeHattFravær = page.getByRole('radio', {
-            name: getTekst({ id: 'lønnHarMottattLønnSvarNei', locale: 'nb' }),
-        });
         await fyllUtFraværSteg(page, 0);
         await fyllUtLønnSteg(page, 3);
 
-        await forrigeKnapp.click();
+        await knapp(page, 'forrige').click();
         await expect(page).toHaveURL(/lonn$/);
-        await radioHarIkkeHattFravær.click();
-        await nesteKnapp.click();
+        await radio(page, 'lønnHarMottattLønnSvarNei').click();
+        await knapp(page, 'neste').click();
 
         await fyllUtDeltattSteg(page, 10);
 
-        // På steget for bekreftelse skal det ikke være noen dager med fravær
-        await sendInnOgAssertInnsending(page, {
-            antallDagerMedDeltatt: 10,
-            antallDagerMedFravær: 0,
-            antallDagerMedLønn: 0,
-            antallDagerMedIkkeBesvart: 4,
-        });
+        const innsendt = await sendInn(page);
+        forventAntallDager(innsendt, { deltatt: 10, fravær: 0, lønn: 0, ikkeBesvart: 4 });
     });
 });
 
 test.describe('kontroll av helg av meldekortet', () => {
-    test('kan ikke fylle ut helgedager dersom saken ikke tillater det', async ({ page }) => {
-        let mockResponseKanIkkeFylleUtHelg = {
-            brukersMeldekort: nyUtfylltMeldekort({
-                id: 'meldekort_2',
-                dager: nyMeldekortDagerForPeriode({}),
-                status: MeldekortStatus.KAN_UTFYLLES,
-            }),
-            kanFylleUtHelg: false,
-        };
+    const ukedag = 'Fredag 10. januar';
+    const helgedager = [
+        'Lørdag 11. januar',
+        'Søndag 12. januar',
+        'Lørdag 18. januar',
+        'Søndag 19. januar',
+    ];
 
-        await page.route(
-            '*/**/meldekort_2/fraver/data',
-            async (route) => await route.fulfill({ json: mockResponseKanIkkeFylleUtHelg }),
-        );
+    for (const kanFylleUtHelg of [false, true]) {
+        test(`helgedager ${kanFylleUtHelg ? 'kan' : 'kan ikke'} fylles ut når saken ${kanFylleUtHelg ? '' : 'ikke '}tillater det`, async ({
+            page,
+            mockApi,
+        }) => {
+            const forventHelgedager = async () => {
+                await expect(page.getByText(ukedag)).toBeVisible();
+                for (const helgedag of helgedager) {
+                    if (kanFylleUtHelg) {
+                        await expect(page.getByText(helgedag)).toBeVisible();
+                    } else {
+                        await expect(page.getByText(helgedag)).toBeHidden();
+                    }
+                }
+            };
 
-        await page.route(
-            '*/**/meldekort_2/lonn/data',
-            async (route) => await route.fulfill({ json: mockResponseKanIkkeFylleUtHelg }),
-        );
+            await startUtfylling(page, mockApi, {
+                bruker: nyMeldekortBruker({ kanSendeInnHelgForMeldekort: kanFylleUtHelg }),
+            });
 
-        await page.route(
-            '*/**/meldekort_2/deltakelse/data',
-            async (route) => await route.fulfill({ json: mockResponseKanIkkeFylleUtHelg }),
-        );
+            await radio(page, 'fraværHarHattFraværSvarJa').click();
+            await forventHelgedager();
+            await radio(page, 'fraværHarHattFraværSvarNei').click();
+            await knapp(page, 'neste').click();
 
-        await page.route(
-            '*/**/meldekort_2/send-inn/data',
-            async (route) => await route.fulfill({ json: mockResponseKanIkkeFylleUtHelg }),
-        );
+            await expect(page).toHaveURL(/lonn$/);
+            await radio(page, 'lønnHarMottattLønnSvarJa').click();
+            await forventHelgedager();
+            await radio(page, 'lønnHarMottattLønnSvarNei').click();
+            await knapp(page, 'neste').click();
 
-        //Fravær steg
-        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
-        await klikkCookieBanner(page);
-        await page.waitForURL(/fraver$/);
-        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarJa', locale: 'nb' })).click();
-        // OBS: datoene for disse testene stemmer ikke med hva vi faktisk setter i mock-responsen over
-        // Denne mock-responsen påvirker kun client-side data-fetching, men meldekort-stegene oppdaterer ikke
-        // dagene etter den initielle render'en
-        //
-        // Tidligere hadde vi en bug som hindret at data fra den initielle server-responsen ble benyttet i dynamiske routes
-        // Dette ble fikset i commit 4c1b865b - men etter dette er vi avhengig av at serveren faktisk returnerer korrekte data :D
-        //
-        // TODO: mock server-responsen når denne issuen er fikset:
-        // https://trello.com/c/72ig6Pm1/1743-mulighet-for-%C3%A5-tilpasse-server-side-api-mocks-for-tester
-        await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 12. januar')).toBeHidden();
-        await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 19. januar')).toBeHidden();
+            await expect(page).toHaveURL(/deltakelse$/);
+            await forventHelgedager();
+            await knapp(page, 'neste').click();
 
-        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarNei', locale: 'nb' })).click();
-        await page.getByText('Neste steg').click();
-
-        //Lønn steg
-        await page.waitForURL(/lonn$/);
-        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarJa', locale: 'nb' })).click();
-        await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 12. januar')).toBeHidden();
-        await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 19. januar')).toBeHidden();
-        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarNei', locale: 'nb' })).click();
-        await page.getByText('Neste steg').click();
-
-        //Deltatt steg
-        await page.waitForURL(/deltakelse$/);
-        await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 12. januar')).toBeHidden();
-        await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 19. januar')).toBeHidden();
-        await page.getByText('Neste steg').click();
-
-        //Send inn steg
-        await page.waitForURL(/send-inn$/);
-        await expect(page.getByText('Lørdag 11. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 12. januar')).toBeHidden();
-        await expect(page.getByText('Lørdag 18. januar')).toBeHidden();
-        await expect(page.getByText('Søndag 19. januar')).toBeHidden();
-    });
-
-    test('kan fylle ut helgedager dersom saken tillater det', async ({ page }) => {
-        let mockResponseKanFylleUtHelg = {
-            brukersMeldekort: nyUtfylltMeldekort({
-                id: 'meldekort_2',
-                dager: nyMeldekortDagerForPeriode({}),
-                status: MeldekortStatus.KAN_UTFYLLES,
-            }),
-            kanFylleUtHelg: true,
-        };
-
-        await page.route(
-            '*/**/meldekort_2/fraver/data',
-            async (route) => await route.fulfill({ json: mockResponseKanFylleUtHelg }),
-        );
-
-        await page.route(
-            '*/**/meldekort_2/lonn/data',
-            async (route) => await route.fulfill({ json: mockResponseKanFylleUtHelg }),
-        );
-
-        await page.route(
-            '*/**/meldekort_2/deltakelse/data',
-            async (route) => await route.fulfill({ json: mockResponseKanFylleUtHelg }),
-        );
-
-        await page.route(
-            '*/**/meldekort_2/send-inn/data',
-            async (route) => await route.fulfill({ json: mockResponseKanFylleUtHelg }),
-        );
-
-        //Fravær steg
-        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
-        await klikkCookieBanner(page);
-        await page.waitForURL(/fraver$/);
-        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarJa', locale: 'nb' })).click();
-        await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 12. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 19. januar')).toBeVisible();
-
-        await page.getByText(getTekst({ id: 'fraværHarHattFraværSvarNei', locale: 'nb' })).click();
-        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
-
-        //Lønn steg
-        await page.waitForURL(/lonn$/);
-        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarJa', locale: 'nb' })).click();
-        await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 12. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 19. januar')).toBeVisible();
-
-        await page.getByText(getTekst({ id: 'lønnHarMottattLønnSvarNei', locale: 'nb' })).click();
-        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
-
-        //Deltatt steg
-        await page.waitForURL(/deltakelse$/);
-        await expect(page.getByText('Fredag 10. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 12. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 19. januar')).toBeVisible();
-
-        await page.getByText(getTekst({ id: 'neste', locale: 'nb' })).click();
-
-        //Send inn steg
-        await page.waitForURL(/send-inn$/);
-        await expect(page.getByText('Lørdag 11. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 12. januar')).toBeVisible();
-        await expect(page.getByText('Lørdag 18. januar')).toBeVisible();
-        await expect(page.getByText('Søndag 19. januar')).toBeVisible();
-    });
+            await expect(page).toHaveURL(/send-inn$/);
+            await forventHelgedager();
+        });
+    }
 });
 
 test.describe('Send inn - feilmeldinger ved innsending', () => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
-        await klikkCookieBanner(page);
-    });
-
-    // Mocker /api/send-inn til å feile med en gitt backend-feilkode (errorBody.kode)
-    const mockSendInnFeil = async (page: Page, kode: ErrorCodes, status = 409) => {
-        await page.route('*/**/api/send-inn', async (route) => {
-            await route.fulfill({
+    // Backend-meldingen skal IKKE vises til bruker - vi viser vår egen lokaliserte tekst
+    const startUtfyllingMedSendInnFeil = async (
+        page: Page,
+        mockApi: MockApi,
+        kode: ErrorCodes,
+        status = 409,
+    ) =>
+        startUtfylling(page, mockApi, {
+            sendInnSvar: {
                 status,
-                body: JSON.stringify({
-                    kode,
-                    // Backend-meldingen skal IKKE vises til bruker - vi viser vår egen lokaliserte tekst
-                    melding: 'Intern backend-melding som ikke skal vises',
-                }),
-            });
+                body: { kode, melding: 'Intern backend-melding som ikke skal vises' },
+            },
         });
-    };
 
     const fyllUtOgSendInn = async (page: Page) => {
-        await fyllUtFraværSteg(page, 0);
-        await fyllUtLønnSteg(page, 0);
-        await fyllUtDeltattSteg(page, 10);
-
+        await fyllUtSteg(page, { fravær: 0, lønn: 0, deltatt: 10 });
         await expect(page).toHaveURL(/send-inn$/);
-        await page
-            .getByRole('checkbox', {
-                name: getTekst({ id: 'oppsummeringBekrefter', locale: 'nb' }),
-            })
-            .click();
-        await page.getByRole('button', { name: getTekst({ id: 'sendInn', locale: 'nb' }) }).click();
+        await checkbox(page, 'oppsummeringBekrefter').click();
+        await knapp(page, 'sendInn').click();
     };
 
     test('viser melding om at meldekortet allerede er sendt inn, med lenke til innsendte meldekort', async ({
         page,
+        mockApi,
     }) => {
-        await mockSendInnFeil(page, ErrorCodes.meldekort_allerede_mottatt);
+        await startUtfyllingMedSendInnFeil(page, mockApi, ErrorCodes.meldekort_allerede_mottatt);
         await fyllUtOgSendInn(page);
 
-        const [førsteSegment] = getTekster({
-            id: 'innsendingFeiletAlleredeMottatt',
-            locale: 'nb',
-        });
-        await expect(page.getByText(førsteSegment)).toBeVisible();
+        await expect(
+            page.getByText(tekstSegmenter('innsendingFeiletAlleredeMottatt')[0]),
+        ).toBeVisible();
 
-        const lenke = page.getByRole('link', {
-            name: getTekst({ id: 'tilInnsendteMeldekort', locale: 'nb' }),
-        });
-        await expect(lenke).toBeVisible();
-
-        await lenke.click();
+        await lenke(page, 'tilInnsendteMeldekort').click();
         await expect(page).toHaveURL(`${testsBaseUrl}/innsendte`);
     });
 
     test('viser melding om utdatert meldekort, med lenke tilbake til oversikten', async ({
         page,
+        mockApi,
     }) => {
-        await mockSendInnFeil(page, ErrorCodes.meldekort_deaktivert);
+        await startUtfyllingMedSendInnFeil(page, mockApi, ErrorCodes.meldekort_deaktivert);
         await fyllUtOgSendInn(page);
 
-        const [førsteSegment] = getTekster({
-            id: 'innsendingFeiletMeldekortUtdatert',
-            locale: 'nb',
-        });
-        await expect(page.getByText(førsteSegment)).toBeVisible();
+        await expect(
+            page.getByText(tekstSegmenter('innsendingFeiletMeldekortUtdatert')[0]),
+        ).toBeVisible();
 
-        const lenke = page.getByRole('link', {
-            name: getTekst({ id: 'tilbakeTilOversikten', locale: 'nb' }),
-        });
-        await expect(lenke).toBeVisible();
-
-        await lenke.click();
+        await lenke(page, 'tilbakeTilOversikten').click();
         await expect(page).toHaveURL(`${testsBaseUrl}/`);
     });
 
     test('viser generell teknisk feil uten navigasjonslenke, og blir værende på send-inn-steget', async ({
         page,
+        mockApi,
     }) => {
-        await mockSendInnFeil(page, ErrorCodes.uventet_feil_ved_lagring, 500);
+        await startUtfyllingMedSendInnFeil(page, mockApi, ErrorCodes.uventet_feil_ved_lagring, 500);
         await fyllUtOgSendInn(page);
 
-        const [førsteSegment] = getTekster({
-            id: 'innsendingFeiletTekniskFeil',
-            locale: 'nb',
-        });
-        await expect(page.getByText(førsteSegment)).toBeVisible();
-
-        // Tekniske feil skal ikke vise noen navigasjonslenke
         await expect(
-            page.getByRole('link', {
-                name: getTekst({ id: 'tilbakeTilOversikten', locale: 'nb' }),
-            }),
-        ).toBeHidden();
-        await expect(
-            page.getByRole('link', {
-                name: getTekst({ id: 'tilInnsendteMeldekort', locale: 'nb' }),
-            }),
-        ).toBeHidden();
-
+            page.getByText(tekstSegmenter('innsendingFeiletTekniskFeil')[0]),
+        ).toBeVisible();
+        await expect(lenke(page, 'tilbakeTilOversikten')).toBeHidden();
+        await expect(lenke(page, 'tilInnsendteMeldekort')).toBeHidden();
         await expect(page).toHaveURL(/send-inn$/);
     });
 });
+
+const forventAntallDager = (
+    innsendt: MeldekortUtfyltDTO,
+    forventet: { deltatt: number; fravær: number; lønn: number; ikkeBesvart: number },
+) => {
+    const antall = (status: MeldekortDagStatus) => antallDagerMedStatus(innsendt, status);
+
+    expect({
+        deltatt: antall(MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET),
+        fravær: antall(MeldekortDagStatus.FRAVÆR_SYK),
+        lønn: antall(MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET),
+        ikkeBesvart: antall(MeldekortDagStatus.IKKE_BESVART),
+    }).toEqual(forventet);
+};

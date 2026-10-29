@@ -1,5 +1,7 @@
 import { Request } from 'express';
 import { FetchFraApi } from '@fetch/apiFetch';
+import { lesCookie, mockResponse } from '@fetch/mockUtils';
+import { hentTestScenarioId, svarFraTestScenario } from '@fetch/testScenario';
 import {
     Meldekort,
     MeldekortDagStatus,
@@ -21,6 +23,13 @@ import {
 dayjs.extend(weekOfYear);
 
 export const fetchFraApiMock: FetchFraApi = async (req, path, _2, body) => {
+    if (__INKLUDER_TESTSCENARIO__) {
+        const testScenarioId = hentTestScenarioId(req);
+        if (testScenarioId) {
+            return svarFraTestScenario(testScenarioId, path);
+        }
+    }
+
     const tilstand = hentDemoTilstand(req);
 
     if (path === 'bruker') {
@@ -94,13 +103,6 @@ export const fetchFraApiMock: FetchFraApi = async (req, path, _2, body) => {
 
     return mockResponse(404, 'Mocket response ikke funnet');
 };
-
-const mockResponse = (status: number, body: any) =>
-    ({
-        status,
-        ok: status >= 200 && status < 300,
-        json: () => body,
-    }) as unknown as ReturnType<typeof fetchFraApiMock>;
 
 const formatDate = (date: string, plusDays: number = 0) => {
     return dayjs(date).add(plusDays, 'days').format('YYYY-MM-DD');
@@ -226,22 +228,6 @@ const hentDemoTilstand = (req: Request): DemoTilstand => {
     tilstandPerInnvilgelse.set(nøkkel, tilstand);
 
     return tilstand;
-};
-
-const lesCookie = (req: Request, navn: string): string | null => {
-    const header = req.headers.cookie;
-    if (!header) {
-        return null;
-    }
-
-    for (const del of header.split(';')) {
-        const [key, ...verdi] = del.trim().split('=');
-        if (key === navn) {
-            return decodeURIComponent(verdi.join('='));
-        }
-    }
-
-    return null;
 };
 
 const lagTilstandForInnvilgelse = (innvilgelse: DemoInnvilgelsesperiode): DemoTilstand => {

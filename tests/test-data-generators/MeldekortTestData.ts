@@ -4,157 +4,94 @@ import {
     MeldekortDagStatus,
     MeldekortStatus,
 } from '../../packages/common/src/typer/MeldekortBruker';
-import { Nullable } from '../../packages/common/src/typer/Nullable';
 import { MeldekortMedSisteMeldeperiode } from '../../packages/common/src/typer/alle-meldekort';
 
-export const nyMeldekortDag = ({
-    dag = '2023-01-02',
-    status = MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-}: {
-    dag: string;
-    status?: MeldekortDagStatus;
-}): MeldekortDag => ({
-    dag,
-    status,
-});
+const { DELTATT_UTEN_LØNN_I_TILTAKET, DELTATT_MED_LØNN_I_TILTAKET, IKKE_BESVART } =
+    MeldekortDagStatus;
 
-export const nyMeldekortDagerForPeriode = ({
-    fraOgMed = '2023-01-02',
-    tilOgMed = '2023-01-15',
-}: {
-    fraOgMed?: string;
-    tilOgMed?: string;
-}): MeldekortDag[] => {
-    const start = new Date(fraOgMed);
-    const end = new Date(tilOgMed);
+/**
+ * Lager én dag per status, med påfølgende datoer fra og med `fraOgMed` (YYYY-MM-DD)
+ */
+export const lagDager = (fraOgMed: string, statuser: MeldekortDagStatus[]): MeldekortDag[] => {
+    const start = new Date(`${fraOgMed}T00:00:00Z`);
 
-    const dager: MeldekortDag[] = [];
-    let current = new Date(start);
-
-    while (current <= end) {
-        const dag = current.toISOString().slice(0, 10); // YYYY-MM-DD
-        dager.push(
-            nyMeldekortDag({
-                dag,
-                status: MeldekortDagStatus.IKKE_BESVART,
-            }),
-        );
-        current.setDate(current.getDate() + 1);
-    }
-
-    return dager;
+    return statuser.map((status, index) => {
+        const dato = new Date(start);
+        dato.setUTCDate(start.getUTCDate() + index);
+        return { dag: dato.toISOString().slice(0, 10), status };
+    });
 };
 
-export const nyUtfylltMeldekort = ({
-    id = '12345',
-    meldeperiodeId = '12345',
-    kjedeId = '67890',
-    versjon = 1,
-    kanSendes = null,
-    periode = { fraOgMed: '2023-01-02', tilOgMed: '2023-01-15' },
-    uke1 = 1,
-    uke2 = 2,
-    maksAntallDager = 10,
-    innsendt = '2023-01-15T12:00:00Z',
-    status = MeldekortStatus.INNSENDT,
-    dager = [
-        nyMeldekortDag({
-            dag: '2023-01-02',
-            status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-03',
-            status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-04',
-            status: MeldekortDagStatus.FRAVÆR_ANNET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-05',
-            status: MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-06',
-            status: MeldekortDagStatus.FRAVÆR_SYK,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-07',
-            status: MeldekortDagStatus.IKKE_BESVART,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-08',
-            status: MeldekortDagStatus.IKKE_BESVART,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-09',
-            status: MeldekortDagStatus.FRAVÆR_SYKT_BARN,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-10',
-            status: MeldekortDagStatus.DELTATT_MED_LØNN_I_TILTAKET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-11',
-            status: MeldekortDagStatus.DELTATT_UTEN_LØNN_I_TILTAKET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-12',
-            status: MeldekortDagStatus.FRAVÆR_ANNET,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-13',
-            status: MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-14',
-            status: MeldekortDagStatus.IKKE_BESVART,
-        }),
-        nyMeldekortDag({
-            dag: '2023-01-15',
-            status: MeldekortDagStatus.IKKE_BESVART,
-        }),
-    ],
-}: {
-    id?: string;
-    meldeperiodeId?: string;
-    kjedeId?: string;
-    versjon?: number;
-    periode?: { fraOgMed: string; tilOgMed: string };
-    uke1?: number;
-    uke2?: number;
-    maksAntallDager?: number;
-    innsendt?: Nullable<string>;
-    dager?: MeldekortDag[];
-    status?: MeldekortStatus;
-    kanSendes?: Nullable<string>;
-}): Meldekort => ({
-    id,
-    meldeperiodeId: meldeperiodeId,
-    kjedeId: kjedeId,
-    versjon: versjon,
-    fraOgMed: periode.fraOgMed,
-    tilOgMed: periode.tilOgMed,
-    uke1,
-    uke2,
-    maksAntallDager,
-    innsendt,
-    kanSendes: kanSendes,
-    dager,
-    status,
-});
+const toUkerMed = (status: MeldekortDagStatus) => Array<MeldekortDagStatus>(14).fill(status);
+
+const utfylteStatuser: MeldekortDagStatus[] = [
+    DELTATT_MED_LØNN_I_TILTAKET,
+    DELTATT_UTEN_LØNN_I_TILTAKET,
+    MeldekortDagStatus.FRAVÆR_ANNET,
+    MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
+    MeldekortDagStatus.FRAVÆR_SYK,
+    IKKE_BESVART,
+    IKKE_BESVART,
+    MeldekortDagStatus.FRAVÆR_SYKT_BARN,
+    DELTATT_MED_LØNN_I_TILTAKET,
+    DELTATT_UTEN_LØNN_I_TILTAKET,
+    MeldekortDagStatus.FRAVÆR_ANNET,
+    MeldekortDagStatus.FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU,
+    IKKE_BESVART,
+    IKKE_BESVART,
+];
+
+/**
+ * Et innsendt meldekort for 2. - 15. januar 2023 (uke 1 - 2)
+ */
+export const nyUtfylltMeldekort = (overrides: Partial<Meldekort> = {}): Meldekort => {
+    const fraOgMed = overrides.fraOgMed ?? '2023-01-02';
+
+    return {
+        id: '12345',
+        meldeperiodeId: '12345',
+        kjedeId: '67890',
+        versjon: 1,
+        fraOgMed,
+        tilOgMed: '2023-01-15',
+        uke1: 1,
+        uke2: 2,
+        maksAntallDager: 10,
+        innsendt: '2023-01-15T12:00:00Z',
+        kanSendes: null,
+        status: MeldekortStatus.INNSENDT,
+        dager: lagDager(fraOgMed, utfylteStatuser),
+        ...overrides,
+    };
+};
+
+/**
+ * Et meldekort som kan fylles ut for 6. - 19. januar 2025 (uke 2 - 3), der ingen dager er besvart
+ */
+export const nyMeldekortTilUtfylling = (overrides: Partial<Meldekort> = {}): Meldekort =>
+    nyUtfylltMeldekort({
+        id: 'meldekort_til_utfylling',
+        meldeperiodeId: 'meldeperiode_til_utfylling',
+        kjedeId: 'kjede_til_utfylling',
+        fraOgMed: '2025-01-06',
+        tilOgMed: '2025-01-19',
+        uke1: 2,
+        uke2: 3,
+        innsendt: null,
+        kanSendes: '2025-01-17',
+        status: MeldekortStatus.KAN_UTFYLLES,
+        dager: lagDager('2025-01-06', toUkerMed(IKKE_BESVART)),
+        ...overrides,
+    });
 
 export const nyUtfylltMeldekortMedSisteMeldeperiode = (
     meldekort: Meldekort,
 ): MeldekortMedSisteMeldeperiode => ({
-    meldekort: meldekort,
+    meldekort,
     sisteMeldeperiode: {
         meldeperiodeId: meldekort.meldeperiodeId,
         kjedeId: meldekort.kjedeId,
-        periode: {
-            fraOgMed: meldekort.fraOgMed,
-            tilOgMed: meldekort.tilOgMed,
-        },
+        periode: { fraOgMed: meldekort.fraOgMed, tilOgMed: meldekort.tilOgMed },
         maksAntallDagerForPeriode: meldekort.maksAntallDager,
     },
 });

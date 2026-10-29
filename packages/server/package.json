@@ -5,6 +5,7 @@
     "type": "module",
     "scripts": {
         "build": "node build.mjs",
+        "build:test": "node build.mjs --med-testscenario",
         "build-and-watch": "node build.mjs watch",
         "start": "DOTENV_CONFIG_PATH=../.env node -r dotenv/config ./dist/server.cjs",
         "deploy-and-start": "cd ../.. && pnpm deploy --filter @meldekort/server --prod --force deploy && cp -r packages/server/dist deploy/dist && cd deploy && NODE_ENV=production pnpm start",

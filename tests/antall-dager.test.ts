@@ -1,13 +1,12 @@
-import test, { expect, Page } from '@playwright/test';
-import { klikkCookieBanner, testsBaseUrl } from './helpers/utils';
+import test, { expect } from '@playwright/test';
+import { checkbox, gåTil, knapp, tekst, testsBaseUrl } from './helpers/utils';
 import {
+    antallDagerMedStatus,
     Fraværstype,
-    fyllUtDeltattSteg,
-    fyllUtFraværSteg,
-    fyllUtLønnSteg,
+    fyllUtSteg,
     sendInn,
+    Utfylling,
 } from './helpers/utfylling';
-import { getTekst } from '../packages/client/src/tekster/tekster';
 import { MeldekortDagStatus } from '../packages/common/src/typer/MeldekortBruker';
 import { demoInnvilgelseCookieNavn, serialiserDemoInnvilgelse } from '../packages/common/src/demo';
 
@@ -23,9 +22,9 @@ const {
 const antallDager = 4;
 const innvilgelse = { fraOgMed: '2026-10-12', tilOgMed: '2026-10-25', antallDager };
 
-type Utfylling = { fravær: Fraværstype[]; lønn: number; deltatt: number };
+type UtfyllingMedFraværstyper = Utfylling & { fravær: Fraværstype[] };
 
-const kanSendesInn: Array<{ navn: string } & Utfylling> = [
+const kanSendesInn: Array<{ navn: string } & UtfyllingMedFraværstyper> = [
     { navn: 'bare deltakelse', fravær: [], lønn: 0, deltatt: 4 },
     {
         navn: 'eget fravær og barns fravær',
@@ -81,12 +80,6 @@ const stoppes: Array<{ navn: string; feil: 'forMangeDagerEnkel' | 'forFaDagerEnk
         },
     ];
 
-const fyllUt = async (page: Page, { fravær, lønn, deltatt }: Utfylling) => {
-    await fyllUtFraværSteg(page, fravær);
-    await fyllUtLønnSteg(page, lønn);
-    await fyllUtDeltattSteg(page, deltatt);
-};
-
 test.describe(`Meldekort med vedtak om ${antallDager} dager per meldeperiode`, () => {
     test.beforeEach(async ({ page, context }) => {
         await context.addCookies([
@@ -96,17 +89,16 @@ test.describe(`Meldekort med vedtak om ${antallDager} dager per meldeperiode`, (
                 url: testsBaseUrl,
             },
         ]);
-        await page.goto(`${testsBaseUrl}/meldekort_2/fraver`);
-        await klikkCookieBanner(page);
+        await gåTil(page, '/meldekort_2/fraver');
     });
 
     for (const utfylling of kanSendesInn) {
         test(`kan sendes inn: ${utfylling.navn}`, async ({ page }) => {
-            await fyllUt(page, utfylling);
+            await fyllUtSteg(page, utfylling);
 
             const innsendt = await sendInn(page);
             const antallMedStatus = (status: MeldekortDagStatus) =>
-                innsendt.dager.filter((dag) => dag.status === status).length;
+                antallDagerMedStatus(innsendt, status);
 
             for (const status of new Set(utfylling.fravær)) {
                 expect(antallMedStatus(status), status).toBe(
@@ -132,21 +124,13 @@ test.describe(`Meldekort med vedtak om ${antallDager} dager per meldeperiode`, (
                 if (request.url().endsWith('/api/send-inn')) innsendinger.push(request.url());
             });
 
-            await fyllUt(page, utfylling);
+            await fyllUtSteg(page, utfylling);
             await expect(page).toHaveURL(/send-inn$/);
 
-            await page
-                .getByRole('checkbox', {
-                    name: getTekst({ id: 'oppsummeringBekrefter', locale: 'nb' }),
-                })
-                .click();
-            await page
-                .getByRole('button', { name: getTekst({ id: 'sendInn', locale: 'nb' }) })
-                .click();
+            await checkbox(page, 'oppsummeringBekrefter').click();
+            await knapp(page, 'sendInn').click();
 
-            await expect(
-                page.getByText(getTekst({ id: utfylling.feil, locale: 'nb' })),
-            ).toBeVisible();
+            await expect(page.getByText(tekst(utfylling.feil))).toBeVisible();
             await expect(page).toHaveURL(/send-inn$/);
             expect(innsendinger).toHaveLength(0);
         });
@@ -154,8 +138,7 @@ test.describe(`Meldekort med vedtak om ${antallDager} dager per meldeperiode`, (
 });
 
 test('demoen lar deg velge antall dager per meldeperiode', async ({ page, context }) => {
-    await page.goto(testsBaseUrl);
-    await klikkCookieBanner(page);
+    await gåTil(page, '');
 
     await page.getByRole('radio', { name: 'Jul' }).click();
     await page.getByLabel('Antall dager per meldeperiode').selectOption(String(antallDager));

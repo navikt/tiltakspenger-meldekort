@@ -36,8 +36,8 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
     - name: Run linting & type checking
       run: pnpm run lint
-    - name: Build app
-      run: pnpm run build
+    - name: Build app (med testscenarioer for Playwright)
+      run: pnpm run build:test
     - name: Run Playwright tests
       run: pnpm exec playwright test
       env:
