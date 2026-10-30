@@ -1,3 +1,8 @@
+.kort {
+    background-color: var(--ax-bg-moderate);
+    transition: background-color 0.1s linear;
+}
+
 .feil:not(:empty) {
     margin-top: var(--ax-space-8);
 }

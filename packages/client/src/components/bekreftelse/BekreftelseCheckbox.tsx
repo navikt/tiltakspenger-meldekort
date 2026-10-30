@@ -14,10 +14,12 @@ type Props = {
 
 export const BekreftelseCheckbox = ({ label, checked, onChange, error, id }: Props) => {
     const errorId = useId();
+    const farge = error ? 'danger' : checked ? 'success' : 'warning';
 
     return (
-        <div>
+        <div data-color={farge}>
             <CheckboxCard
+                className={style.kort}
                 id={id}
                 checked={checked}
                 onChange={(e) => onChange(e.target.checked)}
