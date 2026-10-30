@@ -17,7 +17,7 @@
         "@navikt/nav-dekoratoren-moduler": "4.5.0",
         "dayjs": "1.11.23",
         "preact": "10.29.8",
-        "preact-render-to-string": "6.7.0",
+        "preact-render-to-string": "6.8.0",
         "swr": "2.5.1",
         "wouter": "3.11.1"
     },
