@@ -1,6 +1,7 @@
 import { ErrorRequestHandler, Router } from 'express';
 import { appConfig } from '@meldekort/common/appConfig';
 import { HtmlRenderFunc } from '@ssr/htmlRenderUtils';
+import { getLocaleFromPath } from '@meldekort/common/urls';
 
 export const setupErrorHandler = (router: Router, htmlRenderer: HtmlRenderFunc) => {
     const getErrorHtml = async (url: string, status: number) => {
@@ -9,7 +10,7 @@ export const setupErrorHandler = (router: Router, htmlRenderer: HtmlRenderFunc) 
             status,
             initialPath: url,
             initialProps: {},
-            språk: 'nb',
+            språk: getLocaleFromPath(url),
         });
     };
 

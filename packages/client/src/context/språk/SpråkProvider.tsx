@@ -1,33 +1,34 @@
-import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
-import { erLocaleGyldig, TeksterLocale } from '@meldekort/common/locale';
+import { PropsWithChildren, useCallback, useEffect, useRef } from 'react';
+import { erLocaleGyldig } from '@meldekort/common/locale';
 import { useLocation } from 'wouter';
-import { onLanguageSelect } from '@navikt/nav-dekoratoren-moduler';
-import { replaceLocaleSuffix } from '@meldekort/common/urls';
+import { onLanguageSelect, setParams } from '@navikt/nav-dekoratoren-moduler';
+import { getLocaleFromPath, replaceLocaleSuffix } from '@meldekort/common/urls';
 import { SpråkContext } from './SpråkContext';
 import { TeksterProps, TekstId } from '@tekster/typer';
 import { getTekst, getTekster } from '@tekster/tekster';
 
-type Props = PropsWithChildren<{
-    defaultSpråk: TeksterLocale;
-    alltidDefault?: boolean;
-}>;
-
-export const SpråkProvider = ({ defaultSpråk, alltidDefault = false, children }: Props) => {
-    const [valgtSpråk, setValgtSpråk] = useState(defaultSpråk);
-
+// URL-en er eneste kilde til valgt språk. Språkvelgeren i dekoratøren navigerer bare til riktig URL.
+export const SpråkProvider = ({ children }: PropsWithChildren) => {
     const [path, navigate] = useLocation();
+    const valgtSpråk = getLocaleFromPath(path);
 
     useEffect(() => {
         onLanguageSelect((language) => {
             if (erLocaleGyldig(language.locale)) {
-                const nyPath = replaceLocaleSuffix(path, language.locale);
-                if (!alltidDefault) {
-                    setValgtSpråk(language.locale);
-                }
-                navigate(nyPath);
+                navigate(replaceLocaleSuffix(path, language.locale));
             }
         });
-    }, [path]);
+    }, [path, navigate]);
+
+    // Holder dekoratøren i synk når språket endres uten språkvelgeren, f.eks. ved tilbake-navigering
+    const forrigeSpråk = useRef(valgtSpråk);
+
+    useEffect(() => {
+        if (forrigeSpråk.current !== valgtSpråk) {
+            forrigeSpråk.current = valgtSpråk;
+            setParams({ language: valgtSpråk });
+        }
+    }, [valgtSpråk]);
 
     const getTekstForSpråk = useCallback(
         <Id extends TekstId>(props: TeksterProps<Id>) => {

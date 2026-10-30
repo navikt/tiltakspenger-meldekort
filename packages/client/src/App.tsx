@@ -18,7 +18,7 @@ export const App = (appContext: AppContext) => {
                 tabIndex={-1}
                 className={style.maincontent}
             >
-                <SpråkProvider defaultSpråk={appContext.språk}>
+                <SpråkProvider>
                     <VStack className={style.text}>
                         {appContext.status >= 400 ? (
                             getFeilside(appContext.status)
