@@ -28,7 +28,7 @@ export const teksterNb = {
 
     ikkeRett: 'Ikke rett',
     antallDagerVedtak: ({ antall }: { antall: number }) =>
-        `Du har vedtak om tiltakspenger for ${dager(antall)} i denne perioden.`,
+        `Du har vedtak om tiltakspenger for ${dager(antall)} i perioden. Du må føre opp ${dager(antall)} i perioden. Du kan ikke føre opp flere dager enn det du har vedtak om.`,
 
     forMangeDagerEnkel: ({ maks }: { maks: number }) =>
         `Du har fylt ut for mange dager. Gå tilbake og fjern dager slik at du har nøyaktig ${dager(maks)}.`,

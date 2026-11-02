@@ -28,7 +28,7 @@ export const teksterEn = {
 
     ikkeRett: 'Not entitled',
     antallDagerVedtak: ({ antall }: { antall: number }) =>
-        `You have been granted benefits for ${days(antall)} in this period.`,
+        `You have been granted benefits for ${days(antall)} in the period. You must fill in ${days(antall)} in the period. You cannot fill in more days than you have been granted.`,
 
     forMangeDagerEnkel: ({ maks }: { maks: number }) =>
         `You have filled in too many days. Go back and remove days so that you have exactly ${days(maks)}.`,

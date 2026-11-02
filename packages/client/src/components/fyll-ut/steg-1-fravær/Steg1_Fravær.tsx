@@ -44,7 +44,7 @@ export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) =>
         <MeldekortStegWrapper
             info={
                 meldekortUtfylling.maksAntallDager !== 10 && (
-                    <Infokort variant={'info'}>
+                    <Infokort variant={'advarsel'}>
                         <Tekst
                             id={'antallDagerVedtak'}
                             resolverProps={{
