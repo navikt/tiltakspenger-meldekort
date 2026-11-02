@@ -14,9 +14,11 @@ import style from './MeldekortStegWrapper.module.css';
 
 type Props = {
     children: React.ReactNode;
+    // Vises over stegoverskriften, for informasjon som bare gjelder ett steg
+    info?: React.ReactNode;
 };
 
-export const MeldekortStegWrapper = ({ children }: Props) => {
+export const MeldekortStegWrapper = ({ children, info }: Props) => {
     const ref = useRef<HTMLDivElement>(null);
     const { meldekortUtfylling, meldekortSteg, setMeldekortSteg, getUndertekster } =
         useMeldekortUtfylling();
@@ -86,6 +88,8 @@ export const MeldekortStegWrapper = ({ children }: Props) => {
                         meldekort={meldekortUtfylling}
                         className={style.varsler}
                     />
+
+                    {info && <div className={style.varsler}>{info}</div>}
                 </>
             )}
 

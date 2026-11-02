@@ -18,7 +18,7 @@ import { PaperplaneIcon } from '@navikt/aksel-icons';
 import { antallDagerValidering } from '@utils/utfyllingValidering';
 import { useInitMeldekortSteg } from '@components/fyll-ut/useInitMeldekortSteg';
 import { OppsummeringError } from '@components/fyll-ut/steg-4-oppsummering/OppsummeringError';
-import { TekstId } from '@tekster/typer';
+import { TeksterProps, TekstId } from '@tekster/typer';
 import { Meldekort } from '@meldekort/common/typer/MeldekortBruker';
 import { DagerUtfyltTeller } from '../dager-utfylt-teller/DagerUtfyltTeller';
 import { ErrorCodes, useApiClient } from '@utils/apiClient';
@@ -31,7 +31,7 @@ type SSRProps = {
 };
 
 type ErrorSummaryItem = {
-    tekstId: TekstId;
+    tekst: TeksterProps<TekstId>;
     onClick?: () => void;
     href?: string;
 };
@@ -165,7 +165,7 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                     }
                     redirectTilDeltakelseSteg();
                 },
-                tekstId: 'ingenDagerFyltUt',
+                tekst: { id: 'ingenDagerFyltUt' },
             });
         }
         if (harForMangeDagerBesvart) {
@@ -181,7 +181,10 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                     }
                     redirectTilDeltakelseSteg();
                 },
-                tekstId: 'forMangeDagerEnkel',
+                tekst: {
+                    id: 'forMangeDagerEnkel',
+                    resolverProps: { maks: brukersMeldekort.maksAntallDager },
+                },
             });
         }
         if (harForFaDagerBesvart) {
@@ -197,31 +200,34 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                     }
                     redirectTilDeltakelseSteg();
                 },
-                tekstId: 'forFaDagerEnkel',
+                tekst: {
+                    id: 'forFaDagerEnkel',
+                    resolverProps: { maks: brukersMeldekort.maksAntallDager },
+                },
             });
         }
         if (harHattFravær === null) {
             currentValidationErrors.push({
                 onClick: redirectTilFraværSteg,
-                tekstId: 'fraværSpørsmålIkkeValgt',
+                tekst: { id: 'fraværSpørsmålIkkeValgt' },
             });
         }
         if (harMottattLønn === null) {
             currentValidationErrors.push({
                 onClick: redirectTilLønnSteg,
-                tekstId: 'lønnSpørsmålIkkeValgt',
+                tekst: { id: 'lønnSpørsmålIkkeValgt' },
             });
         }
         if (kanIkkeSendeInnPgaFravær) {
             currentValidationErrors.push({
                 onClick: redirectTilFraværSteg,
-                tekstId: 'oppsummeringIngenDagerMedFravær',
+                tekst: { id: 'oppsummeringIngenDagerMedFravær' },
             });
         }
         if (kanIkkeSendeInnPgaLønn) {
             currentValidationErrors.push({
                 onClick: redirectTilLønnSteg,
-                tekstId: 'oppsummeringIngenDagerMedLønn',
+                tekst: { id: 'oppsummeringIngenDagerMedLønn' },
             });
         }
         setErrors(currentValidationErrors);
@@ -279,9 +285,9 @@ export const Steg4_Oppsummering = ({ brukersMeldekort, kanFylleUtHelg }: SSRProp
                 <ErrorSummary className={style.varsel} ref={errorRef}>
                     {errors.map((error, index) => (
                         <OppsummeringError
-                            key={`${index}-${error.tekstId}`}
+                            key={`${index}-${error.tekst.id}`}
                             onClick={error.onClick}
-                            tekstId={error.tekstId}
+                            tekst={error.tekst}
                             href={error.href}
                         />
                     ))}

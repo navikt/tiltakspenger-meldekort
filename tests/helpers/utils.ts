@@ -6,9 +6,8 @@ import { TekstId, TeksterPropsMedLocale } from '../../packages/client/src/tekste
 
 export const testsBaseUrl = 'http://localhost:3050/tiltakspenger/meldekort/demo';
 
-// For tekster uten resolverProps
-export const tekst = (id: TekstId) =>
-    getTekst({ id, locale: 'nb' } as TeksterPropsMedLocale<TekstId>);
+export const tekst = (id: TekstId, resolverProps?: unknown) =>
+    getTekst({ id, locale: 'nb', resolverProps } as TeksterPropsMedLocale<TekstId>);
 
 export const tekstSegmenter = (id: TekstId) =>
     getTekster({ id, locale: 'nb' } as TeksterPropsMedLocale<TekstId>);

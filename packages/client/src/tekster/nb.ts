@@ -2,6 +2,8 @@ import { Periode } from '@meldekort/common/typer/periode';
 import { TekstResolver } from '@tekster/typer';
 import { formatterDato, getUkenummer } from '@utils/datetime';
 
+const dager = (antall: number) => `${antall} dag${antall === 1 ? '' : 'er'}`;
+
 export const teksterNb = {
     neste: 'Neste steg',
     startUtfylling: 'Start utfylling',
@@ -25,16 +27,20 @@ export const teksterNb = {
     statusIkkeRettTilTiltakspenger: 'Ikke rett',
 
     ikkeRett: 'Ikke rett',
+    antallDagerVedtak: ({ antall }: { antall: number }) =>
+        `Du har vedtak om tiltakspenger for ${dager(antall)} i perioden. Du må føre opp ${dager(antall)} i perioden. Du kan ikke føre opp flere dager enn det du har vedtak om.`,
 
-    forMangeDagerEnkel: 'Du har fylt ut for mange dager',
-    forFaDagerEnkel: 'Du har fylt ut for få dager',
+    forMangeDagerEnkel: ({ maks }: { maks: number }) =>
+        `Du har fylt ut for mange dager. Gå tilbake og fjern dager slik at du har nøyaktig ${dager(maks)}.`,
+    forFaDagerEnkel: ({ maks }: { maks: number }) =>
+        `Du har fylt ut for få dager. Gå tilbake og legg til dager slik at du har nøyaktig ${dager(maks)}.`,
     ingenDagerFyltUt: 'Du må fylle ut minst én dag med fravær, lønn eller deltagelse.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} dag${antall === 1 ? '' : 'er'} fylt ut.`,
     forMangeDagerBesvart: ({ maks }: { maks: number }) =>
-        `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du bare har ført opp dager du faktisk har deltatt, hatt fravær eller fått lønn.`,
-    forFaDagerBesvart: ({ maks }: { maks: number }) =>
-        `Du har vedtak om tiltakspenger for ${maks} dager i perioden. Sjekk at du har ført opp alle dagene du har deltatt, hatt fravær eller fått lønn.`,
+        `Selv om du har deltatt flere dager, kan du bare få tiltakspenger for ${dager(maks)} i denne perioden. Fjern dager slik at du har fylt ut nøyaktig ${dager(maks)}.`,
+    forFaDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
+        `Du har fylt ut ${dager(antall)}, men du må fylle ut ${dager(maks)} i denne perioden. Legg til dager slik at du har fylt ut nøyaktig ${dager(maks)}.`,
     ingenDagerMedFravær:
         'Du må velge minst en dag med fravær, eller velge at du ikke har hatt fravær.',
 
