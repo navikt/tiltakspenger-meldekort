@@ -17,6 +17,9 @@ minimumReleaseAgeExclude:
 
 # Sikkerhetsfikser i transitive pakker: qs og body-parser kommer via express, som bare tillater (ikke krever) fikset versjon.
 # Fjernes når foreldrepakken selv krever fikset versjon (`pnpm why <pakke>`).
+# qs 6.16.1 tetter CVE-2026-110816.
+# source-map-js kommer via postcss i vite, som bare tillater (ikke krever) 1.2.2 med fiks for CVE-2026-93749.
 overrides:
-  qs: 6.16.0
+  qs: 6.16.1
   body-parser: 2.4.0
+  "source-map-js@<1.2.2": 1.2.2
