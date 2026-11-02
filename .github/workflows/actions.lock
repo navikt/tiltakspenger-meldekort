@@ -6,13 +6,13 @@ workflows:
     '.github/workflows/.build-and-test.yml':
         - 'actions/checkout@v4.4.0'
         - 'actions/setup-node@v4.4.0'
-        - 'pnpm/action-setup@v4.3.0'
+        - 'pnpm/action-setup@v6.1.0'
     '.github/workflows/.build-for-deploy.yml':
         - 'actions/checkout@v7.0.0'
         - 'actions/setup-node@v7.0.0'
         - 'nais/deploy@master'
         - 'nais/docker-build-push@main'
-        - 'pnpm/action-setup@v6.0.9'
+        - 'pnpm/action-setup@v6.1.0'
     '.github/workflows/deploy-dev.yml': []
     '.github/workflows/deploy-prod.yml': []
     '.github/workflows/lint-workflows.yml': []
@@ -156,14 +156,9 @@ dependencies:
         commit: 'sha1-38de303aac69abb66f3e6255b7198bff35f323e3'
         owner_id: 81890686
         repo_id: 590286646
-    'pnpm/action-setup@v4.3.0':
-        ref: 'v4.3.0'
-        commit: 'sha1-b906affcce14559ad1aafd4ab0e942779e9f58b1'
-        owner_id: 21320719
-        repo_id: 262289747
-    'pnpm/action-setup@v6.0.9':
-        ref: 'v6.0.9'
-        commit: 'sha1-0ebf47130e4866e96fce0953f49152a61190b271'
+    'pnpm/action-setup@v6.1.0':
+        ref: 'v6.1.0'
+        commit: 'sha1-ea17c68df8912ef543352723c149a84f56e3d413'
         owner_id: 21320719
         repo_id: 262289747
     'sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6':
