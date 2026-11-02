@@ -33,6 +33,7 @@ export const DagerUtfyltTeller = React.forwardRef<HTMLDivElement, Props>(
                     <Tekst
                         id={'forFaDagerBesvart'}
                         resolverProps={{
+                            antall: antallDagerBesvart,
                             maks: brukersMeldekort.maksAntallDager,
                         }}
                     />

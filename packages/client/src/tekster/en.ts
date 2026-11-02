@@ -2,6 +2,8 @@ import { Periode } from '@meldekort/common/typer/periode';
 import { TeksterRecord } from '@tekster/typer';
 import { formatterDato, getUkenummer } from '@utils/datetime';
 
+const days = (antall: number) => `${antall} day${antall === 1 ? '' : 's'}`;
+
 export const teksterEn = {
     neste: 'Next step',
     startUtfylling: 'Start filling out',
@@ -25,16 +27,20 @@ export const teksterEn = {
     statusIkkeRettTilTiltakspenger: 'Not entitled',
 
     ikkeRett: 'Not entitled',
+    antallDagerVedtak: ({ antall }: { antall: number }) =>
+        `You have been granted benefits for ${days(antall)} in this period.`,
 
-    forMangeDagerEnkel: 'You have selected too many days',
-    forFaDagerEnkel: 'You have selected too few days',
+    forMangeDagerEnkel: ({ maks }: { maks: number }) =>
+        `You have filled in too many days. Go back and remove days so that you have exactly ${days(maks)}.`,
+    forFaDagerEnkel: ({ maks }: { maks: number }) =>
+        `You have filled in too few days. Go back and add days so that you have exactly ${days(maks)}.`,
     ingenDagerFyltUt: 'You must select at least one day with absence, paid wage or participation.',
     antallDagerBesvart: ({ antall }: { antall: number }) =>
         `${antall} day${antall === 1 ? '' : 's'} reported.`,
     forMangeDagerBesvart: ({ maks }: { maks: number }) =>
-        `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected only the days you have participated, been absent or earned paid wage.`,
-    forFaDagerBesvart: ({ maks }: { maks: number }) =>
-        `Your decision specifies that you should participate in employment scheme activities on ${maks} days this period. Please make sure you have selected all of the days you have participated, been absent or earned paid wage.`,
+        `Even if you participated on more days, you can only receive benefits for ${days(maks)} in this period. Remove days so that you have filled in exactly ${days(maks)}.`,
+    forFaDagerBesvart: ({ antall, maks }: { antall: number; maks: number }) =>
+        `You have filled in ${days(antall)}, but you must fill in ${days(maks)} in this period. Add days so that you have filled in exactly ${days(maks)}.`,
     ingenDagerMedFravær:
         'You must select at least one day with absence, or select that you did not have any absence.',
 

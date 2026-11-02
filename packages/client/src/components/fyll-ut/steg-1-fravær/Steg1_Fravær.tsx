@@ -41,7 +41,20 @@ export const Steg1_Fravær = ({ brukersMeldekort, kanFylleUtHelg }: SSRProps) =>
     }
 
     return (
-        <MeldekortStegWrapper>
+        <MeldekortStegWrapper
+            info={
+                meldekortUtfylling.maksAntallDager !== 10 && (
+                    <Infokort variant={'info'}>
+                        <Tekst
+                            id={'antallDagerVedtak'}
+                            resolverProps={{
+                                antall: meldekortUtfylling.maksAntallDager,
+                            }}
+                        />
+                    </Infokort>
+                )
+            }
+        >
             <HStack gap="space-16">
                 <Tekst id="fraværIngress" />
                 <RadioGroup

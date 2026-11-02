@@ -38,6 +38,13 @@ test.describe('Meldekort steg', () => {
         await startUtfylling(page, mockApi);
     });
 
+    test('Viser ikke antall dager i vedtaket når maks er 10', async ({ page }) => {
+        await expect(radio(page, 'fraværHarHattFraværSvarNei')).toBeVisible();
+        await expect(
+            page.getByText(tekst('antallDagerVedtak', { antall: meldekort.maksAntallDager })),
+        ).toBeHidden();
+    });
+
     test('Kan ikke gå videre uten å velge fravær/ikke fravær', async ({ page }) => {
         await knapp(page, 'neste').click();
 

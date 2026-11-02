@@ -92,6 +92,12 @@ test.describe(`Meldekort med vedtak om ${antallDager} dager per meldeperiode`, (
         await gåTil(page, '/meldekort_2/fraver');
     });
 
+    test('viser antall dager i vedtaket på fravær-steget', async ({ page }) => {
+        await expect(
+            page.getByText(tekst('antallDagerVedtak', { antall: antallDager })),
+        ).toBeVisible();
+    });
+
     for (const utfylling of kanSendesInn) {
         test(`kan sendes inn: ${utfylling.navn}`, async ({ page }) => {
             await fyllUtSteg(page, utfylling);
@@ -130,7 +136,9 @@ test.describe(`Meldekort med vedtak om ${antallDager} dager per meldeperiode`, (
             await checkbox(page, 'oppsummeringBekrefter').click();
             await knapp(page, 'sendInn').click();
 
-            await expect(page.getByText(tekst(utfylling.feil))).toBeVisible();
+            await expect(
+                page.getByText(tekst(utfylling.feil, { maks: antallDager })),
+            ).toBeVisible();
             await expect(page).toHaveURL(/send-inn$/);
             expect(innsendinger).toHaveLength(0);
         });
